@@ -68,6 +68,7 @@ public static class CoreSeedModels
         {
             //var categories = Categories.Create(ticks).ToArray();
             //var tags = Tags.Create(ticks).ToArray();
+
             return [.. new[]
             {
                 Book.Create(
