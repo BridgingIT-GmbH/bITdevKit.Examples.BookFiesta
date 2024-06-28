@@ -18,9 +18,13 @@
     <Using Include="System.Linq" />
   </ItemGroup>
 
-  <ItemGroup>
+  <PropertyGroup>
+    <NoWarn>CS2002</NoWarn>
+  </PropertyGroup>
+
+  <!--<ItemGroup>
     <Compile Include="..\..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Ensure.That" />

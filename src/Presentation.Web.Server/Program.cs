@@ -1,113 +1,340 @@
-using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.GettingStarted.Application;
-using BridgingIT.DevKit.Examples.GettingStarted.Domain;
-using BridgingIT.DevKit.Examples.GettingStarted.Infrastructure;
-using BridgingIT.DevKit.Examples.GettingStarted.Presentation;
+// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Text.Json;
+using Azure.Monitor.OpenTelemetry.Exporter;
+using BridgingIT.DevKit.Application.Commands;
+using BridgingIT.DevKit.Application.JobScheduling;
+using BridgingIT.DevKit.Application.Messaging;
+using BridgingIT.DevKit.Application.Queries;
+using BridgingIT.DevKit.Application.Utilities;
+using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation;
+using BridgingIT.DevKit.Examples.BookStore.Infrastructure;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using BridgingIT.DevKit.Presentation;
 using BridgingIT.DevKit.Presentation.Web;
+using BridgingIT.DevKit.Presentation.Web.JobScheduling;
 using Hellang.Middleware.ProblemDetails;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using NSwag;
+using NSwag.Generation.AspNetCore;
+using NSwag.Generation.Processors.Security;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using Serilog;
 
 // ===============================================================================================
-// Configure the host
+// Create the webhost
 var builder = WebApplication.CreateBuilder(args);
-// ===v DevKit registrations v===
 builder.Host.ConfigureLogging();
-// ===^ DevKit registrations ^===
+builder.Host.ConfigureAppConfiguration();
+
+// ===============================================================================================
+// Configure the modules
+builder.Services.AddModules(builder.Configuration, builder.Environment)
+    .WithModule<CatalogModule>()
+    .WithModuleContextAccessors()
+    .WithRequestModuleContextAccessors()
+    .WithModuleControllers(c => c.AddJsonOptions(ConfigureJsonOptions));
+
+builder.Services.Configure<JsonOptions>(ConfigureJsonOptions); // configure json for minimal apis
 
 // ===============================================================================================
 // Configure the services
-// ===v DevKit registrations v===
 builder.Services.AddMediatR();
-builder.Services.AddMapping().WithMapster<MapperRegister>();
-builder.Services.AddCommands();
-builder.Services.AddQueries();
+builder.Services.AddMapping().WithMapster();
 
-builder.Services.AddStartupTasks(o => o.Enabled().StartupDelay("00:00:5"))
-    .WithTask<CoreDomainSeederTask>(o => o
-        .Enabled(builder.Environment.IsDevelopment()));
+builder.Services.AddCommands()
+    .WithBehavior(typeof(ModuleScopeCommandBehavior<,>))
+    //.WithBehavior(typeof(ChaosExceptionCommandBehavior<,>))
+    .WithBehavior(typeof(RetryCommandBehavior<,>))
+    .WithBehavior(typeof(TimeoutCommandBehavior<,>));
+builder.Services.AddQueries()
+    .WithBehavior(typeof(ModuleScopeQueryBehavior<,>))
+    //.WithBehavior(typeof(ChaosExceptionQueryBehavior<,>))
+    .WithBehavior(typeof(RetryQueryBehavior<,>))
+    .WithBehavior(typeof(TimeoutQueryBehavior<,>));
 
-builder.Services.AddSqlServerDbContext<CoreDbContext>(o => o
-        .UseConnectionString(builder.Configuration.GetConnectionString("Default"))
-        .UseLogger(true, builder.Environment.IsDevelopment()),
-        c => c
-            .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
-            .CommandTimeout(30))
-    .WithDatabaseCreatorService(o => o
-        .Enabled(builder.Environment.IsDevelopment())
-        .DeleteOnStartup());
-    //.WithDatabaseMigratorService(o => o
-    //    .Enabled(builder.Environment.IsDevelopment())
-    //   .DeleteOnStartup());
+builder.Services.AddJobScheduling(o => o.StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]), builder.Configuration)
+    .WithBehavior<ModuleScopeJobSchedulingBehavior>()
+    //.WithBehavior<ChaosExceptionJobSchedulingBehavior>()
+    .WithBehavior<RetryJobSchedulingBehavior>()
+    .WithBehavior<TimeoutJobSchedulingBehavior>();
 
-builder.Services.AddEntityFrameworkRepository<Customer, CoreDbContext>()
-    .WithTransactions<NullRepositoryTransaction<Customer>>()
-    .WithBehavior<RepositoryTracingBehavior<Customer>>()
-    .WithBehavior<RepositoryLoggingBehavior<Customer>>()
-    .WithBehavior<RepositoryConcurrentBehavior<Customer>>()
-    .WithBehavior<RepositoryAuditStateBehavior<Customer>>()
-    .WithBehavior<RepositoryDomainEventPublisherBehavior<Customer>>();
+builder.Services.AddStartupTasks(o => o.Enabled().StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
+    .WithTask<EchoStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:03"))
+    .WithTask<JobSchedulingSqlServerSeederStartupTask>() // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
+    .WithBehavior<ModuleScopeStartupTaskBehavior>()
+    //.WithBehavior<ChaosExceptionStartupTaskBehavior>()
+    .WithBehavior<RetryStartupTaskBehavior>()
+    .WithBehavior<TimeoutStartupTaskBehavior>();
 
-builder.Services.AddEntityFrameworkRepository<Tag, CoreDbContext>()
-    .WithTransactions<NullRepositoryTransaction<Tag>>()
-    .WithBehavior<RepositoryTracingBehavior<Tag>>()
-    .WithBehavior<RepositoryLoggingBehavior<Tag>>()
-    .WithBehavior<RepositoryConcurrentBehavior<Tag>>();
+builder.Services.AddMessaging(builder.Configuration, o => o
+        .StartupDelay(builder.Configuration["Messaging:StartupDelay"]))
+    .WithBehavior<ModuleScopeMessagePublisherBehavior>()
+    .WithBehavior<ModuleScopeMessageHandlerBehavior>()
+    .WithBehavior<MetricsMessagePublisherBehavior>()
+    .WithBehavior<MetricsMessageHandlerBehavior>()
+    //.WithBehavior<ChaosExceptionMessageHandlerBehavior>()
+    .WithBehavior<RetryMessageHandlerBehavior>()
+    .WithBehavior<TimeoutMessageHandlerBehavior>()
+    .WithOutbox<CatalogDbContext>(o => o // registers the outbox publisher behavior and worker service at once
+        .ProcessingInterval("00:00:30")
+        .ProcessingModeImmediate() // forwards the outbox message, through a queue, to the outbox worker
+        .StartupDelay("00:00:15")
+        .PurgeOnStartup())
+    .WithInProcessBroker(); //.WithRabbitMQBroker();
 
-builder.Services.AddEntityFrameworkRepository<Category, CoreDbContext>()
-    .WithTransactions<NullRepositoryTransaction<Category>>()
-    .WithBehavior<RepositoryTracingBehavior<Category>>()
-    .WithBehavior<RepositoryLoggingBehavior<Category>>()
-    .WithBehavior<RepositoryConcurrentBehavior<Category>>()
-    .WithBehavior<RepositoryAuditStateBehavior<Category>>();
+ConfigureHealth(builder.Services);
 
-builder.Services.AddEntityFrameworkRepository<Book, CoreDbContext>()
-    .WithTransactions<NullRepositoryTransaction<Book>>()
-    .WithBehavior<RepositoryTracingBehavior<Book>>()
-    .WithBehavior<RepositoryLoggingBehavior<Book>>()
-    .WithBehavior<RepositoryConcurrentBehavior<Book>>()
-    .WithBehavior<RepositoryAuditStateBehavior<Book>>()
-    .WithBehavior<RepositoryDomainEventPublisherBehavior<Book>>();
+builder.Services.AddMetrics(); // TOOL: dotnet-counters monitor -n BridgingIT.DevKit.Examples.DinnerFiesta.Presentation.Web.Server --counters bridgingit_devkit
+builder.Services.Configure<ApiBehaviorOptions>(ConfigureApiBehavior);
+builder.Services.AddSingleton<IConfigurationRoot>(builder.Configuration);
+builder.Services.AddProblemDetails(o => Configure.ProblemDetails(o, true));
+//builder.Services.AddProblemDetails(Configure.ProblemDetails); // TODO: replace this with the new .NET8 error handling with IExceptionHandler https://www.milanjovanovic.tech/blog/global-error-handling-in-aspnetcore-8 and AddProblemDetails https://youtu.be/4NfflZilTvk?t=596
+//builder.Services.AddExceptionHandler();
+//builder.Services.AddProblemDetails();
 
-builder.Services.AddEntityFrameworkRepository<Author, CoreDbContext>()
-    .WithTransactions<NullRepositoryTransaction<Author>>()
-    .WithBehavior<RepositoryTracingBehavior<Author>>()
-    .WithBehavior<RepositoryLoggingBehavior<Author>>()
-    .WithBehavior<RepositoryConcurrentBehavior<Author>>()
-    .WithBehavior<RepositoryAuditStateBehavior<Author>>()
-    .WithBehavior<RepositoryDomainEventPublisherBehavior<Author>>();
-// ===^ DevKit registrations ^===
+builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
-builder.Services.AddControllers();
+builder.Services.AddEndpoints<SystemEndpoints>(builder.Environment.IsDevelopment());
+builder.Services.AddEndpoints<JobSchedulingEndpoints>(builder.Environment.IsDevelopment());
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddProblemDetails(o =>
-    Configure.ProblemDetails(o, builder.Environment.IsDevelopment()));
-// builder.Services.AddProblemDetails(Configure.ProblemDetails);
+builder.Services.AddOpenApiDocument(ConfigureOpenApiDocument); // TODO: still needed when all OpenAPI specifications are available in swagger UI?
+
+builder.Services.AddApplicationInsightsTelemetry(); // https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(ConfigureMetrics)
+    .WithTracing(ConfigureTracing);
 
 // ===============================================================================================
 // Configure the HTTP request pipeline
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseWebAssemblyDebugging();
+}
+else
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
 
-// ===v DevKit registrations v===
-app.UseRequestCorrelation();
-app.UseRequestLogging();
-// ===^ DevKit registrations ^===
-
 app.UseProblemDetails();
+//app.UseExceptionHandler();
+app.UseRouting();
+
+app.UseRequestCorrelation();
+app.UseRequestModuleContext();
+app.UseRequestLogging();
+
+app.UseOpenApi();
+app.UseSwaggerUi();
+
+//app.UseResponseCompression();
 app.UseHttpsRedirection();
-app.UseAuthorization();
+
+//app.UseBlazorFrameworkFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = CreateContentTypeProvider(),
+    OnPrepareResponse = context =>
+    {
+        if (context.Context.Response.ContentType == ContentType.YAML.MimeType()) // Disable caching for yaml (OpenAPI) files
+        {
+            context.Context.Response.Headers.CacheControl = "no-cache, no-store, must-revalidate";
+            context.Context.Response.Headers.Expires = "-1";
+            context.Context.Response.Headers.Pragma = "no-cache";
+        }
+    }
+});
+
+app.UseModules();
+
+app.UseAuthentication(); // TODO: move to IdentityModule
+app.UseAuthorization(); // TODO: move to IdentityModule
+
+if (builder.Configuration["Metrics:Prometheus:Enabled"].To<bool>())
+{
+    app.UseOpenTelemetryPrometheusScrapingEndpoint();
+}
+
+app.MapModules();
+app.MapRazorPages();
 app.MapControllers();
+app.MapEndpoints();
+app.MapHealthChecks();
+app.MapFallbackToFile("index.html");
+app.MapHub<CatalogSignalRHub>("/signalrhub-catalog");
 
 app.Run();
+
+void ConfigureApiBehavior(ApiBehaviorOptions options)
+{
+    options.SuppressModelStateInvalidFilter = true;
+}
+
+void ConfigureJsonOptions(JsonOptions options)
+{
+    options.JsonSerializerOptions.WriteIndented = true;
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+}
+
+void ConfigureHealth(IServiceCollection services)
+{
+    services.AddHealthChecks()
+        .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "self" });
+    //.AddSeqPublisher(s => s.Endpoint = builder.Configuration["Serilog:SeqServerUrl"]); // TODO: url configuration does not work like this
+    //.AddCheck<RandomHealthCheck>("random")
+    //.AddAp/plicationInsightsPublisher()
+
+    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+    services.AddHealthChecksUI() // https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/README.md
+        .AddInMemoryStorage();
+    //.AddSqliteStorage($"Data Source=data_health.db");
+}
+
+void ConfigureMetrics(MeterProviderBuilder provider)
+{
+    provider.AddRuntimeInstrumentation()
+        .AddMeter(
+            "Microsoft.AspNetCore.Hosting",
+            "Microsoft.AspNetCore.Server.Kestrel",
+            "System.Net.Http",
+            "BridgingIT.DevKit");
+
+    if (builder.Configuration["Metrics:Prometheus:Enabled"].To<bool>())
+    {
+        Log.Logger.Information("{LogKey} prometheus exporter enabled (endpoint={MetricsEndpoint})", "MET", "/metrics");
+        provider.AddPrometheusExporter();
+    }
+}
+
+void ConfigureTracing(TracerProviderBuilder provider)
+{
+    // TODO: multiple per module tracer needed? https://github.com/open-telemetry/opentelemetry-dotnet/issues/2040
+    // https://opentelemetry.io/docs/instrumentation/net/getting-started/
+    var serviceName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name; //TODO: use ModuleExtensions.ServiceName
+
+    if (builder.Environment.IsDevelopment())
+    {
+        provider.SetSampler(new AlwaysOnSampler());
+    }
+    else
+    {
+        provider.SetSampler(new TraceIdRatioBasedSampler(1));
+    }
+
+    provider
+        //.AddSource(ModuleExtensions.Modules.Select(m => m.Name).Insert(serviceName).ToArray()) // TODO: provide a nice (module) extension for this -> .AddModuleSources() // NOT NEEDED, * will add all activitysources
+        .AddSource("*")
+        .SetErrorStatusOnException(true)
+        .SetResourceBuilder(ResourceBuilder.CreateDefault()
+            .AddService(serviceName)
+            .AddTelemetrySdk()
+            .AddAttributes(new Dictionary<string, object>
+            {
+                ["host.name"] = Environment.MachineName,
+                ["os.description"] = RuntimeInformation.OSDescription,
+                ["deployment.environment"] = builder.Environment.EnvironmentName.ToLowerInvariant(),
+            }))
+        .SetErrorStatusOnException(true)
+        .AddAspNetCoreInstrumentation(options =>
+        {
+            options.RecordException = true;
+            options.Filter = context => !context.Request.Path.ToString().EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns);
+        })
+        .AddHttpClientInstrumentation(options =>
+        {
+            options.RecordException = true;
+            options.FilterHttpRequestMessage = request => !request.RequestUri.PathAndQuery.EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns.Insert("*api/events/raw*"));
+        })
+        .AddSqlClientInstrumentation(options =>
+        {
+            options.EnableConnectionLevelAttributes = true;
+            options.RecordException = true;
+            options.SetDbStatementForText = true;
+        });
+
+    if (builder.Configuration["Tracing:Jaeger:Enabled"].To<bool>())
+    {
+        Log.Logger.Information("{LogKey} jaeger exporter enabled (host={JaegerHost})", "TRC", builder.Configuration["Tracing:Jaeger:AgentHost"]);
+        provider.AddJaegerExporter(opts =>
+        {
+            opts.AgentHost = builder.Configuration["Tracing:Jaeger:AgentHost"];
+            opts.AgentPort = Convert.ToInt32(builder.Configuration["Tracing:Jaeger:AgentPort"]);
+            opts.ExportProcessorType = ExportProcessorType.Simple;
+        });
+    }
+
+    if (builder.Configuration["Tracing:Console:Enabled"].To<bool>())
+    {
+        Log.Logger.Information("{LogKey} console exporter enabled", "TRC");
+        provider.AddConsoleExporter();
+    }
+
+    if (builder.Configuration["Tracing:AzureMonitor:Enabled"].To<bool>())
+    {
+        Log.Logger.Information("{LogKey} azuremonitor exporter enabled", "TRC");
+        provider.AddAzureMonitorTraceExporter(o =>
+        {
+            o.ConnectionString = builder.Configuration["Tracing:AzureMonitor:ConnectionString"].EmptyToNull() ?? Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+        });
+    }
+}
+
+void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings settings)
+{
+    settings.DocumentName = "v1";
+    settings.Version = "v1";
+    settings.Title = "Backend API";
+    settings.AddSecurity(
+        "bearer",
+        [],
+        new OpenApiSecurityScheme
+        {
+            Type = OpenApiSecuritySchemeType.OAuth2,
+            Flow = OpenApiOAuth2Flow.Implicit,
+            Description = "Oidc Authentication",
+            Flows = new OpenApiOAuthFlows
+            {
+                Implicit = new OpenApiOAuthFlow
+                {
+                    AuthorizationUrl = $"{builder.Configuration["Oidc:Authority"]}/protocol/openid-connect/auth",
+                    TokenUrl = $"{builder.Configuration["Oidc:Authority"]}/protocol/openid-connect/token",
+                    Scopes = new Dictionary<string, string>
+                    {
+                        //{"openid", "openid"},
+                    }
+                }
+            },
+        });
+    settings.OperationProcessors.Add(new AuthorizeRolesSummaryOperationProcessor());
+    settings.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("bearer"));
+    settings.OperationProcessors.Add(new AuthorizationOperationProcessor("bearer"));
+}
+
+static FileExtensionContentTypeProvider CreateContentTypeProvider()
+{
+    var provider = new FileExtensionContentTypeProvider();
+    provider.Mappings.Add(".yaml", ContentType.YAML.MimeType());
+    return provider;
+}
 
 public partial class Program
 {
     // this partial class is needed to set the accessibilty for the Program class to public
-    // needed for endpoint testing when using the webapplicationfactory  https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-7.0#basic-tests-with-the-default-webapplicationfactory
+    // needed for testing with a test fixture https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-7.0#basic-tests-with-the-default-webapplicationfactory
 }

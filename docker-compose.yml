@@ -1,9 +1,7 @@
-version: '3.7'
-
 services:
   mssql:
     image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: bdk_gettingstarted_mssql
+    container_name: bdk_bookstore_mssql
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
@@ -12,27 +10,27 @@ services:
     healthcheck:
       test: /opt/mssql-tools/bin/sqlcmd -S mssql -U SA -P 'Abcd1234!' -Q 'select 1'
     ports:
-      - 14339:1433
+      - 14340:1433
     volumes:
       - mssql:/var/opt/mssql
     networks:
-      - bdk_gettingstarted
+      - bdk_bookstore
 
   mssqlscripts:
     image: mcr.microsoft.com/mssql-tools:latest
-    container_name: bdk_gettingstarted_mssqlscripts
+    container_name: bdk_bookstore_mssqlscripts
     depends_on:
       - mssql
     command: /bin/bash -c 'until /opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P "Abcd1234!" -Q "SELECT @@VERSION"; do sleep 5; done'
     networks:
-      - bdk_gettingstarted
+      - bdk_bookstore
 
   seq:
     image: datalust/seq:preview
-    container_name: bdk_gettingstarted_seq
+    container_name: bdk_bookstore_seq
     restart: unless-stopped
     ports:
-      - 15349:80 # http://localhost:15349 azure:https://ml-software.ch/posts/running-seq-on-azure
+      - 15340:80 # http://localhost:15340 azure:https://ml-software.ch/posts/running-seq-on-azure
     environment:
       - ACCEPT_EULA=Y
       - SEQ_FIRSTRUN_ADMINUSERNAME=admin
@@ -41,17 +39,43 @@ services:
     volumes:
       - seq:/data
     networks:
-    - bdk_gettingstarted
+    - bdk_bookstore
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: bdk_bookstore_jaeger
+    restart: unless-stopped
+    ports:
+      - 5778:5775/udp
+      - 5779:5778
+      - 6838:6831/udp
+      - 6839:6832/udp # AgentPort
+      - 9419:9411
+      - 14269:14268
+      - 16689:16686 # http://localhost:16689
+    environment:
+      # https://www.jaegertracing.io/docs/1.16/deployment/#badger---local-storage
+      - SPAN_STORAGE_TYPE=badger
+      - BADGER_EPHEMERAL=false
+      - BADGER_DIRECTORY_VALUE=/badger/data
+      - BADGER_DIRECTORY_KEY=/badger/key
+    volumes:
+      - jaeger:/badger
+    networks:
+      - bdk_bookstore
 
 volumes:
   mssql:
-    name: bdk_gettingstarted_mssql
+    name: bdk_bookstore_mssql
     driver: local
   seq:
-    name: bdk_gettingstarted_seq
+    name: bdk_bookstore_seq
+    driver: local
+  jaeger:
+    name: bdk_bookstore_jaeger
     driver: local
 
 networks:
-  bdk_gettingstarted:
-    name: bdk_gettingstarted
+  bdk_bookstore:
+    name: bdk_bookstore
     driver: bridge
