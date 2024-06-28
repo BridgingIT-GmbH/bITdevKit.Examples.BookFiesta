@@ -5,21 +5,19 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
+using System;
 using BridgingIT.DevKit.Domain.Model;
 
-public class BookAuthor : Entity<Guid>
+public class AuthorBook : Entity<Guid>
 {
-    private BookAuthor() { } // EF Core requires a parameterless constructor
+    private AuthorBook() { } // EF Core requires a parameterless constructor
 
 #pragma warning disable SA1202 // Elements should be ordered by access
-    public BookAuthor(AuthorId authorId, int position)
+    public AuthorBook(BookId bookId)
 #pragma warning restore SA1202 // Elements should be ordered by access
     {
-        this.AuthorId = authorId;
-        this.Position = position;
+        this.BookId = bookId;
     }
 
-    public AuthorId AuthorId { get; private set; }
-
-    public int Position { get; private set; }
+    public BookId BookId { get; private set; }
 }

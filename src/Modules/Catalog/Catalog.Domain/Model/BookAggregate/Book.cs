@@ -15,7 +15,7 @@ using static System.Net.Mime.MediaTypeNames;
 [DebuggerDisplay("Id={Id}, Title={Title}")]
 public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
 {
-    private readonly List<AuthorId> authorIds = [];
+    private readonly List<BookAuthor> authors = [];
     private readonly List<Category> categories = [];
     private readonly List<Tag> tags = [];
     private List<BookChapter> chapters = [];
@@ -38,7 +38,7 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
 
     public Money Price { get; private set; }
 
-    //public IEnumerable<AuthorId> AuthorIds => this.authorIds;
+    public IEnumerable<BookAuthor> Authors => this.authors;
 
     public IEnumerable<Category> Categories => this.categories.OrderBy(e => e.Order);
 
@@ -80,22 +80,31 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
         return this;
     }
 
-    public Book AddAuthor(AuthorId authorId)
-    {
-        if (!this.authorIds.Contains(authorId))
-        {
-            this.authorIds.Add(authorId);
-        }
+    //public Book AddAuthor(AuthorId authorId)
+    //{
+    //    if (!this.bookAuthors.Any(ba => ba.AuthorId == authorId))
+    //    {
+    //        this.bookAuthors.Add(new BookAuthor(this.Id.Value, authorId, this.bookAuthors.Count));
+    //    }
 
-        return this;
-    }
+    //    return this;
+    //}
 
-    public Book RemoveAuthor(AuthorId authorId)
-    {
-        this.authorIds.Remove(authorId);
+    //public Book RemoveAuthor(AuthorId authorId)
+    //{
+    //    var bookAuthor = this.bookAuthors.FirstOrDefault(ba => ba.AuthorId == authorId);
+    //    if (bookAuthor != null)
+    //    {
+    //        this.bookAuthors.Remove(bookAuthor);
+    //        // Reorder remaining authors
+    //        for (var i = 0; i < this.bookAuthors.Count; i++)
+    //        {
+    //            this.bookAuthors[i] = new BookAuthor(this.Id.Value, this.bookAuthors[i].AuthorId, i);
+    //        }
+    //    }
 
-        return this;
-    }
+    //    return this;
+    //}
 
     public Book AddChapter(string title, string content = null)
     {

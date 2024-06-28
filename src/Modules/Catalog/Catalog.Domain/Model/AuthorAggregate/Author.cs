@@ -10,7 +10,7 @@ using BridgingIT.DevKit.Domain.Model;
 
 public class Author : AuditableAggregateRoot<AuthorId, Guid>, IConcurrent
 {
-    private readonly List<BookId> bookIds = [];
+    private readonly List<AuthorBook> books = [];
     private readonly List<Tag> tags = [];
 
     private Author() { } // Private constructor required by EF Core
@@ -25,7 +25,7 @@ public class Author : AuditableAggregateRoot<AuthorId, Guid>, IConcurrent
 
     public string Biography { get; private set; }
 
-    //public IEnumerable<BookId> PublishedBookIds => this.bookIds;
+    public IEnumerable<AuthorBook> Books => this.books;
 
     public IEnumerable<Tag> Tags => this.tags.OrderBy(e => e.Name);
 
@@ -51,22 +51,31 @@ public class Author : AuditableAggregateRoot<AuthorId, Guid>, IConcurrent
         return this;
     }
 
-    public Author AddPublishedBook(BookId id)
-    {
-        if (!this.bookIds.Contains(id))
-        {
-            this.bookIds.Add(id);
-        }
+    //public Author AddBook(BookId bookId)
+    //{
+    //    if (!this.bookIds.Any(ba => ba.BookId == bookId))
+    //    {
+    //        this.bookIds.Add(new BookAuthor(bookId, this.Id.Value, this.bookIds.Count));
+    //    }
 
-        return this;
-    }
+    //    return this;
+    //}
 
-    public Author RemovePublishedBook(BookId id)
-    {
-        this.bookIds.Remove(id);
+    //public Author RemoveBook(BookId bookId)
+    //{
+    //    var bookAuthor = this.bookIds.FirstOrDefault(ba => ba.BookId == bookId);
+    //    if (bookAuthor != null)
+    //    {
+    //        this.bookIds.Remove(bookAuthor);
+    //        // Reorder remaining books
+    //        for (var i = 0; i < this.bookIds.Count; i++)
+    //        {
+    //            this.bookIds[i] = new BookAuthor(this.bookIds[i].BookId, this.Id.Value, i);
+    //        }
+    //    }
 
-        return this;
-    }
+    //    return this;
+    //}
 
     public Author AddTag(Tag tag)
     {

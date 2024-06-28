@@ -26,8 +26,22 @@ public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<Author>
                 id => id.Value,
                 value => AuthorId.Create(value));
 
-        //builder.HasMany<BookAuthor>()
-        //    .WithOne().HasForeignKey(e => e.AuthorId);
+        builder.OwnsMany(e => e.Books, rb =>
+        {
+            rb.ToTable("AuthorBooks");
+
+            rb.WithOwner().HasForeignKey("AuthorId");
+            // TODO: BookId foreign key is missing in migration
+            rb.HasKey("Id");
+
+            rb.Property(r => r.Id);
+
+            rb.Property(r => r.BookId)
+                .IsRequired()
+                .HasConversion(
+                    id => id.Value,
+                    value => BookId.Create(value));
+        });
 
         builder.Property(a => a.Biography)
             .IsRequired(false).HasMaxLength(4096);
@@ -61,6 +75,7 @@ public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<Author>
         // Configure relationships
         // Assuming a many-to-many relationship is managed through BookEntityTypeConfiguration
 
-        // Additional configurations as needed
+        builder.Metadata.FindNavigation(nameof(Author.Books))
+           .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

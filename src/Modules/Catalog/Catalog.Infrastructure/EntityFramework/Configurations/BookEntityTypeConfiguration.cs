@@ -8,6 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookStore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using System.Reflection;
 
 public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
 {
@@ -16,6 +17,7 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
         builder.ToTable("Books");
 
         builder.HasKey(e => e.Id);
+        //builder.Navigation(e => e.BookAuthors).AutoInclude();
         builder.Navigation(e => e.Categories).AutoInclude();
         builder.Navigation(e => e.Chapters).AutoInclude();
         builder.Navigation(e => e.Tags).AutoInclude();
@@ -73,9 +75,25 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
             });
         });
 
-        //builder.HasMany(typeof(Author), "Authors")
-        //    .WithMany("PublishedBooks")
-        //    .UsingEntity(j => j.ToTable("BookAuthors"));
+        builder.OwnsMany(e => e.Authors, rb =>
+        {
+            rb.ToTable("BookAuthors");
+
+            rb.WithOwner().HasForeignKey("BookId");
+            // TODO: AuthorId foreign key is missing in migration
+            rb.HasKey("Id");
+
+            rb.Property(r => r.Id);
+
+            rb.Property(r => r.AuthorId)
+                .IsRequired()
+                .HasConversion(
+                    id => id.Value,
+                    value => AuthorId.Create(value));
+
+            rb.Property(r => r.Position)
+                .IsRequired().HasDefaultValue(0);
+        });
 
         builder.OwnsMany(e => e.Chapters, b =>
         {
@@ -102,10 +120,7 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
         //builder.OwnsOneAuditState(); // TODO: use ToJson variant
         builder.OwnsOne(e => e.AuditState, b => b.ToJson());
 
-        //builder.Metadata.FindNavigation(nameof(Book.Chapters))
-        //    .SetPropertyAccessMode(PropertyAccessMode.Field);
-
-        //builder.Metadata.FindNavigation(nameof(Book.Tags))
-        //    .SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(Book.Authors))
+                    .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

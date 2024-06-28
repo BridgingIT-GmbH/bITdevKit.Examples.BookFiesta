@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20240627160158_Initial")]
+    [Migration("20240628234935_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -437,6 +437,28 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                                 .HasForeignKey("AuthorId");
                         });
 
+                    b.OwnsMany("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.AuthorBook", "Books", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("AuthorId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("BookId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("AuthorId");
+
+                            b1.ToTable("AuthorBooks", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AuthorId");
+                        });
+
                     b.OwnsOne("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.PersonFormalName", "PersonName", b1 =>
                         {
                             b1.Property<Guid>("AuthorId")
@@ -473,6 +495,8 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                         });
 
                     b.Navigation("AuditState");
+
+                    b.Navigation("Books");
 
                     b.Navigation("PersonName");
                 });
@@ -540,6 +564,33 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                             b1.ToTable("Books", "catalog");
 
                             b1.ToJson("AuditState");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BookId");
+                        });
+
+                    b.OwnsMany("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.BookAuthor", "Authors", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("AuthorId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("BookId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Position")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValue(0);
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("BookId");
+
+                            b1.ToTable("BookAuthors", "catalog");
 
                             b1.WithOwner()
                                 .HasForeignKey("BookId");
@@ -646,6 +697,8 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                         });
 
                     b.Navigation("AuditState");
+
+                    b.Navigation("Authors");
 
                     b.Navigation("Chapters");
 

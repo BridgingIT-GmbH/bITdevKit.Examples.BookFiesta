@@ -21,6 +21,7 @@ public class BookId : AggregateRootId<Guid>
     public override Guid Value { get; protected set; }
 
     public static implicit operator BookId(Guid value) => value; // allows a Guid value to be implicitly converted to a BookId object.
+    //public static implicit operator BookId(AggregateRootId<Guid> value) => value.Value; // allows a Guid value to be implicitly converted to a BookId object.
 
     public static BookId CreateUnique()
     {
