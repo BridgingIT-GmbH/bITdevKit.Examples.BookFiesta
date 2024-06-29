@@ -51,15 +51,15 @@ public class Author : AuditableAggregateRoot<AuthorId, Guid>, IConcurrent
         return this;
     }
 
-    //public Author AddBook(BookId bookId)
-    //{
-    //    if (!this.bookIds.Any(ba => ba.BookId == bookId))
-    //    {
-    //        this.bookIds.Add(new BookAuthor(bookId, this.Id.Value, this.bookIds.Count));
-    //    }
+    public Author AddBook(BookId bookId)
+    {
+        if (!this.books.Any(e => e.BookId == bookId))
+        {
+            this.books.Add(new AuthorBook(this.Id.Value));
+        }
 
-    //    return this;
-    //}
+        return this;
+    }
 
     //public Author RemoveBook(BookId bookId)
     //{

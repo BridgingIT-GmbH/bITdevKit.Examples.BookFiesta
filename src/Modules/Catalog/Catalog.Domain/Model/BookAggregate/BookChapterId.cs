@@ -20,6 +20,7 @@ public class BookChapterId : EntityId<Guid>
 
     public override Guid Value { get; protected set; }
 
+    public static implicit operator Guid(BookChapterId value) => value?.Value ?? default; // allows a BookChapterId value to be implicitly converted to a Guid.
     public static implicit operator BookChapterId(Guid value) => value; // allows a Guid value to be implicitly converted to a BookChapterId object.
 
     public static BookChapterId CreateUnique()

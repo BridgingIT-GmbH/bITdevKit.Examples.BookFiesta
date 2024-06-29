@@ -20,7 +20,9 @@ public class AuthorId : AggregateRootId<Guid>
 
     public override Guid Value { get; protected set; }
 
+    public static implicit operator Guid(AuthorId value) => value?.Value ?? default; // allows a AuthorId value to be implicitly converted to a Guid.
     public static implicit operator AuthorId(Guid value) => value; // allows a Guid value to be implicitly converted to a AuthorId object.
+    //public static implicit operator AuthorId(AggregateRootId<Guid> value) => value.Value; // allows a AggregateRootId value to be implicitly converted to a AuthorId object.
 
     public static AuthorId CreateUnique()
     {

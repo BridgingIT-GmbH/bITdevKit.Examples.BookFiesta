@@ -20,6 +20,9 @@ public class TagId : EntityId<Guid>
 
     public override Guid Value { get; protected set; }
 
+    public static implicit operator Guid(TagId value) => value?.Value ?? default; // allows a TagId value to be implicitly converted to a Guid.
+    public static implicit operator TagId(Guid value) => value; // allows a Guid value to be implicitly converted to a TagId object.
+
     public static TagId CreateUnique()
     {
         return new TagId(Guid.NewGuid());

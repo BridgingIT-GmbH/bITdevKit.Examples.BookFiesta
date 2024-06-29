@@ -82,6 +82,7 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
             rb.WithOwner().HasForeignKey("BookId");
             // TODO: AuthorId foreign key is missing in migration
             rb.HasKey("Id");
+            rb.HasIndex("BookId", "AuthorId");
 
             rb.Property(r => r.Id);
 
