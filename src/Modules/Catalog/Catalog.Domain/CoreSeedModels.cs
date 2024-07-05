@@ -24,8 +24,8 @@ public static class CoreSeedModels
         public static Author[] Create(long ticks = 0) =>
             [.. new[]
             {
-                Author.Create(PersonFormalName.Create([$"John", $"Doe"], "Dr.", "Jr."), "Bio"),
-                Author.Create(PersonFormalName.Create([$"Mary", $"Jane"]), "Lorem Ipsum"),
+                Author.Create(PersonFormalName.Create([$"Michael", $"Anderson"], "Dr.", "Jr."), "Bio"),
+                Author.Create(PersonFormalName.Create([$"Patricia", $"Taylor"]), "Lorem Ipsum"),
                 Author.Create(PersonFormalName.Create([$"John", $"Smith"]), "Lorem Ipsum"),
                 Author.Create(PersonFormalName.Create([$"Jane", $"Johnson"]), "Lorem Ipsum")
             }.ForEach(e => e.Id = AuthorId.Create($"{GuidGenerator.Create($"Author_{e.PersonName.Full}")}"))];
