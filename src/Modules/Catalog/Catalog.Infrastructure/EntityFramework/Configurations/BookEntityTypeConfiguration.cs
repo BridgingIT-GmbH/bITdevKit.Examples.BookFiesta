@@ -75,24 +75,44 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
             });
         });
 
-        builder.OwnsMany(e => e.Authors, rb =>
+        builder.OwnsOne(e => e.Publisher, b =>
         {
-            rb.ToTable("BookAuthors");
+            b.ToTable("BookPublishers");
 
-            rb.WithOwner().HasForeignKey("BookId");
+            b.WithOwner().HasForeignKey("BookId");
+            b.HasKey("Id");
+
+            b.Property(r => r.Id);
+
+            b.Property(r => r.PublisherId)
+                .IsRequired()
+                .HasConversion(
+                    id => id.Value,
+                    value => PublisherId.Create(value));
+
+            b.Property(e => e.Name)
+                .HasColumnName("PublisherName")
+                .IsRequired().HasMaxLength(256);
+        });
+
+        builder.OwnsMany(e => e.Authors, b =>
+        {
+            b.ToTable("BookAuthors");
+
+            b.WithOwner().HasForeignKey("BookId");
             // TODO: AuthorId foreign key is missing in migration
-            rb.HasKey("Id");
-            rb.HasIndex("BookId", "AuthorId");
+            b.HasKey("Id");
+            b.HasIndex("BookId", "AuthorId");
 
-            rb.Property(r => r.Id);
+            b.Property(r => r.Id);
 
-            rb.Property(r => r.AuthorId)
+            b.Property(r => r.AuthorId)
                 .IsRequired()
                 .HasConversion(
                     id => id.Value,
                     value => AuthorId.Create(value));
 
-            rb.Property(r => r.Position)
+            b.Property(r => r.Position)
                 .IsRequired().HasDefaultValue(0);
         });
 

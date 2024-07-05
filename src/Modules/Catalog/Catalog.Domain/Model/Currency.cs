@@ -364,9 +364,8 @@ public class Currency : ValueObject
 
     public string Symbol => Currencies.First(c => c.Key == this.Code).Value;
 
-    public static implicit operator Currency(string value) => new(value);
-
-    public static implicit operator string(Currency value) => value.Code;
+    public static implicit operator string(Currency value) => value?.Code; // allows a Currency value to be implicitly converted to a string.
+    public static implicit operator Currency(string value) => new(value); // allows a string value to be implicitly converted to a Currency object.
 
     public static Currency Create(string code)
     {

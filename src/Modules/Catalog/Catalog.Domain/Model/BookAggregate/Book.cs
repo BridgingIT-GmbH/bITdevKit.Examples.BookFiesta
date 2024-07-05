@@ -8,12 +8,13 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml.Linq;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Model;
 using static System.Net.Mime.MediaTypeNames;
 
 [DebuggerDisplay("Id={Id}, Title={Title}")]
-public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
+public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
 {
     private readonly List<BookAuthor> authors = [];
     private readonly List<Category> categories = [];
@@ -22,12 +23,13 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
 
     private Book() { } // Private constructor required by EF Core
 
-    private Book(string title, string description, BookIsbn isbn, Money price)
+    private Book(string title, string description, BookIsbn isbn, Money price, Publisher publisher)
     {
         this.SetTitle(title);
         this.SetDescription(description);
         this.SetIsbn(isbn);
         this.SetPrice(price);
+        this.SetPublisher(publisher);
     }
 
     public string Title { get; private set; }
@@ -37,6 +39,8 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
     public BookIsbn Isbn { get; private set; }
 
     public Money Price { get; private set; }
+
+    public BookPublisher Publisher { get; private set; }
 
     public IEnumerable<BookAuthor> Authors => this.authors;
 
@@ -48,22 +52,39 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
 
     public Guid Version { get; set; }
 
-    public static Book Create(string title, string description, BookIsbn isbn, Money price)
+    public static Book Create(string title, string description, BookIsbn isbn, Money price, Publisher publisher)
     {
-        return new Book(title, description, isbn, price);
+        var book = new Book(title, description, isbn, price, publisher);
+
+        book.DomainEvents.Register(
+                new BookCreatedDomainEvent(book.Id), true);
+
+        return book;
     }
 
     public Book SetTitle(string title)
     {
         // Validate title
-        this.Title = title;
+        if (title != this.Title)
+        {
+            this.Title = title;
+            this.DomainEvents.Register(
+                new BookUpdatedDomainEvent(this.Id), true);
+        }
+
         return this;
     }
 
     public Book SetDescription(string description)
     {
         // Validate description
-        this.Description = description;
+        if (description != this.Description)
+        {
+            this.Description = description;
+            this.DomainEvents.Register(
+                new BookUpdatedDomainEvent(this.Id), true);
+        }
+
         return this;
     }
 
@@ -77,6 +98,13 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
     {
         // Validate price is > 0
         this.Price = price;
+        return this;
+    }
+
+    public Book SetPublisher(Publisher publisher)
+    {
+        // Validate publisher
+        this.Publisher = new BookPublisher(publisher.Id, publisher.Name);
         return this;
     }
 
@@ -132,7 +160,7 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
 
     public Book UpdateChapter(BookChapter chapter)
     {
-        return this.UpdateChapter(chapter.Id.Value, chapter.Title, chapter.Number, chapter.Content);
+        return this.UpdateChapter(chapter.Id, chapter.Title, chapter.Number, chapter.Content);
     }
 
     public Book UpdateChapter(BookChapterId id, string title, int number, string content = null)
@@ -152,7 +180,7 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
 
     public Book RemoveChapter(BookChapter chapter)
     {
-        return this.RemoveChapter(chapter.Id.Value);
+        return this.RemoveChapter(chapter.Id);
     }
 
     public Book RemoveChapter(int number)
@@ -160,7 +188,7 @@ public class Book : AuditableAggregateRoot<BookId, Guid>, IConcurrent
         var chapter = this.chapters.SingleOrDefault(c => c.Number == number);
         if (chapter is not null)
         {
-            this.RemoveChapter(chapter.Id.Value);
+            this.RemoveChapter(chapter.Id);
         }
 
         return this;

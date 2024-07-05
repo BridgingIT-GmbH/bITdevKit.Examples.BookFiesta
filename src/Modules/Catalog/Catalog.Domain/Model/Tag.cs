@@ -10,7 +10,7 @@ using System.Diagnostics;
 using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Id={Id}, Name={Name}")]
-public class Tag : Entity<TagId, Guid>, IConcurrent
+public class Tag : Entity<TagId/*, Guid*/>, IConcurrent
 {
     private Tag() { } // Private constructor required by EF Core
 
@@ -22,6 +22,8 @@ public class Tag : Entity<TagId, Guid>, IConcurrent
     public string Name { get; private set; }
 
     public Guid Version { get; set; }
+
+    public static implicit operator string(Tag tag) => tag?.Name; // allows a Tag value to be implicitly converted to a string.
 
     public static Tag Create(string name)
     {

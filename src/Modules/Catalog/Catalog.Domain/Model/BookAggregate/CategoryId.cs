@@ -21,8 +21,8 @@ public class CategoryId : EntityId<Guid>
 
     public override Guid Value { get; protected set; }
 
-    public static implicit operator Guid(CategoryId value) => value?.Value ?? default; // allows a CategoryId value to be implicitly converted to a Guid.
-    public static implicit operator CategoryId(Guid value) => value; // allows a Guid value to be implicitly converted to a CategoryId object.
+    //public static implicit operator Guid(CategoryId id) => id?.Value ?? default; // allows a CategoryId value to be implicitly converted to a Guid.
+    //public static implicit operator CategoryId(Guid value) => value; // allows a Guid value to be implicitly converted to a CategoryId object.
 
     public static CategoryId CreateUnique()
     {

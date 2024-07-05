@@ -16,10 +16,8 @@ public partial class PersonFormalName : ValueObject
     private static readonly Regex NamePartRegex = Regexes.NamePartRegex();
     private static readonly Regex TitleSuffixRegex = Regexes.TitleSuffixRegex();
 
-    // Private constructor to enforce the use of the Create method
     private PersonFormalName() { }
 
-    // Private constructor used by the Create method to set the name parts
     private PersonFormalName(string[] parts, string title = null, string suffix = null)
     {
         Validate(parts, title, suffix);
@@ -29,14 +27,12 @@ public partial class PersonFormalName : ValueObject
         this.Suffix = suffix;
     }
 
-    // Public properties for the name parts
     public string Title { get; private set; }
 
     public IEnumerable<string> Parts { get; private set; }
 
     public string Suffix { get; private set; }
 
-    //public string Full => this.ToString();
     public string Full
     {
         get
@@ -49,16 +45,13 @@ public partial class PersonFormalName : ValueObject
         }
     }
 
-    // Implicit conversion to string representing the full name
-    public static implicit operator string(PersonFormalName name) => name.ToString();
+    public static implicit operator string(PersonFormalName name) => name?.ToString(); // allows a PersonFormalName value to be implicitly converted to a string.
 
-    // Factory method to create a new FullName instance
     public static PersonFormalName Create(string[] parts, string title = null, string suffix = null)
     {
         return new PersonFormalName(parts, title, suffix);
     }
 
-    // Override ToString method to return the full name
     public override string ToString()
     {
         var fullName = string.Join(" ", this.Parts);
@@ -76,7 +69,6 @@ public partial class PersonFormalName : ValueObject
         return fullName;
     }
 
-    // Method to get atomic values for equality check
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return this.Title;
@@ -105,7 +97,6 @@ public partial class PersonFormalName : ValueObject
         ValidateTitleSuffix(suffix, nameof(Suffix));
     }
 
-    // Method to validate each name part
     private static void ValidateNamePart(string namePart)
     {
         if (string.IsNullOrWhiteSpace(namePart))
@@ -119,7 +110,6 @@ public partial class PersonFormalName : ValueObject
         }
     }
 
-    // Method to validate titles and suffixes
     private static void ValidateTitleSuffix(string value, string propertyName)
     {
         if (string.IsNullOrEmpty(value))

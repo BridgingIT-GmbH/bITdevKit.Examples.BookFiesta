@@ -1,4 +1,4 @@
-// MIT-License
+﻿// MIT-License
 // Copyright BridgingIT GmbH - All Rights Reserved
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
@@ -9,16 +9,16 @@ using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class CustomerTypeConfiguration : IEntityTypeConfiguration<Customer>
+public class PublisherTypeConfiguration : IEntityTypeConfiguration<Publisher>
 {
-    public void Configure(EntityTypeBuilder<Customer> builder)
+    public void Configure(EntityTypeBuilder<Publisher> builder)
     {
-        ConfigureCustomersTable(builder);
+        ConfigurePublishersTable(builder);
     }
 
-    private static void ConfigureCustomersTable(EntityTypeBuilder<Customer> builder)
+    private static void ConfigurePublishersTable(EntityTypeBuilder<Publisher> builder)
     {
-        builder.ToTable("Customers")
+        builder.ToTable("Publishers")
                .HasKey(d => d.Id);
 
         builder.Property(e => e.Version).IsConcurrencyToken();
@@ -27,13 +27,9 @@ public class CustomerTypeConfiguration : IEntityTypeConfiguration<Customer>
             .ValueGeneratedOnAdd()
             .HasConversion(
                 id => id.Value,
-                value => CustomerId.Create(value));
+                value => PublisherId.Create(value));
 
-        builder.Property(e => e.FirstName)
-            .IsRequired()
-            .HasMaxLength(128);
-
-        builder.Property(e => e.LastName)
+        builder.Property(e => e.Name)
             .IsRequired()
             .HasMaxLength(512);
 
@@ -67,7 +63,7 @@ public class CustomerTypeConfiguration : IEntityTypeConfiguration<Customer>
         builder.OwnsOne(e => e.Email, b =>
         {
             b.Property(e => e.Value)
-                .HasColumnName(nameof(Customer.Email))
+                .HasColumnName(nameof(Publisher.Email))
                 .IsRequired(false)
                 .HasMaxLength(256);
 
@@ -75,6 +71,15 @@ public class CustomerTypeConfiguration : IEntityTypeConfiguration<Customer>
                 .IsUnique();
         });
         builder.Navigation(e => e.Email).IsRequired();
+
+        builder.OwnsOne(e => e.Website, b =>
+        {
+            b.Property(e => e.Value)
+                .HasColumnName(nameof(Publisher.Website))
+                .IsRequired(false)
+                .HasMaxLength(512);
+        });
+        builder.Navigation(e => e.Website).IsRequired();
 
         //builder.OwnsOneAuditState(); // TODO: use ToJson variant
         builder.OwnsOne(e => e.AuditState, b => b.ToJson());

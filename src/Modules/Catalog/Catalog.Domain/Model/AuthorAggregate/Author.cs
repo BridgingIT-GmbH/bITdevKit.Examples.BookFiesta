@@ -8,7 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using System;
 using BridgingIT.DevKit.Domain.Model;
 
-public class Author : AuditableAggregateRoot<AuthorId, Guid>, IConcurrent
+public class Author : AuditableAggregateRoot<AuthorId/*, Guid*/>, IConcurrent
 {
     private readonly List<AuthorBook> books = [];
     private readonly List<Tag> tags = [];
@@ -55,7 +55,7 @@ public class Author : AuditableAggregateRoot<AuthorId, Guid>, IConcurrent
     {
         if (!this.books.Any(e => e.BookId == bookId))
         {
-            this.books.Add(new AuthorBook(this.Id.Value));
+            this.books.Add(new AuthorBook(bookId));
         }
 
         return this;

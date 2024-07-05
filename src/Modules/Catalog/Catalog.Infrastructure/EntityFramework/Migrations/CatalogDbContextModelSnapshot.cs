@@ -153,6 +153,29 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                     b.ToTable("Customers", "catalog");
                 });
 
+            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.Publisher", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<Guid>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Publishers", "catalog");
+                });
+
             modelBuilder.Entity("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.Tag", b =>
                 {
                     b.Property<Guid>("Id")
@@ -651,6 +674,35 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                                 .HasForeignKey("BookId");
                         });
 
+                    b.OwnsOne("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.BookPublisher", "Publisher", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("BookId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("PublisherName");
+
+                            b1.Property<Guid>("PublisherId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("BookId")
+                                .IsUnique();
+
+                            b1.ToTable("BookPublishers", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BookId");
+                        });
+
                     b.OwnsOne("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.Money", "Price", b1 =>
                         {
                             b1.Property<Guid>("BookId")
@@ -702,6 +754,8 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                     b.Navigation("Isbn");
 
                     b.Navigation("Price");
+
+                    b.Navigation("Publisher");
                 });
 
             modelBuilder.Entity("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.Category", b =>
@@ -792,26 +846,31 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                             b1.Property<string>("City")
                                 .IsRequired()
                                 .HasMaxLength(128)
-                                .HasColumnType("nvarchar(128)");
+                                .HasColumnType("nvarchar(128)")
+                                .HasColumnName("AddressCity");
 
                             b1.Property<string>("Country")
                                 .IsRequired()
                                 .HasMaxLength(128)
-                                .HasColumnType("nvarchar(128)");
+                                .HasColumnType("nvarchar(128)")
+                                .HasColumnName("AddressCountry");
 
                             b1.Property<string>("Line1")
                                 .IsRequired()
                                 .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)");
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("AddressLine1");
 
                             b1.Property<string>("Line2")
                                 .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)");
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("AddressLine2");
 
                             b1.Property<string>("PostalCode")
                                 .IsRequired()
                                 .HasMaxLength(32)
-                                .HasColumnType("nvarchar(32)");
+                                .HasColumnType("nvarchar(32)")
+                                .HasColumnName("AddressPostalCode");
 
                             b1.HasKey("CustomerId");
 
@@ -893,7 +952,6 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Value")
-                                .IsRequired()
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("Email");
@@ -914,7 +972,169 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
 
                     b.Navigation("AuditState");
 
-                    b.Navigation("Email");
+                    b.Navigation("Email")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.Publisher", b =>
+                {
+                    b.OwnsOne("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("PublisherId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(128)
+                                .HasColumnType("nvarchar(128)")
+                                .HasColumnName("AddressCity");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasMaxLength(128)
+                                .HasColumnType("nvarchar(128)")
+                                .HasColumnName("AddressCountry");
+
+                            b1.Property<string>("Line1")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("AddressLine1");
+
+                            b1.Property<string>("Line2")
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("AddressLine2");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(32)
+                                .HasColumnType("nvarchar(32)")
+                                .HasColumnName("AddressPostalCode");
+
+                            b1.HasKey("PublisherId");
+
+                            b1.ToTable("Publishers", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PublisherId");
+                        });
+
+                    b.OwnsOne("BridgingIT.DevKit.Domain.Model.AuditState", "AuditState", b1 =>
+                        {
+                            b1.Property<Guid>("PublisherId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("CreatedBy")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTimeOffset>("CreatedDate")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<string>("CreatedDescription")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<bool?>("Deactivated")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("DeactivatedBy")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTimeOffset?>("DeactivatedDate")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<string>("DeactivatedDescription")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("DeactivatedReasons")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<bool?>("Deleted")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("DeletedBy")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTimeOffset?>("DeletedDate")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<string>("DeletedDescription")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("DeletedReason")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("UpdatedBy")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTimeOffset?>("UpdatedDate")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<string>("UpdatedDescription")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("UpdatedReasons")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("PublisherId");
+
+                            b1.ToTable("Publishers", "catalog");
+
+                            b1.ToJson("AuditState");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PublisherId");
+                        });
+
+                    b.OwnsOne("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.EmailAddress", "Email", b1 =>
+                        {
+                            b1.Property<Guid>("PublisherId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Value")
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("PublisherId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique()
+                                .HasFilter("[Email] IS NOT NULL");
+
+                            b1.ToTable("Publishers", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PublisherId");
+                        });
+
+                    b.OwnsOne("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.Website", "Website", b1 =>
+                        {
+                            b1.Property<Guid>("PublisherId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Value")
+                                .HasMaxLength(512)
+                                .HasColumnType("nvarchar(512)")
+                                .HasColumnName("Website");
+
+                            b1.HasKey("PublisherId");
+
+                            b1.ToTable("Publishers", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PublisherId");
+                        });
+
+                    b.Navigation("Address");
+
+                    b.Navigation("AuditState");
+
+                    b.Navigation("Email")
+                        .IsRequired();
+
+                    b.Navigation("Website")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.Tag", b =>

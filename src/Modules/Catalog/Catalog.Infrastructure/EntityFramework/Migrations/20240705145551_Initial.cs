@@ -148,11 +148,11 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
-                    Address_Line1 = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Address_Line2 = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Address_PostalCode = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
-                    Address_City = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    Address_Country = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    AddressPostalCode = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
+                    AddressCity = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    AddressCountry = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuditState = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -160,6 +160,29 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Publishers",
+                schema: "catalog",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    AddressPostalCode = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
+                    AddressCity = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    AddressCountry = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Website = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
+                    Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AuditState = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Publishers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,6 +265,28 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                     table.PrimaryKey("PK_BookChapters", x => new { x.Id, x.BookId });
                     table.ForeignKey(
                         name: "FK_BookChapters_Books_BookId",
+                        column: x => x.BookId,
+                        principalSchema: "catalog",
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookPublishers",
+                schema: "catalog",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PublisherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PublisherName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookPublishers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookPublishers_Books_BookId",
                         column: x => x.BookId,
                         principalSchema: "catalog",
                         principalTable: "Books",
@@ -370,16 +415,16 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                 column: "Type");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuthorBooks_AuthorId",
+                name: "IX_AuthorBooks_AuthorId_BookId",
                 schema: "catalog",
                 table: "AuthorBooks",
-                column: "AuthorId");
+                columns: new[] { "AuthorId", "BookId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookAuthors_BookId",
+                name: "IX_BookAuthors_BookId_AuthorId",
                 schema: "catalog",
                 table: "BookAuthors",
-                column: "BookId");
+                columns: new[] { "BookId", "AuthorId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookCategories_CategoryId",
@@ -392,6 +437,13 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                 schema: "catalog",
                 table: "BookChapters",
                 column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookPublishers_BookId",
+                schema: "catalog",
+                table: "BookPublishers",
+                column: "BookId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_Isbn",
@@ -417,6 +469,14 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                 name: "IX_Customers_Email",
                 schema: "catalog",
                 table: "Customers",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Publishers_Email",
+                schema: "catalog",
+                table: "Publishers",
                 column: "Email",
                 unique: true,
                 filter: "[Email] IS NOT NULL");
@@ -467,11 +527,19 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
                 schema: "catalog");
 
             migrationBuilder.DropTable(
+                name: "BookPublishers",
+                schema: "catalog");
+
+            migrationBuilder.DropTable(
                 name: "BookTags",
                 schema: "catalog");
 
             migrationBuilder.DropTable(
                 name: "Customers",
+                schema: "catalog");
+
+            migrationBuilder.DropTable(
+                name: "Publishers",
                 schema: "catalog");
 
             migrationBuilder.DropTable(

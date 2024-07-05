@@ -16,7 +16,7 @@ public static class CoreSeedModels
             {
                 Customer.Create($"John", $"Doe", EmailAddress.Create($"john.doe{ticks}@example.com"), Address.Create("Main Street", string.Empty, "17100", "Anytown", "USA")),
                 Customer.Create($"Mary", $"Jane", EmailAddress.Create($"mary.jane{ticks}@example.com"), Address.Create("Maple Street", string.Empty, "17101", "Anytown", "USA"))
-            }.ForEach(e => e.Id = AuthorId.Create($"{GuidGenerator.Create($"Customer_{e.FirstName}")}"))];
+            }.ForEach(e => e.Id = CustomerId.Create($"{GuidGenerator.Create($"Customer_{e.FirstName}{e.LastName}")}"))];
     }
 
     public static class Authors
@@ -27,6 +27,17 @@ public static class CoreSeedModels
                 Author.Create(PersonFormalName.Create([$"John", $"Doe"], "Dr.", "Jr."), "Bio"),
                 Author.Create(PersonFormalName.Create([$"Mary", $"Jane"]), "Bio")
             }.ForEach(e => e.Id = AuthorId.Create($"{GuidGenerator.Create($"Author_{e.PersonName.Full}")}"))];
+    }
+
+    public static class Publishers
+    {
+        public static Publisher[] Create(long ticks = 0) =>
+            [.. new[]
+            {
+                Publisher.Create("publA", "Lorem Ipsum"),
+                Publisher.Create("publB", "Lorem Ipsum"),
+                Publisher.Create("publC", "Lorem Ipsum")
+            }.ForEach(e => e.Id = PublisherId.Create($"{GuidGenerator.Create($"Publisher_{e.Name}")}"))];
     }
 
     public static class Tags
@@ -64,18 +75,16 @@ public static class CoreSeedModels
 
     public static class Books
     {
-        public static Book[] Create(Tag[] tags, Category[] categories, long ticks = 0)
+        public static Book[] Create(Tag[] tags, Category[] categories, Publisher[] publishers, long ticks = 0)
         {
-            //var categories = Categories.Create(ticks).ToArray();
-            //var tags = Tags.Create(ticks).ToArray();
-
             return [.. new[]
             {
                 Book.Create(
                     $"TitleA-{ticks}",
                     "Lorem",
                     BookIsbn.Create("978-3-16-148410-0"),
-                    Money.Create(12.99m))
+                    Money.Create(12.99m),
+                    publishers[0])
                         .AddTag(tags[0]).AddTag(tags[1])
                         .AddCategory(categories[0]) // category1
                         .AddCategory(categories[0].Children.ToArray()[0].Children.ToArray()[0])
@@ -90,7 +99,8 @@ public static class CoreSeedModels
                     $"TitleB-{ticks}",
                     "Lorem",
                     BookIsbn.Create("978-3-16-148410-1"),
-                    Money.Create(24.95m))
+                    Money.Create(24.95m),
+                    publishers[1])
                         .AddTag(tags[1]).AddTag(tags[2])
                         .AddCategory(categories[0]) // category1
                         .AddCategory(categories[0].Children.ToArray()[1].Children.ToArray()[0]) // category1B1
@@ -99,7 +109,8 @@ public static class CoreSeedModels
                     $"TitleC-{ticks}",
                     "Lorem",
                     BookIsbn.Create("978-3-16-148410-2"),
-                    Money.Create(19.99m))
+                    Money.Create(19.99m),
+                    publishers[1])
                         .AddTag(tags[0]).AddTag(tags[1]).AddTag(tags[2])
                         .AddCategory(categories[1]) // category2
                         .AddCategory(categories[1].Children.ToArray()[1].Children.ToArray()[0]) // category2B1

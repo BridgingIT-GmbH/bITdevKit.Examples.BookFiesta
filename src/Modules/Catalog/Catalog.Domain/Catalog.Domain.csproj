@@ -12,4 +12,8 @@
     <PackageReference Include="BridgingIT.DevKit.Domain.Mediator" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\CustomerAggregate\Rules\" />
+  </ItemGroup>
+
 </Project>

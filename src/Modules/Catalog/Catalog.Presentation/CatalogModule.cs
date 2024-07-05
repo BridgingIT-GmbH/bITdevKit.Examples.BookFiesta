@@ -1,5 +1,6 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation;
 
+using System.Reflection;
 using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Common;
@@ -22,7 +23,7 @@ public class CatalogModule : WebModuleBase
 
         services.AddJobScheduling()
             .WithJob<EchoJob>(CronExpressions.Every5Minutes); // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
-            //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
+                                                              //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
         services.AddStartupTasks()
             .WithTask<CatalogDomainSeederTask>(o => o
@@ -51,6 +52,7 @@ public class CatalogModule : WebModuleBase
             .WithBehavior<RepositoryLoggingBehavior<Customer>>()
             .WithBehavior<RepositoryConcurrentBehavior<Customer>>()
             .WithBehavior<RepositoryAuditStateBehavior<Customer>>()
+            .WithBehavior<RepositoryDomainEventBehavior<Customer>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Customer>>();
 
         services.AddEntityFrameworkRepository<Tag, CatalogDbContext>()
@@ -72,7 +74,17 @@ public class CatalogModule : WebModuleBase
             .WithBehavior<RepositoryLoggingBehavior<Book>>()
             .WithBehavior<RepositoryConcurrentBehavior<Book>>()
             .WithBehavior<RepositoryAuditStateBehavior<Book>>()
+            .WithBehavior<RepositoryDomainEventBehavior<Book>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Book>>();
+
+        services.AddEntityFrameworkRepository<Publisher, CatalogDbContext>()
+            .WithTransactions<NullRepositoryTransaction<Publisher>>()
+            .WithBehavior<RepositoryTracingBehavior<Publisher>>()
+            .WithBehavior<RepositoryLoggingBehavior<Publisher>>()
+            .WithBehavior<RepositoryConcurrentBehavior<Publisher>>()
+            .WithBehavior<RepositoryAuditStateBehavior<Publisher>>()
+            .WithBehavior<RepositoryDomainEventBehavior<Publisher>>()
+            .WithBehavior<RepositoryDomainEventPublisherBehavior<Publisher>>();
 
         services.AddEntityFrameworkRepository<Author, CatalogDbContext>()
             .WithTransactions<NullRepositoryTransaction<Author>>()
@@ -80,6 +92,7 @@ public class CatalogModule : WebModuleBase
             .WithBehavior<RepositoryLoggingBehavior<Author>>()
             .WithBehavior<RepositoryConcurrentBehavior<Author>>()
             .WithBehavior<RepositoryAuditStateBehavior<Author>>()
+            .WithBehavior<RepositoryDomainEventBehavior<Author>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Author>>();
 
         return services;

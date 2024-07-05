@@ -10,7 +10,7 @@ using System.Diagnostics;
 using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Id={Id}, Number={Number}, Title={Title}")]
-public class BookChapter : Entity<BookChapterId, Guid>
+public class BookChapter : Entity<BookChapterId/*, Guid*/>
 {
     private BookChapter() { } // Private constructor required by EF Core
 
