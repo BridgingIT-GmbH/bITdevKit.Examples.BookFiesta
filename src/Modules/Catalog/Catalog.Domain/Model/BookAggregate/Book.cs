@@ -105,7 +105,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         return this;
     }
 
-    public Book AddAuthor(Author author, int position = 0)
+    public Book AssignAuthor(Author author, int position = 0)
     {
         if (!this.authors.Any(e => e.AuthorId == author.Id))
         {

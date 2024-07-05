@@ -52,7 +52,7 @@ public class Author : AuditableAggregateRoot<AuthorId/*, Guid*/>, IConcurrent
         return this;
     }
 
-    public Author AddBook(Book book)
+    public Author AssignBook(Book book)
     {
         if (!this.books.Any(e => e.BookId == book.Id))
         {

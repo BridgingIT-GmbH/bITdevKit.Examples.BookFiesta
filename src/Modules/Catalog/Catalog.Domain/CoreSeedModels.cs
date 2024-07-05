@@ -25,7 +25,9 @@ public static class CoreSeedModels
             [.. new[]
             {
                 Author.Create(PersonFormalName.Create([$"John", $"Doe"], "Dr.", "Jr."), "Bio"),
-                Author.Create(PersonFormalName.Create([$"Mary", $"Jane"]), "Bio")
+                Author.Create(PersonFormalName.Create([$"Mary", $"Jane"]), "Lorem Ipsum"),
+                Author.Create(PersonFormalName.Create([$"John", $"Smith"]), "Lorem Ipsum"),
+                Author.Create(PersonFormalName.Create([$"Jane", $"Johnson"]), "Lorem Ipsum")
             }.ForEach(e => e.Id = AuthorId.Create($"{GuidGenerator.Create($"Author_{e.PersonName.Full}")}"))];
     }
 
@@ -75,7 +77,7 @@ public static class CoreSeedModels
 
     public static class Books
     {
-        public static Book[] Create(Tag[] tags, Category[] categories, Publisher[] publishers, long ticks = 0)
+        public static Book[] Create(Tag[] tags, Category[] categories, Publisher[] publishers, Author[] authors, long ticks = 0)
         {
             return [.. new[]
             {
@@ -85,6 +87,8 @@ public static class CoreSeedModels
                     BookIsbn.Create("978-3-16-148410-0"),
                     Money.Create(12.99m),
                     publishers[0])
+                        .AssignAuthor(authors[0])
+                        .AssignAuthor(authors[1])
                         .AddTag(tags[0]).AddTag(tags[1])
                         .AddCategory(categories[0]) // category1
                         .AddCategory(categories[0].Children.ToArray()[0].Children.ToArray()[0])
@@ -101,6 +105,7 @@ public static class CoreSeedModels
                     BookIsbn.Create("978-3-16-148410-1"),
                     Money.Create(24.95m),
                     publishers[1])
+                        .AssignAuthor(authors[0])
                         .AddTag(tags[1]).AddTag(tags[2])
                         .AddCategory(categories[0]) // category1
                         .AddCategory(categories[0].Children.ToArray()[1].Children.ToArray()[0]) // category1B1
@@ -111,6 +116,7 @@ public static class CoreSeedModels
                     BookIsbn.Create("978-3-16-148410-2"),
                     Money.Create(19.99m),
                     publishers[1])
+                        .AssignAuthor(authors[2])
                         .AddTag(tags[0]).AddTag(tags[1]).AddTag(tags[2])
                         .AddCategory(categories[1]) // category2
                         .AddCategory(categories[1].Children.ToArray()[1].Children.ToArray()[0]) // category2B1
