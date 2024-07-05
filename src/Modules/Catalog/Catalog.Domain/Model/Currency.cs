@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Code={Code}")]
@@ -371,7 +372,7 @@ public class Currency : ValueObject
     {
         if (!Currencies.ContainsKey(code.SafeNull()))
         {
-            throw new ArgumentException($"Invalid currency code: {code}", nameof(code));
+            throw new BusinessRuleNotSatisfiedException($"Invalid currency code: {code}");
         }
 
         return new Currency(code); //Currencies.First(c => c.Key == code).Value; //Currencies[code];

@@ -676,28 +676,22 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
 
                     b.OwnsOne("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.BookPublisher", "Publisher", b1 =>
                         {
-                            b1.Property<Guid>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uniqueidentifier");
-
                             b1.Property<Guid>("BookId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
+                                .HasMaxLength(512)
+                                .HasColumnType("nvarchar(512)")
                                 .HasColumnName("PublisherName");
 
                             b1.Property<Guid>("PublisherId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("PublisherId");
 
-                            b1.HasKey("Id");
+                            b1.HasKey("BookId");
 
-                            b1.HasIndex("BookId")
-                                .IsUnique();
-
-                            b1.ToTable("BookPublishers", "catalog");
+                            b1.ToTable("Books", "catalog");
 
                             b1.WithOwner()
                                 .HasForeignKey("BookId");

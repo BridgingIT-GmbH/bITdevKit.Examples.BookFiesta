@@ -44,7 +44,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
         var publisher = new Publisher(name, description, address, email, website);
 
         publisher.DomainEvents.Register(
-                new PublisherCreatedDomainEvent(publisher.Id), true);
+                new PublisherCreatedDomainEvent(publisher), true);
 
         return publisher;
     }
@@ -56,7 +56,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
         {
             this.Name = name;
             this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this.Id), true);
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -69,7 +69,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
         {
             this.Description = description;
             this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this.Id), true);
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -82,7 +82,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
         {
             this.Email = email;
             this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this.Id), true);
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -95,7 +95,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
         {
             this.Address = address;
             this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this.Id), true);
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -108,7 +108,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
         {
             this.Website = website;
             this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this.Id), true);
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;

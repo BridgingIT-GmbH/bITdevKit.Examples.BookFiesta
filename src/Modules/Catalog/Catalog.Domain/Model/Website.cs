@@ -9,30 +9,30 @@ using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
-public class Website : ValueObject
+public partial class Website : ValueObject
 {
     private Website()
     {
     }
 
-    private Website(string value)
+    private Website(string website)
     {
-        this.Value = value;
+        this.Value = website;
     }
 
     public string Value { get; private set; }
 
     public static implicit operator string(Website website) => website?.Value; // allows a Website value to be implicitly converted to a string.
 
-    public static Website Create(string value)
+    public static Website Create(string website)
     {
-        var website = new Website(NormalizeUrl(value));
+        website = Normalize(website);
         if (!IsValid(website))
         {
-            throw new BusinessRuleNotSatisfiedException("Invalid website format.");
+            throw new BusinessRuleNotSatisfiedException("Invalid website");
         }
 
-        return website;
+        return new Website(website);
     }
 
     protected override IEnumerable<object> GetAtomicValues()
@@ -40,27 +40,27 @@ public class Website : ValueObject
         yield return this.Value;
     }
 
-    private static string NormalizeUrl(string url)
+    private static bool IsValid(string value)
     {
-        url = url?.Trim().ToLowerInvariant();
-        if (url?.StartsWith("http://") != false || url.StartsWith("https://"))
-        {
-            return url;
-        }
-
-        return "https://" + url;
-    }
-
-    private static bool IsValid(Website website)
-    {
-        if (string.IsNullOrWhiteSpace(website.Value))
+        if (string.IsNullOrWhiteSpace(value))
         {
             return false;
         }
 
-        // Basic URL validation regex
-        const string pattern = @"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$";
-
-        return Regex.IsMatch(website.Value, pattern, RegexOptions.IgnoreCase);
+        return IsValidRegex().IsMatch(value);
     }
+
+    private static string Normalize(string website)
+    {
+        website = website?.Trim()?.ToLowerInvariant() ?? string.Empty;
+        if (website?.StartsWith("http://") != false || website.StartsWith("https://"))
+        {
+            return website;
+        }
+
+        return "https://" + website;
+    }
+
+    [GeneratedRegex(@"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$", RegexOptions.IgnoreCase, "en-US")]
+    private static partial Regex IsValidRegex();
 }

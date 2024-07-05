@@ -41,7 +41,7 @@ public class Customer : AuditableAggregateRoot<CustomerId/*, Guid*/>, IConcurren
         return customer;
     }
 
-    public Customer ChangeName(string firstName, string lastName)
+    public Customer SetName(string firstName, string lastName)
     {
         //if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
         //{
@@ -57,7 +57,7 @@ public class Customer : AuditableAggregateRoot<CustomerId/*, Guid*/>, IConcurren
         return this;
     }
 
-    public Customer ChangeAddress(string line1, string line2, string postalCode, string city, string country)
+    public Customer SetAddress(string line1, string line2, string postalCode, string city, string country)
     {
         var address = Address.Create(line1, line2, postalCode, city, country);
         if (this.Address?.Equals(address) == false)

@@ -5,15 +5,14 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
+using System.Collections.Generic;
 using BridgingIT.DevKit.Domain.Model;
 
-public class BookPublisher : Entity<Guid>
+public class BookPublisher : ValueObject
 {
-    private BookPublisher() { } // EF Core requires a parameterless constructor
+    private BookPublisher() { }
 
-#pragma warning disable SA1202 // Elements should be ordered by access
-    public BookPublisher(PublisherId publisherId, string name)
-#pragma warning restore SA1202 // Elements should be ordered by access
+    private BookPublisher(PublisherId publisherId, string name)
     {
         this.PublisherId = publisherId;
         this.Name = name;
@@ -22,4 +21,11 @@ public class BookPublisher : Entity<Guid>
     public PublisherId PublisherId { get; private set; }
 
     public string Name { get; private set; }
+
+    public static BookPublisher Create(Publisher publisher) => new(publisher.Id, publisher.Name);
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return this.PublisherId;
+    }
 }

@@ -77,14 +77,8 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
 
         builder.OwnsOne(e => e.Publisher, b =>
         {
-            b.ToTable("BookPublishers");
-
-            b.WithOwner().HasForeignKey("BookId");
-            b.HasKey("Id");
-
-            b.Property(r => r.Id);
-
-            b.Property(r => r.PublisherId)
+            b.Property(r => r.PublisherId) // TODO: FK -> Publisher.Id
+                .HasColumnName("PublisherId")
                 .IsRequired()
                 .HasConversion(
                     id => id.Value,
@@ -92,7 +86,7 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
 
             b.Property(e => e.Name)
                 .HasColumnName("PublisherName")
-                .IsRequired().HasMaxLength(256);
+                .IsRequired().HasMaxLength(512);
         });
 
         builder.OwnsMany(e => e.Authors, b =>
@@ -100,9 +94,9 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
             b.ToTable("BookAuthors");
 
             b.WithOwner().HasForeignKey("BookId");
-            // TODO: AuthorId foreign key is missing in migration
+
             b.HasKey("Id");
-            b.HasIndex("BookId", "AuthorId");
+            b.HasIndex("BookId", "AuthorId"); // TODO: FK -> Author.Id
 
             b.Property(r => r.Id);
 

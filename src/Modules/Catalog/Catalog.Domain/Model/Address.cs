@@ -36,7 +36,7 @@ public class Address : ValueObject
     public static Address Create(string line1, string line2, string postalCode, string city, string country)
     {
         var address = new Address(line1, line2, postalCode, city, country);
-        if (!address.IsValid())
+        if (!IsValid(address))
         {
             throw new BusinessRuleNotSatisfiedException("Invalid email address");
         }
@@ -53,8 +53,11 @@ public class Address : ValueObject
         yield return this.Country;
     }
 
-    private bool IsValid()
+    private static bool IsValid(Address address)
     {
-        return true; // TODO: implement validation
+        return !string.IsNullOrEmpty(address.Line1)
+            && !string.IsNullOrEmpty(address.PostalCode)
+            && !string.IsNullOrEmpty(address.Country)
+            && !string.IsNullOrEmpty(address.Country);
     }
 }

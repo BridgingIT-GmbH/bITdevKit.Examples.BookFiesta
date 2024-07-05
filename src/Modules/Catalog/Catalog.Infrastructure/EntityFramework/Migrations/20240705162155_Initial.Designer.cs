@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20240705145551_Initial")]
+    [Migration("20240705162155_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -679,28 +679,22 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure.EntityFram
 
                     b.OwnsOne("BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.BookPublisher", "Publisher", b1 =>
                         {
-                            b1.Property<Guid>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uniqueidentifier");
-
                             b1.Property<Guid>("BookId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
+                                .HasMaxLength(512)
+                                .HasColumnType("nvarchar(512)")
                                 .HasColumnName("PublisherName");
 
                             b1.Property<Guid>("PublisherId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("PublisherId");
 
-                            b1.HasKey("Id");
+                            b1.HasKey("BookId");
 
-                            b1.HasIndex("BookId")
-                                .IsUnique();
-
-                            b1.ToTable("BookPublishers", "catalog");
+                            b1.ToTable("Books", "catalog");
 
                             b1.WithOwner()
                                 .HasForeignKey("BookId");

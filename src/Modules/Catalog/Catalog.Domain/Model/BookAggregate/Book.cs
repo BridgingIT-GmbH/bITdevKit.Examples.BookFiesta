@@ -57,7 +57,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         var book = new Book(title, description, isbn, price, publisher);
 
         book.DomainEvents.Register(
-                new BookCreatedDomainEvent(book.Id), true);
+                new BookCreatedDomainEvent(book), true);
 
         return book;
     }
@@ -69,7 +69,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         {
             this.Title = title;
             this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this.Id), true);
+                new BookUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -82,7 +82,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         {
             this.Description = description;
             this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this.Id), true);
+                new BookUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -104,7 +104,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
     public Book SetPublisher(Publisher publisher)
     {
         // Validate publisher
-        this.Publisher = new BookPublisher(publisher.Id, publisher.Name);
+        this.Publisher = BookPublisher.Create(publisher);
         return this;
     }
 

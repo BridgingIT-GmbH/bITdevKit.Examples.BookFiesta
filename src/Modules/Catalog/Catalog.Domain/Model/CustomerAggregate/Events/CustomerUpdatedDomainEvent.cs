@@ -9,5 +9,5 @@ using BridgingIT.DevKit.Domain;
 
 public class CustomerUpdatedDomainEvent(Customer customer) : DomainEventBase
 {
-    public Customer Model { get; } = customer;
+    public CustomerId CustomerId { get; } = customer.Id;
 }

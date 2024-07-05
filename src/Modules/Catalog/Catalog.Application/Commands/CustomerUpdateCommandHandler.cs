@@ -30,8 +30,8 @@ public class CustomerUpdateCommandHandler(
 
         Check.Throw([]);
 
-        customer.ChangeName(command.FirstName, command.LastName);
-        customer.ChangeAddress(command.AddressLine1, command.AddressLine2, command.AddressPostalCode, command.AddressCity, command.AddressCountry);
+        customer.SetName(command.FirstName, command.LastName);
+        customer.SetAddress(command.AddressLine1, command.AddressLine2, command.AddressPostalCode, command.AddressCity, command.AddressCountry);
 
         await repository.UpsertAsync(customer, cancellationToken).AnyContext();
 

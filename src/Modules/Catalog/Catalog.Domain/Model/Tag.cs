@@ -25,10 +25,7 @@ public class Tag : Entity<TagId/*, Guid*/>, IConcurrent
 
     public static implicit operator string(Tag tag) => tag?.Name; // allows a Tag value to be implicitly converted to a string.
 
-    public static Tag Create(string name)
-    {
-        return new Tag(name);
-    }
+    public static Tag Create(string name) => new(name);
 
     public Tag SetName(string name)
     {
