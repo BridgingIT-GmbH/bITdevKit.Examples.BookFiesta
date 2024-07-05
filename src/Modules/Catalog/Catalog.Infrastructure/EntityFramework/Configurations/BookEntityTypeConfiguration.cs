@@ -8,7 +8,6 @@ namespace BridgingIT.DevKit.Examples.BookStore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
-using System.Reflection;
 
 public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
 {
@@ -77,12 +76,13 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
 
         builder.OwnsOne(e => e.Publisher, b =>
         {
-            b.Property(r => r.PublisherId) // TODO: FK -> Publisher.Id
+            b.Property(r => r.PublisherId)
                 .HasColumnName("PublisherId")
                 .IsRequired()
                 .HasConversion(
                     id => id.Value,
                     value => PublisherId.Create(value));
+            b.HasOne(typeof(Publisher)).WithMany().HasForeignKey(nameof(PublisherId)); // FK -> Publisher.Id
 
             b.Property(e => e.Name)
                 .HasColumnName("PublisherName")
@@ -95,16 +95,18 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
 
             b.WithOwner().HasForeignKey("BookId");
 
-            b.HasKey("Id");
-            b.HasIndex("BookId", "AuthorId"); // TODO: FK -> Author.Id
-
-            b.Property(r => r.Id);
+            b.HasKey("BookId", "AuthorId");
+            b.HasIndex("BookId", "AuthorId");
 
             b.Property(r => r.AuthorId)
                 .IsRequired()
                 .HasConversion(
                     id => id.Value,
                     value => AuthorId.Create(value));
+            b.HasOne(typeof(Author)).WithMany().HasForeignKey(nameof(AuthorId)); // FK -> Author.Id
+
+            b.Property(r => r.Name)
+                .IsRequired().HasMaxLength(2048);
 
             b.Property(r => r.Position)
                 .IsRequired().HasDefaultValue(0);

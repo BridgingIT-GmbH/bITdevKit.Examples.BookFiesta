@@ -8,10 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Xml.Linq;
-using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Model;
-using static System.Net.Mime.MediaTypeNames;
 
 [DebuggerDisplay("Id={Id}, Title={Title}")]
 public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
@@ -108,12 +105,15 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         return this;
     }
 
-    public Book AddAuthor(AuthorId authorId, int position = 0)
+    public Book AddAuthor(Author author, int position = 0)
     {
-        if (!this.authors.Any(e => e.AuthorId == authorId))
+        if (!this.authors.Any(e => e.AuthorId == author.Id))
         {
             this.authors.Add(
-                new BookAuthor(authorId, position == 0 ? this.authors.Count + 1 : 0));
+                BookAuthor.Create(author, position == 0 ? this.authors.Count + 1 : 0));
+
+            this.DomainEvents.Register(
+                new BookAuthorAssignedDomainEvent(this, author));
         }
 
         return this;

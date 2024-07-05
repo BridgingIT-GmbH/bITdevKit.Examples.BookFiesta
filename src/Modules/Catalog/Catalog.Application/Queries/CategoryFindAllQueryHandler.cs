@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Domain.Specifications;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using Microsoft.Extensions.Logging;
 

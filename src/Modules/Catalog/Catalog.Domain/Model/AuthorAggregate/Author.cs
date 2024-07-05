@@ -7,6 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
 using System;
 using BridgingIT.DevKit.Domain.Model;
+using static BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.CoreSeedModels;
 
 public class Author : AuditableAggregateRoot<AuthorId/*, Guid*/>, IConcurrent
 {
@@ -51,11 +52,14 @@ public class Author : AuditableAggregateRoot<AuthorId/*, Guid*/>, IConcurrent
         return this;
     }
 
-    public Author AddBook(BookId bookId)
+    public Author AddBook(Book book)
     {
-        if (!this.books.Any(e => e.BookId == bookId))
+        if (!this.books.Any(e => e.BookId == book.Id))
         {
-            this.books.Add(new AuthorBook(bookId));
+            this.books.Add(AuthorBook.Create(book));
+
+            this.DomainEvents.Register(
+                new AuthorBookAssignedDomainEvent(this, book));
         }
 
         return this;

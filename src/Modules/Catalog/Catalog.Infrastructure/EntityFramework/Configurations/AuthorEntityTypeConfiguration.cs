@@ -26,22 +26,24 @@ public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<Author>
                 id => id.Value,
                 value => AuthorId.Create(value));
 
-        builder.OwnsMany(e => e.Books, rb =>
+        builder.OwnsMany(e => e.Books, b =>
         {
-            rb.ToTable("AuthorBooks");
+            b.ToTable("AuthorBooks");
 
-            rb.WithOwner().HasForeignKey("AuthorId");
+            b.WithOwner().HasForeignKey("AuthorId");
 
-            rb.HasKey("Id");
-            rb.HasIndex("AuthorId", "BookId"); // TODO: FK -> Book.Id
+            b.HasKey("AuthorId", "BookId");
+            b.HasIndex("AuthorId", "BookId");
 
-            rb.Property(r => r.Id);
-
-            rb.Property(r => r.BookId)
+            b.Property(r => r.BookId)
                 .IsRequired()
                 .HasConversion(
                     id => id.Value,
                     value => BookId.Create(value));
+            b.HasOne(typeof(Book)).WithMany().HasForeignKey(nameof(BookId)); // FK -> Book.Id
+
+            b.Property(r => r.Title)
+                .IsRequired().HasMaxLength(512);
         });
 
         builder.Property(a => a.Biography)

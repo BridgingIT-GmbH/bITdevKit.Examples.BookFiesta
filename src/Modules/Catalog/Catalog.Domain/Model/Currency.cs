@@ -5,7 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using BridgingIT.DevKit.Common;

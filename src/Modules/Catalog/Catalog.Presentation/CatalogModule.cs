@@ -1,6 +1,5 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation;
 
-using System.Reflection;
 using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Common;
