@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
 using BridgingIT.DevKit.Domain.Model;
+using EnsureThat;
 
 public class TagId : EntityId<Guid>
 {
@@ -20,22 +21,25 @@ public class TagId : EntityId<Guid>
 
     public override Guid Value { get; protected set; }
 
+    public bool IsEmpty => this.Value == Guid.Empty;
+
     //public static implicit operator Guid(TagId id) => id?.Value ?? default; // allows a TagId value to be implicitly converted to a Guid.
-    //public static implicit operator TagId(Guid value) => value; // allows a Guid value to be implicitly converted to a TagId object.
+    //public static implicit operator TagId(Guid id) => id; // allows a Guid value to be implicitly converted to a TagId object.
 
     public static TagId CreateUnique()
     {
         return new TagId(Guid.NewGuid());
     }
 
-    public static TagId Create(Guid value)
+    public static TagId Create(Guid id)
     {
-        return new TagId(value);
+        return new TagId(id);
     }
 
-    public static TagId Create(string value)
+    public static TagId Create(string id)
     {
-        return new TagId(Guid.Parse(value));
+        EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+        return new TagId(Guid.Parse(id));
     }
 
     protected override IEnumerable<object> GetAtomicValues()

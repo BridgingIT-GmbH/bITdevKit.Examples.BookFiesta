@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
 using BridgingIT.DevKit.Domain.Model;
+using EnsureThat;
 
 public class CustomerId : AggregateRootId<Guid>
 {
@@ -20,22 +21,25 @@ public class CustomerId : AggregateRootId<Guid>
 
     public override Guid Value { get; protected set; }
 
-    //public static implicit operator Guid(CustomerId value) => value?.Value ?? default; // allows a CustomerId value to be implicitly converted to a Guid.
-    //public static implicit operator CustomerId(Guid value) => value; // allows a Guid value to be implicitly converted to a CustomerId object.
+    public bool IsEmpty => this.Value == Guid.Empty;
+
+    //public static implicit operator Guid(CustomerId id) => id?.Value ?? default; // allows a CustomerId value to be implicitly converted to a Guid.
+    //public static implicit operator CustomerId(Guid id) => id; // allows a Guid value to be implicitly converted to a CustomerId object.
 
     public static CustomerId CreateUnique()
     {
         return new CustomerId(Guid.NewGuid());
     }
 
-    public static CustomerId Create(Guid value)
+    public static CustomerId Create(Guid id)
     {
-        return new CustomerId(value);
+        return new CustomerId(id);
     }
 
-    public static CustomerId Create(string value)
+    public static CustomerId Create(string id)
     {
-        return new CustomerId(Guid.Parse(value));
+        EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+        return new CustomerId(Guid.Parse(id));
     }
 
     protected override IEnumerable<object> GetAtomicValues()

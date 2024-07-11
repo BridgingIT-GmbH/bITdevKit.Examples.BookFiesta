@@ -125,7 +125,9 @@ public partial class PersonFormalName : ValueObject
 
     public static partial class Regexes
     {
-        [GeneratedRegex(@"^[\p{L}\p{M}]+([\p{L}\p{M}'-]*[\p{L}\p{M}])?$", RegexOptions.Compiled)]
+        // Update the regular expression pattern in the PersonFormalName class
+
+        [GeneratedRegex(@"^[\p{L}\p{M}.]+([\p{L}\p{M}'-]*[\p{L}\p{M}])?$", RegexOptions.Compiled)]
         public static partial Regex NamePartRegex();
 
         [GeneratedRegex(@"^[\p{L}\p{M}\.\-'\s]+$", RegexOptions.Compiled)]

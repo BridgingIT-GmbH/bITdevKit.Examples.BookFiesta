@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
 using BridgingIT.DevKit.Domain.Model;
+using EnsureThat;
 
 public class PublisherId : AggregateRootId<Guid>
 {
@@ -20,22 +21,25 @@ public class PublisherId : AggregateRootId<Guid>
 
     public override Guid Value { get; protected set; }
 
+    public bool IsEmpty => this.Value == Guid.Empty;
+
     //public static implicit operator Guid(PublisherId id) => id?.Value ?? default; // allows a PublisherId value to be implicitly converted to a Guid.
-    //public static implicit operator PublisherId(Guid value) => value; // allows a Guid value to be implicitly converted to a PublisherId object.
+    //public static implicit operator PublisherId(Guid id) => id; // allows a Guid value to be implicitly converted to a PublisherId object.
 
     public static PublisherId CreateUnique()
     {
         return new PublisherId(Guid.NewGuid());
     }
 
-    public static PublisherId Create(Guid value)
+    public static PublisherId Create(Guid id)
     {
-        return new PublisherId(value);
+        return new PublisherId(id);
     }
 
-    public static PublisherId Create(string value)
+    public static PublisherId Create(string id)
     {
-        return new PublisherId(Guid.Parse(value));
+        EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+        return new PublisherId(Guid.Parse(id));
     }
 
     protected override IEnumerable<object> GetAtomicValues()

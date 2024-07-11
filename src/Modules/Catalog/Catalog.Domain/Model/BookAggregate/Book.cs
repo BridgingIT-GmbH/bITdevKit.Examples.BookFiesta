@@ -8,6 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Id={Id}, Title={Title}")]
@@ -16,17 +17,19 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
     private readonly List<BookAuthor> authors = [];
     private readonly List<Category> categories = [];
     private readonly List<Tag> tags = [];
+    private readonly List<BookKeyword> keywords = [];
     private List<BookChapter> chapters = [];
 
     private Book() { } // Private constructor required by EF Core
 
-    private Book(string title, string description, BookIsbn isbn, Money price, Publisher publisher)
+    private Book(string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
     {
         this.SetTitle(title);
         this.SetDescription(description);
         this.SetIsbn(isbn);
         this.SetPrice(price);
         this.SetPublisher(publisher);
+        this.SetPublishedDate(publishedDate);
     }
 
     public string Title { get; private set; }
@@ -39,6 +42,10 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
 
     public BookPublisher Publisher { get; private set; }
 
+    public DateOnly PublishedDate { get; private set; }
+
+    public IEnumerable<BookKeyword> Keywords => this.keywords;
+
     public IEnumerable<BookAuthor> Authors => this.authors;
 
     public IEnumerable<Category> Categories => this.categories.OrderBy(e => e.Order);
@@ -49,9 +56,9 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
 
     public Guid Version { get; set; }
 
-    public static Book Create(string title, string description, BookIsbn isbn, Money price, Publisher publisher)
+    public static Book Create(string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
     {
-        var book = new Book(title, description, isbn, price, publisher);
+        var book = new Book(title, description, isbn, price, publisher, publishedDate);
 
         book.DomainEvents.Register(
                 new BookCreatedDomainEvent(book), true);
@@ -65,6 +72,8 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         if (title != this.Title)
         {
             this.Title = title;
+            this.ReindexKeywords();
+
             this.DomainEvents.Register(
                 new BookUpdatedDomainEvent(this), true);
         }
@@ -78,6 +87,8 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         if (description != this.Description)
         {
             this.Description = description;
+            this.ReindexKeywords();
+
             this.DomainEvents.Register(
                 new BookUpdatedDomainEvent(this), true);
         }
@@ -105,12 +116,20 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         return this;
     }
 
+    public Book SetPublishedDate(DateOnly publishedDate)
+    {
+        // Validate published date
+        this.PublishedDate = publishedDate;
+        return this;
+    }
+
     public Book AssignAuthor(Author author, int position = 0)
     {
         if (!this.authors.Any(e => e.AuthorId == author.Id))
         {
             this.authors.Add(
                 BookAuthor.Create(author, position == 0 ? this.authors.Count + 1 : 0));
+            this.ReindexKeywords();
 
             this.DomainEvents.Register(
                 new BookAuthorAssignedDomainEvent(this, author));
@@ -154,6 +173,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         }
 
         this.chapters = this.ReindexChapters(this.chapters);
+        this.ReindexKeywords();
 
         return this;
     }
@@ -173,6 +193,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
             chapter.SetContent(content);
 
             this.chapters = this.ReindexChapters(this.chapters);
+            this.ReindexKeywords();
         }
 
         return this;
@@ -189,6 +210,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         if (chapter is not null)
         {
             this.RemoveChapter(chapter.Id);
+            this.ReindexKeywords();
         }
 
         return this;
@@ -198,6 +220,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
     {
         this.chapters.RemoveAll(c => c.Id == id);
         this.chapters = this.ReindexChapters(this.chapters);
+        this.ReindexKeywords();
 
         return this;
     }
@@ -207,6 +230,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         if (!this.categories.Contains(category))
         {
             this.categories.Add(category);
+            this.ReindexKeywords();
         }
 
         return this;
@@ -215,6 +239,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
     public Book RemoveCategory(Category category)
     {
         this.categories.Remove(category);
+        this.ReindexKeywords();
 
         return this;
     }
@@ -224,14 +249,19 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         if (!this.tags.Contains(tag))
         {
             this.tags.Add(tag);
+            this.ReindexKeywords();
         }
 
         return this;
     }
 
-    public Book RemoveTag(TagId tagId)
+    public Book RemoveTag(Tag tag)
     {
-        this.tags.RemoveAll(t => t.Id == tagId);
+        if (!this.tags.Contains(tag))
+        {
+            this.tags.Remove(tag);
+            this.ReindexKeywords();
+        }
 
         return this;
     }
@@ -276,5 +306,38 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
 
         // After reindexing, the chapters list might be out of order, so sort it again.
         return [.. sortedChapters.OrderBy(c => c.Number)];
+    }
+
+    private List<string> ReindexKeywords()
+    {
+        var keywords = new HashSet<string>();
+        keywords.UnionWith(this.Title.SafeNull().ToLower().Split(' ').Where(word => word.Length > 3));
+        keywords.UnionWith(this.Description.SafeNull().ToLower().Split(' ').Where(word => word.Length > 3));
+        keywords.UnionWith(this.authors.SafeNull().SelectMany(a => a.Name.ToLower().Split(' ').Where(word => word.Length > 3)));
+        //newKeywords.UnionWith(this.categories.SafeNull().SelectMany(c => c.Name.ToLower().Split(' ').Where(word => word.Length > 3)));
+        keywords.UnionWith(this.tags.SafeNull().Select(t => t.Name.ToLower()));
+        keywords.UnionWith(this.chapters.SafeNull().SelectMany(c => c.Title.ToLower().Split(' ').Where(word => word.Length > 3)));
+
+        UpdateKeywords(keywords);
+
+        return [.. keywords]; // TODO: order by weight?
+
+        void UpdateKeywords(HashSet<string> newKeywords)
+        {
+            var existingKeywords = this.keywords.ToDictionary(ki => ki.Text);
+
+            // Remove keywords that are no longer present
+            foreach (var keyword in existingKeywords.Keys.Except(newKeywords).ToList())
+            {
+                this.keywords.Remove(existingKeywords[keyword]);
+            }
+
+            // Add new keywords
+            foreach (var keyword in newKeywords.Except(existingKeywords.Keys))
+            {
+                this.keywords.Add(
+                    new BookKeyword { BookId = this.Id, Text = keyword });
+            }
+        }
     }
 }

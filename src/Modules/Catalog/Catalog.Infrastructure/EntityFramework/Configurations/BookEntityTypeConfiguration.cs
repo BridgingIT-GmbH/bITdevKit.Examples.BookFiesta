@@ -20,6 +20,7 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
         builder.Navigation(e => e.Categories).AutoInclude();
         builder.Navigation(e => e.Chapters).AutoInclude();
         builder.Navigation(e => e.Tags).AutoInclude();
+        builder.Navigation(e => e.Keywords).AutoInclude();
 
         builder.Property(e => e.Version).IsConcurrencyToken();
 
@@ -133,6 +134,11 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
         builder.HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
             .WithMany()
             .UsingEntity(b => b.ToTable("BookTags"));
+
+        builder.HasMany(b => b.Keywords)
+            .WithOne()
+            .HasForeignKey(ki => ki.BookId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         //builder.OwnsOneAuditState(); // TODO: use ToJson variant
         builder.OwnsOne(e => e.AuditState, b => b.ToJson());
