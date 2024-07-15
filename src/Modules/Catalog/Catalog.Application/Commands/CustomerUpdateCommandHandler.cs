@@ -25,7 +25,7 @@ public class CustomerUpdateCommandHandler(
         var customer = customerResult.Value;
         if (customerResult.IsFailure)
         {
-            return CommandResponse.Create(customerResult);
+            return CommandResponse.For(customerResult);
         }
 
         Check.Throw([]);
