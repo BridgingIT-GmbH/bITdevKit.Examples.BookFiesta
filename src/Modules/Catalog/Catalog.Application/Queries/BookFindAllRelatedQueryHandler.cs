@@ -33,42 +33,4 @@ public class BookFindAllRelatedQueryHandler(
                 await recommendationService.BookFindAllRelatedAsync(result.Value, 5)) // TODO: available in new devkit release
             : QueryResponse.For<IEnumerable<Book>>(result);
     }
-
-    protected static Result<IEnumerable<Book>> Failure(Result result = null)
-    {
-        return Result<IEnumerable<Book>>.Failure()
-            .WithMessages(result?.Messages);
-            //.WithErrors(result.Errors);
-    }
-}
-
-public static class QueryResponse2
-{
-    public static QueryResponse<Result<TValue>> For<TValue>(Result<TValue> result)
-    {
-        return new QueryResponse<Result<TValue>>()
-        {
-            Result = result,
-        };
-    }
-
-    public static QueryResponse<Result<TResult>> For<TResult>(Result result)
-    {
-        if (result?.IsFailure == true)
-        {
-            return new QueryResponse<Result<TResult>>()
-            {
-                Result = Result<TResult>.Failure()
-                    .WithMessages(result?.Messages)
-                    .WithErrors(result?.Errors),
-            };
-        }
-
-        return new QueryResponse<Result<TResult>>()
-        {
-            Result = Result<TResult>.Success()
-                    .WithMessages(result?.Messages)
-                    .WithErrors(result?.Errors),
-        };
-    }
 }
