@@ -3,9 +3,11 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+namespace BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 
-public class TenantId : AggregateRootId<Guid>
+using BridgingIT.DevKit.Domain.Model;
+
+public class TenantId : AggregateRootId<Guid> // cannot be source generated while AggregateRoot in different project
 {
     private TenantId()
     {
@@ -36,7 +38,11 @@ public class TenantId : AggregateRootId<Guid>
 
     public static TenantId Create(string id)
     {
-        EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            throw new ArgumentException("Id cannot be null or whitespace.");
+        }
+
         return new TenantId(Guid.Parse(id));
     }
 

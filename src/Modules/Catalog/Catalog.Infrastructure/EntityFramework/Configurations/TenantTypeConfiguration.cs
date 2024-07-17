@@ -7,6 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookStore.Infrastructure;
 
 using BridgingIT.DevKit.Domain.Model;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

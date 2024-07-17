@@ -36,7 +36,11 @@ public class CompanyId : AggregateRootId<Guid>
 
     public static CompanyId Create(string id)
     {
-        EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            throw new ArgumentException("Id cannot be null or whitespace.");
+        }
+
         return new CompanyId(Guid.Parse(id));
     }
 

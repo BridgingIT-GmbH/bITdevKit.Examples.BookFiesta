@@ -36,7 +36,11 @@ public class TenantBrandingId : AggregateRootId<Guid>
 
     public static TenantBrandingId Create(string id)
     {
-        EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            throw new ArgumentException("Id cannot be null or whitespace.");
+        }
+
         return new TenantBrandingId(Guid.Parse(id));
     }
 

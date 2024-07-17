@@ -35,7 +35,11 @@ public class PublisherId : AggregateRootId<Guid>
 
     public static PublisherId Create(string id)
     {
-        EnsureArg.IsNotNullOrWhiteSpace(id, nameof(id));
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            throw new ArgumentException("Id cannot be null or whitespace.");
+        }
+
         return new PublisherId(Guid.Parse(id));
     }
 

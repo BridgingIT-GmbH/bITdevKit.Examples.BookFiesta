@@ -26,8 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{AB16
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{B830E31D-7101-4F99-BF42-1FF976659D09}"
 	ProjectSection(SolutionItems) = preProject
-		src\Modules\Catalog\API.http = src\Modules\Catalog\API.http
-		src\Modules\Catalog\README.md = src\Modules\Catalog\README.md
+		src\Modules\Catalog\Catalog-API.http = src\Modules\Catalog\Catalog-API.http
+		src\Modules\Catalog\Catalog-README.md = src\Modules\Catalog\Catalog-README.md
+		src\Modules\Catalog\Catalog-Domain-Overview.drawio.png = src\Modules\Catalog\Catalog-Domain-Overview.drawio.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6E6D2EC4-A40D-4312-BCA2-9BC08B51085B}"
@@ -46,7 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain", "src\Modul
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{8240E754-F982-4B71-B156-8AB14A6415BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.Domain", "src\SharedKernel\SharedKernel.Domain\SharedKernel.Domain.csproj", "{C96E335B-6640-4D1D-9358-DCE9EC43F169}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel.Domain", "src\SharedKernel\SharedKernel.Domain\SharedKernel.Domain.csproj", "{C96E335B-6640-4D1D-9358-DCE9EC43F169}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organization", "Organization", "{28DBD25A-F943-4441-8EB3-ABFF713E1D6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +105,7 @@ Global
 		{D5496E30-F436-451D-BFAB-FD24B7ABEFB2} = {6E6D2EC4-A40D-4312-BCA2-9BC08B51085B}
 		{B1AA3C14-05AC-41DC-B01A-112437915F68} = {AB168F93-5260-4A16-BE59-598E3E09DF06}
 		{C96E335B-6640-4D1D-9358-DCE9EC43F169} = {8240E754-F982-4B71-B156-8AB14A6415BC}
+		{28DBD25A-F943-4441-8EB3-ABFF713E1D6E} = {0E683C2F-04E7-4A0A-8DAA-6C73BCB449FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A506444-BFA7-4EFF-8C64-A1A451119966}
