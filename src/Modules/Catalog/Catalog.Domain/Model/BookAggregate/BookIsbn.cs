@@ -1,8 +1,6 @@
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System.Diagnostics;
 using System.Text.RegularExpressions;
-using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Value={Value}, Type={Type}")]
 public partial class BookIsbn : ValueObject

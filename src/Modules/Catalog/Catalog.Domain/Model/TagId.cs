@@ -5,9 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain.Model;
-using EnsureThat;
-
 public class TagId : EntityId<Guid>
 {
     private TagId()
@@ -26,7 +23,7 @@ public class TagId : EntityId<Guid>
     //public static implicit operator Guid(TagId id) => id?.Value ?? default; // allows a TagId value to be implicitly converted to a Guid.
     //public static implicit operator TagId(Guid id) => id; // allows a Guid value to be implicitly converted to a TagId object.
 
-    public static TagId CreateUnique()
+    public static TagId Create()
     {
         return new TagId(Guid.NewGuid());
     }

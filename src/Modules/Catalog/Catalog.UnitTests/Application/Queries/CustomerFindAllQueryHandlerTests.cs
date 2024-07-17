@@ -8,6 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.UnitTests.Application;
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Examples.BookStore.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 
 [UnitTest("GettingStarted.Application")]
 public class CustomerFindAllQueryHandlerTests

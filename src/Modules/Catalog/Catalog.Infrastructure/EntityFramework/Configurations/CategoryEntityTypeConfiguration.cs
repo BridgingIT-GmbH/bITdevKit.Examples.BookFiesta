@@ -13,9 +13,10 @@ public class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Category
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {
-        builder.ToTable("Categories");
+        builder.ToTable("Categories")
+            .HasKey(e => e.Id)
+            .IsClustered(false);
 
-        builder.HasKey(e => e.Id);
         builder.Navigation(e => e.Parent).AutoInclude(false);
         //builder.Navigation(e => e.Children).AutoInclude();
 

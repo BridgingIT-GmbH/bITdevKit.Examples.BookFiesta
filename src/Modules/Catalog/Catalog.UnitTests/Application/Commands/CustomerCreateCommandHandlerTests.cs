@@ -17,7 +17,9 @@ public class CustomerCreateCommandHandlerTests
     {
         // Arrange
         var repository = Substitute.For<IGenericRepository<Customer>>();
-        var customer = CoreSeedModels.Customers.Create(DateTime.UtcNow.Ticks).First();
+        var companies = CoreSeedModels.Companies.Create(DateTime.UtcNow.Ticks);
+        var tenants = CoreSeedModels.Tenants.Create(companies, DateTime.UtcNow.Ticks);
+        var customer = CoreSeedModels.Customers.Create(tenants, DateTime.UtcNow.Ticks)[0];
         var command = new CustomerCreateCommand { FirstName = customer.FirstName, LastName = customer.LastName, Email = customer.Email, AddressLine1 = customer.Address.Line1, AddressLine2 = customer.Address.Line2, AddressPostalCode = customer.Address.PostalCode, AddressCity = customer.Address.City, AddressCountry = customer.Address.Country };
         var sut = new CustomerCreateCommandHandler(Substitute.For<ILoggerFactory>(), repository);
 

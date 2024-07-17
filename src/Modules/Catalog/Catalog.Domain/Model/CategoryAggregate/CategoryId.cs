@@ -5,10 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System;
-using BridgingIT.DevKit.Domain.Model;
-using EnsureThat;
-
 public class CategoryId : EntityId<Guid>
 {
     private CategoryId()
@@ -27,7 +23,7 @@ public class CategoryId : EntityId<Guid>
     //public static implicit operator Guid(CategoryId id) => id?.Value ?? default; // allows a CategoryId value to be implicitly converted to a Guid.
     //public static implicit operator CategoryId(Guid id) => id; // allows a Guid value to be implicitly converted to a CategoryId object.
 
-    public static CategoryId CreateUnique()
+    public static CategoryId Create()
     {
         return new CategoryId(Guid.NewGuid());
     }

@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain;
-
 public class PublisherCreatedDomainEvent(Publisher publisher) : DomainEventBase
 {
     public PublisherId PublisherId { get; } = publisher.Id;

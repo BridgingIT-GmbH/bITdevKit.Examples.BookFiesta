@@ -13,9 +13,16 @@ public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<Author>
 {
     public void Configure(EntityTypeBuilder<Author> builder)
     {
-        builder.ToTable("Authors");
+        ConfigureAuthors(builder);
+        ConfigureAuthorBooks(builder);
+    }
 
-        builder.HasKey(a => a.Id);
+    private static void ConfigureAuthors(EntityTypeBuilder<Author> builder)
+    {
+        builder.ToTable("Authors")
+            .HasKey(e => e.Id)
+            .IsClustered(false);
+
         builder.Navigation(e => e.Tags).AutoInclude();
 
         builder.Property(e => e.Version).IsConcurrencyToken();
@@ -26,25 +33,9 @@ public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<Author>
                 id => id.Value,
                 value => AuthorId.Create(value));
 
-        builder.OwnsMany(e => e.Books, b =>
-        {
-            b.ToTable("AuthorBooks");
-
-            b.WithOwner().HasForeignKey("AuthorId");
-
-            b.HasKey("AuthorId", "BookId");
-            b.HasIndex("AuthorId", "BookId");
-
-            b.Property(r => r.BookId)
-                .IsRequired()
-                .HasConversion(
-                    id => id.Value,
-                    value => BookId.Create(value));
-            b.HasOne(typeof(Book)).WithMany().HasForeignKey(nameof(BookId)); // FK -> Book.Id
-
-            b.Property(r => r.Title)
-                .IsRequired().HasMaxLength(512);
-        });
+        builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
+            .WithMany()
+            .HasForeignKey(e => e.TenantId);
 
         builder.Property(a => a.Biography)
             .IsRequired(false).HasMaxLength(4096);
@@ -80,5 +71,27 @@ public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<Author>
 
         builder.Metadata.FindNavigation(nameof(Author.Books))
            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private static void ConfigureAuthorBooks(EntityTypeBuilder<Author> builder)
+    {
+        builder.OwnsMany(e => e.Books, b =>
+        {
+            b.ToTable("AuthorBooks")
+                .HasKey("AuthorId", "BookId");
+            b.HasIndex("AuthorId", "BookId");
+
+            b.WithOwner().HasForeignKey("AuthorId");
+
+            b.Property(r => r.BookId)
+                .IsRequired()
+                .HasConversion(
+                    id => id.Value,
+                    value => BookId.Create(value));
+            b.HasOne(typeof(Book)).WithMany().HasForeignKey(nameof(BookId)); // FK -> Book.Id
+
+            b.Property(r => r.Title)
+                .IsRequired().HasMaxLength(512);
+        });
     }
 }

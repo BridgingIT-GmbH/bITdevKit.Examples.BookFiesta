@@ -19,7 +19,8 @@ public class CustomerTypeConfiguration : IEntityTypeConfiguration<Customer>
     private static void ConfigureCustomersTable(EntityTypeBuilder<Customer> builder)
     {
         builder.ToTable("Customers")
-               .HasKey(d => d.Id);
+            .HasKey(d => d.Id)
+            .IsClustered(false);
 
         builder.Property(e => e.Version).IsConcurrencyToken();
 

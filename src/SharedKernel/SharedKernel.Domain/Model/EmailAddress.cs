@@ -1,4 +1,9 @@
-namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+namespace BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 
 using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;
@@ -18,6 +23,7 @@ public partial class EmailAddress : ValueObject
     public string Value { get; private set; }
 
     public static implicit operator string(EmailAddress email) => email.Value;
+    public static implicit operator EmailAddress(string email) => Create(email);
 
     public static EmailAddress Create(string email)
     {

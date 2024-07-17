@@ -86,7 +86,9 @@ public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicatio
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        var customer = CoreSeedModels.Customers.Create(DateTime.UtcNow.Ticks).First();
+        var companies = CoreSeedModels.Companies.Create(DateTime.UtcNow.Ticks);
+        var tenants = CoreSeedModels.Tenants.Create(companies, DateTime.UtcNow.Ticks);
+        var customer = CoreSeedModels.Customers.Create(tenants, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             FirstName = customer.FirstName,
@@ -123,7 +125,9 @@ public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicatio
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        var customer = CoreSeedModels.Customers.Create(DateTime.UtcNow.Ticks).First();
+        var companies = CoreSeedModels.Companies.Create(DateTime.UtcNow.Ticks);
+        var tenants = CoreSeedModels.Tenants.Create(companies, DateTime.UtcNow.Ticks);
+        var customer = CoreSeedModels.Customers.Create(tenants, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             FirstName = string.Empty,
@@ -183,7 +187,9 @@ public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicatio
 
     private async Task<CustomerModel> PostCustomerCreate(string route)
     {
-        var customer = CoreSeedModels.Customers.Create(DateTime.UtcNow.Ticks).First();
+        var companies = CoreSeedModels.Companies.Create(DateTime.UtcNow.Ticks);
+        var tenants = CoreSeedModels.Tenants.Create(companies, DateTime.UtcNow.Ticks);
+        var customer = CoreSeedModels.Customers.Create(tenants, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             FirstName = customer.FirstName,

@@ -5,9 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain.Model;
-using EnsureThat;
-
 public class AuthorId : AggregateRootId<Guid>
 {
     private AuthorId()
@@ -23,10 +20,11 @@ public class AuthorId : AggregateRootId<Guid>
 
     public bool IsEmpty => this.Value == Guid.Empty;
 
-    //public static implicit operator Guid(AuthorId id) => id?.Value ?? default; // allows a AuthorId value to be implicitly converted to a Guid.
-    //public static implicit operator AuthorId(Guid id) => id; // allows a Guid value to be implicitly converted to a AuthorId object.
+    public static implicit operator Guid(AuthorId id) => id?.Value ?? default; // allows a AuthorId value to be implicitly converted to a Guid.
+    public static implicit operator string(AuthorId id) => id?.Value.ToString(); // allows a AuthorId value to be implicitly converted to a string.
+    public static implicit operator AuthorId(Guid id) => id; // allows a Guid value to be implicitly converted to a AuthorId object.
 
-    public static AuthorId CreateUnique()
+    public static AuthorId Create()
     {
         return new AuthorId(Guid.NewGuid());
     }

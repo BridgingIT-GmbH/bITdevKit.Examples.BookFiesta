@@ -13,9 +13,9 @@ public class TagEntityTypeConfiguration : IEntityTypeConfiguration<Tag>
 {
     public void Configure(EntityTypeBuilder<Tag> builder)
     {
-        builder.ToTable("Tags");
-
-        builder.HasKey(e => e.Id);
+        builder.ToTable("Tags")
+            .HasKey(e => e.Id)
+            .IsClustered(false);
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()

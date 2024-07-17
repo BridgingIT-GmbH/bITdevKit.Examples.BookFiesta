@@ -19,7 +19,8 @@ public class PublisherTypeConfiguration : IEntityTypeConfiguration<Publisher>
     private static void ConfigurePublishersTable(EntityTypeBuilder<Publisher> builder)
     {
         builder.ToTable("Publishers")
-               .HasKey(d => d.Id);
+            .HasKey(d => d.Id)
+            .IsClustered(false);
 
         builder.Property(e => e.Version).IsConcurrencyToken();
 
@@ -60,17 +61,17 @@ public class PublisherTypeConfiguration : IEntityTypeConfiguration<Publisher>
                 .IsRequired();
         });
 
-        builder.OwnsOne(e => e.Email, b =>
+        builder.OwnsOne(e => e.ContactEmail, b =>
         {
             b.Property(e => e.Value)
-                .HasColumnName(nameof(Publisher.Email))
+                .HasColumnName(nameof(Publisher.ContactEmail))
                 .IsRequired(false)
                 .HasMaxLength(256);
 
             b.HasIndex(nameof(Customer.Email.Value))
                 .IsUnique();
         });
-        builder.Navigation(e => e.Email).IsRequired();
+        builder.Navigation(e => e.ContactEmail).IsRequired();
 
         builder.OwnsOne(e => e.Website, b =>
         {

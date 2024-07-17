@@ -5,9 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain;
-
-public class BookCreatedDomainEvent(Book book) : DomainEventBase
+public class BookCreatedDomainEvent(TenantId tenantId, Book book) : DomainEventBase
 {
+    public TenantId TenantId { get; } = tenantId;
+
     public BookId BookId { get; } = book.Id;
 }

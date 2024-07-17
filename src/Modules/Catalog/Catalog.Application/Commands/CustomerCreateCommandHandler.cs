@@ -12,6 +12,7 @@ using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
 public class CustomerCreateCommandHandler(

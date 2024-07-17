@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain.Model;
-
 public class BookKeywordId : EntityId<Guid>
 {
     private BookKeywordId()
@@ -25,7 +23,7 @@ public class BookKeywordId : EntityId<Guid>
     //public static implicit operator Guid(BookKeywordId id) => id?.Value ?? default; // allows a BookKeywordId value to be implicitly converted to a Guid.
     //public static implicit operator BookKeywordId(Guid value) => value; // allows a Guid value to be implicitly converted to a BookKeywordId object.
 
-    public static BookKeywordId CreateUnique()
+    public static BookKeywordId Create()
     {
         return new BookKeywordId(Guid.NewGuid());
     }

@@ -13,6 +13,8 @@ using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
 public class CatalogDomainSeederTask(
     IGenericRepository<Customer> customerRepository,
+    IGenericRepository<Company> companyRepository,
+    IGenericRepository<Tenant> tenantRepository,
     IGenericRepository<Tag> tagRepository,
     IGenericRepository<Category> categoryRepository,
     IGenericRepository<Publisher> publisherRepository,
@@ -21,17 +23,34 @@ public class CatalogDomainSeederTask(
 {
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        var customers = await this.SeedCustomers(customerRepository);
-        var tags = await this.SeedTags(tagRepository);
-        var categories = await this.SeedCategories(categoryRepository);
-        var publishers = await this.SeedPublishers(publisherRepository);
-        var authors = await this.SeedAuthors(authorRepository);
-        var books = await this.SeedBooks(bookRepository, tags, categories, publishers, authors);
+        var companies = await this.SeedCompanies(companyRepository);
+        var tenants = await this.SeedTenants(tenantRepository, companies);
+        var customers = await this.SeedCustomers(customerRepository, tenants);
+        var tags = await this.SeedTags(tagRepository, tenants);
+        var categories = await this.SeedCategories(categoryRepository, tenants);
+        var publishers = await this.SeedPublishers(publisherRepository, tenants);
+        var authors = await this.SeedAuthors(authorRepository, tenants);
+        var books = await this.SeedBooks(bookRepository, tenants, tags, categories, publishers, authors);
     }
 
-    private async Task<Customer[]> SeedCustomers(IGenericRepository<Customer> repository)
+    private async Task<Tenant[]> SeedTenants(IGenericRepository<Tenant> repository, Company[] companies)
     {
-        var customers = CoreSeedModels.Customers.Create();
+        var tenants = CoreSeedModels.Tenants.Create(companies);
+
+        foreach (var tenant in tenants)
+        {
+            if (!await repository.ExistsAsync(tenant.Id))
+            {
+                await repository.InsertAsync(tenant);
+            }
+        }
+
+        return tenants;
+    }
+
+    private async Task<Customer[]> SeedCustomers(IGenericRepository<Customer> repository, Tenant[] tenants)
+    {
+        var customers = CoreSeedModels.Customers.Create(tenants);
 
         foreach (var customer in customers)
         {
@@ -44,9 +63,24 @@ public class CatalogDomainSeederTask(
         return customers;
     }
 
-    private async Task<Tag[]> SeedTags(IGenericRepository<Tag> repository)
+    private async Task<Company[]> SeedCompanies(IGenericRepository<Company> repository)
     {
-        var tags = CoreSeedModels.Tags.Create();
+        var companies = CoreSeedModels.Companies.Create();
+
+        foreach (var company in companies)
+        {
+            if (!await repository.ExistsAsync(company.Id))
+            {
+                await repository.InsertAsync(company);
+            }
+        }
+
+        return companies;
+    }
+
+    private async Task<Tag[]> SeedTags(IGenericRepository<Tag> repository, Tenant[] tenants)
+    {
+        var tags = CoreSeedModels.Tags.Create(tenants);
 
         foreach (var tag in tags)
         {
@@ -59,9 +93,9 @@ public class CatalogDomainSeederTask(
         return tags;
     }
 
-    private async Task<Category[]> SeedCategories(IGenericRepository<Category> repository)
+    private async Task<Category[]> SeedCategories(IGenericRepository<Category> repository, Tenant[] tenants)
     {
-        var categories = CoreSeedModels.Categories.Create();
+        var categories = CoreSeedModels.Categories.Create(tenants);
 
         foreach (var category in categories)
         {
@@ -74,9 +108,9 @@ public class CatalogDomainSeederTask(
         return categories;
     }
 
-    private async Task<Publisher[]> SeedPublishers(IGenericRepository<Publisher> repository)
+    private async Task<Publisher[]> SeedPublishers(IGenericRepository<Publisher> repository, Tenant[] tenants)
     {
-        var publishers = CoreSeedModels.Publishers.Create();
+        var publishers = CoreSeedModels.Publishers.Create(tenants);
 
         foreach (var publisher in publishers)
         {
@@ -89,9 +123,9 @@ public class CatalogDomainSeederTask(
         return publishers;
     }
 
-    private async Task<Book[]> SeedBooks(IGenericRepository<Book> repository, Tag[] tags, Category[] categories, Publisher[] publishers, Author[] authors)
+    private async Task<Book[]> SeedBooks(IGenericRepository<Book> repository, Tenant[] tenants, Tag[] tags, Category[] categories, Publisher[] publishers, Author[] authors)
     {
-        var books = CoreSeedModels.Books.Create(tags, categories, publishers, authors);
+        var books = CoreSeedModels.Books.Create(tenants, tags, categories, publishers, authors);
 
         foreach (var book in books)
         {
@@ -104,9 +138,9 @@ public class CatalogDomainSeederTask(
         return books;
     }
 
-    private async Task<Author[]> SeedAuthors(IGenericRepository<Author> repository)
+    private async Task<Author[]> SeedAuthors(IGenericRepository<Author> repository, Tenant[] tenants)
     {
-        var authors = CoreSeedModels.Authors.Create();
+        var authors = CoreSeedModels.Authors.Create(tenants);
 
         foreach (var author in authors)
         {

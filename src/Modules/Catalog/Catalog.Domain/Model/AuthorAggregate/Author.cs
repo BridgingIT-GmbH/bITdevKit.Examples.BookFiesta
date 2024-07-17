@@ -5,22 +5,21 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System;
-using BridgingIT.DevKit.Domain.Model;
-using static BridgingIT.DevKit.Examples.BookStore.Catalog.Domain.CoreSeedModels;
-
-public class Author : AuditableAggregateRoot<AuthorId/*, Guid*/>, IConcurrent
+public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 {
     private readonly List<AuthorBook> books = [];
     private readonly List<Tag> tags = [];
 
     private Author() { } // Private constructor required by EF Core
 
-    private Author(PersonFormalName name, string biography)
+    private Author(TenantId tenantId, PersonFormalName name, string biography)
     {
+        this.TenantId = tenantId;
         this.SetName(name);
         this.SetBiography(biography);
     }
+
+    public TenantId TenantId { get; private set; }
 
     public PersonFormalName PersonName { get; private set; }
 
@@ -32,9 +31,9 @@ public class Author : AuditableAggregateRoot<AuthorId/*, Guid*/>, IConcurrent
 
     public Guid Version { get; set; }
 
-    public static Author Create(PersonFormalName name, string biography = null)
+    public static Author Create(TenantId tenantId, PersonFormalName name, string biography = null)
     {
-        return new Author(name, biography);
+        return new Author(tenantId, name, biography);
     }
 
     public Author SetName(PersonFormalName name)

@@ -5,10 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain.Model;
-using EnsureThat;
-using Newtonsoft.Json.Linq;
-
 public class BookChapterId : EntityId<Guid>
 {
     private BookChapterId()
@@ -27,7 +23,7 @@ public class BookChapterId : EntityId<Guid>
     //public static implicit operator Guid(BookChapterId id) => id?.Value ?? default; // allows a BookChapterId value to be implicitly converted to a Guid.
     //public static implicit operator BookChapterId(Guid id) => id; // allows a Guid value to be implicitly converted to a BookChapterId object.
 
-    public static BookChapterId CreateUnique()
+    public static BookChapterId Create()
     {
         return new BookChapterId(Guid.NewGuid());
     }

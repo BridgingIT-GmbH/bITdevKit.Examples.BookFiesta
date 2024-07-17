@@ -21,7 +21,7 @@ public class CatalogCategoryEndpoints : EndpointsBase
         var group = app.MapGroup("api/catalog/categories")
             .WithTags("Catalog");
 
-        group.MapGet("/{id}", async Task<Results<Ok<CategoryModel>, NotFound, ProblemHttpResult>>(
+        group.MapGet("/{id}", async Task<Results<Ok<CategoryModel>, NotFound, ProblemHttpResult>> (
             [FromServices] IMediator mediator,
             [FromServices] IMapper mapper,
             [FromRoute] string id) =>
@@ -35,7 +35,7 @@ public class CatalogCategoryEndpoints : EndpointsBase
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapGet("/{id}/books", async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>>(
+        group.MapGet("/{id}/books", async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>> (
             [FromServices] IMediator mediator,
             [FromServices] IMapper mapper,
             [FromRoute] string id) =>
@@ -50,7 +50,7 @@ public class CatalogCategoryEndpoints : EndpointsBase
             .Produces<ProblemDetails>(500);
 
         // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-8.0
-        group.MapGet(string.Empty, async Task<Results<Ok<IEnumerable<CategoryModel>>, ProblemHttpResult>>(
+        group.MapGet(string.Empty, async Task<Results<Ok<IEnumerable<CategoryModel>>, ProblemHttpResult>> (
             [FromServices] IMediator mediator,
             [FromServices] IMapper mapper) =>
         {

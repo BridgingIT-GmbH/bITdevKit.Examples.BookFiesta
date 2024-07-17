@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 public class CatalogDbContext(DbContextOptions<CatalogDbContext> options)
     : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext, IOutboxMessageContext
 {
+    public DbSet<Tenant> Tenants { get; set; }
+
     public DbSet<Book> Books { get; set; }
 
     public DbSet<Category> Categories { get; set; }

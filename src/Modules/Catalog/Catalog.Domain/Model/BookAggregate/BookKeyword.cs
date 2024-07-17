@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain.Model;
-
 public class BookKeyword : Entity<BookKeywordId>
 {
     public BookId BookId { get; set; }

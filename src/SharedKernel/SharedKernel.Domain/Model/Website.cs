@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+namespace BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 
 using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;
@@ -23,6 +23,8 @@ public partial class Website : ValueObject
     public string Value { get; private set; }
 
     public static implicit operator string(Website website) => website?.Value; // allows a Website value to be implicitly converted to a string.
+
+    public static implicit operator Website(string website) => Create(website);
 
     public static Website Create(string website)
     {

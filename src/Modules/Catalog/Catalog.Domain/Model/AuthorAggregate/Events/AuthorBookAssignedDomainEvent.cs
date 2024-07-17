@@ -5,10 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain;
-
 public class AuthorBookAssignedDomainEvent(Author author, Book book) : DomainEventBase
 {
+    public TenantId TenantId { get; } = author.TenantId;
+
     public AuthorId AuthorId { get; } = author.Id;
 
     public string AuthorName { get; } = author.PersonName;

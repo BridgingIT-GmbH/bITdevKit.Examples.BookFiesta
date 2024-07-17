@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain;
-
 public class CustomerUpdatedDomainEvent(Customer customer) : DomainEventBase
 {
     public CustomerId CustomerId { get; } = customer.Id;

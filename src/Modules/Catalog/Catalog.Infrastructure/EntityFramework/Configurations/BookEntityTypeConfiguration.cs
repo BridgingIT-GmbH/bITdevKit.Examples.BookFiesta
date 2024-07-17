@@ -5,17 +5,33 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Infrastructure;
 
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
+public class BookEntityTypeConfiguration :
+    IEntityTypeConfiguration<Book>, IEntityTypeConfiguration<BookKeyword>
 {
     public void Configure(EntityTypeBuilder<Book> builder)
     {
-        builder.ToTable("Books");
+        ConfigureBooks(builder);
+        ConfigureBookAuthors(builder);
+        ConfigureBookCategories(builder);
+        ConfigureBookChapters(builder);
+        ConfigureBookPublisher(builder);
+    }
 
-        builder.HasKey(e => e.Id);
+    public void Configure(EntityTypeBuilder<BookKeyword> builder)
+    {
+        ConfigureBookKeywords(builder);
+    }
+
+    private static void ConfigureBooks(EntityTypeBuilder<Book> builder)
+    {
+        builder.ToTable("Books")
+            .HasKey(e => e.Id)
+            .IsClustered(false);
+
         //builder.Navigation(e => e.BookAuthors).AutoInclude();
         builder.Navigation(e => e.Categories).AutoInclude();
         builder.Navigation(e => e.Chapters).AutoInclude();
@@ -30,15 +46,9 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
                 id => id.Value,
                 value => BookId.Create(value));
 
-        //builder.HasMany<BookAuthor>()
-        //    .WithOne().HasForeignKey(e => e.BookId);
-
-        // https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#many-to-many-with-join-table-foreign-key-names
-        builder.HasMany(e => e.Categories)
-            .WithMany(e => e.Books).UsingEntity(
-            "BookCategories",
-            l => l.HasOne(typeof(Category)).WithMany().HasForeignKey(nameof(CategoryId)),
-            r => r.HasOne(typeof(Book)).WithMany().HasForeignKey(nameof(BookId)));
+        builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
+            .WithMany()
+            .HasForeignKey(e => e.TenantId);
 
         builder.Property(e => e.Title)
             .IsRequired().HasMaxLength(512);
@@ -75,29 +85,31 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
             });
         });
 
-        builder.OwnsOne(e => e.Publisher, b =>
-        {
-            b.Property(r => r.PublisherId)
-                .HasColumnName("PublisherId")
-                .IsRequired()
-                .HasConversion(
-                    id => id.Value,
-                    value => PublisherId.Create(value));
-            b.HasOne(typeof(Publisher)).WithMany().HasForeignKey(nameof(PublisherId)); // FK -> Publisher.Id
+        builder.HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
+            .WithMany()
+            .UsingEntity(b => b.ToTable("BookTags"));
 
-            b.Property(e => e.Name)
-                .HasColumnName("PublisherName")
-                .IsRequired().HasMaxLength(512);
-        });
+        builder.HasMany(b => b.Keywords)
+            .WithOne()
+            .HasForeignKey(ki => ki.BookId)
+            .OnDelete(DeleteBehavior.Cascade);
 
+        //builder.OwnsOneAuditState(); // TODO: use ToJson variant
+        builder.OwnsOne(e => e.AuditState, b => b.ToJson());
+
+        builder.Metadata.FindNavigation(nameof(Book.Authors))
+                    .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private static void ConfigureBookAuthors(EntityTypeBuilder<Book> builder)
+    {
         builder.OwnsMany(e => e.Authors, b =>
         {
-            b.ToTable("BookAuthors");
+            b.ToTable("BookAuthors")
+                .HasKey("BookId", "AuthorId");
+            b.HasIndex("BookId", "AuthorId");
 
             b.WithOwner().HasForeignKey("BookId");
-
-            b.HasKey("BookId", "AuthorId");
-            b.HasIndex("BookId", "AuthorId");
 
             b.Property(r => r.AuthorId)
                 .IsRequired()
@@ -112,7 +124,20 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
             b.Property(r => r.Position)
                 .IsRequired().HasDefaultValue(0);
         });
+    }
 
+    private static void ConfigureBookCategories(EntityTypeBuilder<Book> builder)
+    {
+        // https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#many-to-many-with-join-table-foreign-key-names
+        builder.HasMany(e => e.Categories)
+            .WithMany(e => e.Books).UsingEntity(
+            "BookCategories",
+            l => l.HasOne(typeof(Category)).WithMany().HasForeignKey(nameof(CategoryId)),
+            r => r.HasOne(typeof(Book)).WithMany().HasForeignKey(nameof(BookId)));
+    }
+
+    private static void ConfigureBookChapters(EntityTypeBuilder<Book> builder)
+    {
         builder.OwnsMany(e => e.Chapters, b =>
         {
             b.ToTable("BookChapters");
@@ -130,20 +155,50 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
             b.Property("Content")
                 .IsRequired(false);
         });
+    }
 
-        builder.HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
-            .WithMany()
-            .UsingEntity(b => b.ToTable("BookTags"));
+    private static void ConfigureBookPublisher(EntityTypeBuilder<Book> builder)
+    {
+        builder.OwnsOne(e => e.Publisher, b =>
+        {
+            b.Property(r => r.PublisherId)
+                .HasColumnName("PublisherId")
+                .IsRequired()
+                .HasConversion(
+                    id => id.Value,
+                    value => PublisherId.Create(value));
+            b.HasOne(typeof(Publisher)).WithMany().HasForeignKey(nameof(PublisherId)); // FK -> Publisher.Id
 
-        builder.HasMany(b => b.Keywords)
-            .WithOne()
-            .HasForeignKey(ki => ki.BookId)
+            b.Property(e => e.Name)
+                .HasColumnName("PublisherName")
+                .IsRequired().HasMaxLength(512);
+        });
+    }
+
+    private static void ConfigureBookKeywords(EntityTypeBuilder<BookKeyword> builder)
+    {
+        builder.ToTable("BookKeywords")
+            .HasKey(e => e.Id)
+            .IsClustered(false);
+
+        builder.Property(e => e.Id)
+            .ValueGeneratedOnAdd()
+            .HasConversion(
+                id => id.Value,
+                value => BookKeywordId.Create(value));
+
+        builder.Property(e => e.Text)
+            .IsRequired()
+            .HasMaxLength(128);
+
+        builder.HasIndex(e => e.Text);
+
+        builder.HasIndex(e => new { e.BookId, e.Text })
+            .IsUnique();
+
+        builder.HasOne<Book>()
+            .WithMany(e => e.Keywords)
+            .HasForeignKey(e => e.BookId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        //builder.OwnsOneAuditState(); // TODO: use ToJson variant
-        builder.OwnsOne(e => e.AuditState, b => b.ToJson());
-
-        builder.Metadata.FindNavigation(nameof(Book.Authors))
-                    .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

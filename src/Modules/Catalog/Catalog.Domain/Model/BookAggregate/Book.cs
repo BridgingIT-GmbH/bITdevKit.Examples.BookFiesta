@@ -5,14 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System;
-using System.Diagnostics;
-using System.Linq;
-using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Domain.Model;
-
 [DebuggerDisplay("Id={Id}, Title={Title}")]
-public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
+public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 {
     private readonly List<BookAuthor> authors = [];
     private readonly List<Category> categories = [];
@@ -22,8 +16,9 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
 
     private Book() { } // Private constructor required by EF Core
 
-    private Book(string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
+    private Book(TenantId tenantId, string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
     {
+        this.TenantId = tenantId;
         this.SetTitle(title);
         this.SetDescription(description);
         this.SetIsbn(isbn);
@@ -31,6 +26,8 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         this.SetPublisher(publisher);
         this.SetPublishedDate(publishedDate);
     }
+
+    public TenantId TenantId { get; private set; }
 
     public string Title { get; private set; }
 
@@ -56,12 +53,12 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
 
     public Guid Version { get; set; }
 
-    public static Book Create(string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
+    public static Book Create(TenantId tenantId, string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
     {
-        var book = new Book(title, description, isbn, price, publisher, publishedDate);
+        var book = new Book(tenantId, title, description, isbn, price, publisher, publishedDate);
 
         book.DomainEvents.Register(
-                new BookCreatedDomainEvent(book), true);
+                new BookCreatedDomainEvent(tenantId, book), true);
 
         return book;
     }
@@ -75,7 +72,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
             this.ReindexKeywords();
 
             this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this), true);
+                new BookUpdatedDomainEvent(this.TenantId, this), true);
         }
 
         return this;
@@ -90,7 +87,7 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
             this.ReindexKeywords();
 
             this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this), true);
+                new BookUpdatedDomainEvent(this.TenantId, this), true);
         }
 
         return this;
@@ -165,11 +162,11 @@ public class Book : AuditableAggregateRoot<BookId/*, Guid*/>, IConcurrent
         var index = this.chapters.FindIndex(c => c.Number == number);
         if (index < 0)
         {
-            this.chapters.Add(BookChapter.For(number, title, content));
+            this.chapters.Add(BookChapter.Create(number, title, content));
         }
         else
         {
-            this.chapters.Insert(index, BookChapter.For(number, title, content));
+            this.chapters.Insert(index, BookChapter.Create(number, title, content));
         }
 
         this.chapters = this.ReindexChapters(this.chapters);

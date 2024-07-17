@@ -5,11 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System.Diagnostics;
-using BridgingIT.DevKit.Domain.Model;
-
 [DebuggerDisplay("Id={Id}, Number={Number}, Title={Title}")]
-public class BookChapter : Entity<BookChapterId/*, Guid*/>
+public class BookChapter : Entity<BookChapterId>
 {
     private BookChapter() { } // Private constructor required by EF Core
 
@@ -26,7 +23,7 @@ public class BookChapter : Entity<BookChapterId/*, Guid*/>
 
     public string Content { get; private set; }
 
-    public static BookChapter For(int number, string title, string content)
+    public static BookChapter Create(int number, string title, string content)
     {
         return new BookChapter(number, title, content);
     }

@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System.Collections.Generic;
-using BridgingIT.DevKit.Domain.Model;
-
+[DebuggerDisplay("AuthorId={AuthorId}, Name={Name}")]
 public class BookAuthor : ValueObject
 {
     private BookAuthor() { }

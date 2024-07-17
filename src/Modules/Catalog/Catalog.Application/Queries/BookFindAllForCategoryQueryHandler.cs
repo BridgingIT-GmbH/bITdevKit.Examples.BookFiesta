@@ -7,20 +7,23 @@ namespace BridgingIT.DevKit.Examples.BookStore.Application;
 
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Common;
-//using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Domain.Specifications;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using Microsoft.Extensions.Logging;
 
 public class BookFindAllForCategoryQueryHandler(
-    ILoggerFactory loggerFactory/*, IGenericRepository<Book> repository*/)
+    ILoggerFactory loggerFactory, IGenericRepository<Book> repository)
         : QueryHandlerBase<BookFindAllForCategoryQuery, Result<IEnumerable<Book>>>(loggerFactory)
 {
-    public override /*async*/ Task<QueryResponse<Result<IEnumerable<Book>>>> Process(
+    public override async Task<QueryResponse<Result<IEnumerable<Book>>>> Process(
         BookFindAllForCategoryQuery query, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-        //return QueryResponse.For(
-        //    await repository.FindAllResultAsync(cancellationToken: cancellationToken).AnyContext());
-        //    //TODO: add CategoryId specification
+        var categoryId = CategoryId.Create(query.CategoryId);
+
+        return QueryResponse.For(
+            await repository.FindAllResultAsync(
+                specification: new Specification<Book>(e => e.Categories.Any(c => c.Id == categoryId)),
+                cancellationToken: cancellationToken).AnyContext());
     }
 }

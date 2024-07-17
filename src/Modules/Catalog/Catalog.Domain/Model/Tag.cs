@@ -5,12 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System;
-using System.Diagnostics;
-using BridgingIT.DevKit.Domain.Model;
-
 [DebuggerDisplay("Id={Id}, Name={Name}")]
-public class Tag : Entity<TagId/*, Guid*/>, IConcurrent
+public class Tag : Entity<TagId>, IConcurrent
 {
     private Tag() { } // Private constructor required by EF Core
 

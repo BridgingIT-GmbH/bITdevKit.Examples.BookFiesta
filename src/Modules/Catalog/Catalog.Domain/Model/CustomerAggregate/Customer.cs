@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain.Model;
-
-public class Customer : AuditableAggregateRoot<CustomerId/*, Guid*/>, IConcurrent
+public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 {
     private Customer()
     {

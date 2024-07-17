@@ -21,7 +21,7 @@ public class CatalogBookEndpoints : EndpointsBase
         var group = app.MapGroup("api/catalog/books")
             .WithTags("Catalog");
 
-        group.MapGet("/{id}", async Task<Results<Ok<BookModel>, NotFound, ProblemHttpResult>>(
+        group.MapGet("/{id}", async Task<Results<Ok<BookModel>, NotFound, ProblemHttpResult>> (
             [FromServices] IMediator mediator,
             [FromServices] IMapper mapper,
             [FromRoute] string id) =>
@@ -35,7 +35,7 @@ public class CatalogBookEndpoints : EndpointsBase
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapGet(string.Empty, async Task<Results<Ok<IEnumerable<BookModel>>, ProblemHttpResult>>(
+        group.MapGet(string.Empty, async Task<Results<Ok<IEnumerable<BookModel>>, ProblemHttpResult>> (
             [FromServices] IMediator mediator,
             [FromServices] IMapper mapper) =>
         {

@@ -5,22 +5,18 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System;
-using System.Diagnostics;
-using BridgingIT.DevKit.Domain.Model;
-
 [DebuggerDisplay("Id={Id}, Name={Name")]
-public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurrent
+public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 {
     //private readonly List<PublisherBook> book = [];
 
     private Publisher() { } // Private constructor required by EF Core
 
-    private Publisher(string name, string description, Address address = null, EmailAddress email = null, Website website = null)
+    private Publisher(string name, string description, EmailAddress contactEmail = null, Address address = null, Website website = null)
     {
         this.SetName(name);
         this.SetDescription(description);
-        this.SetEmail(email);
+        this.SetContactEmail(contactEmail);
         this.SetAddress(address);
         this.SetDescription(website);
     }
@@ -31,7 +27,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
 
     public Address Address { get; private set; }
 
-    public EmailAddress Email { get; private set; }
+    public EmailAddress ContactEmail { get; private set; }
 
     public Website Website { get; private set; }
 
@@ -39,9 +35,9 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
 
     //public IEnumerable<PublisherBook> Books => this.books;
 
-    public static Publisher Create(string name, string description, Address address = null, EmailAddress email = null, Website website = null)
+    public static Publisher Create(string name, string description, EmailAddress contactEmail = null, Address address = null, Website website = null)
     {
-        var publisher = new Publisher(name, description, address, email, website);
+        var publisher = new Publisher(name, description, contactEmail, address, website);
 
         publisher.DomainEvents.Register(
                 new PublisherCreatedDomainEvent(publisher), true);
@@ -75,12 +71,11 @@ public class Publisher : AuditableAggregateRoot<PublisherId/*, Guid*/>, IConcurr
         return this;
     }
 
-    public Publisher SetEmail(EmailAddress email)
+    public Publisher SetContactEmail(EmailAddress email)
     {
-        // Validate email
-        if (email != null && email != this.Email)
+        if (email != this.ContactEmail)
         {
-            this.Email = email;
+            this.ContactEmail = email;
             this.DomainEvents.Register(
                 new PublisherUpdatedDomainEvent(this), true);
         }

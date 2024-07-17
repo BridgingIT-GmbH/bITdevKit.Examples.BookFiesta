@@ -5,9 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain.Model;
-using EnsureThat;
-
 public class PublisherId : AggregateRootId<Guid>
 {
     private PublisherId()
@@ -26,7 +23,7 @@ public class PublisherId : AggregateRootId<Guid>
     //public static implicit operator Guid(PublisherId id) => id?.Value ?? default; // allows a PublisherId value to be implicitly converted to a Guid.
     //public static implicit operator PublisherId(Guid id) => id; // allows a Guid value to be implicitly converted to a PublisherId object.
 
-    public static PublisherId CreateUnique()
+    public static PublisherId Create()
     {
         return new PublisherId(Guid.NewGuid());
     }

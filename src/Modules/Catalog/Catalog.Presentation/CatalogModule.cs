@@ -6,6 +6,7 @@ using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Examples.BookStore.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation.Web;
 using BridgingIT.DevKit.Examples.BookStore.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,8 @@ public class CatalogModule : WebModuleBase
     public override IServiceCollection Register(IServiceCollection services, IConfiguration configuration = null, IWebHostEnvironment environment = null)
     {
         var moduleConfiguration = this.Configure<CatalogModuleConfiguration, CatalogModuleConfiguration.Validator>(services, configuration);
+
+        services.AddScoped<ICatalogQueryService, CatalogQueryService>();
 
         services.AddJobScheduling()
             .WithJob<EchoJob>(CronExpressions.Every5Minutes); // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
@@ -54,6 +57,15 @@ public class CatalogModule : WebModuleBase
             .WithBehavior<RepositoryAuditStateBehavior<Customer>>()
             //.WithBehavior<RepositoryDomainEventBehavior<Customer>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Customer>>();
+
+        services.AddEntityFrameworkRepository<Tenant, CatalogDbContext>()
+            .WithTransactions<NullRepositoryTransaction<Tenant>>()
+            .WithBehavior<RepositoryTracingBehavior<Tenant>>()
+            .WithBehavior<RepositoryLoggingBehavior<Tenant>>()
+            .WithBehavior<RepositoryConcurrentBehavior<Tenant>>()
+            .WithBehavior<RepositoryAuditStateBehavior<Tenant>>()
+            //.WithBehavior<RepositoryDomainEventBehavior<Tenant>>()
+            .WithBehavior<RepositoryDomainEventPublisherBehavior<Tenant>>();
 
         services.AddEntityFrameworkRepository<Tag, CatalogDbContext>()
             .WithTransactions<NullRepositoryTransaction<Tag>>()
@@ -102,6 +114,7 @@ public class CatalogModule : WebModuleBase
     {
         new CatalogBookEndpoints().Map(app);
         new CatalogCategoryEndpoints().Map(app);
+        new CatalogPublisherEndpoints().Map(app);
 
         return app;
     }

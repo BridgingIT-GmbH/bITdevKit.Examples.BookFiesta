@@ -5,12 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-using System;
-using System.Diagnostics;
-using BridgingIT.DevKit.Domain.Model;
-
 [DebuggerDisplay("Id={Id}, Order={Order}, Title={Title}, ParentId={Parent?.Id}")]
-public class Category : AuditableEntity<CategoryId/*, Guid*/>, IConcurrent // TODO: make this an aggregate root?
+public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make this an aggregate root?
 {
     private readonly List<Book> books = [];
     private readonly List<Category> children = [];
