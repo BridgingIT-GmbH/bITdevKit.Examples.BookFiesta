@@ -5,11 +5,14 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-public class TenantSubscriptionPlanType(int id, string name, string description, bool isPaid) : Enumeration(id, name)
+public class TenantSubscriptionPlanType(int id, string name, string code, string description, bool isPaid)
+    : Enumeration(id, name)
 {
-    public static TenantSubscriptionPlanType Free = new(0, nameof(Free), "Lorem Ipsum", false);
-    public static TenantSubscriptionPlanType Basic = new(1, nameof(Basic), "Lorem Ipsum", true);
-    public static TenantSubscriptionPlanType Premium = new(2, nameof(Premium), "Lorem Ipsum", true);
+    public static TenantSubscriptionPlanType Free = new(0, nameof(Free), "FRE", "Lorem Ipsum", false);
+    public static TenantSubscriptionPlanType Basic = new(1, nameof(Basic), "BAS", "Lorem Ipsum", true);
+    public static TenantSubscriptionPlanType Premium = new(2, nameof(Premium), "PRM", "Lorem Ipsum", true);
+
+    public string Code { get; } = code;
 
     public string Description { get; } = description;
 

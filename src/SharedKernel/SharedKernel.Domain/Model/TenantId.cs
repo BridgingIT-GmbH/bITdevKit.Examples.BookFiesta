@@ -38,9 +38,9 @@ public class TenantId : AggregateRootId<Guid> // cannot be source generated whil
 
     public static TenantId Create(string id)
     {
-        if (string.IsNullOrWhiteSpace(id))
+        if (string.IsNullOrEmpty(id))
         {
-            throw new ArgumentException("Id cannot be null or whitespace.");
+            throw new ArgumentException("Id cannot be null or empty.", nameof(id));
         }
 
         return new TenantId(Guid.Parse(id));

@@ -23,7 +23,7 @@ public static class CoreSeedModels
                     name: $"Acme Corporation{GetSuffix(ticks)}",
                     registrationNumber: "AC123456",
                     contactEmail: EmailAddress.Create($"contact{GetSuffix(ticks)}@acme.com"),
-                    address: Address.Create("123 Business Ave", "Suite 100", "90210", "Los Angeles", "USA"))
+                    address: Address.Create($"Acme Corporation{GetSuffix(ticks)}", "123 Business Ave", "Suite 100", "90210", "Los Angeles", "USA"))
                     .SetContactPhone(PhoneNumber.Create("+1234567890"))
                     .SetWebsite(Url.Create("https://www.acme.com"))
                     .SetVatNumber(VatNumber.Create("US12-3456789")),
@@ -32,7 +32,7 @@ public static class CoreSeedModels
                     name: $"TechInnovate GmbH{GetSuffix(ticks)}",
                     registrationNumber: "HRB987654",
                     contactEmail: EmailAddress.Create($"info{GetSuffix(ticks)}@techinnovate.de"),
-                    address: Address.Create("Innovationsstraße 42", string.Empty, "10115", "Berlin", "Germany"))
+                    address: Address.Create($"TechInnovate GmbH{GetSuffix(ticks)}", "Innovationsstraße 42", string.Empty, "10115", "Berlin", "Germany"))
                     .SetContactPhone(PhoneNumber.Create("+49301234567"))
                     .SetWebsite(Url.Create("https://www.techinnovate.de"))
                     .SetVatNumber(VatNumber.Create("DE123456789")),
@@ -41,7 +41,7 @@ public static class CoreSeedModels
                     name: $"Global Trade Ltd{GetSuffix(ticks)}",
                     registrationNumber: "GTL789012",
                     contactEmail: EmailAddress.Create($"enquiries{GetSuffix(ticks)}@globaltrade.co.uk"),
-                    address: Address.Create("1 Commerce Street", "Floor 15", "EC1A 1BB", "London", "United Kingdom"))
+                    address: Address.Create($"Global Trade Ltd{GetSuffix(ticks)}", "1 Commerce Street", "Floor 15", "EC1A 1BB", "London", "United Kingdom"))
                     .SetContactPhone(PhoneNumber.Create("+442071234567"))
                     .SetWebsite(Url.Create("https://www.globaltrade.co.uk"))
                     .SetVatNumber(VatNumber.Create("GB123456789"))
@@ -76,8 +76,8 @@ public static class CoreSeedModels
         public static Customer[] Create(Tenant[] tenants, long ticks = 0) =>
             [.. new[]
             {
-                Customer.Create($"John", $"Doe", EmailAddress.Create($"john.doe{GetSuffix(ticks)}@example.com"), Address.Create("Main Street", string.Empty, "17100", "Anytown", "USA")),
-                Customer.Create($"Mary", $"Jane", EmailAddress.Create($"mary.jane{GetSuffix(ticks)}@example.com"), Address.Create("Maple Street", string.Empty, "17101", "Anytown", "USA"))
+                Customer.Create($"John", $"Doe", EmailAddress.Create($"john.doe{GetSuffix(ticks)}@example.com"), Address.Create("J. Doe", "Main Street", string.Empty, "17100", "Anytown", "USA")),
+                Customer.Create($"Mary", $"Jane", EmailAddress.Create($"mary.jane{GetSuffix(ticks)}@example.com"), Address.Create("M. Jane", "Maple Street", string.Empty, "17101", "Anytown", "USA"))
             }.ForEach(e => e.Id = CustomerId.Create($"{GuidGenerator.Create($"Customer_{e.Email}")}"))];
     }
 

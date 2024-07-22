@@ -9,7 +9,7 @@ using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class CustomerTypeConfiguration : IEntityTypeConfiguration<Customer>
+public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer>
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
@@ -40,6 +40,11 @@ public class CustomerTypeConfiguration : IEntityTypeConfiguration<Customer>
 
         builder.OwnsOne(e => e.Address, b =>
         {
+            b.Property(e => e.Name)
+                .HasColumnName("AddressName")
+                .HasMaxLength(512)
+                .IsRequired();
+
             b.Property(e => e.Line1)
                 .HasColumnName("AddressLine1")
                 .HasMaxLength(256)

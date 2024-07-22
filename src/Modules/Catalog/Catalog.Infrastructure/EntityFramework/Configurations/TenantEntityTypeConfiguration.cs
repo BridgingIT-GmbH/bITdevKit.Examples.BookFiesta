@@ -11,7 +11,7 @@ using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class TenantTypeConfiguration :
+public class TenantEntityTypeConfiguration :
     IEntityTypeConfiguration<Tenant>,
     IEntityTypeConfiguration<TenantBranding>
 {
@@ -80,25 +80,31 @@ public class TenantTypeConfiguration :
                 .ValueGeneratedOnAdd()
                 .HasConversion(
                     id => id.Value,
-                    value => TenantSubscriptionId.Create(value));
+                    id => TenantSubscriptionId.Create(id));
 
             b.Property(e => e.PlanType)
                 //.HasColumnName(nameof(Subscription.PlanType))
                 .HasConversion(
                     status => status.Id,
-                    value => Enumeration.From<TenantSubscriptionPlanType>(value));
+                    id => Enumeration.From<TenantSubscriptionPlanType>(id));
+                //.HasConversion(
+                //    new EnumerationConverter<int, string, TenantSubscriptionPlanType>());
 
             b.Property(e => e.Status)
                 //.HasColumnName(nameof(Subscription.Status))
                 .HasConversion(
                     status => status.Id,
-                    value => Enumeration.From<TenantSubscriptionStatus>(value));
+                    id => Enumeration.From<TenantSubscriptionStatus>(id));
+                //.HasConversion(
+                //    new EnumerationConverter<int, string, TenantSubscriptionStatus>());
 
             b.Property(e => e.BillingCycle)
                 //.HasColumnName(nameof(Subscription.BillingCycle))
                 .HasConversion(
                     status => status.Id,
-                    value => Enumeration.From<TenantSubscriptionBillingCycle>(value));
+                    id => Enumeration.From<TenantSubscriptionBillingCycle>(id));
+            //.HasConversion(//.HasConversion(
+            //    new EnumerationConverter<int, string, TenantSubscriptionBillingCycle>());
 
             b.OwnsOne(e => e.Schedule, sb =>
             {

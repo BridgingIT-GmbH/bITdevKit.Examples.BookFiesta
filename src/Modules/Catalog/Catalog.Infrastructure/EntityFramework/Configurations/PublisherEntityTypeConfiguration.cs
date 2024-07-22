@@ -9,7 +9,7 @@ using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class PublisherTypeConfiguration : IEntityTypeConfiguration<Publisher>
+public class PublisherEntityTypeConfiguration : IEntityTypeConfiguration<Publisher>
 {
     public void Configure(EntityTypeBuilder<Publisher> builder)
     {
@@ -36,6 +36,11 @@ public class PublisherTypeConfiguration : IEntityTypeConfiguration<Publisher>
 
         builder.OwnsOne(e => e.Address, b =>
         {
+            b.Property(e => e.Name)
+                .HasColumnName("AddressName")
+                .HasMaxLength(512)
+                .IsRequired();
+
             b.Property(e => e.Line1)
                 .HasColumnName("AddressLine1")
                 .HasMaxLength(256)

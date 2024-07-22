@@ -9,7 +9,7 @@ using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class CompanyTypeConfiguration :
+public class CompanyEntityTypeConfiguration :
     IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
@@ -37,6 +37,11 @@ public class CompanyTypeConfiguration :
 
         builder.OwnsOne(e => e.Address, b =>
         {
+            b.Property(e => e.Name)
+                .HasColumnName("AddressName")
+                .HasMaxLength(512)
+                .IsRequired();
+
             b.Property(e => e.Line1)
                 .HasColumnName("AddressLine1")
                 .HasMaxLength(256)
@@ -80,6 +85,11 @@ public class CompanyTypeConfiguration :
 
         builder.OwnsOne(e => e.Address, b =>
         {
+            b.Property(e => e.Name)
+                .HasColumnName("AddressName")
+                .HasMaxLength(512)
+                .IsRequired();
+
             b.Property(e => e.Line1)
                 .HasColumnName("AddressLine1")
                 .HasMaxLength(256)

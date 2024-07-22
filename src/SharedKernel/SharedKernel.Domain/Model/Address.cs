@@ -14,14 +14,17 @@ public class Address : ValueObject
     {
     }
 
-    private Address(string line1, string line2, string postalCode, string city, string country)
+    private Address(string name, string line1, string line2, string postalCode, string city, string country)
     {
+        this.Name = name;
         this.Line1 = line1;
         this.Line2 = line2;
         this.PostalCode = postalCode;
         this.City = city;
         this.Country = country;
     }
+
+    public string Name { get; private set; }
 
     public string Line1 { get; private set; }
 
@@ -33,9 +36,9 @@ public class Address : ValueObject
 
     public string Country { get; private set; }
 
-    public static Address Create(string line1, string line2, string postalCode, string city, string country)
+    public static Address Create(string name, string line1, string line2, string postalCode, string city, string country)
     {
-        var address = new Address(line1, line2, postalCode, city, country);
+        var address = new Address(name, line1, line2, postalCode, city, country);
         if (!IsValid(address))
         {
             throw new BusinessRuleNotSatisfiedException("Invalid email address");
@@ -46,6 +49,7 @@ public class Address : ValueObject
 
     protected override IEnumerable<object> GetAtomicValues()
     {
+        yield return this.Name;
         yield return this.Line1;
         yield return this.Line2;
         yield return this.PostalCode;
@@ -55,7 +59,8 @@ public class Address : ValueObject
 
     private static bool IsValid(Address address)
     {
-        return !string.IsNullOrEmpty(address.Line1)
+        return !string.IsNullOrEmpty(address.Name)
+            && !string.IsNullOrEmpty(address.Line1)
             && !string.IsNullOrEmpty(address.PostalCode)
             && !string.IsNullOrEmpty(address.Country)
             && !string.IsNullOrEmpty(address.Country);

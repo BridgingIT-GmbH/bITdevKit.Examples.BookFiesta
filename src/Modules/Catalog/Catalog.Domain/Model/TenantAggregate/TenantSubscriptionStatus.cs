@@ -5,7 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-public class TenantSubscriptionStatus(int id, string name, string description) : Enumeration(id, name)
+public class TenantSubscriptionStatus(int id, string name, string description)
+    : Enumeration(id, name)
 {
     public static TenantSubscriptionStatus Pending = new(1, nameof(Pending), "Lorem Ipsum");
     public static TenantSubscriptionStatus Approved = new(2, nameof(Approved), "Lorem Ipsum");

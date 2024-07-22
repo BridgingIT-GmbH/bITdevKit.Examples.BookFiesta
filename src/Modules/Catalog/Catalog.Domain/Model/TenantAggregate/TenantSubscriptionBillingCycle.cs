@@ -5,7 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
-public class TenantSubscriptionBillingCycle(int id, string name, string description, bool autoRenew) : Enumeration(id, name)
+public class TenantSubscriptionBillingCycle(int id, string name, string description, bool autoRenew)
+    : Enumeration(id, name)
 {
     public static TenantSubscriptionBillingCycle Never = new(0, nameof(Never), "Lorem Ipsum", false);
     public static TenantSubscriptionBillingCycle Monthly = new(1, nameof(Monthly), "Lorem Ipsum", true);
