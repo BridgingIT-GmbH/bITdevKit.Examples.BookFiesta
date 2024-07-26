@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Application;
+namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Common;
@@ -11,8 +11,10 @@ using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
-public class PublisherFindOneQuery(string bookId) : QueryRequestBase<Result<Publisher>>
+public class PublisherFindOneQuery(string tenantId, string bookId) : QueryRequestBase<Result<Publisher>>
 {
+    public string TenantId { get; } = tenantId;
+
     public string PublisherId { get; } = bookId;
 
     public override ValidationResult Validate() =>
@@ -22,13 +24,8 @@ public class PublisherFindOneQuery(string bookId) : QueryRequestBase<Result<Publ
     {
         public Validator()
         {
-            this.RuleFor(c => c.PublisherId).NotNull().NotEmpty().WithMessage("Must not be empty.");
-            this.RuleFor(c => c.PublisherId).Must(this.BeValidGuid).WithMessage("Invalid format.");
-        }
-
-        private bool BeValidGuid(string value)
-        {
-            return Guid.TryParse(value, out _);
+            this.RuleFor(c => c.TenantId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.PublisherId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
         }
     }
 }

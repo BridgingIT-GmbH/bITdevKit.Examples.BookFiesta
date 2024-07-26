@@ -20,9 +20,10 @@ public class BookId : AggregateRootId<Guid>
 
     public bool IsEmpty => this.Value == Guid.Empty;
 
-    public static implicit operator Guid(BookId id) => id?.Value ?? default; // allows a BookId value to be implicitly converted to a Guid.
-    public static implicit operator string(BookId id) => id?.Value.ToString(); // allows a BookId value to be implicitly converted to a string.
-    public static implicit operator BookId(Guid id) => id; // allows a Guid value to be implicitly converted to a BookId object.
+    public static implicit operator Guid(BookId id) => id?.Value ?? default; // allows a TypedId value to be implicitly converted to a Guid.
+    public static implicit operator string(BookId id) => id?.Value.ToString(); // allows a TypedId value to be implicitly converted to a string.
+    public static implicit operator BookId(Guid id) => Create(id); // allows a Guid value to be implicitly converted to a TypedId object.
+    public static implicit operator BookId(string id) => Create(id); // allows a string value to be implicitly converted to a TypedId object.
 
     public static BookId Create()
     {

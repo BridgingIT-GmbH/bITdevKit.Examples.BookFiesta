@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Application;
+namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,9 +23,10 @@ public class CustomerCreateCommandHandler(
     public override async Task<CommandResponse<Result<Customer>>> Process(
         CustomerCreateCommand command, CancellationToken cancellationToken)
     {
+        var tenantId = TenantId.Create(command.TenantId);
         var email = EmailAddress.Create(command.Email);
-        var address = Address.Create(command.AddressLine1, command.AddressLine2, command.AddressPostalCode, command.AddressCity, command.AddressCountry);
-        var customer = Customer.Create(command.FirstName, command.LastName, email, address);
+        var address = Address.Create(command.AddressName, command.AddressLine1, command.AddressLine2, command.AddressPostalCode, command.AddressCity, command.AddressCountry);
+        var customer = Customer.Create(tenantId, command.FirstName, command.LastName, email, address);
 
         Check.Throw(
         [

@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Application;
+namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Common;
@@ -11,9 +11,11 @@ using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
-public class BookFindAllForCategoryQuery(string categoryId)
+public class BookFindAllForCategoryQuery(string tenantId, string categoryId)
     : QueryRequestBase<Result<IEnumerable<Book>>>
 {
+    public string TenantId { get; } = tenantId;
+
     public string CategoryId { get; } = categoryId;
 
     public override ValidationResult Validate() =>
@@ -24,12 +26,7 @@ public class BookFindAllForCategoryQuery(string categoryId)
         public Validator()
         {
             this.RuleFor(c => c.CategoryId).NotNull().NotEmpty().WithMessage("Must not be empty.");
-            this.RuleFor(c => c.CategoryId).Must(this.BeValidGuid).WithMessage("Invalid format.");
-        }
-
-        private bool BeValidGuid(string value)
-        {
-            return Guid.TryParse(value, out _);
+            this.RuleFor(c => c.CategoryId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
         }
     }
 }

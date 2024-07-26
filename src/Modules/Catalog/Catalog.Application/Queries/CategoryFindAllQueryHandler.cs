@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Application;
+namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,8 +24,22 @@ public class CategoryFindAllQueryHandler(
         var categories = await repository.FindAllResultAsync(cancellationToken: cancellationToken).AnyContext();
         this.PrintCategories(categories.Value.SafeNull().Where(c => c.Parent == null).OrderBy(e => e.Order));
 
+        if (query.Flatten)
+        {
+            categories.Value = this.FlattenCategories(categories.Value);
+
+            return QueryResponse.Success(categories.Value.SafeNull().AsEnumerable());
+        }
+
         return QueryResponse.Success(categories.Value.SafeNull()
             .Where(c => c.Parent == null).OrderBy(e => e.Order).AsEnumerable());
+    }
+
+    private IEnumerable<Category> FlattenCategories(IEnumerable<Category> categories)
+    {
+        return categories.SafeAny()
+            ? categories.SelectMany(c => new[] { c }.Concat(c.Children)).ToList().DistinctBy(c => c.Id)
+            : [];
     }
 
     private void PrintCategories(IEnumerable<Category> categories, int level = 0)

@@ -12,14 +12,17 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     private Publisher() { } // Private constructor required by EF Core
 
-    private Publisher(string name, string description, EmailAddress contactEmail = null, Address address = null, Website website = null)
+    private Publisher(TenantId tenantId, string name, string description, EmailAddress contactEmail = null, Address address = null, Website website = null)
     {
+        this.TenantId = tenantId;
         this.SetName(name);
         this.SetDescription(description);
         this.SetContactEmail(contactEmail);
         this.SetAddress(address);
         this.SetDescription(website);
     }
+
+    public TenantId TenantId { get; private set; }
 
     public string Name { get; private set; }
 
@@ -35,9 +38,9 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     //public IEnumerable<PublisherBook> Books => this.books;
 
-    public static Publisher Create(string name, string description, EmailAddress contactEmail = null, Address address = null, Website website = null)
+    public static Publisher Create(TenantId tenantId, string name, string description, EmailAddress contactEmail = null, Address address = null, Website website = null)
     {
-        var publisher = new Publisher(name, description, contactEmail, address, website);
+        var publisher = new Publisher(tenantId, name, description, contactEmail, address, website);
 
         publisher.DomainEvents.Register(
                 new PublisherCreatedDomainEvent(publisher), true);

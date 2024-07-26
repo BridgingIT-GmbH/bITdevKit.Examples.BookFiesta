@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Presentation;
 
-using BridgingIT.DevKit.Examples.BookStore.Application;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using Mapster;
 

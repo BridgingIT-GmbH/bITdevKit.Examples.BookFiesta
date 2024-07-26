@@ -6,7 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.UnitTests.Application;
 
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookStore.Application;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 
@@ -17,10 +17,11 @@ public class CustomerFindAllQueryHandlerTests
     public async Task Process_ValidQuery_ReturnsSuccessResultWithCustomers()
     {
         // Arrange
+        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
         var expectedCustomers = new List<Customer>
         {
-            Customer.Create("John", "Doe", EmailAddress.Create("john.doe@example.com")),
-            Customer.Create("Mary", "Jane", EmailAddress.Create("mary.jane@example.com")),
+            Customer.Create(tenantIds[0], "John", "Doe", EmailAddress.Create("john.doe@example.com")),
+            Customer.Create(tenantIds[0], "Mary", "Jane", EmailAddress.Create("mary.jane@example.com")),
         };
 
         var repository = Substitute.For<IGenericRepository<Customer>>();
@@ -30,7 +31,7 @@ public class CustomerFindAllQueryHandlerTests
         var sut = new CustomerFindAllQueryHandler(Substitute.For<ILoggerFactory>(), repository);
 
         // Act
-        var response = await sut.Process(new CustomerFindAllQuery(), CancellationToken.None);
+        var response = await sut.Process(new CustomerFindAllQuery(tenantIds[0]), CancellationToken.None);
 
         // Assert
         response?.Result.ShouldNotBeNull();

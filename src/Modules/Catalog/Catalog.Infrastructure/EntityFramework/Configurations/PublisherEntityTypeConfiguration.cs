@@ -3,9 +3,10 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Infrastructure;
+namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure;
 
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,6 +30,19 @@ public class PublisherEntityTypeConfiguration : IEntityTypeConfiguration<Publish
             .HasConversion(
                 id => id.Value,
                 value => PublisherId.Create(value));
+
+        //builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
+        //    .WithMany()
+        //    .HasForeignKey(e => e.TenantId).IsRequired();
+        builder.Property(e => e.TenantId)
+        .HasConversion(
+            id => id.Value,
+            value => TenantId.Create(value));
+        builder.HasIndex(e => e.TenantId);
+        builder.HasOne("organization.Tenant")
+            .WithMany()
+            .HasForeignKey(nameof(TenantId))
+            .IsRequired();
 
         builder.Property(e => e.Name)
             .IsRequired()

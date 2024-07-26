@@ -8,12 +8,10 @@ namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Domain.Specifications;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookStore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 public class CatalogQueryService(
@@ -43,4 +41,5 @@ public class CatalogQueryService(
 
         return await bookRepository.FindAllResultAsync(
             new Specification<Book>(e => relatedBookIds.Contains(e.Id)));
-    }}
+    }
+}

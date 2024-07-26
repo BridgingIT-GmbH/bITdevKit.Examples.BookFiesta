@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 
+using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
+
 [DebuggerDisplay("Id={Id}, Order={Order}, Title={Title}, ParentId={Parent?.Id}")]
 public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make this an aggregate root?
 {
@@ -13,13 +15,16 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     private Category() { } // Private constructor required by EF Core
 
-    private Category(string title, string description = null, int order = 0, Category parent = null)
+    private Category(TenantId tenantId, string title, string description = null, int order = 0, Category parent = null)
     {
+        this.TenantId = tenantId;
         this.SetTitle(title);
         this.SetDescription(description);
         this.SetParent(parent);
         this.Order = order;
     }
+
+    public TenantId TenantId { get; private set; }
 
     public string Title { get; private set; }
 
@@ -35,9 +40,9 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public Guid Version { get; set; }
 
-    public static Category Create(string title, string description = null, int order = 0, Category parent = null)
+    public static Category Create(TenantId tenantId, string title, string description = null, int order = 0, Category parent = null)
     {
-        return new Category(title, description, order, parent);
+        return new Category(tenantId, title, description, order, parent);
     }
 
     public Category SetTitle(string title)

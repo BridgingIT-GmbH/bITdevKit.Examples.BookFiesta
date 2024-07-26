@@ -3,6 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
+#pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text.Json;
@@ -13,16 +14,19 @@ using BridgingIT.DevKit.Application.Messaging;
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Application.Utilities;
 using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation;
-using BridgingIT.DevKit.Examples.BookStore.Infrastructure;
+using BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Client.Pages;
+using BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Server;
+using BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Server2.Components;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using BridgingIT.DevKit.Presentation;
 using BridgingIT.DevKit.Presentation.Web;
 using BridgingIT.DevKit.Presentation.Web.JobScheduling;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using MudBlazor.Services;
 using NSwag;
 using NSwag.Generation.AspNetCore;
 using NSwag.Generation.Processors.Security;
@@ -31,6 +35,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+#pragma warning restore SA1200 // Using directives should be placed correctly
 
 // ===============================================================================================
 // Create the webhost
@@ -50,7 +55,7 @@ builder.Services.Configure<JsonOptions>(ConfigureJsonOptions); // configure json
 
 // ===============================================================================================
 // Configure the services
-builder.Services.AddMediatR();
+builder.Services.AddMediatR(); // or AddDomainEvents()?
 builder.Services.AddMapping().WithMapster();
 
 builder.Services.AddCommands()
@@ -97,21 +102,26 @@ builder.Services.AddMessaging(builder.Configuration, o => o
 ConfigureHealth(builder.Services);
 
 builder.Services.AddMetrics(); // TOOL: dotnet-counters monitor -n BridgingIT.DevKit.Examples.DinnerFiesta.Presentation.Web.Server --counters bridgingit_devkit
-builder.Services.Configure<ApiBehaviorOptions>(ConfigureApiBehavior);
+builder.Services.Configure<ApiBehaviorOptions>(ConfiguraApiBehavior);
 builder.Services.AddSingleton<IConfigurationRoot>(builder.Configuration);
-builder.Services.AddProblemDetails(Configure.ProblemDetails);
+builder.Services.AddProblemDetails(o => Configure.ProblemDetails(o, true));
 //builder.Services.AddProblemDetails(Configure.ProblemDetails); // TODO: replace this with the new .NET8 error handling with IExceptionHandler https://www.milanjovanovic.tech/blog/global-error-handling-in-aspnetcore-8 and AddProblemDetails https://youtu.be/4NfflZilTvk?t=596
 //builder.Services.AddExceptionHandler();
 //builder.Services.AddProblemDetails();
 
-builder.Services.AddRazorPages();
+// Add services to the container.
+builder.Services.AddRazorComponents()
+    .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddLocalization();
+builder.Services.AddMudServices();
 builder.Services.AddSignalR();
 
 builder.Services.AddEndpoints<SystemEndpoints>(builder.Environment.IsDevelopment());
 builder.Services.AddEndpoints<JobSchedulingEndpoints>(builder.Environment.IsDevelopment());
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument(ConfigureOpenApiDocument); // TODO: still needed when all OpenAPI specifications are available in swagger UI?
+builder.Services.AddOpenApiDocument(ConfigureOpenApiDocument);
 
 builder.Services.AddApplicationInsightsTelemetry(); // https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core
 builder.Services.AddOpenTelemetry()
@@ -121,19 +131,22 @@ builder.Services.AddOpenTelemetry()
 // ===============================================================================================
 // Configure the HTTP request pipeline
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
-    //app.UseWebAssemblyDebugging();
+    app.UseWebAssemblyDebugging();
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
 }
 
+//app.UseResponseCompression();
+app.UseHttpsRedirection();
+
 app.UseProblemDetails();
 //app.UseExceptionHandler();
-app.UseRouting();
 
 app.UseRequestCorrelation();
 app.UseRequestModuleContext();
@@ -142,23 +155,8 @@ app.UseRequestLogging();
 app.UseOpenApi();
 app.UseSwaggerUi();
 
-//app.UseResponseCompression();
-app.UseHttpsRedirection();
-
-//app.UseBlazorFrameworkFiles();
-app.UseStaticFiles(new StaticFileOptions
-{
-    ContentTypeProvider = CreateContentTypeProvider(),
-    OnPrepareResponse = context =>
-    {
-        if (context.Context.Response.ContentType == ContentType.YAML.MimeType()) // Disable caching for yaml (OpenAPI) files
-        {
-            context.Context.Response.Headers.CacheControl = "no-cache, no-store, must-revalidate";
-            context.Context.Response.Headers.Expires = "-1";
-            context.Context.Response.Headers.Pragma = "no-cache";
-        }
-    }
-});
+app.UseStaticFiles();
+app.UseAntiforgery();
 
 app.UseModules();
 
@@ -171,16 +169,20 @@ if (builder.Configuration["Metrics:Prometheus:Enabled"].To<bool>())
 }
 
 app.MapModules();
-app.MapRazorPages();
 app.MapControllers();
 app.MapEndpoints();
 app.MapHealthChecks();
-app.MapFallbackToFile("index.html");
-app.MapHub<CatalogSignalRHub>("/signalrhub-catalog");
+
+app.MapRazorComponents<App>()
+    .AddInteractiveWebAssemblyRenderMode()
+    //.AddInteractiveServerRenderMode()
+    .AddAdditionalAssemblies(typeof(Counter).Assembly);
+
+app.MapHub<NotificationHub>("/signalrhub");
 
 app.Run();
 
-void ConfigureApiBehavior(ApiBehaviorOptions options)
+void ConfiguraApiBehavior(ApiBehaviorOptions options)
 {
     options.SuppressModelStateInvalidFilter = true;
 }
@@ -325,13 +327,6 @@ void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings setting
     settings.OperationProcessors.Add(new AuthorizeRolesSummaryOperationProcessor());
     settings.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("bearer"));
     settings.OperationProcessors.Add(new AuthorizationOperationProcessor("bearer"));
-}
-
-static FileExtensionContentTypeProvider CreateContentTypeProvider()
-{
-    var provider = new FileExtensionContentTypeProvider();
-    provider.Mappings.Add(".yaml", ContentType.YAML.MimeType());
-    return provider;
 }
 
 public partial class Program

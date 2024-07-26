@@ -7,56 +7,65 @@ namespace BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Controllers;
 
 using System.Threading;
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookStore.Application;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookStore.Presentation;
 using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/tenants/{tenantId}/[controller]")]
 public class CustomersController(IMapper mapper, IMediator mediator) : ControllerBase // TODO: use the new IEndpoints from bitdevkit, see Maps below
 {
     private readonly IMediator mediator = mediator;
     private readonly IMapper mapper = mapper;
 
     [HttpGet("{id}", Name = nameof(Get))]
-    public async Task<ActionResult<CustomerModel>> Get(string id, CancellationToken cancellationToken)
+    public async Task<ActionResult<CustomerModel>> Get(string tenantId, string id, CancellationToken cancellationToken)
     {
         var result = (await this.mediator.Send(
-            new CustomerFindOneQuery(id), cancellationToken)).Result;
+            new CustomerFindOneQuery(tenantId, id), cancellationToken)).Result;
         return result.ToOkActionResult<Customer, CustomerModel>(this.mapper);
     }
 
     [HttpGet]
-    public async Task<ActionResult<ICollection<CustomerModel>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<ICollection<CustomerModel>>> GetAll(string tenantId, CancellationToken cancellationToken)
     {
         var result = (await this.mediator.Send(
-            new CustomerFindAllQuery(), cancellationToken)).Result;
+            new CustomerFindAllQuery(tenantId), cancellationToken)).Result;
         return result.ToOkActionResult<Customer, CustomerModel>(this.mapper);
     }
 
     [HttpPost]
-    public async Task<ActionResult<CustomerModel>> PostAsync([FromBody] CustomerModel model, CancellationToken cancellationToken)
+    public async Task<ActionResult<CustomerModel>> PostAsync(string tenantId, [FromBody] CustomerModel model, CancellationToken cancellationToken)
     {
+        if (tenantId != model.TenantId)
+        {
+            return new BadRequestObjectResult(null);
+        }
+
         var result = (await this.mediator.Send(
             this.mapper.Map<CustomerModel, CustomerCreateCommand>(model), cancellationToken)).Result;
         return result.ToCreatedActionResult<Customer, CustomerModel>(this.mapper, nameof(this.Get), new { id = result.Value?.Id });
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<CustomerModel>> PutAsync(string id, [FromBody] CustomerModel model, CancellationToken cancellationToken)
+    public async Task<ActionResult<CustomerModel>> PutAsync(string tenantId, string id, [FromBody] CustomerModel model, CancellationToken cancellationToken)
     {
+        if (tenantId != model.TenantId || id != model.Id)
+        {
+            return new BadRequestObjectResult(null);
+        }
+
         var result = (await this.mediator.Send(
             this.mapper.Map<CustomerModel, CustomerUpdateCommand>(model), cancellationToken)).Result;
         return result.ToUpdatedActionResult<Customer, CustomerModel>(this.mapper, nameof(this.Get), new { id = result.Value?.Id });
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<CustomerModel>> DeleteAsync(string id, CancellationToken cancellationToken)
+    public async Task<ActionResult<CustomerModel>> DeleteAsync(string tenantId, string id, CancellationToken cancellationToken)
     {
-        var result = (await this.mediator.Send(new CustomerDeleteCommand { Id = id }, cancellationToken)).Result;
+        var result = (await this.mediator.Send(new CustomerDeleteCommand(tenantId, id), cancellationToken)).Result;
         return result.ToDeletedActionResult<CustomerModel>(); // TODO: remove generic CustomerModel
     }
 }

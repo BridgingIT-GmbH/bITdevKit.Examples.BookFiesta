@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Application;
+namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Common;
@@ -11,8 +11,10 @@ using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
-public class CustomerFindOneQuery(string customerId) : QueryRequestBase<Result<Customer>>
+public class CustomerFindOneQuery(string tenantId, string customerId) : QueryRequestBase<Result<Customer>>
 {
+    public string TenantId { get; } = tenantId;
+
     public string CustomerId { get; } = customerId;
 
     public override ValidationResult Validate() =>
@@ -22,7 +24,8 @@ public class CustomerFindOneQuery(string customerId) : QueryRequestBase<Result<C
     {
         public Validator()
         {
-            this.RuleFor(c => c.CustomerId).NotNull().NotEmpty().WithMessage("Must not be empty.");
+            this.RuleFor(c => c.TenantId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.CustomerId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
         }
     }
 }

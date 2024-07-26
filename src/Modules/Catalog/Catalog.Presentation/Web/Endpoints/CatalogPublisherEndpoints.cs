@@ -1,11 +1,9 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation.Web;
 
 using System.Collections.Generic;
-using System.Net;
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookStore.Application;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookStore.Presentation;
 using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -18,15 +16,16 @@ public class CatalogPublisherEndpoints : EndpointsBase
 {
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/catalog/publishers")
+        var group = app.MapGroup("api/tenants/{tenantId}catalog/publishers")
             .WithTags("Catalog");
 
         group.MapGet("/{id}", async Task<Results<Ok<PublisherModel>, NotFound, ProblemHttpResult>> (
             [FromServices] IMediator mediator,
             [FromServices] IMapper mapper,
+            [FromRoute] string tenantId,
             [FromRoute] string id) =>
         {
-            var result = (await mediator.Send(new PublisherFindOneQuery(id))).Result;
+            var result = (await mediator.Send(new PublisherFindOneQuery(tenantId, id))).Result;
 
             return (result.Value == null) ? TypedResults.NotFound() : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Publisher, PublisherModel>(result.Value))
@@ -38,9 +37,10 @@ public class CatalogPublisherEndpoints : EndpointsBase
         group.MapGet("/{id}/books", async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>> (
             [FromServices] IMediator mediator,
             [FromServices] IMapper mapper,
+            [FromRoute] string tenantId,
             [FromRoute] string id) =>
         {
-            var result = (await mediator.Send(new BookFindAllForPublisherQuery(id))).Result;
+            var result = (await mediator.Send(new BookFindAllForPublisherQuery(tenantId, id))).Result;
 
             return result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Book, BookModel>(result.Value))
@@ -52,9 +52,10 @@ public class CatalogPublisherEndpoints : EndpointsBase
         // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-8.0
         group.MapGet(string.Empty, async Task<Results<Ok<IEnumerable<PublisherModel>>, ProblemHttpResult>> (
             [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper) =>
+            [FromServices] IMapper mapper,
+            [FromRoute] string tenantId) =>
         {
-            var result = (await mediator.Send(new PublisherFindAllQuery())).Result;
+            var result = (await mediator.Send(new PublisherFindAllQuery(tenantId))).Result;
 
             return result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Publisher, PublisherModel>(result.Value))

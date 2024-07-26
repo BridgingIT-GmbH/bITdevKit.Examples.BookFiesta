@@ -6,8 +6,9 @@
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.IntegrationTests.Presentation.Web;
 
 using System.Text.Json;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookStore.Presentation;
+using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 
 [IntegrationTest("GettingStarted.Presentation.Web")]
 public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture) : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
@@ -86,9 +87,8 @@ public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicatio
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        var companies = CoreSeedModels.Companies.Create(DateTime.UtcNow.Ticks);
-        var tenants = CoreSeedModels.Tenants.Create(companies, DateTime.UtcNow.Ticks);
-        var customer = CoreSeedModels.Customers.Create(tenants, DateTime.UtcNow.Ticks)[0];
+        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             FirstName = customer.FirstName,
@@ -125,9 +125,8 @@ public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicatio
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        var companies = CoreSeedModels.Companies.Create(DateTime.UtcNow.Ticks);
-        var tenants = CoreSeedModels.Tenants.Create(companies, DateTime.UtcNow.Ticks);
-        var customer = CoreSeedModels.Customers.Create(tenants, DateTime.UtcNow.Ticks)[0];
+        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             FirstName = string.Empty,
@@ -187,9 +186,8 @@ public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicatio
 
     private async Task<CustomerModel> PostCustomerCreate(string route)
     {
-        var companies = CoreSeedModels.Companies.Create(DateTime.UtcNow.Ticks);
-        var tenants = CoreSeedModels.Tenants.Create(companies, DateTime.UtcNow.Ticks);
-        var customer = CoreSeedModels.Customers.Create(tenants, DateTime.UtcNow.Ticks)[0];
+        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             FirstName = customer.FirstName,

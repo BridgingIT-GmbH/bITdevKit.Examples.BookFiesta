@@ -3,12 +3,10 @@ using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookStore.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation.Web;
-using BridgingIT.DevKit.Examples.BookStore.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -57,15 +55,6 @@ public class CatalogModule : WebModuleBase
             .WithBehavior<RepositoryAuditStateBehavior<Customer>>()
             //.WithBehavior<RepositoryDomainEventBehavior<Customer>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Customer>>();
-
-        services.AddEntityFrameworkRepository<Tenant, CatalogDbContext>()
-            .WithTransactions<NullRepositoryTransaction<Tenant>>()
-            .WithBehavior<RepositoryTracingBehavior<Tenant>>()
-            .WithBehavior<RepositoryLoggingBehavior<Tenant>>()
-            .WithBehavior<RepositoryConcurrentBehavior<Tenant>>()
-            .WithBehavior<RepositoryAuditStateBehavior<Tenant>>()
-            //.WithBehavior<RepositoryDomainEventBehavior<Tenant>>()
-            .WithBehavior<RepositoryDomainEventPublisherBehavior<Tenant>>();
 
         services.AddEntityFrameworkRepository<Tag, CatalogDbContext>()
             .WithTransactions<NullRepositoryTransaction<Tag>>()

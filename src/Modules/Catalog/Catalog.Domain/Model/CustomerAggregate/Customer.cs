@@ -11,13 +11,16 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
     {
     }
 
-    private Customer(string firstName, string lastName, EmailAddress email, Address address = null)
+    private Customer(TenantId tenantId, string firstName, string lastName, EmailAddress email, Address address = null)
     {
+        this.TenantId = tenantId;
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
         this.Address = address;
     }
+
+    public TenantId TenantId { get; private set; }
 
     public string FirstName { get; private set; }
 
@@ -29,9 +32,9 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
     public Guid Version { get; set; }
 
-    public static Customer Create(string firstName, string lastName, EmailAddress email, Address address = null)
+    public static Customer Create(TenantId tenantId, string firstName, string lastName, EmailAddress email, Address address = null)
     {
-        var customer = new Customer(firstName, lastName, email, address);
+        var customer = new Customer(tenantId, firstName, lastName, email, address);
 
         customer.DomainEvents.Register(
             new CustomerCreatedDomainEvent(customer));
@@ -55,9 +58,9 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
         return this;
     }
 
-    public Customer SetAddress(string line1, string line2, string postalCode, string city, string country)
+    public Customer SetAddress(string name, string line1, string line2, string postalCode, string city, string country)
     {
-        var address = Address.Create(line1, line2, postalCode, city, country);
+        var address = Address.Create(name, line1, line2, postalCode, city, country);
         if (this.Address?.Equals(address) == false)
         {
             this.Address = address;

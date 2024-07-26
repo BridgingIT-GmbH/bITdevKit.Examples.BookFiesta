@@ -1,0 +1,39 @@
+﻿// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+namespace BridgingIT.DevKit.Examples.BookStore.Organization.Application;
+
+using BridgingIT.DevKit.Application.Commands;
+using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Examples.BookStore.Organization.Domain;
+using FluentValidation;
+using FluentValidation.Results;
+
+public class TenantCreateCommand(TenantModel model)
+    : CommandRequestBase<Result<Tenant>>
+{
+    public TenantModel Model { get; } = model;
+
+    public override ValidationResult Validate() =>
+        new Validator().Validate(this);
+
+    public class Validator : AbstractValidator<TenantCreateCommand>
+    {
+        public Validator()
+        {
+            this.RuleFor(c => c.Model).SetValidator(new ModelValidator());
+        }
+
+        private class ModelValidator : AbstractValidator<TenantModel>
+        {
+            public ModelValidator()
+            {
+                this.RuleFor(m => m).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Id).MustBeDefaultOrEmptyGuid().WithMessage("Must be empty.");
+                this.RuleFor(m => m.CompanyId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
+            }
+        }
+    }
+}

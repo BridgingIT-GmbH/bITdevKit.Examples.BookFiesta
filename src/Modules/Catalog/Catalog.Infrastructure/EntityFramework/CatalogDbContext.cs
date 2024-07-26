@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Infrastructure;
+namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure;
 
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
@@ -12,8 +12,6 @@ using Microsoft.EntityFrameworkCore;
 public class CatalogDbContext(DbContextOptions<CatalogDbContext> options)
     : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext, IOutboxMessageContext
 {
-    public DbSet<Tenant> Tenants { get; set; }
-
     public DbSet<Book> Books { get; set; }
 
     public DbSet<Category> Categories { get; set; }

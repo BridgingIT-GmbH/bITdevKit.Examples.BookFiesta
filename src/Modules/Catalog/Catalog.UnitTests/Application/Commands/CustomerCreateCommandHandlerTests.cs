@@ -6,8 +6,9 @@
 namespace BridgingIT.DevKit.Examples.BookStore.Catalog.UnitTests.Application;
 
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookStore.Application;
+using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
 
 [UnitTest("GettingStarted.Application")]
 public class CustomerCreateCommandHandlerTests
@@ -17,10 +18,9 @@ public class CustomerCreateCommandHandlerTests
     {
         // Arrange
         var repository = Substitute.For<IGenericRepository<Customer>>();
-        var companies = CoreSeedModels.Companies.Create(DateTime.UtcNow.Ticks);
-        var tenants = CoreSeedModels.Tenants.Create(companies, DateTime.UtcNow.Ticks);
-        var customer = CoreSeedModels.Customers.Create(tenants, DateTime.UtcNow.Ticks)[0];
-        var command = new CustomerCreateCommand { FirstName = customer.FirstName, LastName = customer.LastName, Email = customer.Email, AddressLine1 = customer.Address.Line1, AddressLine2 = customer.Address.Line2, AddressPostalCode = customer.Address.PostalCode, AddressCity = customer.Address.City, AddressCountry = customer.Address.Country };
+        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
+        var command = new CustomerCreateCommand(tenantIds[0]) { FirstName = customer.FirstName, LastName = customer.LastName, Email = customer.Email, AddressLine1 = customer.Address.Line1, AddressLine2 = customer.Address.Line2, AddressPostalCode = customer.Address.PostalCode, AddressCity = customer.Address.City, AddressCountry = customer.Address.Country };
         var sut = new CustomerCreateCommandHandler(Substitute.For<ILoggerFactory>(), repository);
 
         // Act
