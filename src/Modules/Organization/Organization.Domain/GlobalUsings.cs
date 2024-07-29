@@ -6,6 +6,6 @@ global using System.Diagnostics;
 global using System.Linq;
 global using BridgingIT.DevKit.Domain;
 global using BridgingIT.DevKit.Domain.Model;
-global using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
+global using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 #pragma warning restore SA1200 // Using directives should be placed correctly

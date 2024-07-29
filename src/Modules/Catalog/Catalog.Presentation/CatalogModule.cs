@@ -1,12 +1,12 @@
-﻿namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation;
+﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation;
 using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Infrastructure;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation.Web;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;

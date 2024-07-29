@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "BridgingIT.DevKit.Ddd.Examples.BookStore.Web.Server": {
+    "BridgingIT.DevKit.Ddd.Examples.BookFiesta.Web.Server": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -1,4 +1,4 @@
-Organization![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookStore/main/bITDevKit_Logo.png)
+Organization![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookFiesta/main/bITDevKit_Logo.png)
 =====================================
 
 # Organization Module overview

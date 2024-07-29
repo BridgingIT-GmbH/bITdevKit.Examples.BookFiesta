@@ -3,13 +3,13 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Organization.Application;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Application;
 
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookStore.Organization.Domain;
-using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
 public class TenantFindOneQueryHandler(

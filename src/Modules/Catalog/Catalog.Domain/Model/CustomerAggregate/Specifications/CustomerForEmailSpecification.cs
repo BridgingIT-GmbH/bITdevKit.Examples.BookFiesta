@@ -1,4 +1,4 @@
-﻿namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
 using BridgingIT.DevKit.Domain.Specifications;
 using System.Linq.Expressions;

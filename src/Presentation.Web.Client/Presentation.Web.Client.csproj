@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Client</AssemblyName>
-    <RootNamespace>BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Client</RootNamespace>
+    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client</AssemblyName>
+    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client</RootNamespace>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
     <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
@@ -14,7 +14,7 @@
     <ApiSpecGenerate>true</ApiSpecGenerate> <!--$(BuildingInsideVisualStudio)-->
     <ApiSpecLocation>..\Presentation.Web.Server\wwwroot\swagger.json</ApiSpecLocation>
     <ApiClientClassName>ApiClient</ApiClientClassName>
-    <ApiClientNamespace>BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Client</ApiClientNamespace>
+    <ApiClientNamespace>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client</ApiClientNamespace>
     <ApiClientOutputDirectory>./</ApiClientOutputDirectory>
   </PropertyGroup>
   <ItemGroup Condition="Exists('$(ApiSpecLocation)') And '$(ApiSpecGenerate)' == 'true'">

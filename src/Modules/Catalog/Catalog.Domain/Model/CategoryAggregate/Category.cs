@@ -3,9 +3,9 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
-using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [DebuggerDisplay("Id={Id}, Order={Order}, Title={Title}, ParentId={Parent?.Id}")]
 public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make this an aggregate root?

@@ -3,12 +3,12 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Controllers;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Controllers;
 
 using System.Threading;
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -3,12 +3,12 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.Catalog.IntegrationTests.Presentation.Web;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.IntegrationTests.Presentation.Web;
 
 using System.Text.Json;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [IntegrationTest("GettingStarted.Presentation.Web")]
 public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture) : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture

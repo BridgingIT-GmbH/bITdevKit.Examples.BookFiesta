@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Client.Resources {
+namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Client.Resources
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BridgingIT.DevKit.Examples.BookStore.Presentation.Web.Client.Resources.Global", typeof(Global).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Resources.Global", typeof(Global).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

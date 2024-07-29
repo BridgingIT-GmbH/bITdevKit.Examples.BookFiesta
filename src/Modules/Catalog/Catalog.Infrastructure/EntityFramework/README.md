@@ -1,3 +1,7 @@
+# BookFiesta - Catalog Module
+
+## Create and apply a new Database Migration
+
 These database commands should be executed from the solution root folder.
 
 ### new migration: 

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>BridgingIT.DevKit.Examples.BookStore.Organization.Infrastructure</AssemblyName>
-    <RootNamespace>BridgingIT.DevKit.Examples.BookStore.Organization.Infrastructure</RootNamespace>
+    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure</AssemblyName>
+    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 

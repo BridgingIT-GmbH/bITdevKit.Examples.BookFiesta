@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookStore.SharedKernel.Domain;
+namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;

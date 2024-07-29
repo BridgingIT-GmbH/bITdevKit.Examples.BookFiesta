@@ -1,9 +1,9 @@
-﻿namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation.Web;
+﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation.Web;
 
 using System.Collections.Generic;
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookStore.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

@@ -1,4 +1,4 @@
-﻿namespace BridgingIT.DevKit.Examples.BookStore.Catalog.Presentation;
+﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation;
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;

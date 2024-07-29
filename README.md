@@ -26,7 +26,7 @@ The supporting containers should first be started with `docker-compose up` or `d
 Then the Presentation.Web.Server project can be set as the startup project.
 On `CTRL+F5` this will start the host at [https://localhost:7144](https://localhost:7144).
 
-- [SQL Server](https://learn.microsoft.com/en-us/sql/sql-server/?view=sql-server-ver16) details: `Server=127.0.0.1,14339;Database=bit_devkit_bookstore;User=sa;Password=Abcd1234!;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;encrypt=false;`
+- [SQL Server](https://learn.microsoft.com/en-us/sql/sql-server/?view=sql-server-ver16) details: `Server=127.0.0.1,14339;Database=bit_devkit_bookfiesta;User=sa;Password=Abcd1234!;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;encrypt=false;`
 - [Swagger UI](https://swagger.io/docs/) is available [here](https://localhost:7144/swagger/index.html).
 - [Seq](https://docs.datalust.co/docs/an-overview-of-seq) Dashboard is available [here](http://localhost:15349).
 
