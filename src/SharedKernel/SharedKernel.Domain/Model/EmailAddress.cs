@@ -11,9 +11,7 @@ using BridgingIT.DevKit.Domain.Model;
 
 public partial class EmailAddress : ValueObject
 {
-    private EmailAddress()
-    {
-    }
+    private EmailAddress() { } // Private constructor required by EF Core
 
     private EmailAddress(string email)
     {

@@ -17,9 +17,7 @@ public class Money : DecimalValueObject
 {
     private int? cachedHashCode;
 
-    private Money()
-    {
-    }
+    private Money() { } // Private constructor required by EF Core
 
     private Money(decimal amount, Currency currency)
         : base(amount)

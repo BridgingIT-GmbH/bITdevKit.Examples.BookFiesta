@@ -133,9 +133,7 @@ public class Currency : ValueObject
             };
     }
 
-    private Currency()
-    {
-    }
+    private Currency() { } // Private constructor required by EF Core
 
     private Currency(string code)
     {

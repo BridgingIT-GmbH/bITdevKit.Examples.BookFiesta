@@ -16,7 +16,7 @@ public partial class PersonFormalName : ValueObject
     private static readonly Regex NamePartRegex = Regexes.NamePartRegex();
     private static readonly Regex TitleSuffixRegex = Regexes.TitleSuffixRegex();
 
-    private PersonFormalName() { }
+    private PersonFormalName() { } // Private constructor required by EF Core
 
     private PersonFormalName(string[] parts, string title = null, string suffix = null)
     {

@@ -8,6 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure;
 using BridgingIT.DevKit.Domain.Model;
 using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -113,6 +114,9 @@ public class TenantEntityTypeConfiguration :
                     .HasColumnName("ScheduleEndDate")
                     .IsRequired(false);
             });
+
+            //b.OwnsOneAuditState(); // TODO: use ToJson variant
+            //b.OwnsOne(e => e.AuditState, b => b.ToJson());
         });
     }
 
@@ -166,6 +170,7 @@ public class TenantEntityTypeConfiguration :
 
         builder.HasOne<Tenant>()
             .WithOne(e => e.Branding)
+            .HasForeignKey<TenantBranding>(e => e.TenantId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

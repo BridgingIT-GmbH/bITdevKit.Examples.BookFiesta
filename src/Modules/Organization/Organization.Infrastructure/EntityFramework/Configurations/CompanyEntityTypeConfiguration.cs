@@ -147,7 +147,7 @@ public class CompanyEntityTypeConfiguration :
                 .IsRequired(false)
                 .HasMaxLength(128);
         });
-        builder.Navigation(e => e.Website).IsRequired();
+        builder.Navigation(e => e.VatNumber).IsRequired();
 
         //builder.HasMany<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
         //    .WithOne()

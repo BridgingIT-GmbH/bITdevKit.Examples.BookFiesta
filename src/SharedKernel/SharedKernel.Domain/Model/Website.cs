@@ -11,9 +11,7 @@ using BridgingIT.DevKit.Domain.Model;
 
 public partial class Website : ValueObject
 {
-    private Website()
-    {
-    }
+    private Website() { } // Private constructor required by EF Core
 
     private Website(string website)
     {

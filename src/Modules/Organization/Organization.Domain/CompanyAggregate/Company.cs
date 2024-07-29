@@ -30,8 +30,6 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     public EmailAddress ContactEmail { get; private set; }
 
-    public Address HeadquartersAddress { get; private set; }
-
     public PhoneNumber ContactPhone { get; private set; }
 
     public Url Website { get; private set; }
@@ -120,22 +118,6 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         if (email != this.ContactEmail)
         {
             this.ContactEmail = email;
-
-            if (!this.Id.IsEmpty)
-            {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
-            }
-        }
-
-        return this;
-    }
-
-    public Company SetHeadquartersAddress(Address address)
-    {
-        if (address != this.HeadquartersAddress)
-        {
-            this.HeadquartersAddress = address;
 
             if (!this.Id.IsEmpty)
             {

@@ -17,6 +17,8 @@ public class VatNumber : ValueObject
         // Add more countries as needed
     };
 
+    private VatNumber() { } // Private constructor required by EF Core
+
     private VatNumber(string countryCode, string number)
     {
         this.CountryCode = countryCode;

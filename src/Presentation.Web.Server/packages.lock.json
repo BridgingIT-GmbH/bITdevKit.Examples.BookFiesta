@@ -2863,6 +2863,57 @@
           "Ensure.That": "[10.1.0, )"
         }
       },
+      "BridgingIT.DevKit.Examples.BookFiesta.Organization.Application": {
+        "type": "Project",
+        "dependencies": {
+          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Organization.Application.Contracts": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain": "[1.0.0, )",
+          "Ensure.That": "[10.1.0, )"
+        }
+      },
+      "BridgingIT.DevKit.Examples.BookFiesta.Organization.Application.Contracts": {
+        "type": "Project",
+        "dependencies": {
+          "Ensure.That": "[10.1.0, )"
+        }
+      },
+      "BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain": {
+        "type": "Project",
+        "dependencies": {
+          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
+          "Ensure.That": "[10.1.0, )"
+        }
+      },
+      "BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure": {
+        "type": "Project",
+        "dependencies": {
+          "BridgingIT.DevKit.Examples.BookFiesta.Organization.Application": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain": "[1.0.0, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.21, )",
+          "Ensure.That": "[10.1.0, )",
+          "Microsoft.EntityFrameworkCore.SqlServer": "[8.0.6, )"
+        }
+      },
+      "BridgingIT.DevKit.Examples.BookFiesta.Organization.Presentation": {
+        "type": "Project",
+        "dependencies": {
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Organization.Application": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure": "[1.0.0, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.21, )",
+          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.21, )",
+          "Ensure.That": "[10.1.0, )"
+        }
+      },
       "BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client": {
         "type": "Project",
         "dependencies": {

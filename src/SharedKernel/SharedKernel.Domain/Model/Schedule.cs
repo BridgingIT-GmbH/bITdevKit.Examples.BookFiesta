@@ -13,9 +13,7 @@ using BridgingIT.DevKit.Domain.Model;
 
 public class Schedule : ValueObject, IComparable<Schedule>
 {
-    private Schedule()
-    {
-    }
+    private Schedule() { } // Private constructor required by EF Core
 
     private Schedule(DateOnly startDate, DateOnly? endDate)
     {

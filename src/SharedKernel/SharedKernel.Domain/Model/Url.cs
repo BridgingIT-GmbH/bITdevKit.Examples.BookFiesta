@@ -15,6 +15,8 @@ public partial class Url : ValueObject
     private static readonly Regex RelativeUrlRegex = RelativeRegex();
     private static readonly Regex LocalUrlRegex = LocalRegex();
 
+    private Url() { } // Private constructor required by EF Core
+
     private Url(string url)
     {
         this.Value = url;

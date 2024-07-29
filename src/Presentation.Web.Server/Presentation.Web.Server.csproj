@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server2</AssemblyName>
-    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server2</RootNamespace>
+    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server</AssemblyName>
+    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server</RootNamespace>
     <IsPackable>false</IsPackable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -57,6 +57,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Modules\Catalog\Catalog.Presentation\Catalog.Presentation.csproj" />
+    <ProjectReference Include="..\Modules\Organization\Organization.Presentation\Organization.Presentation.csproj" />
     <ProjectReference Include="..\Presentation.Web.Client\Presentation.Web.Client.csproj" />
   </ItemGroup>
 

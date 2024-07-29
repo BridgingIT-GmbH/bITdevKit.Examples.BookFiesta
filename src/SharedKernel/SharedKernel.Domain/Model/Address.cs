@@ -10,9 +10,7 @@ using BridgingIT.DevKit.Domain.Model;
 
 public class Address : ValueObject
 {
-    private Address()
-    {
-    }
+    private Address() { } // Private constructor required by EF Core
 
     private Address(string name, string line1, string line2, string postalCode, string city, string country)
     {

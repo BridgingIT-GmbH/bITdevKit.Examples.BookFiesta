@@ -16,9 +16,10 @@ using BridgingIT.DevKit.Application.Utilities;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation;
+using BridgingIT.DevKit.Examples.BookFiesta.Organization.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Pages;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server;
-using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server2.Components;
+using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server.Components;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using BridgingIT.DevKit.Presentation;
 using BridgingIT.DevKit.Presentation.Web;
@@ -47,6 +48,7 @@ builder.Host.ConfigureAppConfiguration();
 // Configure the modules
 builder.Services.AddModules(builder.Configuration, builder.Environment)
     .WithModule<CatalogModule>()
+    .WithModule<OrganizationModule>()
     .WithModuleContextAccessors()
     .WithRequestModuleContextAccessors()
     .WithModuleControllers(c => c.AddJsonOptions(ConfigureJsonOptions));
