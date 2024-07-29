@@ -23,31 +23,33 @@ public class OrganizationDomainSeederTask(
 
     private async Task<Company[]> SeedCompanies(IGenericRepository<Company> repository)
     {
-        var companies = OrganizationSeedModels.Companies.Create();
+        var entities = OrganizationSeedModels.Companies.Create();
 
-        foreach (var company in companies)
+        foreach (var entity in entities)
         {
-            if (!await repository.ExistsAsync(company.Id))
+            if (!await repository.ExistsAsync(entity.Id))
             {
-                await repository.InsertAsync(company);
+                entity.AuditState.SetCreated("seed", nameof(OrganizationDomainSeederTask));
+                await repository.InsertAsync(entity);
             }
         }
 
-        return companies;
+        return entities;
     }
 
     private async Task<Tenant[]> SeedTenants(IGenericRepository<Tenant> repository, Company[] companies)
     {
-        var tenants = OrganizationSeedModels.Tenants.Create(companies);
+        var entities = OrganizationSeedModels.Tenants.Create(companies);
 
-        foreach (var tenant in tenants)
+        foreach (var entity in entities)
         {
-            if (!await repository.ExistsAsync(tenant.Id))
+            if (!await repository.ExistsAsync(entity.Id))
             {
-                await repository.InsertAsync(tenant);
+                entity.AuditState.SetCreated("seed", nameof(OrganizationDomainSeederTask));
+                await repository.InsertAsync(entity);
             }
         }
 
-        return tenants;
+        return entities;
     }
 }

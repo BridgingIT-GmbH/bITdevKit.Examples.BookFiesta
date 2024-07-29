@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure;
 
 using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -38,34 +39,29 @@ public class CompanyEntityTypeConfiguration :
         builder.OwnsOne(e => e.Address, b =>
         {
             b.Property(e => e.Name)
-                .HasColumnName("AddressName")
                 .HasMaxLength(512)
                 .IsRequired();
 
             b.Property(e => e.Line1)
-                .HasColumnName("AddressLine1")
                 .HasMaxLength(256)
                 .IsRequired();
 
             b.Property(e => e.Line2)
-                .HasColumnName("AddressLine2")
                 .HasMaxLength(256);
 
             b.Property(e => e.City)
-                .HasColumnName("AddressCity")
                 .HasMaxLength(128)
                 .IsRequired();
 
             b.Property(e => e.PostalCode)
-                .HasColumnName("AddressPostalCode")
                 .HasMaxLength(32)
                 .IsRequired();
 
             b.Property(e => e.Country)
-                .HasColumnName("AddressCountry")
                 .HasMaxLength(128)
                 .IsRequired();
         });
+        builder.Navigation(e => e.Address).IsRequired();
 
         builder.Property(e => e.RegistrationNumber)
             .IsRequired()
@@ -80,49 +76,15 @@ public class CompanyEntityTypeConfiguration :
         });
         builder.Navigation(e => e.ContactEmail).IsRequired();
 
-        builder.OwnsOne(e => e.Address, b =>
-        {
-            b.Property(e => e.Name)
-                .HasColumnName("AddressName")
-                .HasMaxLength(512)
-                .IsRequired();
-
-            b.Property(e => e.Line1)
-                .HasColumnName("AddressLine1")
-                .HasMaxLength(256)
-                .IsRequired();
-
-            b.Property(e => e.Line2)
-                .HasColumnName("AddressLine2")
-                .HasMaxLength(256);
-
-            b.Property(e => e.City)
-                .HasColumnName("AddressCity")
-                .HasMaxLength(128)
-                .IsRequired();
-
-            b.Property(e => e.PostalCode)
-                .HasColumnName("AddressPostalCode")
-                .HasMaxLength(32)
-                .IsRequired();
-
-            b.Property(e => e.Country)
-                .HasColumnName("AddressCountry")
-                .HasMaxLength(128)
-                .IsRequired();
-        });
-
         builder.OwnsOne(e => e.ContactPhone, b =>
         {
             b.Property(e => e.CountryCode)
-                .HasColumnName("ContactPhoneCountryCode")
                 .HasMaxLength(8)
-                .IsRequired();
+                .IsRequired(false);
 
             b.Property(e => e.Number)
-                .HasColumnName("ContactPhoneNumber")
                 .HasMaxLength(32)
-                .IsRequired();
+                .IsRequired(false);
         });
         builder.Navigation(e => e.ContactPhone).IsRequired();
 
@@ -138,23 +100,16 @@ public class CompanyEntityTypeConfiguration :
         builder.OwnsOne(e => e.VatNumber, b =>
         {
             b.Property(e => e.CountryCode)
-                .HasColumnName("VatNumberCountryCode")
                 .IsRequired(false)
                 .HasMaxLength(16);
 
             b.Property(e => e.Number)
-                .HasColumnName("VatNumber")
                 .IsRequired(false)
                 .HasMaxLength(128);
         });
         builder.Navigation(e => e.VatNumber).IsRequired();
 
-        //builder.HasMany<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
-        //    .WithOne()
-        //    .HasForeignKey(e => e.CompanyId)
-        //    .IsRequired();
-
-        //builder.OwnsOneAuditState(); // TODO: use ToJson variant
-        builder.OwnsOne(e => e.AuditState, b => b.ToJson());
+        builder.OwnsOneAuditState(); // TODO: use ToJson variant
+        //builder.OwnsOne(e => e.AuditState, b => b.ToJson());
     }
 }

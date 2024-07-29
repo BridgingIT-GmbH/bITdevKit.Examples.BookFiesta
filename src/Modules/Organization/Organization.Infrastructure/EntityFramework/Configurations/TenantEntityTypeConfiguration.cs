@@ -51,7 +51,7 @@ public class TenantEntityTypeConfiguration :
         {
             b.Property(e => e.Value)
                 .HasColumnName(nameof(Tenant.ContactEmail))
-                .IsRequired(false)
+                .IsRequired(true)
                 .HasMaxLength(256);
         });
         builder.Navigation(e => e.ContactEmail).IsRequired();
@@ -69,10 +69,12 @@ public class TenantEntityTypeConfiguration :
     {
         builder.OwnsMany(e => e.Subscriptions, b =>
         {
-            b.ToTable("TenantSubscriptions");
+            b.ToTable("TenantSubscriptions")
+                .HasKey(e => e.Id)
+                .IsClustered(false);
+            b.WithOwner(e => e.Tenant);
+
             b.Property(e => e.Version).IsConcurrencyToken();
-            b.WithOwner().HasForeignKey("TenantId");
-            b.HasKey("Id", "TenantId");
 
             b.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -81,42 +83,38 @@ public class TenantEntityTypeConfiguration :
                     id => TenantSubscriptionId.Create(id));
 
             b.Property(e => e.PlanType)
-                //.HasColumnName(nameof(Subscription.PlanType))
-                .HasConversion(
-                    status => status.Id,
-                    id => Enumeration.FromId<TenantSubscriptionPlanType>(id));
                 //.HasConversion(
-                //    new EnumerationConverter<int, string, TenantSubscriptionPlanType>());
+                //    status => status.Id,
+                //    id => Enumeration.FromId<TenantSubscriptionPlanType>(id))
+                .HasConversion(
+                    new EnumerationConverter<TenantSubscriptionPlanType>())
+                .IsRequired();
 
             b.Property(e => e.Status)
-                //.HasColumnName(nameof(Subscription.Status))
-                .HasConversion(
-                    status => status.Id,
-                    id => Enumeration.FromId<TenantSubscriptionStatus>(id));
                 //.HasConversion(
-                //    new EnumerationConverter<int, string, TenantSubscriptionStatus>());
+                //    status => status.Id,
+                //    id => Enumeration.FromId<TenantSubscriptionStatus>(id))
+                .HasConversion(
+                    new EnumerationConverter<TenantSubscriptionStatus>())
+                .IsRequired();
 
             b.Property(e => e.BillingCycle)
-                //.HasColumnName(nameof(Subscription.BillingCycle))
-                .HasConversion(
-                    status => status.Id,
-                    id => Enumeration.FromId<TenantSubscriptionBillingCycle>(id));
-            //.HasConversion(//.HasConversion(
-            //    new EnumerationConverter<int, string, TenantSubscriptionBillingCycle>());
+                //.HasConversion(
+                //    status => status.Id,
+                //    id => Enumeration.FromId<TenantSubscriptionBillingCycle>(id))
+                .HasConversion(//.HasConversion(
+                    new EnumerationConverter<TenantSubscriptionBillingCycle>())
+                .IsRequired();
 
-            b.OwnsOne(e => e.Schedule, sb =>
+            b.OwnsOne(e => e.Schedule, b =>
             {
-                sb.Property(d => d.StartDate)
-                    .HasColumnName("ScheduleStartDate")
+                b.Property(e => e.StartDate)
                     .IsRequired();
 
-                sb.Property(d => d.EndDate)
-                    .HasColumnName("ScheduleEndDate")
+                b.Property(e => e.EndDate)
                     .IsRequired(false);
             });
-
-            //b.OwnsOneAuditState(); // TODO: use ToJson variant
-            //b.OwnsOne(e => e.AuditState, b => b.ToJson());
+            b.Navigation(e => e.Schedule).IsRequired();
         });
     }
 
@@ -168,8 +166,14 @@ public class TenantEntityTypeConfiguration :
         });
         builder.Navigation(e => e.FaviconUrl).IsRequired();
 
+        builder.Property(e => e.TenantId)
+            .HasConversion(
+                id => id.Value,
+                value => TenantId.Create(value));
+
         builder.HasOne<Tenant>()
             .WithOne(e => e.Branding)
+            .IsRequired()
             .HasForeignKey<TenantBranding>(e => e.TenantId)
             .OnDelete(DeleteBehavior.Cascade);
     }

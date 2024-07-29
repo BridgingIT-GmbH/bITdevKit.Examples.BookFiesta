@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -73,8 +74,8 @@ public class AuthorEntityTypeConfiguration : IEntityTypeConfiguration<Author>
                 .IsRequired(true).HasMaxLength(2048);
         });
 
-        //builder.OwnsOneAuditState(); // TODO: use ToJson variant
-        builder.OwnsOne(e => e.AuditState, b => b.ToJson());
+        builder.OwnsOneAuditState(); // TODO: use ToJson variant
+        //builder.OwnsOne(e => e.AuditState, b => b.ToJson());
 
         // Configure relationships
         // Assuming a many-to-many relationship is managed through BookEntityTypeConfiguration

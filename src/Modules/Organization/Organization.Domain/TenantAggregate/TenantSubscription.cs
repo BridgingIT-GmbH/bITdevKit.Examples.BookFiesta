@@ -17,6 +17,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
         this.Tenant = tenant;
         this.SetPlanType(planType);
         this.SetSchedule(schedule);
+        this.SetStatus(TenantSubscriptionStatus.Pending);
     }
 
     public Tenant Tenant { get; private set; }
@@ -49,6 +50,11 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 
     public TenantSubscription SetPlanType(TenantSubscriptionPlanType planType)
     {
+        if(planType == null)
+        {
+            throw new BusinessRuleNotSatisfiedException("Plan type cannot be null.");
+        }
+
         if (planType != this.PlanType)
         {
             this.PlanType = planType;
@@ -76,6 +82,11 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 
     public TenantSubscription SetSchedule(Schedule schedule)
     {
+        if (schedule == null)
+        {
+            throw new BusinessRuleNotSatisfiedException("Schedule cannot be null.");
+        }
+
         if (schedule != this.Schedule)
         {
             this.Schedule = schedule;

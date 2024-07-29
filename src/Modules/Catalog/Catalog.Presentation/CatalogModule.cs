@@ -45,7 +45,10 @@ public class CatalogModule : WebModuleBase
             //    .Enabled(environment?.IsDevelopment() == true)
             //   .DeleteOnStartup());
             .WithOutboxDomainEventService(o => o
-                .ProcessingInterval("00:00:30").StartupDelay("00:00:15").PurgeOnStartup().ProcessingModeImmediate());
+                .ProcessingInterval("00:00:30")
+                .StartupDelay("00:00:15")
+                .PurgeOnStartup()
+                .ProcessingModeImmediate());
 
         services.AddEntityFrameworkRepository<Customer, CatalogDbContext>()
             .WithTransactions<NullRepositoryTransaction<Customer>>()

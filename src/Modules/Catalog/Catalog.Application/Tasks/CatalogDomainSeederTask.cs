@@ -33,91 +33,96 @@ public class CatalogDomainSeederTask(
 
     private async Task<Customer[]> SeedCustomers(IGenericRepository<Customer> repository, TenantId[] tenantIds)
     {
-        var customers = CatalogSeedModels.Customers.Create(tenantIds);
+        var entities = CatalogSeedModels.Customers.Create(tenantIds);
 
-        foreach (var customer in customers)
+        foreach (var entity in entities)
         {
-            if (!await repository.ExistsAsync(customer.Id))
+            if (!await repository.ExistsAsync(entity.Id))
             {
-                await repository.InsertAsync(customer);
+                entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
+                await repository.InsertAsync(entity);
             }
         }
 
-        return customers;
+        return entities;
     }
 
     private async Task<Tag[]> SeedTags(IGenericRepository<Tag> repository, TenantId[] tenantIds)
     {
-        var tags = CatalogSeedModels.Tags.Create(tenantIds);
+        var entities = CatalogSeedModels.Tags.Create(tenantIds);
 
-        foreach (var tag in tags)
+        foreach (var entity in entities)
         {
-            if (!await repository.ExistsAsync(tag.Id))
+            if (!await repository.ExistsAsync(entity.Id))
             {
-                await repository.InsertAsync(tag);
+                await repository.InsertAsync(entity);
             }
         }
 
-        return tags;
+        return entities;
     }
 
     private async Task<Category[]> SeedCategories(IGenericRepository<Category> repository, TenantId[] tenantIds)
     {
-        var categories = CatalogSeedModels.Categories.Create(tenantIds);
+        var entities = CatalogSeedModels.Categories.Create(tenantIds);
 
-        foreach (var category in categories)
+        foreach (var entity in entities)
         {
-            if (!await repository.ExistsAsync(category.Id))
+            if (!await repository.ExistsAsync(entity.Id))
             {
-                await repository.InsertAsync(category);
+                entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
+                await repository.InsertAsync(entity);
             }
         }
 
-        return categories;
+        return entities;
     }
 
     private async Task<Publisher[]> SeedPublishers(IGenericRepository<Publisher> repository, TenantId[] tenantIds)
     {
-        var publishers = CatalogSeedModels.Publishers.Create(tenantIds);
+        var entities = CatalogSeedModels.Publishers.Create(tenantIds);
 
-        foreach (var publisher in publishers)
+        foreach (var entity in entities)
         {
-            if (!await repository.ExistsAsync(publisher.Id))
+            if (!await repository.ExistsAsync(entity.Id))
             {
-                await repository.InsertAsync(publisher);
+                entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
+                await repository.InsertAsync(entity);
             }
         }
 
-        return publishers;
+        return entities;
     }
 
     private async Task<Book[]> SeedBooks(IGenericRepository<Book> repository, TenantId[] tenantIds, Tag[] tags, Category[] categories, Publisher[] publishers, Author[] authors)
     {
-        var books = CatalogSeedModels.Books.Create(tenantIds, tags, categories, publishers, authors);
+        var entities = CatalogSeedModels.Books.Create(tenantIds, tags, categories, publishers, authors);
 
-        foreach (var book in books)
+        foreach (var entity in entities)
         {
-            if (!await repository.ExistsAsync(book.Id))
+            if (!await repository.ExistsAsync(entity.Id))
             {
-                await repository.InsertAsync(book);
+                entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
+                await repository.InsertAsync(entity);
             }
         }
 
-        return books;
+        return entities;
     }
 
     private async Task<Author[]> SeedAuthors(IGenericRepository<Author> repository, TenantId[] tenantIds)
     {
-        var authors = CatalogSeedModels.Authors.Create(tenantIds);
+        var entities = CatalogSeedModels.Authors.Create(tenantIds);
 
-        foreach (var author in authors)
+        foreach (var entity in entities)
         {
-            if (!await repository.ExistsAsync(author.Id))
+            if (!await repository.ExistsAsync(entity.Id))
             {
-                await repository.InsertAsync(author);
+                entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
+                await repository.InsertAsync(entity);
             }
         }
 
-        return authors;
+        return entities;
     }
 }

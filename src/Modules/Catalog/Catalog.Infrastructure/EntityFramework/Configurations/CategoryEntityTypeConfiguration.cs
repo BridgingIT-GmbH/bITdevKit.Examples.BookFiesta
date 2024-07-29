@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 
 public class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Category>
 {
@@ -55,7 +56,7 @@ public class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Category
             .WithOne(c => c.Parent)
             .OnDelete(DeleteBehavior.Restrict);
 
-        //builder.OwnsOneAuditState(); // TODO: use ToJson variant
-        builder.OwnsOne(e => e.AuditState, b => b.ToJson());
+        builder.OwnsOneAuditState(); // TODO: use ToJson variant
+        //builder.OwnsOne(e => e.AuditState, b => b.ToJson());
     }
 }

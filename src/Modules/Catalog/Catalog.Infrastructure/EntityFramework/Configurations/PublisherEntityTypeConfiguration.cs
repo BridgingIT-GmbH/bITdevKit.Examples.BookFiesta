@@ -7,6 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure;
 
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -101,7 +102,7 @@ public class PublisherEntityTypeConfiguration : IEntityTypeConfiguration<Publish
         });
         builder.Navigation(e => e.Website).IsRequired();
 
-        //builder.OwnsOneAuditState(); // TODO: use ToJson variant
-        builder.OwnsOne(e => e.AuditState, b => b.ToJson());
+        builder.OwnsOneAuditState(); // TODO: use ToJson variant
+        //builder.OwnsOne(e => e.AuditState, b => b.ToJson());
     }
 }

@@ -146,11 +146,16 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         return this;
     }
 
-    public Tenant SetContactEmail(EmailAddress contactEmail)
+    public Tenant SetContactEmail(EmailAddress email)
     {
-        if (contactEmail != this.ContactEmail)
+        if (email == null)
         {
-            this.ContactEmail = contactEmail;
+            throw new BusinessRuleNotSatisfiedException("Tenant contact email cannot be empty.");
+        }
+
+        if (email != this.ContactEmail)
+        {
+            this.ContactEmail = email;
 
             if (!this.Id.IsEmpty)
             {
