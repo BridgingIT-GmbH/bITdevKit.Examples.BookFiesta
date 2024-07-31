@@ -11,10 +11,12 @@ using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer>
+public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Customer>
 {
-    public void Configure(EntityTypeBuilder<Customer> builder)
+    public override void Configure(EntityTypeBuilder<Customer> builder)
     {
+        base.Configure(builder);
+
         ConfigureCustomersTable(builder);
     }
 
@@ -36,14 +38,15 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
         builder.Property(e => e.TenantId)
-        .HasConversion(
-            id => id.Value,
-            value => TenantId.Create(value));
-        builder.HasIndex(e => e.TenantId);
-        builder.HasOne("organization.Tenant")
-            .WithMany()
-            .HasForeignKey(nameof(TenantId))
+            .HasConversion(
+                id => id.Value,
+                value => TenantId.Create(value))
             .IsRequired();
+        //builder.HasIndex(e => e.TenantId);
+        //builder.HasOne("organization.Tenants")
+        //    .WithMany()
+        //    .HasForeignKey(nameof(TenantId))
+        //    .IsRequired();
 
         builder.Property(e => e.FirstName)
             .IsRequired()

@@ -10,10 +10,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-public class TagEntityTypeConfiguration : IEntityTypeConfiguration<Tag>
+public class TagEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Tag>
 {
-    public void Configure(EntityTypeBuilder<Tag> builder)
+    public override void Configure(EntityTypeBuilder<Tag> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("Tags")
             .HasKey(e => e.Id)
             .IsClustered(false);
@@ -28,14 +30,15 @@ public class TagEntityTypeConfiguration : IEntityTypeConfiguration<Tag>
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
         builder.Property(e => e.TenantId)
-        .HasConversion(
-            id => id.Value,
-            value => TenantId.Create(value));
-        builder.HasIndex(e => e.TenantId);
-        builder.HasOne("organization.Tenant")
-            .WithMany()
-            .HasForeignKey(nameof(TenantId))
+            .HasConversion(
+                id => id.Value,
+                value => TenantId.Create(value))
             .IsRequired();
+        //builder.HasIndex(e => e.TenantId);
+        //builder.HasOne("organization.Tenants")
+        //    .WithMany()
+        //    .HasForeignKey(nameof(TenantId))
+        //    .IsRequired();
 
         builder.Property(e => e.Name)
             .IsRequired().HasMaxLength(128);

@@ -11,10 +11,12 @@ using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class PublisherEntityTypeConfiguration : IEntityTypeConfiguration<Publisher>
+public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Publisher>
 {
-    public void Configure(EntityTypeBuilder<Publisher> builder)
+    public override void Configure(EntityTypeBuilder<Publisher> builder)
     {
+        base.Configure(builder);
+
         ConfigurePublishersTable(builder);
     }
 
@@ -36,14 +38,15 @@ public class PublisherEntityTypeConfiguration : IEntityTypeConfiguration<Publish
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
         builder.Property(e => e.TenantId)
-        .HasConversion(
-            id => id.Value,
-            value => TenantId.Create(value));
-        builder.HasIndex(e => e.TenantId);
-        builder.HasOne("organization.Tenant")
-            .WithMany()
-            .HasForeignKey(nameof(TenantId))
+            .HasConversion(
+                id => id.Value,
+                value => TenantId.Create(value))
             .IsRequired();
+        //builder.HasIndex(e => e.TenantId);
+        //builder.HasOne("organization.Tenants")
+        //    .WithMany()
+        //    .HasForeignKey(nameof(TenantId))
+        //    .IsRequired();
 
         builder.Property(e => e.Name)
             .IsRequired()

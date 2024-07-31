@@ -64,7 +64,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         {
             this.CompanyId = company.Id;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                     new TenantUpdatedDomainEvent(this), true);
@@ -88,7 +88,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         {
             this.Name = name;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new TenantUpdatedDomainEvent(this), true);
@@ -104,7 +104,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         {
             this.Description = description;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new TenantUpdatedDomainEvent(this), true);
@@ -120,7 +120,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         {
             this.Activated = false;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                    new TenantDeactivatedDomainEvent(this), true);
@@ -136,7 +136,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         {
             this.Activated = true;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                     new TenantActivatedDomainEvent(this), true);
@@ -157,7 +157,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         {
             this.ContactEmail = email;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new TenantUpdatedDomainEvent(this), true);
@@ -176,7 +176,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
         this.Branding = branding;
 
-        if (!this.Id.IsEmpty)
+        if (this.Id?.IsEmpty == false)
         {
             this.DomainEvents.Register(
                 new TenantUpdatedDomainEvent(this), true);
@@ -192,7 +192,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
         this.subscriptions.Add(subscription);
 
-        if (!this.Id.IsEmpty)
+        if (this.Id?.IsEmpty == false)
         {
             this.DomainEvents.Register(
                 new TenantUpdatedDomainEvent(this), true);
@@ -210,7 +210,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
         this.subscriptions.Add(subscription);
 
-        if (!this.Id.IsEmpty)
+        if (this.Id?.IsEmpty == false)
         {
             this.DomainEvents.Register(
                 new TenantUpdatedDomainEvent(this), true);
@@ -230,7 +230,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         {
             this.subscriptions.Remove(subscription);
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents
                 .Register(new TenantUpdatedDomainEvent(this), true)
@@ -248,7 +248,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         {
             this.subscriptions.Remove(subscription);
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents
                     .Register(new TenantUpdatedDomainEvent(this), true)

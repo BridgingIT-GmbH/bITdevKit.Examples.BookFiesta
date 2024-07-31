@@ -11,11 +11,12 @@ using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class BookEntityTypeConfiguration :
-    IEntityTypeConfiguration<Book>, IEntityTypeConfiguration<BookKeyword>
+public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Book>, IEntityTypeConfiguration<BookKeyword>
 {
-    public void Configure(EntityTypeBuilder<Book> builder)
+    public override void Configure(EntityTypeBuilder<Book> builder)
     {
+        base.Configure(builder);
+
         ConfigureBooks(builder);
         ConfigureBookAuthors(builder);
         ConfigureBookCategories(builder);
@@ -52,14 +53,16 @@ public class BookEntityTypeConfiguration :
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
         builder.Property(e => e.TenantId)
-        .HasConversion(
-            id => id.Value,
-            value => TenantId.Create(value));
-        builder.HasIndex(e => e.TenantId);
-        builder.HasOne("organization.Tenant")
-            .WithMany()
-            .HasForeignKey(nameof(TenantId))
+            .HasConversion(
+                id => id.Value,
+                value => TenantId.Create(value))
             .IsRequired();
+
+        //builder.HasIndex(e => e.TenantId);
+        //builder.HasOne("organization.Tenants")
+        //    .WithMany()
+        //    .HasForeignKey(nameof(TenantId))
+        //    .IsRequired();
 
         builder.Property(e => e.Title)
             .IsRequired().HasMaxLength(512);

@@ -130,6 +130,17 @@ public class TenantEntityTypeConfiguration :
                 id => id.Value,
                 value => TenantBrandingId.Create(value));
 
+        builder.Property(e => e.TenantId)
+            .HasConversion(
+                id => id.Value,
+                value => TenantId.Create(value));
+
+        builder.HasOne<Tenant>()
+            .WithOne(e => e.Branding)
+            .IsRequired()
+            .HasForeignKey<TenantBranding>(e => e.TenantId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.OwnsOne(e => e.PrimaryColor, b =>
         {
             b.Property(e => e.Value)
@@ -165,16 +176,5 @@ public class TenantEntityTypeConfiguration :
                 .HasMaxLength(512);
         });
         builder.Navigation(e => e.FaviconUrl).IsRequired();
-
-        builder.Property(e => e.TenantId)
-            .HasConversion(
-                id => id.Value,
-                value => TenantId.Create(value));
-
-        builder.HasOne<Tenant>()
-            .WithOne(e => e.Branding)
-            .IsRequired()
-            .HasForeignKey<TenantBranding>(e => e.TenantId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -24,24 +24,24 @@ public class OrganizationModule : WebModuleBase
         //    .WithJob<EchoJob>(CronExpressions.Every5Minutes); // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
         //                                                      //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
-        services.AddStartupTasks()
-            .WithTask<OrganizationDomainSeederTask>(o => o
-                .Enabled(environment?.IsDevelopment() == true)
-                .StartupDelay(moduleConfiguration.SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)
+        //services.AddStartupTasks()
+        //    .WithTask<OrganizationDomainSeederTask>(o => o
+        //        .Enabled(environment?.IsDevelopment() == true)
+        //        .StartupDelay(moduleConfiguration.SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)
 
         services.AddSqlServerDbContext<OrganizationDbContext>(o => o
                 .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
                 .UseLogger(true, environment?.IsDevelopment() == true),
-                c => c
+                o => o
                     .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
                     .CommandTimeout(30))
             .WithHealthChecks()
-            .WithDatabaseCreatorService(o => o
+            //.WithDatabaseCreatorService(o => o
+            //    .Enabled(environment?.IsDevelopment() == true)
+            //    .DeleteOnStartup())
+            .WithDatabaseMigratorService(o => o
                 .Enabled(environment?.IsDevelopment() == true)
                 .DeleteOnStartup())
-            //.WithDatabaseMigratorService(o => o
-            //    .Enabled(environment?.IsDevelopment() == true)
-            //   .DeleteOnStartup());
             .WithOutboxDomainEventService(o => o
                 .ProcessingInterval("00:00:30")
                 .StartupDelay("00:00:15")
@@ -71,8 +71,8 @@ public class OrganizationModule : WebModuleBase
 
     public override IEndpointRouteBuilder Map(IEndpointRouteBuilder app, IConfiguration configuration = null, IWebHostEnvironment environment = null)
     {
-        new OrganizationCompanyEndpoints().Map(app);
-        new OrganizationTenantEndpoints().Map(app);
+        //new OrganizationCompanyEndpoints().Map(app);
+        //new OrganizationTenantEndpoints().Map(app);
 
         return app;
     }

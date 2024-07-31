@@ -61,7 +61,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         {
             this.Name = name;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
@@ -77,7 +77,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         {
             this.Address = address;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
@@ -98,7 +98,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         {
             this.RegistrationNumber = registrationNumber;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
@@ -119,7 +119,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         {
             this.ContactEmail = email;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
@@ -135,7 +135,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         {
             this.ContactPhone = phone;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
@@ -151,7 +151,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         {
             this.Website = website;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
@@ -167,7 +167,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         {
             this.VatNumber = vatNumber;
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
@@ -183,7 +183,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         {
             this.tenantIds.Add(tenantId);
 
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
@@ -197,7 +197,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
     {
         if (this.tenantIds.Remove(tenantId))
         {
-            if (!this.Id.IsEmpty)
+            if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
                 new CompanyUpdatedDomainEvent(this), true);
