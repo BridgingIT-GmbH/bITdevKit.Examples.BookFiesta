@@ -369,7 +369,7 @@ public class Currency : ValueObject
     {
         if (!Currencies.ContainsKey(code.SafeNull()))
         {
-            throw new BusinessRuleNotSatisfiedException($"Invalid currency code: {code}");
+            throw new DomainRuleException($"Invalid currency code: {code}");
         }
 
         return new Currency(code); //Currencies.First(c => c.Key == code).Value; //Currencies[code];

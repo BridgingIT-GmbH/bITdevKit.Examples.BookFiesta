@@ -25,4 +25,11 @@ public class CatalogDbContext(DbContextOptions<CatalogDbContext> options)
     public DbSet<OutboxDomainEvent> OutboxDomainEvents { get; set; }
 
     public DbSet<OutboxMessage> OutboxMessages { get; set; }
+
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(TagEntityTypeConfiguration).Assembly);
+
+    //    base.OnModelCreating(modelBuilder); // applies the other EntityTypeConfigurations
+    //}
 }

@@ -30,7 +30,7 @@ public class CustomerUpdateCommandHandler(
             return CommandResponse.For(customerResult);
         }
 
-        Check.Throw([]);
+        DomainRules.Apply([]);
 
         customerResult.Value.SetName(command.FirstName, command.LastName);
         customerResult.Value.SetAddress(command.AddressName, command.AddressLine1, command.AddressLine2, command.AddressPostalCode, command.AddressCity, command.AddressCountry);

@@ -36,7 +36,7 @@ public partial class Url : ValueObject
 
         if (!IsValid(normalizedUrl))
         {
-            throw new BusinessRuleNotSatisfiedException($"Invalid URL format: {url}");
+            throw new DomainRuleException($"Invalid URL format: {url}");
         }
 
         return new Url(normalizedUrl);

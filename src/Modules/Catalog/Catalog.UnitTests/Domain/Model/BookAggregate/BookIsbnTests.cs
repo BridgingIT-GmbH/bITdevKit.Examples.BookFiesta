@@ -2,7 +2,7 @@
 
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
-public class BookIsbnAggregateTests
+public class BookIsbnTests
 {
     [Theory]
     [InlineData("ISBN 978-3-16-148410-0", true, "978-3-16-148410-0", "ISBN-13")]

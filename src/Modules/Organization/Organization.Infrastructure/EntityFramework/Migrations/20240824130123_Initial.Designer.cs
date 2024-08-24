@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(OrganizationDbContext))]
-    [Migration("20240729191500_Initial")]
+    [Migration("20240824130123_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure.Enti
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("organization")
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

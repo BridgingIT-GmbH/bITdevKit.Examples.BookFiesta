@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Infrastructure</AssemblyName>
+    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Infrastructure</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BridgingIT.DevKit.Infrastructure.EntityFramework" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SharedKernel.Domain\SharedKernel.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -28,7 +28,7 @@ public partial class EmailAddress : ValueObject
         email = Normalize(email);
         if (!IsValid(email))
         {
-            throw new BusinessRuleNotSatisfiedException("Invalid email address");
+            throw new DomainRuleException("Invalid email address");
         }
 
         return new EmailAddress(email);

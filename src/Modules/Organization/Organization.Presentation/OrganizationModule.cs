@@ -1,4 +1,10 @@
-﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Presentation;
+﻿// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Presentation;
+
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Examples.BookFiesta.Organization.Application;
@@ -24,10 +30,10 @@ public class OrganizationModule : WebModuleBase
         //    .WithJob<EchoJob>(CronExpressions.Every5Minutes); // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
         //                                                      //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
-        //services.AddStartupTasks()
-        //    .WithTask<OrganizationDomainSeederTask>(o => o
-        //        .Enabled(environment?.IsDevelopment() == true)
-        //        .StartupDelay(moduleConfiguration.SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)
+        services.AddStartupTasks()
+            .WithTask<OrganizationDomainSeederTask>(o => o
+                .Enabled(environment?.IsDevelopment() == true)
+                .StartupDelay(moduleConfiguration.SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)
 
         services.AddSqlServerDbContext<OrganizationDbContext>(o => o
                 .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
@@ -66,11 +72,15 @@ public class OrganizationModule : WebModuleBase
             //.WithBehavior<RepositoryDomainEventBehavior<Tenant>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Tenant>>();
 
+        //services.AddEndpoints<OrganizationCompanyEndpoints>();
+        //services.AddEndpoints<OrganizationTenantEndpoints>();
+
         return services;
     }
 
     public override IEndpointRouteBuilder Map(IEndpointRouteBuilder app, IConfiguration configuration = null, IWebHostEnvironment environment = null)
     {
+        // disabled due to tenantid route issue
         //new OrganizationCompanyEndpoints().Map(app);
         //new OrganizationTenantEndpoints().Map(app);
 

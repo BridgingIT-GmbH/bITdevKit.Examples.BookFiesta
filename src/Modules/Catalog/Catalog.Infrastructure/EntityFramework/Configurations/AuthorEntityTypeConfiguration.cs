@@ -80,6 +80,10 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
                 .IsRequired(true).HasMaxLength(2048);
         });
 
+        builder.HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
+            .WithMany()
+            .UsingEntity(b => b.ToTable("AuthorTags"));
+
         builder.OwnsOneAuditState(); // TODO: use ToJson variant
         //builder.OwnsOne(e => e.AuditState, b => b.ToJson());
 

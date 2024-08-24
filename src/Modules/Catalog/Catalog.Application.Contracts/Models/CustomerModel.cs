@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
 
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
+
 public class CustomerModel
 {
     public string Id { get; set; }
@@ -20,17 +22,4 @@ public class CustomerModel
     public string Email { get; set; }
 
     public string Version { get; set; }
-}
-
-public class AddressModel
-{
-    public string Line1 { get; set; }
-
-    public string Line2 { get; set; }
-
-    public string PostalCode { get; set; }
-
-    public string City { get; set; }
-
-    public string Country { get; set; }
 }

@@ -26,13 +26,17 @@ public static class CatalogSeedModels
 
     public static class Authors
     {
-        public static Author[] Create(TenantId[] tenants, long ticks = 0) =>
+        public static Author[] Create(TenantId[] tenants, Tag[] tags, long ticks = 0) =>
             [.. new[]
             {
-                Author.Create(tenants[0], PersonFormalName.Create(["Martin", "Fowler"], string.Empty, string.Empty), "Martin Fowler is a British software developer, author and international public speaker on software development, specializing in object-oriented analysis and design, UML, patterns, and agile software development methodologies, including extreme programming."),
-                Author.Create(tenants[0], PersonFormalName.Create(["Robert", "C.", "Martin"], string.Empty, string.Empty), "Robert C. Martin, colloquially called 'Uncle Bob', is an American software engineer, instructor, and best-selling author. He is most recognized for developing many software design principles and for being a founder of the influential Agile Manifesto."),
-                Author.Create(tenants[0], PersonFormalName.Create(["Eric", "Evans"], string.Empty, string.Empty), "Eric Evans is a thought leader in software design and domain modeling. He is the author of 'Domain-Driven Design: Tackling Complexity in the Heart of Software'."),
-                Author.Create(tenants[0], PersonFormalName.Create(["Gregor", "Hohpe"], string.Empty, string.Empty), "Gregor Hohpe is a software architect and author known for his work on enterprise integration patterns and cloud computing."),
+                Author.Create(tenants[0], PersonFormalName.Create(["Martin", "Fowler"], string.Empty, string.Empty), "Martin Fowler is a British software developer, author and international public speaker on software development, specializing in object-oriented analysis and design, UML, patterns, and agile software development methodologies, including extreme programming.")
+                    .AddTag(tags[10]),
+                Author.Create(tenants[0], PersonFormalName.Create(["Robert", "C.", "Martin"], string.Empty, string.Empty), "Robert C. Martin, colloquially called 'Uncle Bob', is an American software engineer, instructor, and best-selling author. He is most recognized for developing many software design principles and for being a founder of the influential Agile Manifesto.")
+                    .AddTag(tags[10]),
+                Author.Create(tenants[0], PersonFormalName.Create(["Eric", "Evans"], string.Empty, string.Empty), "Eric Evans is a thought leader in software design and domain modeling. He is the author of 'Domain-Driven Design: Tackling Complexity in the Heart of Software'.")
+                    .AddTag(tags[10]),
+                Author.Create(tenants[0], PersonFormalName.Create(["Gregor", "Hohpe"], string.Empty, string.Empty), "Gregor Hohpe is a software architect and author known for his work on enterprise integration patterns and cloud computing.")
+                    .AddTag(tags[10]),
                 Author.Create(tenants[0], PersonFormalName.Create(["Sam", "Newman"], string.Empty, string.Empty), "Sam Newman is a technologist and consultant specializing in cloud computing, continuous delivery, and microservices."),
                 Author.Create(tenants[0], PersonFormalName.Create(["Vaughn", "Vernon"], string.Empty, string.Empty), "Vaughn Vernon is a software developer and architect with more than 35 years of experience in a broad range of business domains."),
                 Author.Create(tenants[0], PersonFormalName.Create(["Neal", "Ford"], string.Empty, string.Empty), "Neal Ford is a software architect, programmer, and author. He is an internationally recognized expert on software development and delivery, especially in the intersection of agile engineering techniques and software architecture."),
@@ -87,17 +91,18 @@ public static class CatalogSeedModels
         public static Tag[] Create(TenantId[] tenants, long ticks = 0) =>
             [.. new[]
             {
-                Tag.Create(tenants[0], $"SoftwareArchitecture{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"DomainDrivenDesign{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"Microservices{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"CleanArchitecture{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"DesignPatterns{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"CloudArchitecture{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"EnterpriseArchitecture{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"ArchitecturalPatterns{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"SystemDesign{GetSuffix(ticks)}"),
-                Tag.Create(tenants[0], $"SoftwareDesign{GetSuffix(ticks)}")
-            }.ForEach(e => e.Id = TagId.Create($"{GuidGenerator.Create($"Tag_{e.Name}")}"))];
+                Tag.Create(tenants[0], $"SoftwareArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"DomainDrivenDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"Microservices{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"CleanArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"DesignPatterns{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"CloudArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"EnterpriseArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"ArchitecturalPatterns{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"SystemDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"SoftwareDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                Tag.Create(tenants[0], $"Author{GetSuffix(ticks)}", $"CatalogAuthor{GetSuffix(ticks)}"),
+            }.ForEach(e => e.Id = TagId.Create($"{GuidGenerator.Create($"Tag_{e.Name}_{e.Category}")}"))];
     }
 
     public static class Categories
@@ -141,6 +146,9 @@ public static class CatalogSeedModels
                         .AddTag(tags[1]).AddTag(tags[0])
                         .AddCategory(categories[0])
                         .AddCategory(categories[0].Children.ToArray()[2])
+                        .AddRating(Rating.Excellent())
+                        .AddRating(Rating.VeryGood())
+                        .AddRating(Rating.VeryGood())
                         .AddChapter("Chapter 1: Putting the Domain Model to Work")
                         .AddChapter("Chapter 2: The Building Blocks of a Model-Driven Design")
                         .AddChapter("Chapter 3: Refactoring Toward Deeper Insight"),
@@ -156,6 +164,9 @@ public static class CatalogSeedModels
                         .AddTag(tags[3]).AddTag(tags[0])
                         .AddCategory(categories[2])
                         .AddCategory(categories[2].Children.ToArray()[0])
+                        .AddRating(Rating.Poor())
+                        .AddRating(Rating.Good())
+                        .AddRating(Rating.VeryGood())
                         .AddChapter("Chapter 1: What Is Design and Architecture?")
                         .AddChapter("Chapter 2: A Tale of Two Values")
                         .AddChapter("Chapter 3: Paradigm Overview"),
@@ -171,6 +182,9 @@ public static class CatalogSeedModels
                         .AddTag(tags[4]).AddTag(tags[6])
                         .AddCategory(categories[0])
                         .AddCategory(categories[0].Children.ToArray()[0])
+                        .AddRating(Rating.VeryGood())
+                        .AddRating(Rating.Poor())
+                        .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Layering")
                         .AddChapter("Chapter 2: Organizing Domain Logic")
                         .AddChapter("Chapter 3: Mapping to Relational Databases"),
@@ -186,6 +200,9 @@ public static class CatalogSeedModels
                         .AddTag(tags[6]).AddTag(tags[7])
                         .AddCategory(categories[1])
                         .AddCategory(categories[1].Children.ToArray()[1])
+                        .AddRating(Rating.VeryGood())
+                        .AddRating(Rating.Poor())
+                        .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Introduction to Messaging Systems")
                         .AddChapter("Chapter 2: Integration Styles")
                         .AddChapter("Chapter 3: Messaging Systems"),
@@ -201,6 +218,9 @@ public static class CatalogSeedModels
                         .AddTag(tags[2]).AddTag(tags[0])
                         .AddCategory(categories[0])
                         .AddCategory(categories[0].Children.ToArray()[1].Children.ToArray()[0])
+                        .AddRating(Rating.VeryGood())
+                        .AddRating(Rating.Poor())
+                        .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Microservices")
                         .AddChapter("Chapter 2: The Evolutionary Architect")
                         .AddChapter("Chapter 3: How to Model Services"),
@@ -216,6 +236,9 @@ public static class CatalogSeedModels
                         .AddTag(tags[1]).AddTag(tags[0])
                         .AddCategory(categories[0])
                         .AddCategory(categories[0].Children.ToArray()[2])
+                        .AddRating(Rating.VeryGood())
+                        .AddRating(Rating.Poor())
+                        .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Getting Started with DDD")
                         .AddChapter("Chapter 2: Domains, Subdomains, and Bounded Contexts")
                         .AddChapter("Chapter 3: Context Maps"),
@@ -230,6 +253,7 @@ public static class CatalogSeedModels
                         .AssignAuthor(authors[9]) // Len Bass
                         .AddTag(tags[0]).AddTag(tags[9])
                         .AddCategory(categories[0])
+                        .AddRating(Rating.VeryGood())
                         .AddChapter("Chapter 1: What Is Software Architecture?")
                         .AddChapter("Chapter 2: Why Is Software Architecture Important?")
                         .AddChapter("Chapter 3: The Many Contexts of Software Architecture"),
@@ -248,6 +272,7 @@ public static class CatalogSeedModels
                         .AddTag(tags[4]).AddTag(tags[9])
                         .AddCategory(categories[0])
                         .AddCategory(categories[0].Children.ToArray()[0])
+                        .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Introduction")
                         .AddChapter("Chapter 2: A Case Study: Designing a Document Editor")
                         .AddChapter("Chapter 3: Creational Patterns"),
@@ -263,6 +288,8 @@ public static class CatalogSeedModels
                         .AddTag(tags[2]).AddTag(tags[7])
                         .AddCategory(categories[0])
                         .AddCategory(categories[0].Children.ToArray()[1].Children.ToArray()[0])
+                        .AddRating(Rating.VeryGood())
+                        .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Escaping Monolithic Hell")
                         .AddChapter("Chapter 2: Decomposition Strategies")
                         .AddChapter("Chapter 3: Interprocess Communication in a Microservice Architecture"),
@@ -278,6 +305,9 @@ public static class CatalogSeedModels
                         .AssignAuthor(authors[15]) // Grady Booch
                         .AddTag(tags[9]).AddTag(tags[4])
                         .AddCategory(categories[2])
+                        .AddRating(Rating.VeryGood())
+                        .AddRating(Rating.Poor())
+                        .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Complexity")
                         .AddChapter("Chapter 2: The Object Model")
                         .AddChapter("Chapter 3: Classes and Objects"),
@@ -294,6 +324,9 @@ public static class CatalogSeedModels
                         .AssignAuthor(authors[17]) // James Rumbaugh
                         .AddTag(tags[9]).AddTag(tags[0])
                         .AddCategory(categories[2])
+                        .AddRating(Rating.VeryGood())
+                        .AddRating(Rating.Poor())
+                        .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Getting Started")
                         .AddChapter("Chapter 2: Classes")
                         .AddChapter("Chapter 3: Relationships"),

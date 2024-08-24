@@ -33,6 +33,8 @@ public class CompanyCreateCommand(CompanyModel model)
                 this.RuleFor(m => m).NotNull().NotEmpty().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Id).MustBeDefaultOrEmptyGuid().WithMessage("Must be empty.");
                 this.RuleFor(m => m.Name).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.RegistrationNumber).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.ContactEmail).NotNull().NotEmpty().WithMessage("Must not be empty.");
             }
         }
     }

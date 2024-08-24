@@ -18,7 +18,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure.Enti
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("organization")
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

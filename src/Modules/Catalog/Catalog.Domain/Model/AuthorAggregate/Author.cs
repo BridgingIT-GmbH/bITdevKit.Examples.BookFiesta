@@ -84,6 +84,8 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
     {
         if (!this.tags.Contains(tag))
         {
+            DomainRules.Apply([new TagMustBelongToTenantRule(tag, this.TenantId)]);
+
             this.tags.Add(tag);
         }
 

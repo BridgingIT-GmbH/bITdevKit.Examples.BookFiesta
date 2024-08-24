@@ -33,7 +33,7 @@ public class VatNumber : ValueObject
     {
         if (string.IsNullOrWhiteSpace(vatNumber))
         {
-            throw new BusinessRuleNotSatisfiedException("VAT/EIN number cannot be empty.");
+            throw new DomainRuleException("VAT/EIN number cannot be empty.");
         }
 
         vatNumber = vatNumber.ToUpperInvariant().Replace(" ", string.Empty);
@@ -45,12 +45,12 @@ public class VatNumber : ValueObject
         {
             if (!regex.IsMatch(vatNumber))
             {
-                throw new BusinessRuleNotSatisfiedException($"Invalid VAT/EIN number format for country {countryCode}.");
+                throw new DomainRuleException($"Invalid VAT/EIN number format for country {countryCode}.");
             }
         }
         else if (!GeneralVatFormat.IsMatch(vatNumber))
         {
-            throw new BusinessRuleNotSatisfiedException("Invalid VAT number format.");
+            throw new DomainRuleException("Invalid VAT number format.");
         }
         else
         {
@@ -68,7 +68,7 @@ public class VatNumber : ValueObject
 
             return true;
         }
-        catch (BusinessRuleNotSatisfiedException)
+        catch (DomainRuleException)
         {
             result = null;
 

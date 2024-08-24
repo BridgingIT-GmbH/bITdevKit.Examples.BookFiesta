@@ -25,6 +25,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         this.SetPrice(price);
         this.SetPublisher(publisher);
         this.SetPublishedDate(publishedDate);
+        this.AverageRating = AverageRating.Create();
     }
 
     public TenantId TenantId { get; private set; }
@@ -40,6 +41,8 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     public BookPublisher Publisher { get; private set; }
 
     public DateOnly PublishedDate { get; private set; }
+
+    public AverageRating AverageRating { get; private set; }
 
     public IEnumerable<BookKeyword> Keywords => this.keywords;
 
@@ -117,6 +120,18 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         // Validate published date
         this.PublishedDate = publishedDate;
+        return this;
+    }
+
+    public Book AddRating(Rating rating)
+    {
+        if (rating is null)
+        {
+            return this;
+        }
+
+        this.AverageRating.Add(rating);
+
         return this;
     }
 
@@ -245,6 +260,8 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         if (!this.tags.Contains(tag))
         {
+            DomainRules.Apply([new TagMustBelongToTenantRule(tag, this.TenantId)]);
+
             this.tags.Add(tag);
             this.ReindexKeywords();
         }

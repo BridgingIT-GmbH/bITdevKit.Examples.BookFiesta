@@ -31,7 +31,7 @@ public class HexColor : ValueObject
         color = Normalize(color);
         if (!IsValid(color))
         {
-            throw new BusinessRuleNotSatisfiedException($"Invalid hex color format: {color}. Use the format #RGB or #RRGGBB.");
+            throw new DomainRuleException($"Invalid hex color format: {color}. Use the format #RGB or #RRGGBB.");
         }
 
         return new HexColor(color);

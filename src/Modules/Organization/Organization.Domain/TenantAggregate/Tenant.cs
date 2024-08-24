@@ -57,7 +57,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
     {
         if (company == null)
         {
-            throw new BusinessRuleNotSatisfiedException("Tenant company cannot be null.");
+            throw new DomainRuleException("Tenant company cannot be null.");
         }
 
         if (company.Id != this.CompanyId)
@@ -81,7 +81,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
     {
         if (string.IsNullOrWhiteSpace(name))
         {
-            throw new BusinessRuleNotSatisfiedException("Tenant name cannot be empty.");
+            throw new DomainRuleException("Tenant name cannot be empty.");
         }
 
         if (name != this.Name)
@@ -150,7 +150,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
     {
         if (email == null)
         {
-            throw new BusinessRuleNotSatisfiedException("Tenant contact email cannot be empty.");
+            throw new DomainRuleException("Tenant contact email cannot be empty.");
         }
 
         if (email != this.ContactEmail)

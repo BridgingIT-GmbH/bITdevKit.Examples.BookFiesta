@@ -28,7 +28,7 @@ public class CustomerCreateCommandHandler(
         var address = Address.Create(command.AddressName, command.AddressLine1, command.AddressLine2, command.AddressPostalCode, command.AddressCity, command.AddressCountry);
         var customer = Customer.Create(tenantId, command.FirstName, command.LastName, email, address);
 
-        Check.Throw(
+        await DomainRules.ApplyAsync(
         [
             CustomerRules.EmailMustBeUnique(repository, customer),
         ]);

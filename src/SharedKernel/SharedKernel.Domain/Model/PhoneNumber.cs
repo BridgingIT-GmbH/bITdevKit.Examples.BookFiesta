@@ -32,7 +32,7 @@ public class PhoneNumber : ValueObject
     {
         if (!IsValid(phoneNumber))
         {
-            throw new BusinessRuleNotSatisfiedException("Invalid phone number format.");
+            throw new DomainRuleException("Invalid phone number format.");
         }
 
         var cleanNumber = CleanNumber(phoneNumber);

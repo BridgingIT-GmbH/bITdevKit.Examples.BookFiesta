@@ -51,7 +51,7 @@ public class Schedule : ValueObject, IComparable<Schedule>
     {
         if (endDate <= startDate)
         {
-            throw new BusinessRuleNotSatisfiedException("End date must be after start date");
+            throw new DomainRuleException("End date must be after start date");
         }
 
         return new Schedule(startDate, endDate);

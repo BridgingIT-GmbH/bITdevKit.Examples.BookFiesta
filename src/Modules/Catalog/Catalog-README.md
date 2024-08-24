@@ -1,7 +1,7 @@
 Catalog![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookFiesta/main/bITDevKit_Logo.png)
 =====================================
 
-# Catalog Module overview
+# Catalog Module Overview
 
 > The Catalog Module is responsible for managing the book catalog.
 
@@ -15,8 +15,9 @@ The domain model consists of two main aggregates: Book and Author. These aggrega
 
 ```mermaid
 classDiagram
-    class Book {
+    class Book {a
         +BookId Id
+        +TenantId TenantId
         -List~AuthorId~ authorIds
         -List~Category~ categories
         -List~Tag~ tags
@@ -30,6 +31,7 @@ classDiagram
 
     class Author {
         +AuthorId Id
+        +TenantId TenantId
         -List~BookId~ bookIds
         -List~Tag~ tags
         +PersonName: PersonFormalName
@@ -46,6 +48,7 @@ classDiagram
 
     class Category {
         +CategoryId Id
+        +TenantId TenantId
         -List~Book~ books
         -List~Category~ children
         +Title: string

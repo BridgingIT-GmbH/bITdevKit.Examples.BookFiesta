@@ -116,8 +116,8 @@ builder.Services.AddProblemDetails(o => Configure.ProblemDetails(o, true));
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddHostedService<Service1>();
-builder.Services.AddHostedService<Service2>();
+//builder.Services.AddHostedService<Service1>();
+//builder.Services.AddHostedService<Service2>();
 
 builder.Services.AddLocalization();
 builder.Services.AddMudServices();
@@ -129,7 +129,11 @@ builder.Services.AddEndpoints<JobSchedulingEndpoints>(builder.Environment.IsDeve
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(ConfigureOpenApiDocument);
 
-builder.Services.AddApplicationInsightsTelemetry(); // https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Services.AddApplicationInsightsTelemetry(); // https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core
+}
+
 builder.Services.AddOpenTelemetry()
     .WithMetrics(ConfigureMetrics)
     .WithTracing(ConfigureTracing);
@@ -341,49 +345,49 @@ public partial class Program
     // needed for testing with a test fixture https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-7.0#basic-tests-with-the-default-webapplicationfactory
 }
 
-#pragma warning disable SA1402 // File may only contain a single type
-public class Service1 : IHostedService
-{
-    private readonly ILogger<Service1> logger;
+//#pragma warning disable SA1402 // File may only contain a single type
+//public class Service1 : IHostedService
+//{
+//    private readonly ILogger<Service1> logger;
 
-    public Service1(ILogger<Service1> logger)
-    {
-        this.logger = logger;
-    }
+//    public Service1(ILogger<Service1> logger)
+//    {
+//        this.logger = logger;
+//    }
 
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {
-        this.logger.LogInformation("Service1 starting at: {time}", DateTimeOffset.UtcNow);
-        await Task.Delay(5000, cancellationToken);
-        this.logger.LogInformation("Service1 delay completed at: {time}", DateTimeOffset.UtcNow);
-    }
+//    public async Task StartAsync(CancellationToken cancellationToken)
+//    {
+//        this.logger.LogInformation("Service1 starting at: {time}", DateTimeOffset.UtcNow);
+//        await Task.Delay(5000, cancellationToken);
+//        this.logger.LogInformation("Service1 delay completed at: {time}", DateTimeOffset.UtcNow);
+//    }
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        this.logger.LogInformation("Service1 stopping.");
-        return Task.CompletedTask;
-    }
-}
+//    public Task StopAsync(CancellationToken cancellationToken)
+//    {
+//        this.logger.LogInformation("Service1 stopping.");
+//        return Task.CompletedTask;
+//    }
+//}
 
-public class Service2 : IHostedService
-{
-    private readonly ILogger<Service2> logger;
+//public class Service2 : IHostedService
+//{
+//    private readonly ILogger<Service2> logger;
 
-    public Service2(ILogger<Service2> logger)
-    {
-        this.logger = logger;
-    }
+//    public Service2(ILogger<Service2> logger)
+//    {
+//        this.logger = logger;
+//    }
 
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        this.logger.LogInformation("Service2 starting at: {time}", DateTimeOffset.UtcNow);
-        return Task.CompletedTask;
-    }
+//    public Task StartAsync(CancellationToken cancellationToken)
+//    {
+//        this.logger.LogInformation("Service2 starting at: {time}", DateTimeOffset.UtcNow);
+//        return Task.CompletedTask;
+//    }
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        this.logger.LogInformation("Service2 stopping.");
-        return Task.CompletedTask;
-    }
-}
-#pragma warning restore SA1402 // File may only contain a single type
+//    public Task StopAsync(CancellationToken cancellationToken)
+//    {
+//        this.logger.LogInformation("Service2 stopping.");
+//        return Task.CompletedTask;
+//    }
+//}
+//#pragma warning restore SA1402 // File may only contain a single type

@@ -16,7 +16,7 @@ public class CatalogCategoryEndpoints : EndpointsBase
 {
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/tenants/{tenantId}catalog/categories")
+        var group = app.MapGroup("api/tenants/{tenantId}/catalog/categories")
             .WithTags("Catalog");
 
         group.MapGet("/{id}", async Task<Results<Ok<CategoryModel>, NotFound, ProblemHttpResult>> (

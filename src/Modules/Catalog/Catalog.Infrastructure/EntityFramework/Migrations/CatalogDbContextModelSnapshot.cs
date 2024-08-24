@@ -18,10 +18,25 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("catalog")
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AuthorTag", b =>
+                {
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TagsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AuthorId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("AuthorTags", "catalog");
+                });
 
             modelBuilder.Entity("BookCategories", b =>
                 {
@@ -241,14 +256,31 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                     b.ToTable("Publishers", "catalog");
                 });
 
-            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Tag", b =>
+            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.TenantReference", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AuthorId")
+                    b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.ToTable("Tenants", "organization", t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
+            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Tag", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -265,30 +297,17 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("Category");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
                     b.HasIndex("TenantId");
 
+                    b.HasIndex("Name", "Category")
+                        .IsUnique()
+                        .HasFilter("[Category] IS NOT NULL");
+
                     b.ToTable("Tags", "catalog");
-                });
-
-            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.TenantReference", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
-
-                    b.ToTable("Tenants", "organization", t =>
-                        {
-                            t.ExcludeFromMigrations();
-                        });
                 });
 
             modelBuilder.Entity("BridgingIT.DevKit.Infrastructure.EntityFramework.OutboxDomainEvent", b =>
@@ -447,6 +466,21 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                     b.ToTable("__Storage_Documents", "catalog");
                 });
 
+            modelBuilder.Entity("AuthorTag", b =>
+                {
+                    b.HasOne("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Author", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BookCategories", b =>
                 {
                     b.HasOne("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Book", null)
@@ -470,7 +504,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Tag", null)
+                    b.HasOne("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -841,6 +875,29 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                                 .IsRequired();
                         });
 
+                    b.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.AverageRating", "AverageRating", b1 =>
+                        {
+                            b1.Property<Guid>("BookId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Amount")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValue(0)
+                                .HasColumnName("AverageRatingAmount");
+
+                            b1.Property<decimal?>("Value")
+                                .HasColumnType("decimal(5,2)")
+                                .HasColumnName("AverageRating");
+
+                            b1.HasKey("BookId");
+
+                            b1.ToTable("Books", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BookId");
+                        });
+
                     b.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Money", "Price", b1 =>
                         {
                             b1.Property<Guid>("BookId")
@@ -886,6 +943,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                     b.Navigation("AuditState");
 
                     b.Navigation("Authors");
+
+                    b.Navigation("AverageRating");
 
                     b.Navigation("Chapters");
 
@@ -1340,22 +1399,13 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Tag", b =>
+            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Tag", b =>
                 {
-                    b.HasOne("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Author", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("AuthorId");
-
                     b.HasOne("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.TenantReference", null)
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Author", b =>
-                {
-                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Book", b =>

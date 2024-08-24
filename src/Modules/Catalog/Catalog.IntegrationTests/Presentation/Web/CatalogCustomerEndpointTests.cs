@@ -8,10 +8,11 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.IntegrationTests.Present
 using System.Text.Json;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-[IntegrationTest("GettingStarted.Presentation.Web")]
-public class CustomerEndpointTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture) : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
+[IntegrationTest("Presentation.Web")]
+public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture) : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
 {
     private readonly CustomWebApplicationFactoryFixture<Program> fixture = fixture.WithOutput(output);
 

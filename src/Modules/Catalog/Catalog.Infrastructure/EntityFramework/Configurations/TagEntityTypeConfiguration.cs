@@ -7,7 +7,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 public class TagEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Tag>
@@ -43,7 +42,12 @@ public class TagEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Tag
         builder.Property(e => e.Name)
             .IsRequired().HasMaxLength(128);
 
-        builder.HasIndex(nameof(Tag.Name))
+        builder.Property(e => e.Category)
+            .IsRequired(false).HasMaxLength(128);
+
+        builder.HasIndex(nameof(Tag.Name));
+        builder.HasIndex(nameof(Tag.Category));
+        builder.HasIndex(nameof(Tag.Name), nameof(Tag.Category))
              .IsUnique();
     }
 }

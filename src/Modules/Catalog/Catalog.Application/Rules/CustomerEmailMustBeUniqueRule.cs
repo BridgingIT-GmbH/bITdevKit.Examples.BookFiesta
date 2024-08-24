@@ -13,11 +13,11 @@ using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
 public class CustomerEmailMustBeUniqueRule(
     IGenericRepository<Customer> repository,
-    Customer customer) : IBusinessRule
+    Customer customer) : DomainRuleBase
 {
-    public string Message => "Customer email should be unique";
+    public override string Message => "Customer email should be unique";
 
-    public async Task<bool> IsSatisfiedAsync(CancellationToken cancellationToken = default)
+    public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
         return !(await repository.FindAllAsync(
             CustomerSpecifications.ForEmail(customer.Email), cancellationToken: cancellationToken)).SafeAny();
@@ -26,7 +26,7 @@ public class CustomerEmailMustBeUniqueRule(
 
 public static partial class CustomerRules
 {
-    public static IBusinessRule EmailMustBeUnique(
+    public static IDomainRule EmailMustBeUnique(
         IGenericRepository<Customer> repository,
         Customer customer) => new CustomerEmailMustBeUniqueRule(repository, customer);
 }

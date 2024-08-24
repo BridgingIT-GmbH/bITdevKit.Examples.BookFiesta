@@ -33,6 +33,8 @@ public class TenantCreateCommand(TenantModel model)
                 this.RuleFor(m => m).NotNull().NotEmpty().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Id).MustBeDefaultOrEmptyGuid().WithMessage("Must be empty.");
                 this.RuleFor(m => m.CompanyId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
+                this.RuleFor(m => m.Name).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.ContactEmail).NotNull().NotEmpty().WithMessage("Must not be empty.");
             }
         }
     }

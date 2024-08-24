@@ -1,4 +1,10 @@
-﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation;
+﻿// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation;
+
 using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Common;
@@ -7,6 +13,7 @@ using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation.Web;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -26,10 +33,10 @@ public class CatalogModule : WebModuleBase
             .WithJob<EchoJob>(CronExpressions.Every5Minutes); // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
                                                               //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
-        //services.AddStartupTasks()
-        //    .WithTask<CatalogDomainSeederTask>(o => o
-        //        .Enabled(environment?.IsDevelopment() == true)
-        //        .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
+        services.AddStartupTasks()
+            .WithTask<CatalogDomainSeederTask>(o => o
+                .Enabled(environment?.IsDevelopment() == true)
+                .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
 
         services.AddSqlServerDbContext<CatalogDbContext>(o => o
                 .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
@@ -43,7 +50,7 @@ public class CatalogModule : WebModuleBase
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup(false))
             .WithDatabaseMigratorService(o => o
-                .StartupDelay("00:00:35") // organization schema has to be created first to accomodate for the tenant FKs
+                .StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
                 .Enabled(environment?.IsDevelopment() == true)
                 .DeleteOnStartup(false))
             .WithOutboxDomainEventService(o => o
@@ -101,11 +108,16 @@ public class CatalogModule : WebModuleBase
             //.WithBehavior<RepositoryDomainEventBehavior<Author>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Author>>();
 
+        //services.AddEndpoints<CatalogBookEndpoints>();
+        //services.AddEndpoints<CatalogCategoryEndpoints>();
+        //services.AddEndpoints<CatalogPublisherEndpoints>();
+
         return services;
     }
 
     public override IEndpointRouteBuilder Map(IEndpointRouteBuilder app, IConfiguration configuration = null, IWebHostEnvironment environment = null)
     {
+        // disabled due to tenantid route issue
         //new CatalogBookEndpoints().Map(app);
         //new CatalogCategoryEndpoints().Map(app);
         //new CatalogPublisherEndpoints().Map(app);

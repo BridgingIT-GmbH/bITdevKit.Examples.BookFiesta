@@ -29,7 +29,7 @@ public partial class Website : ValueObject
         website = Normalize(website);
         if (!IsValid(website))
         {
-            throw new BusinessRuleNotSatisfiedException("Invalid website");
+            throw new DomainRuleException("Invalid website");
         }
 
         return new Website(website);

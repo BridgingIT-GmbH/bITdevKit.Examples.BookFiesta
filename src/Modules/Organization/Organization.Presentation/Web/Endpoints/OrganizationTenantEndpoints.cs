@@ -16,52 +16,58 @@ public class OrganizationTenantEndpoints : EndpointsBase
 {
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/tenants")
+        var group = app.MapGroup("api/organization/tenants")
             .WithTags("Organization");
 
-        group.MapGet("/{id}", async Task<Results<Ok<TenantModel>, NotFound, ProblemHttpResult>> (
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string tenantId,
-            [FromRoute] string id) =>
-        {
-            var result = (await mediator.Send(new TenantFindOneQuery(id))).Result;
-
-            return (result.Value == null) ? TypedResults.NotFound() : result.IsSuccess
-                ? TypedResults.Ok(mapper.Map<Tenant, TenantModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
-        }).WithName("GetOrganizationTenant")
+        group.MapGet("/{id}", GetTenant).WithName("GetOrganizationTenant")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapGet(string.Empty, async Task<Results<Ok<IEnumerable<TenantModel>>, ProblemHttpResult>> (
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper) =>
-        {
-            var result = (await mediator.Send(new TenantFindAllQuery())).Result;
-
-            return result.IsSuccess
-                ? TypedResults.Ok(mapper.Map<Tenant, TenantModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
-        }).WithName("GetOrganizationTenants")
+        group.MapGet(string.Empty, GetTenants).WithName("GetOrganizationTenants")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapPost(string.Empty, async Task<Results<Created<TenantModel>, ProblemHttpResult>> (
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromBody] TenantModel model) =>
-        {
-            var result = (await mediator.Send(new TenantCreateCommand(model))).Result;
-
-            return result.IsSuccess
-                ? TypedResults.Created($"api/tenants/{result.Value.Id}",
-                                       mapper.Map<Tenant, TenantModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "),
-                                       statusCode: 400);
-        }).WithName("CreateOrganizationTenant")
+        group.MapPost(string.Empty, CreateTenant).WithName("CreateOrganizationTenant")
             .Produces<TenantModel>(201)
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
+    }
+
+    private static async Task<Results<Ok<TenantModel>, NotFound, ProblemHttpResult>> GetTenant(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id)
+    {
+        var result = (await mediator.Send(new TenantFindOneQuery(id))).Result;
+
+        return result.Value == null ? TypedResults.NotFound() : result.IsSuccess
+            ? TypedResults.Ok(mapper.Map<Tenant, TenantModel>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+    }
+
+    private static async Task<Results<Ok<IEnumerable<TenantModel>>, ProblemHttpResult>> GetTenants(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper)
+    {
+        var result = (await mediator.Send(new TenantFindAllQuery())).Result;
+
+        return result.IsSuccess
+            ? TypedResults.Ok(mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantModel>>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+    }
+
+    private static async Task<Results<Created<TenantModel>, ProblemHttpResult>> CreateTenant(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromBody] TenantModel model)
+    {
+        var result = (await mediator.Send(new TenantCreateCommand(model))).Result;
+
+        return result.IsSuccess
+            ? TypedResults.Created($"api/tenants/{result.Value.Id}",
+                                   mapper.Map<Tenant, TenantModel>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "),
+                                   statusCode: 400);
     }
 }

@@ -52,7 +52,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
     {
         if(planType == null)
         {
-            throw new BusinessRuleNotSatisfiedException("Plan type cannot be null.");
+            throw new DomainRuleException("Plan type cannot be null.");
         }
 
         if (planType != this.PlanType)
@@ -84,7 +84,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
     {
         if (schedule == null)
         {
-            throw new BusinessRuleNotSatisfiedException("Schedule cannot be null.");
+            throw new DomainRuleException("Schedule cannot be null.");
         }
 
         if (schedule != this.Schedule)
@@ -104,7 +104,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
         {
             if (this.PlanType.IsPaid && billingCycle == TenantSubscriptionBillingCycle.Never)
             {
-                throw new BusinessRuleNotSatisfiedException("Subscription billing cycle should not be 'never' for paid plans.");
+                throw new DomainRuleException("Subscription billing cycle should not be 'never' for paid plans.");
             }
 
             this.BillingCycle = billingCycle ?? TenantSubscriptionBillingCycle.Monthly;

@@ -13,11 +13,11 @@ using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
 public class BookIsbnMustBeUniqueRule(
     IGenericRepository<Book> repository,
-    Book book) : IBusinessRule
+    Book book) : DomainRuleBase
 {
-    public string Message => "Book ISBN should be unique";
+    public override string Message => "Book ISBN should be unique";
 
-    public async Task<bool> IsSatisfiedAsync(CancellationToken cancellationToken = default)
+    public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
         return !(await repository.FindAllAsync(
             BookSpecifications.ForIsbn(book.Isbn), cancellationToken: cancellationToken)).SafeAny();
@@ -26,7 +26,7 @@ public class BookIsbnMustBeUniqueRule(
 
 public static partial class BookRules
 {
-    public static IBusinessRule IsbnMustBeUnique(
+    public static IDomainRule IsbnMustBeUnique(
         IGenericRepository<Book> repository,
         Book book) => new BookIsbnMustBeUniqueRule(repository, book);
 }

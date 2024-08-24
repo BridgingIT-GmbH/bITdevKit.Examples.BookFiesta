@@ -1,132 +1,116 @@
-Organization![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookFiesta/main/bITDevKit_Logo.png)
-=====================================
+# Organization Module Overview
 
-# Organization Module overview
-
-> The Organization Module is responsible for managing the Tenants and their Subscriptions.
+> The Organization Module is responsible for managing tenants, companies, and their associated subscriptions and branding.
 
 ## Domain Model
 
-The domain model provides a robust foundation for the module, capturing the essential entities and their relationships while adhering to Domain-Driven Design principles. It allows for complex operations such as managing books with multiple authors, hierarchical categorization, and flexible tagging, while maintaining clear boundaries between aggregates.
+The domain model provides a robust foundation for the module, capturing the essential entities and their relationships while adhering to Domain-Driven Design principles. It allows for complex operations such as managing tenants, companies, subscriptions, and branding, while maintaining clear boundaries between aggregates.
 
-
-The domain model consists of two main aggregates: Book and Author. These aggregates, along with supporting entities and value objects, form the core of the domain model. A summary of each aggregate and their relationships:
-
+The domain model consists of two main aggregates: Tenant and Company. These aggregates, along with supporting entities and value objects, form the core of the domain model. A summary of each aggregate and their relationships:
 
 ```mermaid
 classDiagram
-    class Book {
-        +BookId Id
-        -List~AuthorId~ authorIds
-        -List~Category~ categories
-        -List~Tag~ tags
-        -List~BookChapter~ chapters
-        +Title: string
-        +Description: string
-        +Isbn: BookIsbn
-        +Price: Money
-        +Version: Guid
+    class Tenant {
+        <<Aggregate Root>>
+        +TenantId Id
+        +CompanyId CompanyId
+        +string Name
+        +string Description
+        +bool Activated
+        +EmailAddress ContactEmail
+        +List~TenantSubscription~ Subscriptions
+        +TenantBranding Branding
     }
 
-    class Author {
-        +AuthorId Id
-        -List~BookId~ bookIds
-        -List~Tag~ tags
-        +PersonName: PersonFormalName
-        +Biography: string
-        +Version: Guid
+    class Company {
+        <<Aggregate Root>>
+        +CompanyId Id
+        +string Name
+        +Address Address
+        +string RegistrationNumber
+        +EmailAddress ContactEmail
+        +PhoneNumber ContactPhone
+        +Url Website
+        +VatNumber VatNumber
+        +List~TenantId~ TenantIds
     }
 
-    class BookChapter {
-        +BookChapterId Id
-        +Title: string
-        +Number: int
-        +Content: string
+    class TenantSubscription {
+        <<Entity>>
+        +TenantSubscriptionId Id
+        +TenantSubscriptionPlanType PlanType
+        +TenantSubscriptionStatus Status
+        +Schedule Schedule
+        +TenantSubscriptionBillingCycle BillingCycle
     }
 
-    class Category {
-        +CategoryId Id
-        -List~Book~ books
-        -List~Category~ children
-        +Title: string
-        +Order: int
-        +Description: string
-        +Parent: Category
-        +Version: Guid
+    class TenantBranding {
+        <<Entity>>
+        +TenantBrandingId Id
+        +HexColor PrimaryColor
+        +HexColor SecondaryColor
+        +Url LogoUrl
+        +Url FaviconUrl
+        +string CustomCss
     }
 
-    class BookIsbn {
-        +Value: string
-        +Type: string
-    }
-
-    class Tag {
-        +Name: string
-    }
-
-    Book "1" *-- "0..*" BookChapter : contains
-    Book "1" *-- "1" BookIsbn : has
-    Book "0..*" -- "0..*" Category : belongs to
-    Book "1" *-- "0..*" Tag : tagged with
-    Author "1" *-- "0..*" Tag : tagged with
-    Category "1" *-- "0..*" Category : has subcategories
-    Book "0..*" -- "0..*" Author : written by
+    Tenant "1" *-- "0..*" TenantSubscription : contains
+    Tenant "1" *-- "1" TenantBranding : has
+    Tenant "0..*" -- "1" Company : belongs to
 ```
 
-### Book Aggregate
+### Tenant Aggregate
 
-The Book aggregate is the central entity in the Organization module.
-
-Components:
-- Book (Aggregate Root): Represents a book in the Organization.
-- BookChapter: Represents individual chapters within a book.
-- BookIsbn: A value object representing the book's ISBN.
-- Tag: A value object for categorizing books.
-
-Relationships:
-- A Book contains multiple BookChapters.
-- Each Book has one BookIsbn.
-- A Book can be tagged with multiple Tags.
-- Books have a many-to-many relationship with Categories.
-- Books have a many-to-many relationship with Authors, referenced by AuthorIds.
-
-### Author Aggregate
-
-The Author aggregate represents book authors in the module.
+The Tenant aggregate is the central entity in the organization module.
 
 Components:
-- Author (Aggregate Root): Represents an author.
-- Tag: A value object for categorizing authors.
+- Tenant (Aggregate Root): Represents a client organization or individual using the shop platform.
+- TenantSubscription (Entity): Represents the commercial agreements for the tenant.
+- TenantBranding (Entity): Represents the branding information for the tenant.
 
 Relationships:
-- An Author can be tagged with multiple Tags.
-- Authors have a many-to-many relationship with Books, referenced by BookIds.
+- A Tenant belongs to one Company.
+- A Tenant can have multiple TenantSubscriptions.
+- A Tenant has one TenantBranding.
+
+### Company Aggregate
+
+The Company aggregate represents the parent organization of tenants.
+
+Components:
+- Company (Aggregate Root): Represents a company that can have multiple tenants.
+
+Relationships:
+- A Company can have multiple Tenants (referenced by TenantIds).
 
 ### Supporting Entities and Value Objects
 
-1. Category:
-   - Represents book categories.
-   - Has a hierarchical structure (parent-child relationships).
-   - Has a many-to-many relationship with Books.
+1. TenantSubscription (Entity):
+   - Represents a subscription plan for a tenant.
+   - Contains information about the plan type, status, schedule, and billing cycle.
 
-2. Tag:
-   - A value object used by both Book and Author for categorization.
+2. TenantBranding (Entity):
+   - Represents the branding information for a tenant.
+   - Contains colors, logo URLs, and custom CSS.
+
+3. Value Objects:
+   - TenantSubscriptionPlanType: Enumeration of subscription plan types (Free, Basic, Premium).
+   - TenantSubscriptionStatus: Enumeration of subscription statuses (Pending, Approved, Cancelled, Ended).
+   - TenantSubscriptionBillingCycle: Enumeration of billing cycles (Never, Monthly, Yearly).
+   - EmailAddress, PhoneNumber, Url, VatNumber: Represent specific data types with their own validation rules.
 
 ### Key Relationships
 
-1. Book-Author:
-   - Many-to-many relationship.
-   - Managed through typed IDs (BookId in Author, AuthorId in Book).
-   - Allows for books with multiple authors and authors with multiple books.
+1. Tenant-Company:
+   - Many-to-one relationship.
+   - A Tenant belongs to one Company, but a Company can have multiple Tenants.
 
-2. Book-Category:
-   - Many-to-many relationship.
-   - Allows for flexible categorization of books.
+2. Tenant-TenantSubscription:
+   - One-to-many relationship within the Tenant aggregate.
+   - A Tenant can have multiple TenantSubscriptions.
 
-3. Category Hierarchy:
-   - Self-referential relationship in Category.
-   - Enables the creation of a category tree structure.
+3. Tenant-TenantBranding:
+   - One-to-one relationship within the Tenant aggregate.
+   - Each Tenant has its own TenantBranding.
 
-4. Tagging:
-   - Both Books and Authors can be tagged.
-   - Provides a flexible way to add metadata and improve searchability.
+This domain model provides a flexible structure for managing organizations, tenants, and their associated data in the system. It allows for complex operations while maintaining clear boundaries between aggregates and ensuring data integrity through the use of specific value objects and entities.

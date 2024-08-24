@@ -83,6 +83,20 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
                 .IsUnique();
         });
 
+        builder.OwnsOne(e => e.AverageRating, b =>
+        {
+            b.Property(e => e.Value)
+                .HasColumnName("AverageRating")
+                //.HasDefaultValue(0m)
+                .IsRequired(false).HasColumnType("decimal(5,2)");
+
+            b.Property(e => e.Amount)
+                .HasColumnName("AverageRatingAmount")
+                .HasDefaultValue(0)
+                .IsRequired();
+        }
+        );
+
         builder.OwnsOne(e => e.Price, b =>
         {
             b.Property(e => e.Amount)

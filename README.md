@@ -1,4 +1,4 @@
-![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.GettingStarted/main/bITDevKit_Logo.png)
+cs![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.GettingStarted/main/bITDevKit_Logo.png)
 =====================================
 
 # Architecture overview
@@ -18,7 +18,33 @@
 - [Serilog](https://serilog.net/)
 - [xUnit.net](https://xunit.net/), [NSubstitute](https://nsubstitute.github.io/), [Shouldly](https://docs.shouldly.org/)
 
+## Architecture
+
+The architecture is structured around key DDD principles, ensuring that the domain model is at the core of the application. 
+The solution is divided into several layers:
+
+- **Domain**: Contains the core business logic and domain model.
+- **Application**: Handles application-specific logic, including commands and queries.
+- **Infrastructure**: Manages data access, external services, and other infrastructure concerns.
+- **Presentation**: Provides the user interface and API endpoints.
+- **SharedKernel**: Contains shared concepts, such as value objects, rules, and interfaces.
+
+## Modules
+
+### Organization Module
+[see](./src/Modules/Organization/Organization-README.md)
+
+### Catalog Module
+[see](./src/Modules/Catalog/Catalog-README.md)
+
 ## Getting Started
+
+TODO
+
+### Prerequisites
+
+- Docker Desktop
+- Visual Studio (Code)
 
 ### Running the Application
 

@@ -5,9 +5,17 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Application;
 
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
+
 public class CompanyModel
 {
     public string Id { get; set; }
 
-    public string Name { get; private set; }
+    public string Name { get; set; }
+
+    public string RegistrationNumber { get; set; }
+
+    public string ContactEmail { get; set; }
+
+    public AddressModel Address { get; set; }
 }

@@ -271,19 +271,13 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Category = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id)
                         .Annotation("SqlServer:Clustered", false);
-                    table.ForeignKey(
-                        name: "FK_Tags_Authors_AuthorId",
-                        column: x => x.AuthorId,
-                        principalSchema: "catalog",
-                        principalTable: "Authors",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tags_Tenants_TenantId",
                         column: x => x.TenantId,
@@ -308,6 +302,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                     PublisherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     PublisherName = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     PublishedDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    AverageRating = table.Column<decimal>(type: "decimal(5,2)", nullable: true),
+                    AverageRatingAmount = table.Column<int>(type: "int", nullable: true, defaultValue: 0),
                     Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuditState_CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     AuditState_CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -344,6 +340,33 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                         principalSchema: "organization",
                         principalTable: "Tenants",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuthorTags",
+                schema: "catalog",
+                columns: table => new
+                {
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TagsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorTags", x => new { x.AuthorId, x.TagsId });
+                    table.ForeignKey(
+                        name: "FK_AuthorTags_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalSchema: "catalog",
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AuthorTags_Tags_TagsId",
+                        column: x => x.TagsId,
+                        principalSchema: "catalog",
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -587,6 +610,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuthorTags_TagsId",
+                schema: "catalog",
+                table: "AuthorTags",
+                column: "TagsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BookAuthors_AuthorId",
                 schema: "catalog",
                 table: "BookAuthors",
@@ -691,17 +720,24 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_AuthorId",
+                name: "IX_Tags_Category",
                 schema: "catalog",
                 table: "Tags",
-                column: "AuthorId");
+                column: "Category");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tags_Name",
                 schema: "catalog",
                 table: "Tags",
-                column: "Name",
-                unique: true);
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_Name_Category",
+                schema: "catalog",
+                table: "Tags",
+                columns: new[] { "Name", "Category" },
+                unique: true,
+                filter: "[Category] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tags_TenantId",
@@ -730,6 +766,10 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                 schema: "catalog");
 
             migrationBuilder.DropTable(
+                name: "AuthorTags",
+                schema: "catalog");
+
+            migrationBuilder.DropTable(
                 name: "BookAuthors",
                 schema: "catalog");
 
@@ -754,6 +794,10 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                 schema: "catalog");
 
             migrationBuilder.DropTable(
+                name: "Authors",
+                schema: "catalog");
+
+            migrationBuilder.DropTable(
                 name: "Categories",
                 schema: "catalog");
 
@@ -767,10 +811,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
 
             migrationBuilder.DropTable(
                 name: "Publishers",
-                schema: "catalog");
-
-            migrationBuilder.DropTable(
-                name: "Authors",
                 schema: "catalog");
         }
     }

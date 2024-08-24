@@ -27,7 +27,7 @@ public class CatalogDomainSeederTask(
         var tags = await this.SeedTags(tagRepository, tenantIds);
         var categories = await this.SeedCategories(categoryRepository, tenantIds);
         var publishers = await this.SeedPublishers(publisherRepository, tenantIds);
-        var authors = await this.SeedAuthors(authorRepository, tenantIds);
+        var authors = await this.SeedAuthors(authorRepository, tenantIds, tags);
         var books = await this.SeedBooks(bookRepository, tenantIds, tags, categories, publishers, authors);
     }
 
@@ -110,9 +110,9 @@ public class CatalogDomainSeederTask(
         return entities;
     }
 
-    private async Task<Author[]> SeedAuthors(IGenericRepository<Author> repository, TenantId[] tenantIds)
+    private async Task<Author[]> SeedAuthors(IGenericRepository<Author> repository, TenantId[] tenantIds, Tag[] tags)
     {
-        var entities = CatalogSeedModels.Authors.Create(tenantIds);
+        var entities = CatalogSeedModels.Authors.Create(tenantIds, tags);
 
         foreach (var entity in entities)
         {
