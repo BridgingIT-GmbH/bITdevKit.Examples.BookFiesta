@@ -16,9 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.Publisher.Seq" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" />
-    <PackageVersion Include="AspNetcore.HealthChecks.Publisher.Seq" Version="8.0.1" />
-    <PackageReference Include="AspNetcore.HealthChecks.Publisher.Seq" />
     <PackageReference Include="BridgingIT.DevKit.Application.Messaging" />
     <PackageReference Include="BridgingIT.DevKit.Application.Utilities" />
     <PackageReference Include="BridgingIT.DevKit.Common.Extensions" />
