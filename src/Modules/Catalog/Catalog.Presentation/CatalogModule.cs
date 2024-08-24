@@ -108,6 +108,7 @@ public class CatalogModule : WebModuleBase
             //.WithBehavior<RepositoryDomainEventBehavior<Author>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Author>>();
 
+        // see below (Map)
         //services.AddEndpoints<CatalogBookEndpoints>();
         //services.AddEndpoints<CatalogCategoryEndpoints>();
         //services.AddEndpoints<CatalogPublisherEndpoints>();
@@ -117,10 +118,9 @@ public class CatalogModule : WebModuleBase
 
     public override IEndpointRouteBuilder Map(IEndpointRouteBuilder app, IConfiguration configuration = null, IWebHostEnvironment environment = null)
     {
-        // disabled due to tenantid route issue
-        //new CatalogBookEndpoints().Map(app);
-        //new CatalogCategoryEndpoints().Map(app);
-        //new CatalogPublisherEndpoints().Map(app);
+        new CatalogBookEndpoints().Map(app);
+        new CatalogCategoryEndpoints().Map(app);
+        new CatalogPublisherEndpoints().Map(app);
 
         return app;
     }

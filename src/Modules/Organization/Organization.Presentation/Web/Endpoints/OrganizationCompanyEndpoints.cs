@@ -40,7 +40,6 @@ public class OrganizationCompanyEndpoints : EndpointsBase
     private static async Task<Results<Ok<CompanyModel>, NotFound, ProblemHttpResult>> GetCompany(
         [FromServices] IMediator mediator,
         [FromServices] IMapper mapper,
-        [FromRoute] string tenantId,
         [FromRoute] string id)
     {
         var result = (await mediator.Send(new CompanyFindOneQuery(id))).Result;
@@ -53,7 +52,6 @@ public class OrganizationCompanyEndpoints : EndpointsBase
     private static async Task<Results<Ok<IEnumerable<TenantModel>>, NotFound, ProblemHttpResult>> GetCompanyTenants(
         [FromServices] IMediator mediator,
         [FromServices] IMapper mapper,
-        [FromRoute] string tenantId,
         [FromRoute] string id)
     {
         var result = (await mediator.Send(new CompanyFindAllTenantsQuery(id))).Result;
@@ -65,8 +63,7 @@ public class OrganizationCompanyEndpoints : EndpointsBase
 
     private static async Task<Results<Ok<IEnumerable<CompanyModel>>, ProblemHttpResult>> GetCompanies(
         [FromServices] IMediator mediator,
-        [FromServices] IMapper mapper,
-        [FromRoute] string tenantId)
+        [FromServices] IMapper mapper)
     {
         var result = (await mediator.Send(new CompanyFindAllQuery())).Result;
 

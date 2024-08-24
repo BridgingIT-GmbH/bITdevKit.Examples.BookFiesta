@@ -36,7 +36,6 @@ public class OrganizationTenantEndpoints : EndpointsBase
     private static async Task<Results<Ok<TenantModel>, NotFound, ProblemHttpResult>> GetTenant(
         [FromServices] IMediator mediator,
         [FromServices] IMapper mapper,
-        [FromRoute] string tenantId,
         [FromRoute] string id)
     {
         var result = (await mediator.Send(new TenantFindOneQuery(id))).Result;

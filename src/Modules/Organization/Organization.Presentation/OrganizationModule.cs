@@ -72,6 +72,7 @@ public class OrganizationModule : WebModuleBase
             //.WithBehavior<RepositoryDomainEventBehavior<Tenant>>()
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Tenant>>();
 
+        // see below (Map)
         //services.AddEndpoints<OrganizationCompanyEndpoints>();
         //services.AddEndpoints<OrganizationTenantEndpoints>();
 
@@ -80,9 +81,8 @@ public class OrganizationModule : WebModuleBase
 
     public override IEndpointRouteBuilder Map(IEndpointRouteBuilder app, IConfiguration configuration = null, IWebHostEnvironment environment = null)
     {
-        // disabled due to tenantid route issue
-        //new OrganizationCompanyEndpoints().Map(app);
-        //new OrganizationTenantEndpoints().Map(app);
+        new OrganizationCompanyEndpoints().Map(app);
+        new OrganizationTenantEndpoints().Map(app);
 
         return app;
     }
