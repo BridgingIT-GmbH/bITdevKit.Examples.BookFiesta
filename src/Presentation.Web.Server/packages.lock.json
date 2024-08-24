@@ -349,6 +349,16 @@
           "OpenTelemetry.Api.ProviderBuilderExtensions": "1.5.1"
         }
       },
+      "Quartz.Serialization.Json": {
+        "type": "Direct",
+        "requested": "[3.13.0, )",
+        "resolved": "3.13.0",
+        "contentHash": "Nm8klDppHsttLLfbchWOAOb2bB5mgwbuALpNY+a8Yd+C4kx6RiTvmwbM2l/8qifMOcJxyFvfWTWyoB69ubwTWw==",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "Quartz": "3.13.0"
+        }
+      },
       "Serilog.AspNetCore": {
         "type": "Direct",
         "requested": "[8.0.2, )",
