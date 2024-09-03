@@ -41,7 +41,7 @@ public class OrganizationModule : WebModuleBase
                 o => o
                     .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
                     .CommandTimeout(30))
-            .WithHealthChecks()
+            .WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
             //.WithDatabaseCreatorService(o => o
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup())

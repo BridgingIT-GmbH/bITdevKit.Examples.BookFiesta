@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
 [DebuggerDisplay("Id={Id}, Number={Number}, Title={Title}")]
+[TypedEntityId<Guid>]
 public class BookChapter : Entity<BookChapterId>
 {
     private BookChapter() { } // Private constructor required by EF Core

@@ -8,6 +8,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using Azure.Monitor.OpenTelemetry.Exporter;
+using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.Commands;
 using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Application.Messaging;
@@ -72,6 +73,7 @@ builder.Services.AddQueries()
     .WithBehavior(typeof(TimeoutQueryBehavior<,>));
 
 builder.Services.AddJobScheduling(o => o.StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]), builder.Configuration)
+    .WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)
     .WithBehavior<ModuleScopeJobSchedulingBehavior>()
     //.WithBehavior<ChaosExceptionJobSchedulingBehavior>()
     .WithBehavior<RetryJobSchedulingBehavior>()
@@ -207,16 +209,26 @@ void ConfigureJsonOptions(JsonOptions options)
 
 void ConfigureHealth(IServiceCollection services)
 {
+    var seqServerUrl = builder.Configuration
+        .GetSection("Serilog:WriteTo")
+        .GetChildren()
+        .FirstOrDefault(x => x["Name"] == "Seq")?["Args:serverUrl"];
+
     services.AddHealthChecks()
-        .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "self" });
-    //.AddSeqPublisher(s => s.Endpoint = builder.Configuration["Serilog:SeqServerUrl"]); // TODO: url configuration does not work like this
+        .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "self" })
+        .AddSeqPublisher(s => s.Endpoint = seqServerUrl);
     //.AddCheck<RandomHealthCheck>("random")
-    //.AddAp/plicationInsightsPublisher()
+    //.AddApplicationInsightsPublisher()
+
+    //services.Configure<HealthCheckPublisherOptions>(options =>
+    //{
+    //    options.Delay = TimeSpan.FromSeconds(5);
+    //});
 
     ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
     services.AddHealthChecksUI() // https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/README.md
         .AddInMemoryStorage();
-    //.AddSqliteStorage($"Data Source=data_health.db");
+        //.AddSqliteStorage($"Data Source=data_health.db");
 }
 
 void ConfigureMetrics(MeterProviderBuilder provider)

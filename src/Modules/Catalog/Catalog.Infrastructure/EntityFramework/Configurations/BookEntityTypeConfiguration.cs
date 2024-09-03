@@ -94,8 +94,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
                 .HasColumnName("AverageRatingAmount")
                 .HasDefaultValue(0)
                 .IsRequired();
-        }
-        );
+        });
+        builder.Navigation(e => e.AverageRating).IsRequired();
 
         builder.OwnsOne(e => e.Price, b =>
         {

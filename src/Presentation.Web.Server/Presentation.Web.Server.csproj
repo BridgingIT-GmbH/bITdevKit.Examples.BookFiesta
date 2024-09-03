@@ -18,6 +18,7 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.Publisher.Seq" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" />
+    <PackageReference Include="BridgingIT.DevKit.Application.JobScheduling" />
     <PackageReference Include="BridgingIT.DevKit.Application.Messaging" />
     <PackageReference Include="BridgingIT.DevKit.Application.Utilities" />
     <PackageReference Include="BridgingIT.DevKit.Common.Extensions" />

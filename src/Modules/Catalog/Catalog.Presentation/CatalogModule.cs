@@ -44,7 +44,7 @@ public class CatalogModule : WebModuleBase
                 o => o
                     .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
                     .CommandTimeout(30))
-            .WithHealthChecks()
+            .WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
             //.WithDatabaseCreatorService(o => o
             //    .StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
             //    .Enabled(environment?.IsDevelopment() == true)
