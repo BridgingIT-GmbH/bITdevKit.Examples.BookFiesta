@@ -8,9 +8,10 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [DebuggerDisplay("Id={Id}, Name={Name}")]
+[TypedEntityId<Guid>]
 public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 {
-    private readonly List<TenantId> tenantIds = new();
+    private readonly List<TenantId> tenantIds = [];
 
     private Company() { } // Private constructor required by EF Core
 

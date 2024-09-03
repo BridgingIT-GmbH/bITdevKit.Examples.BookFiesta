@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 
 [DebuggerDisplay("Id={Id}, TenantId={TenantId}")]
+[TypedEntityId<Guid>]
 public class TenantBranding : Entity<TenantBrandingId>
 {
     private TenantBranding() { } // Private constructor required by EF Core

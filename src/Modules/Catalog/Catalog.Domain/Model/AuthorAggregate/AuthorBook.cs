@@ -5,6 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
+[DebuggerDisplay("BookId={BookId}, Title={Title")]
 public class AuthorBook : ValueObject
 {
     private AuthorBook() { }

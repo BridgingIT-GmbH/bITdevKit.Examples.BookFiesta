@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
+[DebuggerDisplay("BookId={BookId}, Text={Text")]
+[TypedEntityId<Guid>]
 public class BookKeyword : Entity<BookKeywordId>
 {
     public BookId BookId { get; set; }

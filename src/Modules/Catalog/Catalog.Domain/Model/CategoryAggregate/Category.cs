@@ -7,7 +7,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-[DebuggerDisplay("Id={Id}, Order={Order}, Title={Title}, ParentId={Parent?.Id}")]
+[DebuggerDisplay("Id={Id}, Title={Title}, Order={Order}, ParentId={Parent?.Id}")]
+[TypedEntityId<Guid>]
 public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make this an aggregate root?
 {
     private readonly List<Book> books = [];

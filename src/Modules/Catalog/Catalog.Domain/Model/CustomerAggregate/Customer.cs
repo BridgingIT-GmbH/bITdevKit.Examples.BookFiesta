@@ -5,6 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
+[TypedEntityId<Guid>]
 public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 {
     private Customer()

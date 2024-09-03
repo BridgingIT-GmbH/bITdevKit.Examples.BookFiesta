@@ -1,52 +1,52 @@
-// MIT-License
-// Copyright BridgingIT GmbH - All Rights Reserved
-// Use of this source code is governed by an MIT-style license that can be
-// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+//// MIT-License
+//// Copyright BridgingIT GmbH - All Rights Reserved
+//// Use of this source code is governed by an MIT-style license that can be
+//// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+//namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
-public class BookId : AggregateRootId<Guid>
-{
-    private BookId()
-    {
-    }
+//public class BookId : AggregateRootId<Guid>
+//{
+//    private BookId()
+//    {
+//    }
 
-    private BookId(Guid guid)
-    {
-        this.Value = guid;
-    }
+//    private BookId(Guid guid)
+//    {
+//        this.Value = guid;
+//    }
 
-    public override Guid Value { get; protected set; }
+//    public override Guid Value { get; protected set; }
 
-    public bool IsEmpty => this.Value == Guid.Empty;
+//    public bool IsEmpty => this.Value == Guid.Empty;
 
-    public static implicit operator Guid(BookId id) => id?.Value ?? default; // allows a TypedId value to be implicitly converted to a Guid.
-    public static implicit operator string(BookId id) => id?.Value.ToString(); // allows a TypedId value to be implicitly converted to a string.
-    public static implicit operator BookId(Guid id) => Create(id); // allows a Guid value to be implicitly converted to a TypedId object.
-    public static implicit operator BookId(string id) => Create(id); // allows a string value to be implicitly converted to a TypedId object.
+//    public static implicit operator Guid(BookId id) => id?.Value ?? default; // allows a TypedId value to be implicitly converted to a Guid.
+//    public static implicit operator string(BookId id) => id?.Value.ToString(); // allows a TypedId value to be implicitly converted to a string.
+//    public static implicit operator BookId(Guid id) => Create(id); // allows a Guid value to be implicitly converted to a TypedId object.
+//    public static implicit operator BookId(string id) => Create(id); // allows a string value to be implicitly converted to a TypedId object.
 
-    public static BookId Create()
-    {
-        return new BookId(Guid.NewGuid());
-    }
+//    public static BookId Create()
+//    {
+//        return new BookId(Guid.NewGuid());
+//    }
 
-    public static BookId Create(Guid id)
-    {
-        return new BookId(id);
-    }
+//    public static BookId Create(Guid id)
+//    {
+//        return new BookId(id);
+//    }
 
-    public static BookId Create(string id)
-    {
-        if (string.IsNullOrWhiteSpace(id))
-        {
-            throw new ArgumentException("Id cannot be null or whitespace.");
-        }
+//    public static BookId Create(string id)
+//    {
+//        if (string.IsNullOrWhiteSpace(id))
+//        {
+//            throw new ArgumentException("Id cannot be null or whitespace.");
+//        }
 
-        return new BookId(Guid.Parse(id));
-    }
+//        return new BookId(Guid.Parse(id));
+//    }
 
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return this.Value;
-    }
-}
+//    protected override IEnumerable<object> GetAtomicValues()
+//    {
+//        yield return this.Value;
+//    }
+//}

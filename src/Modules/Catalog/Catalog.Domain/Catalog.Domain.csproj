@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="BridgingIT.DevKit.Domain" />
+    <PackageReference Include="BridgingIT.DevKit.Domain.CodeGen" OutputItemType="Analyzer"/>
     <PackageReference Include="BridgingIT.DevKit.Domain.Mediator" />
   </ItemGroup>
 

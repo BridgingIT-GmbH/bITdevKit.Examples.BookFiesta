@@ -8,6 +8,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 /// <summary>
 /// Represents the commercial agreements for the tenant.
 /// </summary>
+[DebuggerDisplay("Id={Id}, TenantId={Tenant?.Id}, Status={Status}")]
+[TypedEntityId<Guid>]
 public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 {
     private TenantSubscription() { } // Private constructor required by EF Core

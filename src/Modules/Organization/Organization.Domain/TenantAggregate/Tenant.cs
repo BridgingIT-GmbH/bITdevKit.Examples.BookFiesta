@@ -5,11 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 
-using BridgingIT.DevKit.Common;
-
 /// <summary>
 /// Represents the client organization or individual using the shop platform.
 /// </summary>
+[DebuggerDisplay("Id={Id}, Name={Name}")]
 public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 {
     private readonly List<TenantSubscription> subscriptions = [];

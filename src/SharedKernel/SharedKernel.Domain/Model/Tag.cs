@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [DebuggerDisplay("Id={Id}, Name={Name}")]
+[TypedEntityId<Guid>]
 public class Tag : Entity<TagId>, IConcurrent
 {
     private Tag() { } // Private constructor required by EF Core

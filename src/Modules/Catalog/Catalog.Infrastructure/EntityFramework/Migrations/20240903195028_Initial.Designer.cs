@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20240824130312_Initial")]
+    [Migration("20240903195028_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

@@ -5,8 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 
-public class TenantSubscriptionBillingCycle(int id, string name, string description, bool autoRenew)
-    : Enumeration(id, name)
+[DebuggerDisplay("Id={Id}, Value={Value}")]
+public class TenantSubscriptionBillingCycle(int id, string value, string description, bool autoRenew)
+    : Enumeration(id, value)
 {
     public static TenantSubscriptionBillingCycle Never = new(0, nameof(Never), "Lorem Ipsum", false);
     public static TenantSubscriptionBillingCycle Monthly = new(1, nameof(Monthly), "Lorem Ipsum", true);

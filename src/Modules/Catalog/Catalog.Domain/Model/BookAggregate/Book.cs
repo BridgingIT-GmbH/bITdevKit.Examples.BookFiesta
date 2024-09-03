@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
 [DebuggerDisplay("Id={Id}, Title={Title}")]
+[TypedEntityId<Guid>]
 public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 {
     private readonly List<BookAuthor> authors = [];
