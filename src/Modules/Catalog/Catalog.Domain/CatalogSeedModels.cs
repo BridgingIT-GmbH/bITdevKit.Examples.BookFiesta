@@ -10,7 +10,7 @@ using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 public static class CatalogSeedModels
 {
-    private static string GetSuffix(long ticks) => ticks > 0 ? $"-{GetSuffix(ticks)}" : string.Empty;
+    private static string GetSuffix(long ticks) => ticks > 0 ? $"-{ticks}" : string.Empty;
 
     private static string GetIsbn(long ticks, string isbn) => ticks > 0 ? $"978-{new Random().NextInt64(1000000000000, 9999999999999)}" : isbn;
 

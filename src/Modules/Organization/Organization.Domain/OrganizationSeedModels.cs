@@ -10,7 +10,7 @@ using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 public static class OrganizationSeedModels
 {
-    private static string GetSuffix(long ticks) => ticks > 0 ? $"-{GetSuffix(ticks)}" : string.Empty;
+    private static string GetSuffix(long ticks) => ticks > 0 ? $"-{ticks}" : string.Empty;
 
     public static class Companies
     {

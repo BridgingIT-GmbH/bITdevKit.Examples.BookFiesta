@@ -73,7 +73,7 @@ builder.Services.AddQueries()
     .WithBehavior(typeof(TimeoutQueryBehavior<,>));
 
 builder.Services.AddJobScheduling(o => o.StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]), builder.Configuration)
-    .WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)
+    //.WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)
     .WithBehavior<ModuleScopeJobSchedulingBehavior>()
     //.WithBehavior<ChaosExceptionJobSchedulingBehavior>()
     .WithBehavior<RetryJobSchedulingBehavior>()
