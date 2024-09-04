@@ -19,20 +19,20 @@ public class CatalogMapperRegister : IRegister
         //config.ForType<Category, CategoryModel>()
         //    .Map(d => d.ParentId, s => s.Parent.Id.Value.ToString(), e => e.Parent != null);
 
-        config.ForType<CustomerModel, CustomerCreateCommand>()
-            .Map(d => d.AddressName, s => s.Address.Name)
-            .Map(d => d.AddressLine1, s => s.Address.Line1)
-            .Map(d => d.AddressLine2, s => s.Address.Line2)
-            .Map(d => d.AddressPostalCode, s => s.Address.PostalCode)
-            .Map(d => d.AddressCity, s => s.Address.City)
-            .Map(d => d.AddressCountry, s => s.Address.Country);
+        //config.ForType<CustomerModel, CustomerCreateCommand>()
+        //    .Map(d => d.AddressName, s => s.Address.Name)
+        //    .Map(d => d.AddressLine1, s => s.Address.Line1)
+        //    .Map(d => d.AddressLine2, s => s.Address.Line2)
+        //    .Map(d => d.AddressPostalCode, s => s.Address.PostalCode)
+        //    .Map(d => d.AddressCity, s => s.Address.City)
+        //    .Map(d => d.AddressCountry, s => s.Address.Country);
 
-        config.ForType<CustomerModel, CustomerUpdateCommand>()
-            .Map(d => d.AddressName, s => s.Address.Name)
-            .Map(d => d.AddressLine1, s => s.Address.Line1)
-            .Map(d => d.AddressLine2, s => s.Address.Line2)
-            .Map(d => d.AddressPostalCode, s => s.Address.PostalCode)
-            .Map(d => d.AddressCity, s => s.Address.City)
-            .Map(d => d.AddressCountry, s => s.Address.Country);
+        //config.ForType<CustomerModel, CustomerUpdateCommand>()
+        //    .Map(d => d.AddressName, s => s.Address.Name)
+        //    .Map(d => d.AddressLine1, s => s.Address.Line1)
+        //    .Map(d => d.AddressLine2, s => s.Address.Line2)
+        //    .Map(d => d.AddressPostalCode, s => s.Address.PostalCode)
+        //    .Map(d => d.AddressCity, s => s.Address.City)
+        //    .Map(d => d.AddressCountry, s => s.Address.Country);
     }
 }

@@ -7,11 +7,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Commands;
 using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
 public class CustomerDeleteCommand(string tenantId, string id)
-    : CommandRequestBase<Result>
+    : CommandRequestBase<Result<Customer>>
 {
     public string TenantId { get; } = tenantId;
 

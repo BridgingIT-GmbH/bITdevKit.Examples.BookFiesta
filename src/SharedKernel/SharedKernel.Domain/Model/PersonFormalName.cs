@@ -47,6 +47,11 @@ public partial class PersonFormalName : ValueObject
 
     public static implicit operator string(PersonFormalName name) => name?.ToString(); // allows a PersonFormalName value to be implicitly converted to a string.
 
+    public static PersonFormalName Create(IEnumerable<string> parts, string title = null, string suffix = null)
+    {
+        return Create(parts?.ToArray(), title, suffix);
+    }
+
     public static PersonFormalName Create(string[] parts, string title = null, string suffix = null)
     {
         return new PersonFormalName(parts, title, suffix);

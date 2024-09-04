@@ -109,6 +109,7 @@ public class CatalogModule : WebModuleBase
             .WithBehavior<RepositoryDomainEventPublisherBehavior<Author>>();
 
         // see below (Map)
+        //services.AddEndpoints<CatalogCustomerEndpoints>();
         //services.AddEndpoints<CatalogBookEndpoints>();
         //services.AddEndpoints<CatalogCategoryEndpoints>();
         //services.AddEndpoints<CatalogPublisherEndpoints>();
@@ -118,6 +119,7 @@ public class CatalogModule : WebModuleBase
 
     public override IEndpointRouteBuilder Map(IEndpointRouteBuilder app, IConfiguration configuration = null, IWebHostEnvironment environment = null)
     {
+        new CatalogCustomerEndpoints().Map(app);
         new CatalogBookEndpoints().Map(app);
         new CatalogCategoryEndpoints().Map(app);
         new CatalogPublisherEndpoints().Map(app);

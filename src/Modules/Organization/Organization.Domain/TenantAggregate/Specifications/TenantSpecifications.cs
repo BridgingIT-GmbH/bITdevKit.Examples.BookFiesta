@@ -20,4 +20,7 @@ public static partial class TenantSpecifications
 {
     public static Specification<Tenant> ForName(string name)
         => new TenantForNameSpecification(name);
+
+    public static Specification<Tenant> ForName2(string name) // INFO: short version to define a specification
+        => new(e => e.Name == name);
 }

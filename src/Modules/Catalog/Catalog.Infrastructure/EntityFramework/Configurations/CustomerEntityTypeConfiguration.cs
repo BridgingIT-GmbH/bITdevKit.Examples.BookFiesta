@@ -9,6 +9,7 @@ using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Customer>
@@ -48,13 +49,28 @@ public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
         //    .HasForeignKey(nameof(TenantId))
         //    .IsRequired();
 
-        builder.Property(e => e.FirstName)
-            .IsRequired()
-            .HasMaxLength(128);
-
-        builder.Property(e => e.LastName)
-            .IsRequired()
-            .HasMaxLength(512);
+        builder.OwnsOne(e => e.PersonName, b =>
+        {
+            b.Property(e => e.Title)
+                .HasColumnName("PersonNameTitle")
+                .IsRequired(false).HasMaxLength(64);
+            b.Property(e => e.Parts)
+                .HasColumnName("PersonNameParts")
+                .IsRequired(true).HasMaxLength(1024)
+                .HasConversion(
+                    parts => string.Join("|", parts),
+                    value => value.Split("|", StringSplitOptions.RemoveEmptyEntries),
+                    new ValueComparer<IEnumerable<string>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c.AsEnumerable()));
+            b.Property(e => e.Suffix)
+                .HasColumnName("PersonNameSuffix")
+                .IsRequired(false).HasMaxLength(64);
+            b.Property(e => e.Full)
+                .HasColumnName("PersonNameFull")
+                .IsRequired(true).HasMaxLength(2048);
+        });
 
         builder.OwnsOne(e => e.Address, b =>
         {

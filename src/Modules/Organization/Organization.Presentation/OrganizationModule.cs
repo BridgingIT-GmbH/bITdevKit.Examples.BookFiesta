@@ -47,7 +47,7 @@ public class OrganizationModule : WebModuleBase
             //    .DeleteOnStartup())
             .WithDatabaseMigratorService(o => o
                 .Enabled(environment?.IsDevelopment() == true)
-                .DeleteOnStartup())
+                .DeleteOnStartup(false))
             .WithOutboxDomainEventService(o => o
                 .ProcessingInterval("00:00:30")
                 .StartupDelay("00:00:15")

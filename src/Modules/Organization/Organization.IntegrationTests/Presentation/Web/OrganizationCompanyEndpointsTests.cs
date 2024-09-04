@@ -88,20 +88,24 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
-        var customer = OrganizationSeedModels.Companies.Create(DateTime.UtcNow.Ticks)[0];
+        TenantId[] tenantIds = [
+            TenantIdFactory.CreateForName("Tenant_AcmeBooks"),
+            TenantIdFactory.CreateForName("Tenant_TechBooks")
+            ];
+        var company = OrganizationSeedModels.Companies.Create(DateTime.UtcNow.Ticks)[0];
         var model = new CompanyModel
         {
-            Name = customer.Name,
-            RegistrationNumber = customer.RegistrationNumber,
-            ContactEmail = customer.ContactEmail,
+            Name = company.Name,
+            RegistrationNumber = company.RegistrationNumber,
+            ContactEmail = company.ContactEmail,
             Address = new AddressModel
             {
-                Line1 = customer.Address.Line1,
-                Line2 = customer.Address.Line2,
-                PostalCode = customer.Address.PostalCode,
-                City = customer.Address.City,
-                Country = customer.Address.Country
+                Name = company.Address.Name ?? company.Name,
+                Line1 = company.Address.Line1,
+                Line2 = company.Address.Line2,
+                PostalCode = company.Address.PostalCode,
+                City = company.Address.City,
+                Country = company.Address.Country
             },
         };
         var content = new StringContent(
@@ -126,7 +130,7 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        var customer = OrganizationSeedModels.Companies.Create(DateTime.UtcNow.Ticks)[0];
+        var company = OrganizationSeedModels.Companies.Create(DateTime.UtcNow.Ticks)[0];
         var model = new CompanyModel
         {
             Name = string.Empty,
@@ -134,11 +138,12 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
             ContactEmail = string.Empty,
             Address = new AddressModel
             {
-                Line1 = customer.Address.Line1,
-                Line2 = customer.Address.Line2,
-                PostalCode = customer.Address.PostalCode,
-                City = customer.Address.City,
-                Country = customer.Address.Country
+                Name = company.Address.Name ?? company.Name,
+                Line1 = company.Address.Line1,
+                Line2 = company.Address.Line2,
+                PostalCode = company.Address.PostalCode,
+                City = company.Address.City,
+                Country = company.Address.Country
             },
         };
         var content = new StringContent(

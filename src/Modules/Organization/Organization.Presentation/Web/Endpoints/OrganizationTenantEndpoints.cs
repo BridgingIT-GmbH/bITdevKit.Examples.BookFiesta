@@ -28,7 +28,6 @@ public class OrganizationTenantEndpoints : EndpointsBase
             .Produces<ProblemDetails>(500);
 
         group.MapPost(string.Empty, CreateTenant).WithName("CreateOrganizationTenant")
-            .Produces<TenantModel>(201)
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
     }

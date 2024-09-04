@@ -200,16 +200,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -594,37 +584,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                                 .HasForeignKey("AuthorId");
                         });
 
-                    b.OwnsMany("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.AuthorBook", "Books", b1 =>
-                        {
-                            b1.Property<Guid>("AuthorId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("BookId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Title")
-                                .IsRequired()
-                                .HasMaxLength(512)
-                                .HasColumnType("nvarchar(512)");
-
-                            b1.HasKey("AuthorId", "BookId");
-
-                            b1.HasIndex("BookId");
-
-                            b1.HasIndex("AuthorId", "BookId");
-
-                            b1.ToTable("AuthorBooks", "catalog");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AuthorId");
-
-                            b1.HasOne("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Book", null)
-                                .WithMany()
-                                .HasForeignKey("BookId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-                        });
-
                     b.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.PersonFormalName", "PersonName", b1 =>
                         {
                             b1.Property<Guid>("AuthorId")
@@ -658,6 +617,37 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
 
                             b1.WithOwner()
                                 .HasForeignKey("AuthorId");
+                        });
+
+                    b.OwnsMany("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.AuthorBook", "Books", b1 =>
+                        {
+                            b1.Property<Guid>("AuthorId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("BookId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Title")
+                                .IsRequired()
+                                .HasMaxLength(512)
+                                .HasColumnType("nvarchar(512)");
+
+                            b1.HasKey("AuthorId", "BookId");
+
+                            b1.HasIndex("BookId");
+
+                            b1.HasIndex("AuthorId", "BookId");
+
+                            b1.ToTable("AuthorBooks", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AuthorId");
+
+                            b1.HasOne("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Book", null)
+                                .WithMany()
+                                .HasForeignKey("BookId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
                         });
 
                     b.Navigation("AuditState");
@@ -944,7 +934,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
 
                     b.Navigation("Authors");
 
-                    b.Navigation("AverageRating");
+                    b.Navigation("AverageRating")
+                        .IsRequired();
 
                     b.Navigation("Chapters");
 
@@ -1209,12 +1200,49 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure.EntityFra
                                 .HasForeignKey("CustomerId");
                         });
 
+                    b.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.PersonFormalName", "PersonName", b1 =>
+                        {
+                            b1.Property<Guid>("CustomerId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Full")
+                                .IsRequired()
+                                .HasMaxLength(2048)
+                                .HasColumnType("nvarchar(2048)")
+                                .HasColumnName("PersonNameFull");
+
+                            b1.Property<string>("Parts")
+                                .IsRequired()
+                                .HasMaxLength(1024)
+                                .HasColumnType("nvarchar(1024)")
+                                .HasColumnName("PersonNameParts");
+
+                            b1.Property<string>("Suffix")
+                                .HasMaxLength(64)
+                                .HasColumnType("nvarchar(64)")
+                                .HasColumnName("PersonNameSuffix");
+
+                            b1.Property<string>("Title")
+                                .HasMaxLength(64)
+                                .HasColumnType("nvarchar(64)")
+                                .HasColumnName("PersonNameTitle");
+
+                            b1.HasKey("CustomerId");
+
+                            b1.ToTable("Customers", "catalog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerId");
+                        });
+
                     b.Navigation("Address");
 
                     b.Navigation("AuditState");
 
                     b.Navigation("Email")
                         .IsRequired();
+
+                    b.Navigation("PersonName");
                 });
 
             modelBuilder.Entity("BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain.Publisher", b =>

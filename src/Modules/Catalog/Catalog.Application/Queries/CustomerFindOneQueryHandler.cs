@@ -21,7 +21,7 @@ public class CustomerFindOneQueryHandler(
     {
         return QueryResponse.For(
             await repository.FindOneResultAsync(
-                AuthorId.Create(query.CustomerId),
+                CustomerId.Create(query.CustomerId),
                 cancellationToken: cancellationToken).AnyContext());
     }
 }

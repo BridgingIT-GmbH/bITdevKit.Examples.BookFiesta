@@ -1,4 +1,9 @@
-﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation.Web;
+﻿// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation.Web;
 
 using System.Collections.Generic;
 using BridgingIT.DevKit.Common;
@@ -19,51 +24,56 @@ public class CatalogBookEndpoints : EndpointsBase
         var group = app.MapGroup("api/tenants/{tenantId}/catalog/books")
             .WithTags("Catalog");
 
-        group.MapGet("/{id}", async Task<Results<Ok<BookModel>, NotFound, ProblemHttpResult>> (
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string tenantId,
-            [FromRoute] string id) =>
-        {
-            var result = (await mediator.Send(new BookFindOneQuery(tenantId, id))).Result;
-
-            return (result.Value == null) ? TypedResults.NotFound() : result.IsSuccess
-                ? TypedResults.Ok(mapper.Map<Book, BookModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
-        }).WithName("GetCatalogBook")
+        group.MapGet("/{id}", GetBook).WithName("GetCatalogBook")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapGet(string.Empty, async Task<Results<Ok<IEnumerable<BookModel>>, ProblemHttpResult>> (
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string tenantId) =>
-        {
-            var result = (await mediator.Send(new BookFindAllQuery(tenantId))).Result;
-
-            return result.IsSuccess
-                ? TypedResults.Ok(mapper.Map<Book, BookModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
-        }).WithName("GetCatalogBooks")
+        group.MapGet(string.Empty, GetBooks).WithName("GetCatalogBooks")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapPost(string.Empty, async Task<Results<Created<BookModel>, ProblemHttpResult>> (
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string tenantId,
-            [FromBody] BookModel model) =>
-        {
-            var result = (await mediator.Send(new BookCreateCommand(tenantId, model))).Result;
-
-            return result.IsSuccess
-                ? TypedResults.Created($"api/tenants/{tenantId}/catalog/books/{result.Value.Id}",
-                                       mapper.Map<Book, BookModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "),
-                                       statusCode: 400);
-        }).WithName("CreateCatalogBook")
-            .Produces<BookModel>(201)
+        group.MapPost(string.Empty, CreateBook).WithName("CreateCatalogBook")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
+    }
+
+    private static async Task<Results<Ok<BookModel>, NotFound, ProblemHttpResult>> GetBook(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id)
+    {
+        var result = (await mediator.Send(new BookFindOneQuery(tenantId, id))).Result;
+
+        return result.Value == null ? TypedResults.NotFound() : result.IsSuccess
+            ? TypedResults.Ok(mapper.Map<Book, BookModel>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+    }
+
+    private static async Task<Results<Ok<IEnumerable<BookModel>>, ProblemHttpResult>> GetBooks(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId)
+    {
+        var result = (await mediator.Send(new BookFindAllQuery(tenantId))).Result;
+
+        return result.IsSuccess
+            ? TypedResults.Ok(mapper.Map<IEnumerable<Book>, IEnumerable<BookModel>>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+    }
+
+    private static async Task<Results<Created<BookModel>, ProblemHttpResult>> CreateBook(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromBody] BookModel model)
+    {
+        var result = (await mediator.Send(new BookCreateCommand(tenantId, model))).Result;
+
+        return result.IsSuccess
+            ? TypedResults.Created($"api/tenants/{tenantId}/catalog/books/{result.Value.Id}",
+                                   mapper.Map<Book, BookModel>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "),
+                                   statusCode: 400);
     }
 }

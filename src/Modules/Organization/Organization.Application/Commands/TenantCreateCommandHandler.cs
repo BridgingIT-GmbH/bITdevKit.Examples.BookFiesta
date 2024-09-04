@@ -37,10 +37,9 @@ public class TenantCreateCommandHandler(
             command.Model.Name,
             EmailAddress.Create(command.Model.ContactEmail));
 
-        await DomainRules.ApplyAsync(
-        [
+        await DomainRules.ApplyAsync([
             TenantRules.NameMustBeUnique(tenantRepository, tenant),
-        ]);
+        ], cancellationToken);
 
         await tenantRepository.InsertAsync(tenant, cancellationToken).AnyContext();
 

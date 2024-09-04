@@ -8,6 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Application;
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [UnitTest("GettingStarted.Application")]
@@ -20,7 +21,27 @@ public class CustomerCreateCommandHandlerTests
         var repository = Substitute.For<IGenericRepository<Customer>>();
         TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
         var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
-        var command = new CustomerCreateCommand(tenantIds[0]) { FirstName = customer.FirstName, LastName = customer.LastName, Email = customer.Email, AddressLine1 = customer.Address.Line1, AddressLine2 = customer.Address.Line2, AddressPostalCode = customer.Address.PostalCode, AddressCity = customer.Address.City, AddressCountry = customer.Address.Country };
+        var model = new CustomerModel
+        {
+            TenantId = customer.TenantId,
+            PersonName = new PersonFormalNameModel
+            {
+                Parts = customer.PersonName.Parts.ToArray(),
+                Title = customer.PersonName.Title,
+                Suffix = customer.PersonName.Suffix
+            },
+            Email = customer.Email,
+            Address = new AddressModel
+            {
+                Name = customer.Address.Name,
+                Line1 = customer.Address.Line1,
+                Line2 = customer.Address.Line2,
+                PostalCode = customer.Address.PostalCode,
+                City = customer.Address.City,
+                Country = customer.Address.Country
+            },
+        };
+        var command = new CustomerCreateCommand(tenantIds[0], model);
         var sut = new CustomerCreateCommandHandler(Substitute.For<ILoggerFactory>(), repository);
 
         // Act
@@ -28,8 +49,8 @@ public class CustomerCreateCommandHandlerTests
 
         // Assert
         response?.Result.ShouldNotBeNull();
-        response.Result.Value.FirstName.ShouldBe(command.FirstName);
-        response.Result.Value.LastName.ShouldBe(command.LastName);
+        response.Result.Value.PersonName.Parts.ToArray()[0].ShouldBe(command.Model.PersonName.Parts[0]);
+        response.Result.Value.PersonName.Parts.ToArray()[1].ShouldBe(command.Model.PersonName.Parts[1]);
         await repository.Received(1).InsertAsync(Arg.Any<Customer>(), CancellationToken.None);
     }
 }

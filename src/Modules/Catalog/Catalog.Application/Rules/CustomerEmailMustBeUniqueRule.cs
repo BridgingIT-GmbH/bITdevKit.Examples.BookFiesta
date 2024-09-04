@@ -20,7 +20,7 @@ public class CustomerEmailMustBeUniqueRule(
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
         return !(await repository.FindAllAsync(
-            CustomerSpecifications.ForEmail(customer.Email), cancellationToken: cancellationToken)).SafeAny();
+            CustomerSpecifications.ForEmail(customer.TenantId, customer.Email), cancellationToken: cancellationToken)).SafeAny();
     }
 }
 

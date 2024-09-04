@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 
+using System.Xml.Linq;
+
 [TypedEntityId<Guid>]
 public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 {
@@ -12,20 +14,17 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
     {
     }
 
-    private Customer(TenantId tenantId, string firstName, string lastName, EmailAddress email, Address address = null)
+    private Customer(TenantId tenantId, PersonFormalName name, EmailAddress email, Address address = null)
     {
         this.TenantId = tenantId;
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.Email = email;
-        this.Address = address;
+        this.SetName(name);
+        this.SetEmail(email);
+        this.SetAddress(address);
     }
 
     public TenantId TenantId { get; private set; }
 
-    public string FirstName { get; private set; }
-
-    public string LastName { get; private set; }
+    public PersonFormalName PersonName { get; private set; }
 
     public Address Address { get; private set; }
 
@@ -33,9 +32,9 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
     public Guid Version { get; set; }
 
-    public static Customer Create(TenantId tenantId, string firstName, string lastName, EmailAddress email, Address address = null)
+    public static Customer Create(TenantId tenantId, PersonFormalName name, EmailAddress email, Address address = null)
     {
-        var customer = new Customer(tenantId, firstName, lastName, email, address);
+        var customer = new Customer(tenantId, name, email, address);
 
         customer.DomainEvents.Register(
             new CustomerCreatedDomainEvent(customer));
@@ -43,33 +42,59 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
         return customer;
     }
 
-    public Customer SetName(string firstName, string lastName)
+    public Customer SetName(PersonFormalName name)
     {
-        //if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
-        //{
-        //    return this;
-        //}
+        if (name is null)
+        {
+            throw new DomainRuleException("Customer name cannot be empty.");
+        }
 
-        this.FirstName = firstName;
-        this.LastName = lastName;
+        if (this.PersonName != name)
+        {
+            this.PersonName = name;
 
-        this.DomainEvents.Register(
-            new CustomerUpdatedDomainEvent(this), true);
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
+                    new CustomerUpdatedDomainEvent(this), true);
+            }
+        }
 
         return this;
     }
 
-    public Customer SetAddress(string name, string line1, string line2, string postalCode, string city, string country)
+    public Customer SetEmail(EmailAddress email)
     {
-        var address = Address.Create(name, line1, line2, postalCode, city, country);
-        if (this.Address?.Equals(address) == false)
+        if (email is null)
+        {
+            throw new DomainRuleException("Customer email cannot be empty.");
+        }
+
+        if (email != this.Email)
+        {
+            this.Email = email;
+
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
+                    new CustomerUpdatedDomainEvent(this), true);
+            }
+        }
+
+        return this;
+    }
+
+    public Customer SetAddress(Address address)
+    {
+        if (address != this.Address)
         {
             this.Address = address;
 
-            this.DomainEvents.Register(
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
                 new CustomerUpdatedDomainEvent(this), true);
-            this.DomainEvents.Register(
-                new CustomerAddressUpdatedDomainEvent(this), true);
+            }
         }
 
         return this;

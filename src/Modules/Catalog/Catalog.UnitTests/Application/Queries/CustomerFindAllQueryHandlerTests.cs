@@ -20,8 +20,8 @@ public class CustomerFindAllQueryHandlerTests
         TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
         var expectedCustomers = new List<Customer>
         {
-            Customer.Create(tenantIds[0], "John", "Doe", EmailAddress.Create("john.doe@example.com")),
-            Customer.Create(tenantIds[0], "Mary", "Jane", EmailAddress.Create("mary.jane@example.com")),
+            Customer.Create(tenantIds[0], PersonFormalName.Create(["John", "Doe"]), EmailAddress.Create("john.doe@example.com")),
+            Customer.Create(tenantIds[0], PersonFormalName.Create(["Mary", "Jane"]), EmailAddress.Create("mary.jane@example.com")),
         };
 
         var repository = Substitute.For<IGenericRepository<Customer>>();

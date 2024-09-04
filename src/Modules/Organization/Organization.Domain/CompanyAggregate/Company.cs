@@ -178,33 +178,33 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         return this;
     }
 
-    public Company AddTenant(TenantId tenantId)
-    {
-        if (!this.tenantIds.Contains(tenantId))
-        {
-            this.tenantIds.Add(tenantId);
+    //public Company AddTenant(TenantId tenantId)
+    //{
+    //    if (!this.tenantIds.Contains(tenantId))
+    //    {
+    //        this.tenantIds.Add(tenantId);
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
-            }
-        }
+    //        if (this.Id?.IsEmpty == false)
+    //        {
+    //            this.DomainEvents.Register(
+    //            new CompanyUpdatedDomainEvent(this), true);
+    //        }
+    //    }
 
-        return this;
-    }
+    //    return this;
+    //}
 
-    public Company RemoveTenant(TenantId tenantId)
-    {
-        if (this.tenantIds.Remove(tenantId))
-        {
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
-            }
-        }
+    //public Company RemoveTenant(TenantId tenantId)
+    //{
+    //    if (this.tenantIds.Remove(tenantId))
+    //    {
+    //        if (this.Id?.IsEmpty == false)
+    //        {
+    //            this.DomainEvents.Register(
+    //            new CompanyUpdatedDomainEvent(this), true);
+    //        }
+    //    }
 
-        return this;
-    }
+    //    return this;
+    //}
 }

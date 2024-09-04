@@ -32,7 +32,6 @@ public class OrganizationCompanyEndpoints : EndpointsBase
             .Produces<ProblemDetails>(500);
 
         group.MapPost(string.Empty, CreateCompany).WithName("CreateOrganizationCompany")
-            .Produces<CompanyModel>(201)
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
     }

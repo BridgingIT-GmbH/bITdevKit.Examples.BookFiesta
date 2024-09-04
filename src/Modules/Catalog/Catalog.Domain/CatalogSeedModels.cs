@@ -19,8 +19,8 @@ public static class CatalogSeedModels
         public static Customer[] Create(TenantId[] tenants, long ticks = 0) =>
             [.. new[]
             {
-                Customer.Create(tenants[0], "John", "Doe", EmailAddress.Create($"john.doe{GetSuffix(ticks)}@example.com"), Address.Create("J. Doe", "Main Street", string.Empty, "17100", "Anytown", "USA")),
-                Customer.Create(tenants[0], "Mary", "Jane", EmailAddress.Create($"mary.jane{GetSuffix(ticks)}@example.com"), Address.Create("M. Jane", "Maple Street", string.Empty, "17101", "Anytown", "USA"))
+                Customer.Create(tenants[0], PersonFormalName.Create(["John", "Doe"]), EmailAddress.Create($"john.doe{GetSuffix(ticks)}@example.com"), Address.Create("J. Doe", "Main Street", string.Empty, "17100", "Anytown", "USA")),
+                Customer.Create(tenants[0], PersonFormalName.Create(["Mary", "Jane"]), EmailAddress.Create($"mary.jane{GetSuffix(ticks)}@example.com"), Address.Create("M. Jane", "Maple Street", string.Empty, "17101", "Anytown", "USA"))
             }.ForEach(e => e.Id = CustomerId.Create($"{GuidGenerator.Create($"Customer_{e.Email}")}"))];
     }
 

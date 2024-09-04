@@ -13,9 +13,7 @@ public class CustomerModel
 
     public string TenantId { get; set; }
 
-    public string FirstName { get; set; }
-
-    public string LastName { get; set; }
+    public PersonFormalNameModel PersonName { get; set; }
 
     public AddressModel Address { get; set; }
 

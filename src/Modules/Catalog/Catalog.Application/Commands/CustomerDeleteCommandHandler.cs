@@ -13,17 +13,17 @@ using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
-public class CustomerUpdateCommandHandler(
+public class CustomerDeleteCommandHandler(
     ILoggerFactory loggerFactory,
     IGenericRepository<Customer> repository)
-        : CommandHandlerBase<CustomerUpdateCommand, Result<Customer>>(loggerFactory)
+        : CommandHandlerBase<CustomerDeleteCommand, Result<Customer>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Customer>>> Process(
-        CustomerUpdateCommand command, CancellationToken cancellationToken)
+        CustomerDeleteCommand command, CancellationToken cancellationToken)
     {
         var tenantId = TenantId.Create(command.TenantId); // TODO: use in findone query or check later > notfoundexception
         var customerResult = await repository.FindOneResultAsync(
-            CustomerId.Create(command.Model.Id), cancellationToken: cancellationToken);
+            CustomerId.Create(command.Id), cancellationToken: cancellationToken);
 
         if (customerResult.IsFailure)
         {
@@ -32,14 +32,7 @@ public class CustomerUpdateCommandHandler(
 
         DomainRules.Apply([]);
 
-        customerResult.Value.SetName(
-            PersonFormalName.Create(command.Model.PersonName.Parts, command.Model.PersonName.Title, command.Model.PersonName.Suffix));
-        customerResult.Value.SetAddress(
-            Address.Create(
-                command.Model.Address.Name, command.Model.Address.Line1, command.Model.Address.Line2,
-                command.Model.Address.PostalCode, command.Model.Address.City, command.Model.Address.Country));
-
-        await repository.UpsertAsync(customerResult.Value, cancellationToken).AnyContext();
+        await repository.DeleteAsync(customerResult.Value, cancellationToken).AnyContext();
 
         return CommandResponse.Success(customerResult.Value);
     }

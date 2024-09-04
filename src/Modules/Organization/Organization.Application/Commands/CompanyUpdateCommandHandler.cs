@@ -1,4 +1,4 @@
-// MIT-License
+﻿// MIT-License
 // Copyright BridgingIT GmbH - All Rights Reserved
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
@@ -15,18 +15,30 @@ using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
-public class CompanyCreateCommandHandler(
+public class CompanyUpdateCommandHandler(
     ILoggerFactory loggerFactory,
     IGenericRepository<Company> repository)
-        : CommandHandlerBase<CompanyCreateCommand, Result<Company>>(loggerFactory)
+        : CommandHandlerBase<CompanyUpdateCommand, Result<Company>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Company>>> Process(
-        CompanyCreateCommand command, CancellationToken cancellationToken)
+        CompanyUpdateCommand command, CancellationToken cancellationToken)
     {
-        var company = Company.Create(
-            command.Model.Name,
-            command.Model.RegistrationNumber,
-            command.Model.ContactEmail,
+        var companyResult = await repository.FindOneResultAsync(
+            CompanyId.Create(command.Model.Id), cancellationToken: cancellationToken);
+
+        if (companyResult.IsFailure)
+        {
+            return CommandResponse.For(companyResult);
+        }
+
+        await DomainRules.ApplyAsync([
+            CompanyRules.NameMustBeUnique(repository, companyResult.Value),
+        ], cancellationToken);
+
+        companyResult.Value.SetName(command.Model.Name);
+        companyResult.Value.SetRegistrationNumber(command.Model.RegistrationNumber);
+        companyResult.Value.SetContactEmail(command.Model.ContactEmail);
+        companyResult.Value.SetAddress(
             Address.Create(
                 command.Model.Address.Name,
                 command.Model.Address.Line1,
@@ -35,12 +47,8 @@ public class CompanyCreateCommandHandler(
                 command.Model.Address.City,
                 command.Model.Address.Country));
 
-        await DomainRules.ApplyAsync([
-            CompanyRules.NameMustBeUnique(repository, company),
-        ], cancellationToken);
+        await repository.UpdateAsync(companyResult.Value, cancellationToken).AnyContext();
 
-        await repository.InsertAsync(company, cancellationToken).AnyContext();
-
-        return CommandResponse.Success(company);
+        return CommandResponse.Success(companyResult.Value);
     }
 }

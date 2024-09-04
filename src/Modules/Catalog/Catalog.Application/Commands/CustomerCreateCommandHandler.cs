@@ -25,17 +25,16 @@ public class CustomerCreateCommandHandler(
     {
         var customer = Customer.Create(
             TenantId.Create(command.TenantId),
-            command.FirstName,
-            command.LastName,
-            EmailAddress.Create(command.Email),
-            Address.Create(command.AddressName, command.AddressLine1, command.AddressLine2,
-                           command.AddressPostalCode, command.AddressCity, command.AddressCountry)
+            PersonFormalName.Create(command.Model.PersonName.Parts, command.Model.PersonName.Title, command.Model.PersonName.Suffix),
+            EmailAddress.Create(command.Model.Email),
+            Address.Create(
+                command.Model.Address.Name, command.Model.Address.Line1, command.Model.Address.Line2,
+                command.Model.Address.PostalCode, command.Model.Address.City, command.Model.Address.Country)
         );
 
-        await DomainRules.ApplyAsync(
-        [
+        await DomainRules.ApplyAsync([
             CustomerRules.EmailMustBeUnique(repository, customer),
-        ]);
+        ], cancellationToken);
 
         await repository.InsertAsync(customer, cancellationToken).AnyContext();
 
