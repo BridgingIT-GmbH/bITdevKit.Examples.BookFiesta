@@ -15,9 +15,9 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     private Tenant() { } // Private constructor required by EF Core
 
-    private Tenant(Company company, string name, EmailAddress contactEmail)
+    private Tenant(CompanyId companyId, string name, EmailAddress contactEmail)
     {
-        this.SetCompany(company);
+        this.SetCompany(companyId);
         this.SetName(name);
         this.SetContactEmail(contactEmail);
         this.Activate();
@@ -39,9 +39,9 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public Guid Version { get; set; }
 
-    public static Tenant Create(Company company, string name, EmailAddress contactEmail)
+    public static Tenant Create(CompanyId companyId, string name, EmailAddress contactEmail)
     {
-        var tenant = new Tenant(company, name, contactEmail);
+        var tenant = new Tenant(companyId, name, contactEmail);
 
         tenant.DomainEvents.Register(
                 new TenantCreatedDomainEvent(tenant), true);
@@ -49,19 +49,26 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
         return tenant;
     }
 
-    public bool IsActive(DateOnly date) =>
-        this.Activated && this.subscriptions.Any(e => e.IsActive(date));
-
-    public Tenant SetCompany(Company company)
+    public bool IsActive(DateOnly? date = null)
     {
-        if (company == null)
+        if (date == null)
+        {
+            return this.Activated;
+        }
+
+        return this.Activated && this.subscriptions.Any(e => e.IsActive(date.Value));
+    }
+
+    public Tenant SetCompany(CompanyId id)
+    {
+        if (id == null)
         {
             throw new DomainRuleException("Tenant company cannot be null.");
         }
 
-        if (company.Id != this.CompanyId)
+        if (id != this.CompanyId)
         {
-            this.CompanyId = company.Id;
+            this.CompanyId = id;
 
             if (this.Id?.IsEmpty == false)
             {
@@ -69,7 +76,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
                     new TenantUpdatedDomainEvent(this), true);
 
                 this.DomainEvents.Register(
-                    new TenantCompanyReassignedDomainEvent(this, company), true);
+                    new TenantReassignedCompanyDomainEvent(this), true);
             }
         }
 
@@ -168,6 +175,11 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public Tenant SetBranding(TenantBranding branding)
     {
+        if (branding == null)
+        {
+            throw new DomainRuleException("Tenant branding cannot be empty.");
+        }
+
         if (branding.TenantId != null && branding.TenantId != this.Id)
         {
             throw new InvalidOperationException("Branding does not belong to this tenant.");
@@ -187,7 +199,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
     public TenantSubscription AddSubscription()
     {
         var subscription = TenantSubscription.Create(
-            this, TenantSubscriptionPlanType.Free, Schedule.Create(DateOnly.FromDateTime(DateTime.Now)));
+            this, TenantSubscriptionPlanType.Free, DateSchedule.Create(DateOnly.FromDateTime(DateTime.Now)));
 
         this.subscriptions.Add(subscription);
 

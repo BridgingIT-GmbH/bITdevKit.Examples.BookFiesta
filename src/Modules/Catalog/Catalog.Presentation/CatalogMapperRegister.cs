@@ -13,8 +13,8 @@ public class CatalogMapperRegister : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.ForType<Customer, CustomerModel>()
-            .Map(d => d.Email, s => s.Email.Value);
+        //config.ForType<Customer, CustomerModel>()
+        //    .Map(d => d.Email, s => s.Email.Value);
 
         //config.ForType<Category, CategoryModel>()
         //    .Map(d => d.ParentId, s => s.Parent.Id.Value.ToString(), e => e.Parent != null);

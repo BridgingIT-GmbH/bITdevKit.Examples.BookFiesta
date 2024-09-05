@@ -17,23 +17,15 @@ using Microsoft.Extensions.Logging;
 
 public class CompanyCreateCommandHandler(
     ILoggerFactory loggerFactory,
+    IMapper mapper,
     IGenericRepository<Company> repository)
         : CommandHandlerBase<CompanyCreateCommand, Result<Company>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Company>>> Process(
         CompanyCreateCommand command, CancellationToken cancellationToken)
     {
-        var company = Company.Create(
-            command.Model.Name,
-            command.Model.RegistrationNumber,
-            command.Model.ContactEmail,
-            Address.Create(
-                command.Model.Address.Name,
-                command.Model.Address.Line1,
-                command.Model.Address.Line2,
-                command.Model.Address.PostalCode,
-                command.Model.Address.City,
-                command.Model.Address.Country));
+        //var company = CompanyModelMapper.Map(command.Model);
+        var company = mapper.Map<CompanyModel, Company>(command.Model);
 
         await DomainRules.ApplyAsync([
             CompanyRules.NameMustBeUnique(repository, company),

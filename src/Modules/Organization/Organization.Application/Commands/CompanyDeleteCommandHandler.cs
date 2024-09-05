@@ -10,18 +10,18 @@ using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
 public class CompanyDeleteCommandHandler(
     ILoggerFactory loggerFactory,
-    IGenericRepository<Company> repository)
+    IGenericRepository<Company> companyRepository,
+    IGenericRepository<Tenant> tenantRepository)
         : CommandHandlerBase<CompanyDeleteCommand, Result<Company>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Company>>> Process(
         CompanyDeleteCommand command, CancellationToken cancellationToken)
     {
-        var companyResult = await repository.FindOneResultAsync(
+        var companyResult = await companyRepository.FindOneResultAsync(
             CompanyId.Create(command.Id), cancellationToken: cancellationToken);
 
         if (companyResult.IsFailure)
@@ -29,9 +29,11 @@ public class CompanyDeleteCommandHandler(
             return CommandResponse.For(companyResult);
         }
 
-        DomainRules.Apply([]);
+        DomainRules.Apply([
+            CompanyRules.MustHaveNoTenants(tenantRepository, companyResult.Value)
+        ]);
 
-        await repository.DeleteAsync(companyResult.Value, cancellationToken).AnyContext();
+        await companyRepository.DeleteAsync(companyResult.Value, cancellationToken).AnyContext();
 
         return CommandResponse.Success(companyResult.Value);
     }

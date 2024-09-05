@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
+[DebuggerDisplay("Value={Value}")]
 public class HexColor : ValueObject
 {
     private static readonly Regex HexColorRegex = new(@"^#(?:[0-9a-fA-F]{3}){1,2}$", RegexOptions.Compiled);

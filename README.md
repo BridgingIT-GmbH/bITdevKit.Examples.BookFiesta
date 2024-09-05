@@ -233,7 +233,7 @@ public class CustomersController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> PostAsync([FromBody] CustomerViewModel model)
     {
-        if (model is null)
+        if (model == null)
         {
             return this.BadRequest();
         }

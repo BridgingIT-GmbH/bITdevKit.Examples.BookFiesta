@@ -14,6 +14,8 @@ using FluentValidation;
 public class TenantFindAllQuery
     : QueryRequestBase<Result<IEnumerable<Tenant>>>
 {
+    public string CompanyId { get; set; }
+
     public class Validator : AbstractValidator<TenantFindAllQuery>
     {
         public Validator()

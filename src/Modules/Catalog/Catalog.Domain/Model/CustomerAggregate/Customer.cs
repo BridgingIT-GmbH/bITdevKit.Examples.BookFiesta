@@ -44,7 +44,7 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
     public Customer SetName(PersonFormalName name)
     {
-        if (name is null)
+        if (name == null)
         {
             throw new DomainRuleException("Customer name cannot be empty.");
         }
@@ -65,7 +65,7 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
     public Customer SetEmail(EmailAddress email)
     {
-        if (email is null)
+        if (email == null)
         {
             throw new DomainRuleException("Customer email cannot be empty.");
         }

@@ -36,6 +36,8 @@ public partial class Website : ValueObject
         return new Website(website);
     }
 
+    public override string ToString() => this.Value;
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return this.Value;

@@ -228,7 +228,7 @@ void ConfigureHealth(IServiceCollection services)
     ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
     services.AddHealthChecksUI() // https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/README.md
         .AddInMemoryStorage();
-        //.AddSqliteStorage($"Data Source=data_health.db");
+    //.AddSqliteStorage($"Data Source=data_health.db");
 }
 
 void ConfigureMetrics(MeterProviderBuilder provider)

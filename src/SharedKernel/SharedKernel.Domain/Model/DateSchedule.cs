@@ -11,11 +11,12 @@ using System.Globalization;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
-public class Schedule : ValueObject, IComparable<Schedule>
+[DebuggerDisplay("StartDate={StartDate}, EndDate={EndDate}")]
+public class DateSchedule : ValueObject, IComparable<DateSchedule>
 {
-    private Schedule() { } // Private constructor required by EF Core
+    private DateSchedule() { } // Private constructor required by EF Core
 
-    private Schedule(DateOnly startDate, DateOnly? endDate)
+    private DateSchedule(DateOnly startDate, DateOnly? endDate)
     {
         this.StartDate = startDate;
         this.EndDate = endDate;
@@ -27,34 +28,34 @@ public class Schedule : ValueObject, IComparable<Schedule>
 
     public bool IsOpenEnded => !this.EndDate.HasValue;
 
-    public static bool operator <(Schedule left, Schedule right)
+    public static bool operator <(DateSchedule left, DateSchedule right)
     {
         return left.CompareTo(right) < 0;
     }
 
-    public static bool operator <=(Schedule left, Schedule right)
+    public static bool operator <=(DateSchedule left, DateSchedule right)
     {
         return left.CompareTo(right) <= 0;
     }
 
-    public static bool operator >(Schedule left, Schedule right)
+    public static bool operator >(DateSchedule left, DateSchedule right)
     {
         return left.CompareTo(right) > 0;
     }
 
-    public static bool operator >=(Schedule left, Schedule right)
+    public static bool operator >=(DateSchedule left, DateSchedule right)
     {
         return left.CompareTo(right) >= 0;
     }
 
-    public static Schedule Create(DateOnly startDate, DateOnly? endDate = null)
+    public static DateSchedule Create(DateOnly startDate, DateOnly? endDate = null)
     {
         if (endDate <= startDate)
         {
             throw new DomainRuleException("End date must be after start date");
         }
 
-        return new Schedule(startDate, endDate);
+        return new DateSchedule(startDate, endDate);
     }
 
     public bool IsActive(DateOnly date)
@@ -62,7 +63,7 @@ public class Schedule : ValueObject, IComparable<Schedule>
         return date >= this.StartDate && (!this.EndDate.HasValue || date <= this.EndDate.Value);
     }
 
-    public bool OverlapsWith(Schedule other)
+    public bool OverlapsWith(DateSchedule other)
     {
         if (other == null)
         {
@@ -86,7 +87,7 @@ public class Schedule : ValueObject, IComparable<Schedule>
             : $"{this.StartDate.ToString(dateFormat, CultureInfo.InvariantCulture)} (Open-ended)";
     }
 
-    public int CompareTo(Schedule other)
+    public int CompareTo(DateSchedule other)
     {
         if (other == null)
         {

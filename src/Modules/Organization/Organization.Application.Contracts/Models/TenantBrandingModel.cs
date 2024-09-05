@@ -5,19 +5,19 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Application;
 
-public class TenantModel
+public class TenantBrandingModel
 {
     public string Id { get; set; }
 
-    public string CompanyId { get; set; }
+    public string TenantId { get; private set; }
 
-    public string Name { get; set; }
+    public string PrimaryColor { get; private set; }
 
-    public string Description { get; set; }
+    public string SecondaryColor { get; private set; }
 
-    public string ContactEmail { get; set; }
+    public string LogoUrl { get; private set; }
 
-    public TenantBrandingModel Branding { get; set; }
+    public string FaviconUrl { get; private set; }
 
-    public TenantSubscriptionModel[] Subscriptions { get; set; }
+    public string CustomCss { get; private set; }
 }

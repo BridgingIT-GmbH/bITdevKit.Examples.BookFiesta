@@ -25,7 +25,7 @@ public class CatalogQueryService(
     /// <param name="limit">The maximum number of related books to retrieve (default is 5).</param>
     public async Task<Result<IEnumerable<Book>>> BookFindAllRelatedAsync(Book book, int limit = 5)
     {
-        if (book is null)
+        if (book == null)
         {
             return Result<IEnumerable<Book>>.Failure();
         }

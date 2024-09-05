@@ -111,7 +111,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     public Company SetContactEmail(EmailAddress email)
     {
-        if (string.IsNullOrWhiteSpace(email))
+        if (email == null)
         {
             throw new DomainRuleException("Company contact email cannot be empty.");
         }

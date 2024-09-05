@@ -36,6 +36,8 @@ public partial class EmailAddress : ValueObject
         return new EmailAddress(email);
     }
 
+    public override string ToString() => this.Value;
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return this.Value;

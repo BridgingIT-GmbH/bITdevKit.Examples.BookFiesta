@@ -30,6 +30,8 @@ public class OrganizationTenantEndpoints : EndpointsBase
         group.MapPost(string.Empty, CreateTenant).WithName("CreateOrganizationTenant")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
+
+        // TODO: update/delete tenant
     }
 
     private static async Task<Results<Ok<TenantModel>, NotFound, ProblemHttpResult>> GetTenant(

@@ -12,7 +12,7 @@ using System.Linq;
 using BridgingIT.DevKit.Domain.Model;
 using EnsureThat;
 
-[DebuggerDisplay("Amount={Amount}, Currency={Currency}")]
+[DebuggerDisplay("Currency={Currency}, Amount={Amount}")]
 public class Money : DecimalValueObject
 {
     private int? cachedHashCode;
@@ -46,7 +46,7 @@ public class Money : DecimalValueObject
             return true;
         }
 
-        if (a is not null && b is not null)
+        if (a != null && b != null)
         {
             return a.Amount.Equals(b.Amount) && a.Currency.Equals(b.Currency);
         }
@@ -90,7 +90,7 @@ public class Money : DecimalValueObject
 
     public override bool Equals(object obj)
     {
-        if (obj is null || obj.GetType() != this.GetType())
+        if (obj == null || obj.GetType() != this.GetType())
         {
             return false;
         }
@@ -132,10 +132,10 @@ public class Money : DecimalValueObject
 
         var culture = (from c in CultureInfo.GetCultures(CultureTypes.SpecificCultures)
                        let r = this.CreateRegionInfo(c.Name)
-                       where r is not null && string.Equals(r.ISOCurrencySymbol, currencyCode, StringComparison.OrdinalIgnoreCase)
+                       where r != null && string.Equals(r.ISOCurrencySymbol, currencyCode, StringComparison.OrdinalIgnoreCase)
                        select c).FirstOrDefault();
 
-        if (culture is null)
+        if (culture == null)
         {
             return amount.ToString("0.00");
         }

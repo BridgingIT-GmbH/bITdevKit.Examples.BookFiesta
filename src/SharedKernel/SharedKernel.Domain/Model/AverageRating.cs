@@ -7,6 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 using BridgingIT.DevKit.Domain.Model;
 
+[DebuggerDisplay("Value={Value}, Amount={Amount}")]
 public class AverageRating : ValueObject
 {
     private double value;

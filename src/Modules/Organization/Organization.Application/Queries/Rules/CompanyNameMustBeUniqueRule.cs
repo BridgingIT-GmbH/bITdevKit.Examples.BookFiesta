@@ -15,7 +15,7 @@ public class CompanyNameMustBeUniqueRule(
     IGenericRepository<Company> repository,
     Company company) : DomainRuleBase
 {
-    public override string Message => "Company name should be unique";
+    public override string Message => "Company name must be unique";
 
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
@@ -25,9 +25,27 @@ public class CompanyNameMustBeUniqueRule(
     }
 }
 
+public class CompanyMustHaveNoTenantsRule(
+    IGenericRepository<Tenant> repository,
+    Company company) : DomainRuleBase
+{
+    public override string Message => "Company must have no tenants assigned";
+
+    public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
+    {
+        return !(await repository.FindAllAsync(
+            TenantSpecifications.ForCompany(company.Id), cancellationToken: cancellationToken))
+            .SafeAny();
+    }
+}
+
 public static partial class CompanyRules
 {
     public static IDomainRule NameMustBeUnique(
         IGenericRepository<Company> repository,
         Company company) => new CompanyNameMustBeUniqueRule(repository, company);
+
+    public static IDomainRule MustHaveNoTenants(
+        IGenericRepository<Tenant> repository,
+        Company company) => new CompanyMustHaveNoTenantsRule(repository, company);
 }

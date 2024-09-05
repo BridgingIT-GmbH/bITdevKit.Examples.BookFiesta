@@ -52,27 +52,27 @@ public static class OrganizationSeedModels
             [.. new[]
             {
                 Tenant.Create(
-                    companies[0],
+                    companies[0].Id,
                     $"AcmeBooks{GetSuffix(ticks)}",
                     $"books@acme{GetSuffix(ticks)}.com")
                 .AddSubscription()
-                    .SetSchedule(Schedule.Create(
+                    .SetSchedule(DateSchedule.Create(
                         DateOnly.FromDateTime(new DateTime(2020, 1, 1)),
                         DateOnly.FromDateTime(new DateTime(2022, 12, 31))))
                     .SetPlanType(TenantSubscriptionPlanType.Free).Tenant
                 .AddSubscription()
-                    .SetSchedule(Schedule.Create(
+                    .SetSchedule(DateSchedule.Create(
                         DateOnly.FromDateTime(new DateTime(2023, 1, 1))))
                     .SetPlanType(TenantSubscriptionPlanType.Basic)
                     .SetBillingCycle(TenantSubscriptionBillingCycle.Yearly).Tenant
                 .SetBranding(TenantBranding.Create("#000000", "#AAAAAA")),
 
                 Tenant.Create(
-                    companies[0],
+                    companies[0].Id,
                     $"TechBooks{GetSuffix(ticks)}",
                     $"books@techinnovate{GetSuffix(ticks)}.de")
                 .AddSubscription()
-                    .SetSchedule(Schedule.Create(
+                    .SetSchedule(DateSchedule.Create(
                         DateOnly.FromDateTime(new DateTime(2020, 1, 1))))
                     .SetPlanType(TenantSubscriptionPlanType.Premium)
                     .SetBillingCycle(TenantSubscriptionBillingCycle.Yearly).Tenant

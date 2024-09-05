@@ -61,7 +61,7 @@ public class OrganizationCompanyEndpoints : EndpointsBase
         [FromServices] IMapper mapper,
         [FromRoute] string id)
     {
-        var result = (await mediator.Send(new CompanyFindAllTenantsQuery(id))).Result;
+        var result = (await mediator.Send(new TenantFindAllQuery() { CompanyId = id })).Result;
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantModel>>(result.Value))

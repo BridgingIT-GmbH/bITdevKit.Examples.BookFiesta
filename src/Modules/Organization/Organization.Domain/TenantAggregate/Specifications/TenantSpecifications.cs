@@ -16,6 +16,14 @@ public class TenantForNameSpecification(string name) : Specification<Tenant>
     }
 }
 
+public class TenantForCompanySpecification(CompanyId companyId) : Specification<Tenant>
+{
+    public override Expression<Func<Tenant, bool>> ToExpression()
+    {
+        return e => e.CompanyId == companyId;
+    }
+}
+
 public static partial class TenantSpecifications
 {
     public static Specification<Tenant> ForName(string name)
@@ -23,4 +31,10 @@ public static partial class TenantSpecifications
 
     public static Specification<Tenant> ForName2(string name) // INFO: short version to define a specification
         => new(e => e.Name == name);
+
+    public static Specification<Tenant> ForCompany(CompanyId companyId)
+        => new TenantForCompanySpecification(companyId);
+
+    public static Specification<Tenant> ForCompany2(CompanyId companyId) // INFO: short version to define a specification
+        => new(e => e.CompanyId == companyId);
 }

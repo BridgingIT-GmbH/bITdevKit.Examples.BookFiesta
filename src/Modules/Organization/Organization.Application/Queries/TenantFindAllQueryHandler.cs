@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Domain.Specifications;
 using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 using Microsoft.Extensions.Logging;
 
@@ -21,8 +22,17 @@ public class TenantFindAllQueryHandler(
     public override async Task<QueryResponse<Result<IEnumerable<Tenant>>>> Process(
         TenantFindAllQuery query, CancellationToken cancellationToken)
     {
+        var specifications = new List<ISpecification<Tenant>>();
+
+        if (!query.CompanyId.IsNullOrEmpty())
+        {
+            specifications.Add(
+                TenantSpecifications.ForCompany(CompanyId.Create(query.CompanyId)));
+        }
+
         return QueryResponse.For(
-            await repository.FindAllResultAsync(
-                new FindOptions<Tenant>() { Order = new OrderOption<Tenant>(e => e.Name) }, cancellationToken: cancellationToken).AnyContext());
+                await repository.FindAllResultAsync(
+                    specifications,
+                    new FindOptions<Tenant>() { Order = new OrderOption<Tenant>(e => e.Name) }, cancellationToken: cancellationToken).AnyContext());
     }
 }

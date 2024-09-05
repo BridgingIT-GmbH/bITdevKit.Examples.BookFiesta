@@ -1,4 +1,4 @@
-// MIT-License
+﻿// MIT-License
 // Copyright BridgingIT GmbH - All Rights Reserved
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
@@ -15,15 +15,15 @@ using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
-public class TenantCreateCommandHandler(
+public class TenantUpdateCommandHandler(
     ILoggerFactory loggerFactory,
     IMapper mapper,
     IGenericRepository<Tenant> tenantRepository,
     IGenericRepository<Company> companyRepository)
-        : CommandHandlerBase<TenantCreateCommand, Result<Tenant>>(loggerFactory)
+        : CommandHandlerBase<TenantUpdateCommand, Result<Tenant>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Tenant>>> Process(
-        TenantCreateCommand command, CancellationToken cancellationToken)
+        TenantUpdateCommand command, CancellationToken cancellationToken)
     {
         var companyResult = await companyRepository.FindOneResultAsync(
             CompanyId.Create(command.Model.CompanyId), cancellationToken: cancellationToken);
@@ -33,14 +33,22 @@ public class TenantCreateCommandHandler(
             return CommandResponse.For<Tenant>(companyResult);
         }
 
-        //var tenant = TenantModelMapper.Map(command.Model);
-        var tenant = mapper.Map<TenantModel, Tenant>(command.Model);
+        var tenantResult = await tenantRepository.FindOneResultAsync(
+        TenantId.Create(command.Model.Id), cancellationToken: cancellationToken);
+
+        if (tenantResult.IsFailure)
+        {
+            return CommandResponse.For(tenantResult);
+        }
+
+        //var tenant = TenantModelMapper.Map(command.Model, tenantResult.Value);
+        var tenant = mapper.Map<TenantModel, Tenant>(command.Model, tenantResult.Value);
 
         await DomainRules.ApplyAsync([
             TenantRules.NameMustBeUnique(tenantRepository, tenant),
         ], cancellationToken);
 
-        await tenantRepository.InsertAsync(tenant, cancellationToken).AnyContext();
+        await tenantRepository.UpdateAsync(tenant, cancellationToken).AnyContext();
 
         return CommandResponse.Success(tenant);
     }

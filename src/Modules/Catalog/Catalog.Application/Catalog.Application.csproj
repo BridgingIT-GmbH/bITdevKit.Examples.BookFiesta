@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BridgingIT.DevKit.Common.Mapping" />
     <PackageReference Include="BridgingIT.DevKit.Application.Commands" />
     <PackageReference Include="BridgingIT.DevKit.Application.JobScheduling" />
     <PackageReference Include="BridgingIT.DevKit.Application.Queries" />

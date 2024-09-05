@@ -14,12 +14,12 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 {
     private TenantSubscription() { } // Private constructor required by EF Core
 
-    private TenantSubscription(Tenant tenant, TenantSubscriptionPlanType planType, Schedule schedule)
+    private TenantSubscription(Tenant tenant, TenantSubscriptionPlanType planType, DateSchedule schedule)
     {
         this.Tenant = tenant;
         this.SetPlanType(planType);
-        this.SetSchedule(schedule);
         this.SetStatus(TenantSubscriptionStatus.Pending);
+        this.SetSchedule(schedule);
     }
 
     public Tenant Tenant { get; private set; }
@@ -28,7 +28,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 
     public TenantSubscriptionStatus Status { get; private set; }
 
-    public Schedule Schedule { get; private set; }
+    public DateSchedule Schedule { get; private set; }
 
     public TenantSubscriptionBillingCycle BillingCycle { get; private set; }
 
@@ -37,7 +37,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
     public static TenantSubscription Create(
         Tenant tenant,
         TenantSubscriptionPlanType planType,
-        Schedule schedule)
+        DateSchedule schedule)
     {
         var subscription = new TenantSubscription(tenant, planType, schedule);
 
@@ -52,7 +52,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 
     public TenantSubscription SetPlanType(TenantSubscriptionPlanType planType)
     {
-        if(planType == null)
+        if (planType == null)
         {
             throw new DomainRuleException("Plan type cannot be null.");
         }
@@ -82,7 +82,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
         return this;
     }
 
-    public TenantSubscription SetSchedule(Schedule schedule)
+    public TenantSubscription SetSchedule(DateSchedule schedule)
     {
         if (schedule == null)
         {

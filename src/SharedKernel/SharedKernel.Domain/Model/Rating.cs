@@ -8,6 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
+[DebuggerDisplay("Value={Value}")]
 public class Rating : ValueObject
 {
     private Rating()
@@ -22,6 +23,7 @@ public class Rating : ValueObject
     public int Value { get; private set; }
 
     public static Rating Poor() => new(1);
+
     public static Rating Fair() => new(2);
 
     public static Rating Good() => new(3);

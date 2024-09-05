@@ -5,17 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 
-public class AddressModel
+public class DateScheduleModel
 {
-    public string Name { get; set; }
+    public DateOnly StartDate { get; set; }
 
-    public string Line1 { get; set; }
-
-    public string Line2 { get; set; }
-
-    public string PostalCode { get; set; }
-
-    public string City { get; set; }
-
-    public string Country { get; set; }
+    public DateOnly? EndDate { get; set; }
 }

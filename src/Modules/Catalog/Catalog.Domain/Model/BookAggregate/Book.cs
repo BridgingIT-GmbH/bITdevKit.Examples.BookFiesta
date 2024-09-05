@@ -126,7 +126,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book AddRating(Rating rating)
     {
-        if (rating is null)
+        if (rating == null)
         {
             return this;
         }
@@ -199,7 +199,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     public Book UpdateChapter(BookChapterId id, string title, int number, string content = null)
     {
         var chapter = this.chapters.SingleOrDefault(c => c.Id == id);
-        if (chapter is not null)
+        if (chapter != null)
         {
             chapter.SetTitle(title);
             chapter.SetNumber(number);
@@ -220,7 +220,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     public Book RemoveChapter(int number)
     {
         var chapter = this.chapters.SingleOrDefault(c => c.Number == number);
-        if (chapter is not null)
+        if (chapter != null)
         {
             this.RemoveChapter(chapter.Id);
             this.ReindexKeywords();

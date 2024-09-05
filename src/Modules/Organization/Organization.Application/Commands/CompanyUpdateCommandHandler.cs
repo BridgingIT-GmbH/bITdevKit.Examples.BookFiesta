@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 
 public class CompanyUpdateCommandHandler(
     ILoggerFactory loggerFactory,
+    IMapper mapper,
     IGenericRepository<Company> repository)
         : CommandHandlerBase<CompanyUpdateCommand, Result<Company>>(loggerFactory)
 {
@@ -35,20 +36,11 @@ public class CompanyUpdateCommandHandler(
             CompanyRules.NameMustBeUnique(repository, companyResult.Value),
         ], cancellationToken);
 
-        companyResult.Value.SetName(command.Model.Name);
-        companyResult.Value.SetRegistrationNumber(command.Model.RegistrationNumber);
-        companyResult.Value.SetContactEmail(command.Model.ContactEmail);
-        companyResult.Value.SetAddress(
-            Address.Create(
-                command.Model.Address.Name,
-                command.Model.Address.Line1,
-                command.Model.Address.Line2,
-                command.Model.Address.PostalCode,
-                command.Model.Address.City,
-                command.Model.Address.Country));
+        //var company = CompanyModelMapper.Map(command.Model, companyResult.Value);
+        var company = mapper.Map<CompanyModel, Company>(command.Model, companyResult.Value);
 
-        await repository.UpdateAsync(companyResult.Value, cancellationToken).AnyContext();
+        await repository.UpdateAsync(company, cancellationToken).AnyContext();
 
-        return CommandResponse.Success(companyResult.Value);
+        return CommandResponse.Success(company);
     }
 }
