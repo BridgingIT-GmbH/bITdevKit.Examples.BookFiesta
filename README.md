@@ -95,6 +95,14 @@ graph TD
     Infrastructure --> |references| Domain
 ```
 
+Key Points:
+
+- Domain layer remains independent, not referencing other layers
+- Infrastructure layer doesn't directly reference the Application or Domain layer
+- Adheres to the DI principle: high-level layers (Domain, Application) don't depend on low-level layer (Infrastructure), but both depend on abstractions
+
+This layering structure enforces clean architecture principles, ensuring separation of concerns and maintaining the independence of core business logic.
+
 #### Request Procesing Flow
 
 ```mermaid
