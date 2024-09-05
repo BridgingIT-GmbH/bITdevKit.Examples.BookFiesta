@@ -32,12 +32,12 @@ public class CompanyUpdateCommandHandler(
             return CommandResponse.For(companyResult);
         }
 
-        await DomainRules.ApplyAsync([
-            CompanyRules.NameMustBeUnique(repository, companyResult.Value),
-        ], cancellationToken);
-
         //var company = CompanyModelMapper.Map(command.Model, companyResult.Value);
         var company = mapper.Map<CompanyModel, Company>(command.Model, companyResult.Value);
+
+        await DomainRules.ApplyAsync([
+            CompanyRules.NameMustBeUnique(repository, company),
+        ], cancellationToken);
 
         await repository.UpdateAsync(company, cancellationToken).AnyContext();
 

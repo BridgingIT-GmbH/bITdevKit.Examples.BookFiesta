@@ -58,9 +58,73 @@ On `CTRL+F5` this will start the host at [https://localhost:7144](https://localh
 
 ### Architecture Overview
 
-The GettingStartedDdd project, powered by bITDevKit, is structured around key architectural layers:
+The solution, powered by bITDevKit, is structured around key architectural layers and the references between them:
 
-![](assets/Onion.drawio.png)
+```mermaid
+graph TD
+    subgraph Presentation
+        CP[Module Definition]
+        REG[DI Registrations]
+        CA[Endpoint Routings]
+        MP[Object Mappings]
+        RP[Razor Pages/<br>Views/etc]
+    end
+
+    subgraph Application
+        SV[Services/<br>Jobs/ Tasks]
+        CQ[Commands/<br>Queries/ <br>Validators]
+        DRR[Rules/<br>Policies]
+        VM[ViewModels/<br>DTOs]
+        MA[Messages/<br>Adapter<br>Interfaces]
+    end
+
+    subgraph Domain
+        DMM[Domain Model]
+        EN[Entities/<br>Aggregates/<br>Value Objects]
+        RS[Repository<br>Interfaces/<br>Specifications]
+        DR[Domain Rules/<br>Domain Policies]
+    end
+
+    subgraph Infrastructure
+        DC[DbContext/<br>Migrations/<br>Data Entities]
+        DA[Domain +<br>Application<br>Interface<br>Implementations]
+    end
+
+    Presentation --> |references| Application
+    Application --> |references| Domain
+    Infrastructure --> |references| Domain
+```
+
+#### Request Procesing Flow
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant E as Endpoints
+    participant CM as Command
+    participant CV as CommandValidator
+    participant CH as CommandHandler
+    participant M as Mapper
+    participant R as Repository
+
+    C->>E: Web Request
+    E->>CM: Create Command (with Model)
+    CM->>CV: Validate
+    CV-->>CM: Validation Result
+    CM->>CH: Process
+    CH->>R: FindOneResultAsync(EntityId)
+    R-->>CH: Result<Domain Entity>
+    CH->>M: Map Model to existing Domain Entity
+    M-->>CH: Updated Domain Entity
+    CH->>CH: Apply Domain Rules
+    CH->>R: UpdateAsync(Domain Entity)
+    R-->>CH: Updated Domain Entity
+    CH-->>E: Result<Domain Entity>
+    E->>M: Map Domain Entity to Model
+    M-->>E: Model
+    E->>E: Format Response
+    E-->>C: Web Response
+```
 
 ### Solution Structure
 
