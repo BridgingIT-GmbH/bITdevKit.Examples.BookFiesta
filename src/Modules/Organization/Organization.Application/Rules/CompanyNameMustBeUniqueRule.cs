@@ -20,7 +20,8 @@ public class CompanyNameMustBeUniqueRule(
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
         return !(await repository.FindAllAsync(
-            CompanySpecifications.ForName(company.Name), cancellationToken: cancellationToken)).SafeAny();
+            CompanySpecifications.ForName(company.Name), cancellationToken: cancellationToken))
+            .SafeAny(c => c.Id != company.Id);
     }
 }
 

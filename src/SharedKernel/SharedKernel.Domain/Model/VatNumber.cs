@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
+[DebuggerDisplay("CountryCode={CountryCode}, Number={Number}")]
 public class VatNumber : ValueObject
 {
     private static readonly Regex GeneralVatFormat = new(@"^[A-Z]{2}[0-9A-Z]+$", RegexOptions.Compiled);

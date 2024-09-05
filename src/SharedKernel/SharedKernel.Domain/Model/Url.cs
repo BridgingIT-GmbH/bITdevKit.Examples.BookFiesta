@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
+[DebuggerDisplay("Value={Value}")]
 public partial class Url : ValueObject
 {
     private static readonly Regex AbsoluteUrlRegex = AbsoluteRegex();

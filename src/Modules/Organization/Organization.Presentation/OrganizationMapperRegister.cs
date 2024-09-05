@@ -5,11 +5,15 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Presentation;
 
+using BridgingIT.DevKit.Examples.BookFiesta.Organization.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
 using Mapster;
 
 public class OrganizationMapperRegister : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
+        config.ForType<Company, CompanyModel>()
+            .Map(d => d.ContactEmail, s => s.ContactEmail.Value);
     }
 }

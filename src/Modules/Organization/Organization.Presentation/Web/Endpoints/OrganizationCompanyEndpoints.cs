@@ -23,15 +23,23 @@ public class OrganizationCompanyEndpoints : EndpointsBase
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapGet("/{id}/tenants", GetCompanyTenants).WithName("GetOrganizationCompanyTenants")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
-
         group.MapGet(string.Empty, GetCompanies).WithName("GetOrganizationCompanies")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
+        group.MapGet("/{id}/tenants", GetCompanyTenants).WithName("GetOrganizationCompanyTenants")
+            .Produces<ProblemDetails>(400)
+            .Produces<ProblemDetails>(500);
+
         group.MapPost(string.Empty, CreateCompany).WithName("CreateOrganizationCompany")
+            .Produces<ProblemDetails>(400)
+            .Produces<ProblemDetails>(500);
+
+        group.MapPut("/{id}", UpdateCompany).WithName("UpdateOrganizationCompany")
+            .Produces<ProblemDetails>(400)
+            .Produces<ProblemDetails>(500);
+
+        group.MapDelete("/{id}", DeleteCompany).WithName("DeleteCatalogCompany")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
     }
@@ -83,5 +91,31 @@ public class OrganizationCompanyEndpoints : EndpointsBase
                                    mapper.Map<Company, CompanyModel>(result.Value))
             : TypedResults.Problem(result.Messages.ToString(", "),
                                    statusCode: 400);
+    }
+
+    private static async Task<Results<Ok<CompanyModel>, ProblemHttpResult>> UpdateCompany(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string id,
+        [FromBody] CompanyModel model)
+    {
+        var result = (await mediator.Send(new CompanyUpdateCommand(model))).Result;
+
+        return result.IsSuccess
+            ? TypedResults.Ok(mapper.Map<Company, CompanyModel>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "),
+                                   statusCode: 400);
+    }
+
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> DeleteCompany(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string id)
+    {
+        var result = (await mediator.Send(new CompanyDeleteCommand(id))).Result;
+
+        return result.HasError<EntityNotFoundResultError>() ? TypedResults.NotFound() : result.IsSuccess
+            ? TypedResults.Ok()
+            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 }

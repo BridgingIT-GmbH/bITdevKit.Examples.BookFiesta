@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
+[DebuggerDisplay("Value={Value}")]
+
 public partial class EmailAddress : ValueObject
 {
     private EmailAddress() { } // Private constructor required by EF Core

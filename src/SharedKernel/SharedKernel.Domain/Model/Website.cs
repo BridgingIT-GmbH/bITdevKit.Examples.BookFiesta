@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
+[DebuggerDisplay("Value={Value}")]
 public partial class Website : ValueObject
 {
     private Website() { } // Private constructor required by EF Core

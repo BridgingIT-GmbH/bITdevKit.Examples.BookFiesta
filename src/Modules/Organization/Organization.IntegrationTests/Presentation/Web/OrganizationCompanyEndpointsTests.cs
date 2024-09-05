@@ -22,7 +22,7 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        var model = await this.PostCustomerCreate(route);
+        var model = await this.PostCompanyCreate(route);
 
         // Act
         var response = await this.fixture.CreateClient()
@@ -61,7 +61,7 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
     {
         // Arrange & Act
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        var model = await this.PostCustomerCreate(route);
+        var model = await this.PostCompanyCreate(route);
 
         var response = await this.fixture.CreateClient()
             .GetAsync(route).AnyContext();
@@ -162,34 +162,51 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         response.Should().MatchInContent($"*{nameof(model.ContactEmail)}*");
     }
 
-    //[Theory]
-    //[InlineData("api/organization/companies")]
-    //public async Task Put_ValidModel_ReturnsOk(string route)
-    //{
-    //    // Arrange
-    //    this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-    //    var model = await this.PostCustomerCreate(route);
-    //    model.Name += "changed";
-    //    model.RegistrationNumber += "changed";
-    //    var content = new StringContent(
-    //        JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+    [Theory]
+    [InlineData("api/organization/companies")]
+    public async Task Put_ValidModel_ReturnsOk(string route)
+    {
+        // Arrange
+        this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
+        var model = await this.PostCompanyCreate(route);
+        model.Name += "changed";
+        model.RegistrationNumber += "changed";
+        var content = new StringContent(
+            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
 
-    //    // Act
-    //    var response = await this.fixture.CreateClient()
-    //        .PutAsync(route + $"/{model.Id}", content).AnyContext();
-    //    this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
+        // Act
+        var response = await this.fixture.CreateClient()
+            .PutAsync(route + $"/{model.Id}", content).AnyContext();
+        this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
-    //    // Assert
-    //    response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
-    //    response.Headers.Location.Should().NotBeNull();
-    //    response.Should().MatchInContent($"*{model.Name}*");
-    //    response.Should().MatchInContent($"*{model.RegistrationNumber}*");
-    //    var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
-    //    responseModel.ShouldNotBeNull();
-    //    this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
-    //}
+        // Assert
+        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().MatchInContent($"*{model.Name}*");
+        response.Should().MatchInContent($"*{model.RegistrationNumber}*");
+        var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
+        responseModel.ShouldNotBeNull();
+        this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
+    }
 
-    private async Task<CompanyModel> PostCustomerCreate(string route)
+    [Theory]
+    [InlineData("api/organization/companies")]
+    public async Task Delete_ValidId_ReturnsOk(string route)
+    {
+        // Arrange
+        this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
+        var model = await this.PostCompanyCreate(route);
+
+        // Act
+        var response = await this.fixture.CreateClient()
+            .DeleteAsync(route + $"/{model.Id}").AnyContext();
+        this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
+
+        // Assert
+        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Headers.Location.Should().BeNull();
+    }
+
+    private async Task<CompanyModel> PostCompanyCreate(string route)
     {
         var company = OrganizationSeedModels.Companies.Create(DateTime.UtcNow.Ticks)[0];
         var model = new CompanyModel
