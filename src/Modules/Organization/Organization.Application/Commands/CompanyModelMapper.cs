@@ -1,7 +1,7 @@
-﻿//namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Application;
+﻿//namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 //using System;
 //using System.Collections.Generic;
-//using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
+//using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 //using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 //using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 

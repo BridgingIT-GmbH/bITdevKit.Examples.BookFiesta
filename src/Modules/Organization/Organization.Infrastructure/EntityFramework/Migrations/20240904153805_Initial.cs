@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure.EntityFramework.Migrations
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure.EntityFramework.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

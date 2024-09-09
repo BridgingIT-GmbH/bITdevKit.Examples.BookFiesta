@@ -11,8 +11,8 @@
   <ItemGroup>
     <InternalsVisibleTo Include="BridgingIT.DevKit.Examples.BookFiesta.Catalog.IntegrationTests" />
     <InternalsVisibleTo Include="BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests" />
-    <InternalsVisibleTo Include="BridgingIT.DevKit.Examples.BookFiesta.Organization.IntegrationTests" />
-    <InternalsVisibleTo Include="BridgingIT.DevKit.Examples.BookFiesta.Organization.UnitTests" />
+    <InternalsVisibleTo Include="BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.IntegrationTests" />
+    <InternalsVisibleTo Include="BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.UnitTests" />
   </ItemGroup>
 
   <ItemGroup>

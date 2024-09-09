@@ -3,14 +3,14 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Presentation;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Organization.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.Organization.Infrastructure;
-using BridgingIT.DevKit.Examples.BookFiesta.Organization.Presentation.Web;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;

@@ -3,11 +3,11 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Organization.Application;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
 using BridgingIT.DevKit.Application.Commands;
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Organization.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 using FluentValidation;
 using FluentValidation.Results;
 

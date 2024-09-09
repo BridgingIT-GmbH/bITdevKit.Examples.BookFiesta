@@ -17,7 +17,7 @@ using BridgingIT.DevKit.Application.Utilities;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation;
-using BridgingIT.DevKit.Examples.BookFiesta.Organization.Presentation;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Pages;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server.Components;
