@@ -1,4 +1,4 @@
-namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
 using System.Text.RegularExpressions;
 

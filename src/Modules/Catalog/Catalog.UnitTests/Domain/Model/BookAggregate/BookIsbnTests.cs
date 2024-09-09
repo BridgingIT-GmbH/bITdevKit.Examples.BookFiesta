@@ -1,6 +1,6 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Domain;
 
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
 public class BookIsbnTests
 {

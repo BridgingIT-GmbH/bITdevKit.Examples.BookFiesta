@@ -7,8 +7,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Controllers;
 
 using System.Threading;
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

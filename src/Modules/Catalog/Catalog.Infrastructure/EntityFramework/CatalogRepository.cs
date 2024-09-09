@@ -1,7 +1,7 @@
-﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure;
+﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

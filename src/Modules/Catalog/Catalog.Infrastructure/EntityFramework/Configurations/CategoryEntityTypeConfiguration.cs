@@ -3,11 +3,11 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Infrastructure;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 

@@ -6,8 +6,8 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Application;
 
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [UnitTest("GettingStarted.Application")]

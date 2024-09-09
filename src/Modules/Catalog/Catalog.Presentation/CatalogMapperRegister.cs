@@ -3,10 +3,10 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation;
 
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using Mapster;
 
 public class CatalogMapperRegister : IRegister
