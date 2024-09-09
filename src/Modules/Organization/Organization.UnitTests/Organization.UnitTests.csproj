@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Organization.UnitTests</AssemblyName>
-    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Organization.UnitTests</RootNamespace>
+    <ModuleName>Organization</ModuleName>
+    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).UnitTests</AssemblyName>
+    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).UnitTests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -37,9 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Organization.Application\Organization.Application.csproj" />
-    <ProjectReference Include="..\Organization.Infrastructure\Organization.Infrastructure.csproj" />
-    <ProjectReference Include="..\Organization.Presentation\Organization.Presentation.csproj" />
+    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" />
+    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" />
+    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation</AssemblyName>
-    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Catalog.Presentation</RootNamespace>
+    <ModuleName>Catalog</ModuleName>
+    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).Presentation</AssemblyName>
+    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).Presentation</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -16,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Catalog.Application\Catalog.Application.csproj" />
-    <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj" />
-    <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" />
+    <ProjectReference Include="..\$(ModuleName).Domain\$(ModuleName).Domain.csproj" />
+    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
