@@ -42,7 +42,7 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
     <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" />
-    <PackageReference Include="Quartz.Serialization.Json"  />
+    <PackageReference Include="Quartz.Serialization.Json" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" />
     <PackageReference Include="MudBlazor" />
@@ -59,6 +59,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Modules\Catalog\Catalog.Presentation\Catalog.Presentation.csproj" />
     <ProjectReference Include="..\Modules\Organization\Organization.Presentation\Organization.Presentation.csproj" />
+    <ProjectReference Include="..\Presentation.ServiceDefaults\Presentation.ServiceDefaults.csproj" />
     <ProjectReference Include="..\Presentation.Web.Client\Presentation.Web.Client.csproj" />
   </ItemGroup>
 

@@ -42,6 +42,8 @@ using Serilog;
 // ===============================================================================================
 // Create the webhost
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 builder.Host.ConfigureLogging();
 builder.Host.ConfigureAppConfiguration();
 
@@ -136,6 +138,11 @@ if (!builder.Environment.IsDevelopment())
     builder.Services.AddApplicationInsightsTelemetry(); // https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core
 }
 
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    logging.IncludeFormattedMessage = true;
+    logging.IncludeScopes = true;
+});
 builder.Services.AddOpenTelemetry()
     .WithMetrics(ConfigureMetrics)
     .WithTracing(ConfigureTracing);
@@ -143,6 +150,8 @@ builder.Services.AddOpenTelemetry()
 // ===============================================================================================
 // Configure the HTTP request pipeline
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
@@ -318,6 +327,8 @@ void ConfigureTracing(TracerProviderBuilder provider)
             o.ConnectionString = builder.Configuration["Tracing:AzureMonitor:ConnectionString"].EmptyToNull() ?? Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
         });
     }
+
+    provider.AddOtlpExporter();
 }
 
 void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings settings)
