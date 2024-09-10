@@ -22,7 +22,7 @@
             <MudIconButton Icon="@Icons.Material.Filled.GraphicEq" Color="Color.Inherit" Href="http://localhost:16688" Target="_blank" />
         </MudTooltip>
         <MudTooltip Text="Health">
-            <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="@(this.IsHealthy ? Color.Success : Color.Error)" Href="https://localhost:5001/health-ui" Target="_blank" />
+            <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="@(IsHealthy ? Color.Success : Color.Error)" Href="https://localhost:5001/health-ui" Target="_blank" />
         </MudTooltip>
         <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Href="https://mudblazor.com/" Target="_blank" />
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/Garderoben/MudBlazor" Target="_blank" />
@@ -49,23 +49,23 @@
     protected override async Task OnInitializedAsync()
     {
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(this.navigationManager.ToAbsoluteUri("/signalrhub"))
+            .WithUrl(navigationManager.ToAbsoluteUri("/signalrhub"))
             .Build();
         hubConnection.On<string>("CheckHealth", (notification) =>
         {
-            this.IsHealthy = !notification.Contains("Unhealthy");
-            this.StateHasChanged();
+            IsHealthy = !notification.Contains("Unhealthy");
+            StateHasChanged();
         });
         await hubConnection.StartAsync();
 
-        this.IsConnected = this.hubConnection.State == HubConnectionState.Connected;
-        if (this.IsConnected)
+        IsConnected = hubConnection.State == HubConnectionState.Connected;
+        if (IsConnected)
         {
-            this.snackbar.Add("signalr connected", Severity.Success);
+            snackbar.Add("signalr connected", Severity.Success);
         }
         else
         {
-            this.snackbar.Add("signalr not connected", Severity.Error);
+            snackbar.Add("signalr not connected", Severity.Error);
         }
     }
 
