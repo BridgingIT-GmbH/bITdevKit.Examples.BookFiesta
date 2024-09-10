@@ -5,6 +5,11 @@
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<Projects.Presentation_Web_Server>("presentation-web-server");
+var sql = builder.AddSqlServer("sql", port: 14329)
+    .WithDataVolume()
+    .AddDatabase("bitdevkitbookfiesta");
+
+builder.AddProject<Projects.Presentation_Web_Server>("presentation-web-server")
+    .WithReference(sql);
 
 builder.Build().Run();

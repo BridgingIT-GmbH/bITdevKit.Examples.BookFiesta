@@ -8,7 +8,6 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.Commands;
 using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Application.Messaging;
@@ -27,6 +26,7 @@ using BridgingIT.DevKit.Presentation.Web;
 using BridgingIT.DevKit.Presentation.Web.JobScheduling;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MudBlazor.Services;
 using NSwag;
@@ -44,8 +44,8 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
-builder.Host.ConfigureLogging();
 builder.Host.ConfigureAppConfiguration();
+builder.Host.ConfigureLogging(builder.Configuration);
 
 // ===============================================================================================
 // Configure the modules
@@ -285,21 +285,32 @@ void ConfigureTracing(TracerProviderBuilder provider)
                 ["deployment.environment"] = builder.Environment.EnvironmentName.ToLowerInvariant(),
             }))
         .SetErrorStatusOnException(true)
-        .AddAspNetCoreInstrumentation(options =>
+        .AddAspNetCoreInstrumentation(opts =>
         {
-            options.RecordException = true;
-            options.Filter = context => !context.Request.Path.ToString().EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns);
+            opts.RecordException = true;
+            opts.Filter = context => !context.Request.Path.ToString().EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns);
         })
-        .AddHttpClientInstrumentation(options =>
+        .AddHttpClientInstrumentation(opts =>
         {
-            options.RecordException = true;
-            options.FilterHttpRequestMessage = request => !request.RequestUri.PathAndQuery.EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns.Insert("*api/events/raw*"));
+            opts.RecordException = true;
+            opts.FilterHttpRequestMessage = req => !req
+                .RequestUri.PathAndQuery.EqualsPatternAny(
+                    new RequestLoggingOptions().PathBlackListPatterns.Insert("*api/events/raw"));
         })
-        .AddSqlClientInstrumentation(options =>
+        .AddSqlClientInstrumentation(opts =>
         {
-            options.EnableConnectionLevelAttributes = true;
-            options.RecordException = true;
-            options.SetDbStatementForText = true;
+            opts.Filter = cmd => // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/main/src/OpenTelemetry.Instrumentation.SqlClient/README.md#filter
+            {
+                if (cmd is SqlCommand command)
+                {
+                    return !command.CommandText.Contains("QRTZ_") && !command.CommandText.Contains("__MigrationsHistory") && !command.CommandText.Equals("SELECT 1;");
+                }
+
+                return false;
+            };
+            opts.RecordException = true;
+            opts.EnableConnectionLevelAttributes = true;
+            opts.SetDbStatementForText = true;
         });
 
     if (builder.Configuration["Tracing:Jaeger:Enabled"].To<bool>())
@@ -328,7 +339,12 @@ void ConfigureTracing(TracerProviderBuilder provider)
         });
     }
 
-    provider.AddOtlpExporter();
+    var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+
+    if (useOtlpExporter)
+    {
+        builder.Services.AddOpenTelemetry().UseOtlpExporter();
+    }
 }
 
 void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings settings)

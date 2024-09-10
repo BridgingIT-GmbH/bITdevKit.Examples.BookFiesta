@@ -35,209 +35,354 @@
       },
       "BridgingIT.DevKit.Application.JobScheduling": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "42BcxB9tW+rtV+y70sd03m/VejtuxNn1hWRFN6NjuTdvyDQoe2OtNkkTV/s+UGC5H+Vqg+999Gg//Ap0X4eJhQ==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "REO8snZvvffihnw6IpFyfLCsdQkeN7SsWb+CVBE+XTMsfcjlXeC5Z4+Bp70fQGBDAPKWUguojs2Omt2KJjluYA==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
           "Humanizer.Core": "2.14.1",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
           "Polly": "8.4.1",
           "Polly.Contrib.Simmy": "0.3.0",
           "Quartz": "3.13.0",
           "Quartz.Extensions.DependencyInjection": "3.13.0",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Application.Messaging": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "saCKzT9V0qylKdWLIY1PJjZtxdmcv9ktgXcdH0KLiIj3F7oi1gdjUlnZQZQU5l3uPnGHwjSQYZCQrJ18uxcfPg==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "eNXLeZNnfMtPXhlLCMYOJinsuv2GhYks1qlY06m10juFLPJTIaNBkuBjrmHU8CNPPtHWgCi7QvU1RrxfID4xYg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
           "Humanizer.Core": "2.14.1",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
           "Polly": "8.4.1",
           "Polly.Contrib.Simmy": "0.3.0",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Application.Utilities": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "7JONgHVbnpRqDjZpBwCvIU19IzovxR1459B9RytCzF975s+dA/TjMQfYqIyr7TWdtHgN78Hom0/88E8TxL6aRA==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "pNBNPuav8rgqH3n29ajaq+F+hjLR3W2TaAqSiCi5ggA5aFlr4h2Ezlz9hs9ne4Y3ujUpnzX4Bn/+yb2lxNObDw==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Common.Extensions": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "f21W8pFw77o/bWVChZeVzU+yx0FGL97oZdOTcG9WQtP8hmEOSA9y+rn/wzRqeHztZ3xwzzFFihkSghb98xiNQA==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "EFMfD/sSxjQm0ZyX4cEfKT7eTqzggXXGBdvaZFdZDRHRZPdNKkF72XvjQk0V28PkTmjna8hWiFe7kSjsBHfirw==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
           "Microsoft.Extensions.Primitives": "8.0.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1",
           "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Common.Extensions.Web": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "pekaEvXu3ftNI2wM05HCMKG4UtgHWz8ZWG02asar/281HCXiPTkYrEw/pNnvOg5xpdJQwvtUZL5IjI52bjw1Yw==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "4lb4bcgErLgjKeyWTyqeFPxxpE2tTh08d4ItMWSjMdi+rmDx0QvENEZ+/uqts1je+MCDoFracUley8qMJAQJMA==",
         "dependencies": {
-          "Ensure.That": "10.1.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "Ensure.That": "10.1.0"
         }
       },
       "BridgingIT.DevKit.Infrastructure.Mapping": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "vOa8y85CJoY/WpWdLEpb88foIP89x2qZHZWyZ22+5B1TFpyp983AQ9UFzARxdkRB7JFJYN1IC/R5WS4S46NpVw==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "SiES7iiksTjBqDfjD4reE8+NhjkVKbInAr/34H3pwdEynFQmE45li6u2jsV3dM8Y9e1xLUmSuXPM6Pz2ua9WMw==",
         "dependencies": {
+          "AutoMapper": "13.0.1",
           "AutoMapper.Extensions.ExpressionMapping": "7.0.1",
-          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
+          "Mapster": "7.4.0",
+          "Mapster.DependencyInjection": "1.0.1",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "Scrutor": "4.2.2",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Presentation.Configuration": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "gVlg0Jxl0lwMClrIgieaGE1PV/+DdjSpjFC0FdyA/VyZnfof+/24qs5mn+7LoAneHo1OiostkTBqUrN1myoCYg==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "F78Nlp0avPnqlmShz7qFfY+R4v4tsdhvsUzIs055h0H+zStWmgOtw9bE4TFHObWjuE2OMFzLvFEFX1CGR3Dqxw==",
         "dependencies": {
           "Azure.Extensions.AspNetCore.Configuration.Secrets": "1.3.2",
           "Azure.Identity": "1.12.0",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
+          "MessagePack": "2.5.172",
           "Microsoft.Azure.AppConfiguration.AspNetCore": "7.3.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Presentation.Serilog": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "6YEz2GZdHnEI+RNaLzVwwh//UEU+Um04tiCZ/slk6K+cEZ0XZHLIqZnt7bv0TtRIRf6kgEgGpwvFaG+aFCJGsA==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "lws5KpfI3VmL/QW1QlQ71yxnZJWpvSOWthyQabIfD2NdRC2inL/dtsOOLu5KD1hspFPa7Pt212tAHRsn9b9Odw==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Primitives": "8.0.0",
           "Serilog": "4.0.1",
+          "Serilog.Expressions": "5.0.0",
           "Serilog.Extensions.Hosting": "8.0.0",
           "Serilog.Settings.Configuration": "8.0.2",
           "Serilog.Sinks.Console": "6.0.0",
           "Serilog.Sinks.File": "6.0.0",
+          "Serilog.Sinks.OpenTelemetry": "4.1.0",
           "Serilog.Sinks.Trace": "4.0.0",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
+          "System.Text.Json": "8.0.4"
         }
       },
       "BridgingIT.DevKit.Presentation.Web": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "iEAH+thKPkj1AoyGYqs8Th7xRppH20iuAxtiFNm7GInxHH30Gv/PsU2TuCyOp/FsXupjsr2pCDy+BQR80V/fGw==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "Csi302jC+x8Xli6tf3+bVpMvlkkk68d0UAOYWX5inBSX8VgWpWJ6unawXW2UczCs8L97j/hHA7ovDLuHJXl10g==",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Queries": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Presentation": "3.0.3-preview.0.27",
+          "AutoMapper": "13.0.1",
+          "BridgingIT.DevKit.Application.Queries": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Presentation": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
           "Hellang.Middleware.ProblemDetails": "6.5.1",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "Humanizer.Core": "2.14.1",
+          "Mapster": "7.4.0",
+          "Mapster.DependencyInjection": "1.0.1",
+          "MediatR": "12.4.0",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Caching.Memory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
           "NSwag.AspNetCore": "14.1.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
           "Serilog.Extensions.Hosting": "8.0.0",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Presentation.Web.HealthChecks": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "aK9sychPpuhhJ0EnHMnMmGoNhfRnpfa+CcXV/6U8SM92Hl3tupRQ/SmTnwI1GTwGFBo15KoNX0qBz7BC5aUw6w==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "TT9J2u10KhqwXYUztQNhN23QcHOt6MDo0YuW/9jdaS9F4SUTxns88Uq+hfdvhPUV2tk0UnkpXCEOpLQnT9mtaQ==",
         "dependencies": {
           "AspNetCore.HealthChecks.UI": "8.0.2",
           "AspNetCore.HealthChecks.UI.Client": "8.0.1",
           "Ensure.That": "10.1.0",
+          "Humanizer.Core": "2.14.1",
+          "Microsoft.CodeAnalysis.CSharp.Workspaces": "4.11.0",
+          "Microsoft.EntityFrameworkCore": "8.0.8",
+          "Microsoft.EntityFrameworkCore.Design": "8.0.8",
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.8",
+          "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Caching.Memory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.8",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Http": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
           "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Text.Json": "8.0.4"
         }
       },
       "BridgingIT.DevKit.Presentation.Web.JobScheduling": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "p8/TB+KMHmxzAPRJYzKquiBeJy2kt/LZ7kw6mTV/Y4NdxFpK1xE6v1YW9Em4xUgqtgsWznXlCKxkw/NgFxjCJQ==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "Q+Cqll5dzZowY64NAZvTAPM6ilsemY2zCQ0hUicWVhrjW7ZtzVlJvGeRJd3w/keHDbn+YCU2C0twLAJe7OlrdQ==",
         "dependencies": {
-          "BridgingIT.DevKit.Application.JobScheduling": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Extensions.Web": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Presentation.Web": "3.0.3-preview.0.27",
+          "AutoMapper": "13.0.1",
+          "BridgingIT.DevKit.Application.JobScheduling": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Extensions.Web": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Presentation.Web": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "FluentValidation": "11.9.2",
+          "Hellang.Middleware.ProblemDetails": "6.5.1",
+          "Humanizer.Core": "2.14.1",
+          "Mapster": "7.4.0",
+          "Mapster.DependencyInjection": "1.0.1",
+          "MediatR": "12.4.0",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Caching.Memory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NSwag.AspNetCore": "14.1.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "Quartz": "3.13.0",
+          "Quartz.Extensions.DependencyInjection": "3.13.0",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "Serilog.Extensions.Hosting": "8.0.0",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "Ensure.That": {
@@ -593,140 +738,147 @@
       },
       "BridgingIT.DevKit.Application.Storage": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "ieOqUqsIo4pRPP5DQBSuHjxUW8sBJ2voUe4z3FuiQKHnJ/GN3eUS2RV072qg+ibDrc7dYe7x/guIj8gSK7d9XQ==",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "CtJMK6UIhdmcNg+ZqNHV123EMxEUhh+5qw/9ZKpVHqncEv2Q2Crzi0/WhcCjX/EhTLrKczbCIICb3R27cnK/dg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
           "Humanizer.Core": "2.14.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Caching.Memory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
           "Polly": "8.4.1",
           "Polly.Contrib.Simmy": "0.3.0",
           "Scrutor": "4.2.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Common.Abstractions": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "FOgrZZRvpsUXLh5Wc+V8VnEhWSWi027fCUQk2XDFZc4dw8In2cOpb1FhrkFmgDE+c/8Usvy1S9YNH5E/QocWgQ==",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "U5DzhiGLG5E8M6HdHi6UVaZIoBF30OZGOGsZiWxT0f4+SwFK9mV4CMlgMwbEsqdkwZAgqQvOfbUIz7Vlys3enQ==",
         "dependencies": {
-          "Ensure.That": "10.1.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "Ensure.That": "10.1.0"
         }
       },
       "BridgingIT.DevKit.Common.Caching": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "SxVLz6JXqKMwzmkiLqbffT/py6HeznIJ93Z46dHgr1iD3/OeMm7D5WC3hA/J/sPEjuInDJRVOUFyma8TxgvaHw==",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "oX99RgzF+rPzFLM1nILCCUE0IGEVPBb9mH8FYJopIWckn1nkqOPcMEtJOroYJOul7x3cYv9yLP+oNZwYMugaxQ==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
           "Microsoft.Extensions.Caching.Memory": "8.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.Configuration.Binder": "8.0.2",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Common.Options": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "A01KSiuEZC1FbZYMZAGXHVgb67lv+Pfozi9bIkVdmgf4WzXw8uXfolF6IbRTkT6dEc0U6xSekJ3Lpu3+7eSPQw==",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "V8+dH3pjmKXHGp2XW7jrJu6uvssd98cSxFbmVNyMVUsB3KkdyeWcqPeSzBIGRzKyoLk2PCGeirHeh+kjbqF9oA==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1"
         }
       },
       "BridgingIT.DevKit.Common.Serialization": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "T3rLSBJBEcDTooTVHjME69xXkZJIpDWVICgKQB1uPq9oGLVQNNCIYs0xgPSO5bGN/HSYsThHPJ0V6AL6QVycOA==",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "QTTCeKH4pdoyiXgl8weIw6NIRic4Ci+hcYQ/22rxAxMgcQVFaRuN/pp0BrMZvw7hyf436iaShs650c95cb5jiA==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "MessagePack": "2.5.172",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
           "Newtonsoft.Json": "13.0.3",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1",
           "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Common.Utilities": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "1l/41g0Ip21YXnIUHPpYAIeNui3qWINaUiC90x6o0jNF9MODvuC37yiJw0Kq996uOcAlF5XPeG5aIubNS+jvyw==",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "saXL9qClBq0OsP7AyVtiWdbmMBHwyVgT5MsKNkug0jsakSyPhEzoTQav75H0MBG9uI1vkJDKDopWUqH1R3UoKg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.9.2",
           "Humanizer.Core": "2.14.1",
+          "MessagePack": "2.5.172",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "Microsoft.Extensions.Primitives": "8.0.0",
           "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
           "Polly": "8.4.1",
           "Polly.Contrib.Simmy": "0.3.0",
           "System.Diagnostics.DiagnosticSource": "8.0.1",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Domain.Outbox": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "F2BJ4eAGBxqq/oKOjx65JDnWgO/9fdB53yHtEUd0zakaJ2gLnchlG+iiijzamYhcnx6+HwM3vokZk5CF1BbAPg==",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "l4bwfYRRL3Druv1TLRYW2LtqBGh/3ZCaSKyZAZEb018bD64SJE4M1NusXXexAQtL/9X44j0Jdovos0LS52UWyA==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "Scrutor": "4.2.2",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Presentation": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "IdT+om4k6LvvRENZT1ro6+WUbyD4ZXgiqtBgFWXGQ0yeZPIervgRMbA8JrWiXc/adictZYKPgIwmps8mgVprXw==",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "udYevgDjN/OwrRu45z5ny7IC8Ve/gff+fNNBGLNJrdqBNn3ZnzBUvmJKsf3/elmcBVulOEvHndGgJ9IdDmi0mg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.27",
-          "Ensure.That": "10.1.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.31",
+          "Ensure.That": "10.1.0"
         }
       },
       "DnsClient": {
@@ -749,32 +901,29 @@
       },
       "Google.Protobuf": {
         "type": "Transitive",
-        "resolved": "3.22.5",
-        "contentHash": "tTMtDZPbLxJew8pk7NBdqhLqC4OipfkZdwPuCEUNr2AoDo1siUGcxFqJK0wDewTL8ge5Cjrb16CToMPxBUHMGA=="
+        "resolved": "3.26.1",
+        "contentHash": "CHZX8zXqhF/fdUtd+AYzew8T2HFkAoe5c7lbGxZY/qryAlQXckDvM5BfOJjXlMS7kyICqQTMszj4w1bX5uBJ/w=="
       },
       "Grpc.Core.Api": {
         "type": "Transitive",
-        "resolved": "2.52.0",
-        "contentHash": "SQiPyBczG4vKPmI6Fd+O58GcxxDSFr6nfRAJuBDUNj+PgdokhjWJvZE/La1c09AkL2FVm/jrDloG89nkzmVF7A==",
-        "dependencies": {
-          "System.Memory": "4.5.3"
-        }
+        "resolved": "2.62.0",
+        "contentHash": "q4Jj6bRZHNnE4CMLqgjiBUCKLit+tRr0simZsS2W6U++akd7CzXByeKy2tddqT68hFzP2XzceXA2YtBTfWtixA=="
       },
       "Grpc.Net.Client": {
         "type": "Transitive",
-        "resolved": "2.52.0",
-        "contentHash": "hWVH9g/Nnjz40ni//2S8UIOyEmhueQREoZIkD0zKHEPqLxXcNlbp4eebXIOicZtkwDSx0TFz9NpkbecEDn6rBw==",
+        "resolved": "2.62.0",
+        "contentHash": "C7HxLt+wWPTpPFORRHkxxtDLL+K/jXSmZBaPLhFM8AEkN0bYjklIfCwnzajn1gcbRcEETBb0WnRgHJdVzpwbCg==",
         "dependencies": {
-          "Grpc.Net.Common": "2.52.0",
-          "Microsoft.Extensions.Logging.Abstractions": "3.0.3"
+          "Grpc.Net.Common": "2.62.0",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0"
         }
       },
       "Grpc.Net.Common": {
         "type": "Transitive",
-        "resolved": "2.52.0",
-        "contentHash": "di9qzpdx525IxumZdYmu6sG2y/gXJyYeZ1ruFUzB9BJ1nj4kU1/dTAioNCMt1VLRvNVDqh8S8B1oBdKhHJ4xRg==",
+        "resolved": "2.62.0",
+        "contentHash": "eBv5I4RPWfdezGXqooU5hs3+XcfVMLk5XDlA4G/Nd9TMX78ZGrFl/lM1Ad187zgBLmH7WPAgfjKRWLBwaa1Wbw==",
         "dependencies": {
-          "Grpc.Core.Api": "2.52.0"
+          "Grpc.Core.Api": "2.62.0"
         }
       },
       "Hellang.Middleware.ProblemDetails": {
@@ -1459,19 +1608,19 @@
       },
       "Microsoft.Extensions.Diagnostics.HealthChecks": {
         "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "P9SoBuVZhJPpALZmSq72aQEb9ryP67EdquaCZGXGrrcASTNHYdrUhnpgSwIipgM5oVC+dKpRXg5zxobmF9xr5g==",
+        "resolved": "8.0.8",
+        "contentHash": "Wg8OpwQgQLuYZQlSyNQSjp9GMubE0DKU/g5BTv0nWlShp8qm8stzV+cJRcSe/6l+Kk9XkdIfW7qbwYWI2wKYwA==",
         "dependencies": {
-          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "8.0.8",
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "Microsoft.Extensions.Options": "8.0.0"
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options": "8.0.2"
         }
       },
       "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "AT2qqos3IgI09ok36Qag9T8bb6kHJ3uT9Q5ki6CySybFsK6/9JbvQAgAHf1pVEjST0/N4JaFaCbm40R5edffwg=="
+        "resolved": "8.0.8",
+        "contentHash": "KcX0+6EeNcN3EpoIoLVh42s72n/6LWCmWKQwf3+gcl3ovIWPO27eikrRW8M8n86Rpto9mSzk/4ag/3CVX3SpJg=="
       },
       "Microsoft.Extensions.Features": {
         "type": "Transitive",
@@ -1846,8 +1995,8 @@
       },
       "Microsoft.NETCore.Targets": {
         "type": "Transitive",
-        "resolved": "1.1.3",
-        "contentHash": "3Wrmi0kJDzClwAC+iBdUBpEKmEle8FQNsCs77fkiOIw/9oYA07bL1EZNX0kQ2OMN3xpwvl0vAtOCYY3ndDNlhQ=="
+        "resolved": "1.1.0",
+        "contentHash": "aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg=="
       },
       "Microsoft.SqlServer.Server": {
         "type": "Transitive",
@@ -2060,104 +2209,6 @@
           "Quartz": "3.13.0"
         }
       },
-      "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "7VSGO0URRKoMEAq0Sc9cRz8mb6zbyx/BZDEWhgPdzzpmFhkam3fJ1DAGWFXBI4nGlma+uPKpfuMQP5LXRnOH5g=="
-      },
-      "runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "0oAaTAm6e2oVH+/Zttt0cuhGaePQYKII1dY8iaqP7CvOpVKgLybKRFvQjXR2LtxXOXTVPNv14j0ot8uV+HrUmw=="
-      },
-      "runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "G24ibsCNi5Kbz0oXWynBoRgtGvsw5ZSVEWjv13/KiCAM8C6wz9zzcCniMeQFIkJ2tasjo2kXlvlBZhplL51kGg=="
-      },
-      "runtime.native.System": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "c/qWt2LieNZIj1jGnVNsE2Kl23Ya2aSTBuXMD6V7k9KWr6l16Tqdwq+hJScEpWER9753NWC8h96PaVNY5Ld7Jw==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "Microsoft.NETCore.Targets": "1.1.0"
-        }
-      },
-      "runtime.native.System.Net.Http": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "ZVuZJqnnegJhd2k/PtAbbIcZ3aZeITq3sj06oKfMBSfphW3HDmk/t4ObvbOk/JA/swGR0LNqMksAh/f7gpTROg==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "Microsoft.NETCore.Targets": "1.1.0"
-        }
-      },
-      "runtime.native.System.Security.Cryptography.Apple": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "DloMk88juo0OuOWr56QG7MNchmafTLYWvABy36izkrLI5VledI0rq28KGs1i9wbpeT9NPQrx/wTf8U2vazqQ3Q==",
-        "dependencies": {
-          "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.Apple": "4.3.0"
-        }
-      },
-      "runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "QR1OwtwehHxSeQvZKXe+iSd+d3XZNkEcuWMFYa2i0aG1l+lR739HPicKMlTbJst3spmeekDVBUS7SeS26s4U/g==",
-        "dependencies": {
-          "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.opensuse.13.2-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.opensuse.42.1-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.rhel.7-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2",
-          "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2"
-        }
-      },
-      "runtime.opensuse.13.2-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "I+GNKGg2xCHueRd1m9PzeEW7WLbNNLznmTuEi8/vZX71HudUbx1UTwlGkiwMri7JLl8hGaIAWnA/GONhu+LOyQ=="
-      },
-      "runtime.opensuse.42.1-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "1Z3TAq1ytS1IBRtPXJvEUZdVsfWfeNEhBkbiOCGEl9wwAfsjP2lz3ZFDx5tq8p60/EqbS0HItG5piHuB71RjoA=="
-      },
-      "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.Apple": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "kVXCuMTrTlxq4XOOMAysuNwsXWpYeboGddNGpIgNSZmv1b6r/s/DPk0fYMB7Q5Qo4bY68o48jt4T4y5BVecbCQ=="
-      },
-      "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "6mU/cVmmHtQiDXhnzUImxIcDL48GbTk+TsptXyJA+MIOG9LRjPoAQC/qBFB7X+UNyK86bmvGwC8t+M66wsYC8w=="
-      },
-      "runtime.rhel.7-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "vjwG0GGcTW/PPg6KVud8F9GLWYuAV1rrw1BKAqY0oh4jcUqg15oYF1+qkGR2x2ZHM4DQnWKQ7cJgYbfncz/lYg=="
-      },
-      "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "7KMFpTkHC/zoExs+PwP8jDCWcrK9H6L7soowT80CUx3e+nxP/AFnq0AQAW5W76z2WYbLAYCRyPfwYFG6zkvQRw=="
-      },
-      "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "xrlmRCnKZJLHxyyLIqkZjNXqgxnKdZxfItrPkjI+6pkRo5lHX8YvSZlWrSI5AVwLMi4HbNWP7064hcAWeZKp5w=="
-      },
-      "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.2",
-        "contentHash": "leXiwfiIkW7Gmn7cgnNcdtNAU70SjmKW3jxGj1iKHOvdn0zRWsgv/l2OJUO5zdGdiv2VRFnAsxxhDgMzofPdWg=="
-      },
       "Scrutor": {
         "type": "Transitive",
         "resolved": "4.2.2",
@@ -2171,6 +2222,14 @@
         "type": "Transitive",
         "resolved": "4.0.1",
         "contentHash": "pzeDRXdpSLSsgBHpZcmpIDxqMy845Ab4s+dfnBg0sN9h8q/4Wo3vAoe0QCGPze1Q06EVtEPupS+UvLm8iXQmTQ=="
+      },
+      "Serilog.Expressions": {
+        "type": "Transitive",
+        "resolved": "5.0.0",
+        "contentHash": "QhZjXtUcA2QfQRA60m+DfyIfidKsQV7HBstbYEDqzJKMbJH/KnKthkkjciRuYrmFE+scWv1JibC5LlXrdtOUmw==",
+        "dependencies": {
+          "Serilog": "4.0.0"
+        }
       },
       "Serilog.Extensions.Hosting": {
         "type": "Transitive",
@@ -2219,6 +2278,16 @@
           "Serilog": "2.10.0"
         }
       },
+      "Serilog.Sinks.OpenTelemetry": {
+        "type": "Transitive",
+        "resolved": "4.1.0",
+        "contentHash": "zYKe2TIeWZE4sFUlbGAk94Ae46xgp20dsiw52m2KnRe34zBRQmb+GjYvcpciqMR3nskWebWODjJe2yRTDR3q8g==",
+        "dependencies": {
+          "Google.Protobuf": "3.26.1",
+          "Grpc.Net.Client": "2.62.0",
+          "Serilog": "4.0.0"
+        }
+      },
       "System.Buffers": {
         "type": "Transitive",
         "resolved": "4.5.0",
@@ -2246,23 +2315,6 @@
           "Microsoft.NETCore.Platforms": "1.1.0",
           "Microsoft.NETCore.Targets": "1.1.0",
           "System.Runtime": "4.3.0"
-        }
-      },
-      "System.Collections.Concurrent": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "ztl69Xp0Y/UXCL+3v3tEU+lIy+bvjKNUmopn1wep/a291pVPK7dxBd6T7WnlQqRog+d1a/hSsgRsmFnIBKTPLQ==",
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Diagnostics.Tracing": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Threading": "4.3.0",
-          "System.Threading.Tasks": "4.3.0"
         }
       },
       "System.Collections.Immutable": {
@@ -2355,16 +2407,6 @@
           "System.Configuration.ConfigurationManager": "6.0.0"
         }
       },
-      "System.Diagnostics.Tracing": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "rswfv0f/Cqkh78rA5S8eN8Neocz234+emGCtTF3lxPY96F+mmmUen6tbn0glN6PMvlKQb9bPAY5e9u7fgPTkKw==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "Microsoft.NETCore.Targets": "1.1.0",
-          "System.Runtime": "4.3.0"
-        }
-      },
       "System.Dynamic.Runtime": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -2396,30 +2438,6 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "System.Globalization.Calendars": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "GUlBtdOWT4LTV3I+9/PJW+56AnnChTaOqqTLFtdmype/L500M2LIyXgmtd9X2P2VOkmJd5c67H5SaC2QcL1bFA==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "Microsoft.NETCore.Targets": "1.1.0",
-          "System.Globalization": "4.3.0",
-          "System.Runtime": "4.3.0"
-        }
-      },
-      "System.Globalization.Extensions": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "FhKmdR6MPG+pxow6wGtNAWdZh7noIOpdD5TwQ3CprzgIE1bBBoim0vbR1+AWsWjQmU7zXHgQo4TWSP6lCeiWcQ==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.Globalization": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0"
-        }
-      },
       "System.IdentityModel.Tokens.Jwt": {
         "type": "Transitive",
         "resolved": "8.0.2",
@@ -2441,21 +2459,6 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
-      "System.IO.FileSystem": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "3wEMARTnuio+ulnvi+hkRNROYwa1kylvYahhcLk4HSoVdl+xxTFVeVlYOfLwrDPImGls0mDqbMhrza8qnWPTdA==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "Microsoft.NETCore.Targets": "1.1.0",
-          "System.IO": "4.3.0",
-          "System.IO.FileSystem.Primitives": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "System.Threading.Tasks": "4.3.0"
-        }
-      },
       "System.IO.FileSystem.AccessControl": {
         "type": "Transitive",
         "resolved": "4.7.0",
@@ -2463,14 +2466,6 @@
         "dependencies": {
           "System.Security.AccessControl": "4.7.0",
           "System.Security.Principal.Windows": "4.7.0"
-        }
-      },
-      "System.IO.FileSystem.Primitives": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "6QOb2XFLch7bEc4lIcJH49nJN2HV+OC3fHDgsLVsBVBk3Y4hFAnOBGzJ2lUu7CyDDFo9IBWkSsnbkT6IBwwiMw==",
-        "dependencies": {
-          "System.Runtime": "4.3.0"
         }
       },
       "System.IO.Pipelines": {
@@ -2531,50 +2526,6 @@
         "dependencies": {
           "System.Text.Encodings.Web": "4.7.2",
           "System.Text.Json": "4.6.0"
-        }
-      },
-      "System.Net.Http": {
-        "type": "Transitive",
-        "resolved": "4.3.4",
-        "contentHash": "aOa2d51SEbmM+H+Csw7yJOuNZoHkrP2XnAurye5HWYgGVVU54YZDvsLUYRv6h18X3sPnjNCANmN7ZhIPiqMcjA==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.1",
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Diagnostics.DiagnosticSource": "4.3.0",
-          "System.Diagnostics.Tracing": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Globalization.Extensions": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.IO.FileSystem": "4.3.0",
-          "System.Net.Primitives": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Security.Cryptography.Algorithms": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.OpenSsl": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Security.Cryptography.X509Certificates": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "System.Threading": "4.3.0",
-          "System.Threading.Tasks": "4.3.0",
-          "runtime.native.System": "4.3.0",
-          "runtime.native.System.Net.Http": "4.3.0",
-          "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.2"
-        }
-      },
-      "System.Net.Primitives": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "qOu+hDwFwoZPbzPvwut2qATe3ygjeQBDQj91xlsaqGFQUI5i4ZnZb8yyQuLGpDGivEPIt8EJkd1BVzVoP31FXA==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "Microsoft.NETCore.Targets": "1.1.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Handles": "4.3.0"
         }
       },
       "System.Numerics.Vectors": {
@@ -2691,11 +2642,11 @@
       },
       "System.Runtime": {
         "type": "Transitive",
-        "resolved": "4.3.1",
-        "contentHash": "abhfv1dTK6NXOmu4bgHIONxHyEqFjW8HwXPmpY9gmll+ix9UNo4XDcmzJn6oLooftxNssVHdJC1pGT9jkSynQg==",
+        "resolved": "4.3.0",
+        "contentHash": "JufQi0vPQ0xGnAczR13AUFglDyVYt4Kqnz1AZaiKZ5+GICq0/1MH/mO/eAJHt/mHW1zjKBJd7kV26SrxddAhiw==",
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.1",
-          "Microsoft.NETCore.Targets": "1.1.3"
+          "Microsoft.NETCore.Platforms": "1.1.0",
+          "Microsoft.NETCore.Targets": "1.1.0"
         }
       },
       "System.Runtime.Caching": {
@@ -2739,17 +2690,6 @@
           "System.Runtime.Handles": "4.3.0"
         }
       },
-      "System.Runtime.Numerics": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "yMH+MfdzHjy17l2KESnPiF2dwq7T+xLnSJar7slyimAkUh/gTrS9/UQOtv7xarskJ2/XDSNvfLGOBQPjL7PaHQ==",
-        "dependencies": {
-          "System.Globalization": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0"
-        }
-      },
       "System.Security.AccessControl": {
         "type": "Transitive",
         "resolved": "5.0.0",
@@ -2759,154 +2699,10 @@
           "System.Security.Principal.Windows": "5.0.0"
         }
       },
-      "System.Security.Cryptography.Algorithms": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "W1kd2Y8mYSCgc3ULTAZ0hOP2dSdG5YauTb1089T0/kRcN2MpSAW1izOFROrJgxSlMn3ArsgHXagigyi+ibhevg==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.Collections": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Runtime.Numerics": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "runtime.native.System.Security.Cryptography.Apple": "4.3.0",
-          "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
-        }
-      },
-      "System.Security.Cryptography.Cng": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "03idZOqFlsKRL4W+LuCpJ6dBYDUWReug6lZjBa3uJWnk5sPCUXckocevTaUA8iT/MFSrY/2HXkOt753xQ/cf8g==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Security.Cryptography.Algorithms": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0"
-        }
-      },
-      "System.Security.Cryptography.Csp": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "X4s/FCkEUnRGnwR3aSfVIkldBmtURMhmexALNTwpjklzxWU7yjMk7GHLKOZTNkgnWnE0q7+BCf9N2LVRWxewaA==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.IO": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Security.Cryptography.Algorithms": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "System.Threading": "4.3.0"
-        }
-      },
-      "System.Security.Cryptography.Encoding": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "1DEWjZZly9ae9C79vFwqaO5kaOlI5q+3/55ohmq/7dpDyDfc8lYe7YVxJUZ5MF/NtbkRjwFRo14yM4OEo9EmDw==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.Collections": "4.3.0",
-          "System.Collections.Concurrent": "4.3.0",
-          "System.Linq": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
-        }
-      },
-      "System.Security.Cryptography.OpenSsl": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "h4CEgOgv5PKVF/HwaHzJRiVboL2THYCou97zpmhjghx5frc7fIvlkY1jL+lnIQyChrJDMNEXS6r7byGif8Cy4w==",
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Runtime.Numerics": "4.3.0",
-          "System.Security.Cryptography.Algorithms": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
-        }
-      },
-      "System.Security.Cryptography.Primitives": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "7bDIyVFNL/xKeFHjhobUAQqSpJq9YTOpbEs6mR233Et01STBMXNAc/V+BM6dwYGc95gVh/Zf+iVXWzj3mE8DWg==",
-        "dependencies": {
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Threading": "4.3.0",
-          "System.Threading.Tasks": "4.3.0"
-        }
-      },
       "System.Security.Cryptography.ProtectedData": {
         "type": "Transitive",
         "resolved": "8.0.0",
         "contentHash": "+TUFINV2q2ifyXauQXRwy4CiBhqvDEDZeVJU7qfxya4aRYOKzVBpN+4acx25VcPB9ywUN6C0n8drWl110PhZEg=="
-      },
-      "System.Security.Cryptography.X509Certificates": {
-        "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "t2Tmu6Y2NtJ2um0RtcuhP7ZdNNxXEgUm2JeoA/0NvlMjAhKCnM1NX07TDl3244mVp3QU6LPEhT3HTtH1uF7IYw==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Globalization.Calendars": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.IO.FileSystem": "4.3.0",
-          "System.IO.FileSystem.Primitives": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Runtime.Numerics": "4.3.0",
-          "System.Security.Cryptography.Algorithms": "4.3.0",
-          "System.Security.Cryptography.Cng": "4.3.0",
-          "System.Security.Cryptography.Csp": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.OpenSsl": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "System.Threading": "4.3.0",
-          "runtime.native.System": "4.3.0",
-          "runtime.native.System.Net.Http": "4.3.0",
-          "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
-        }
       },
       "System.Security.Principal.Windows": {
         "type": "Transitive",
@@ -2934,14 +2730,6 @@
         "contentHash": "bAkhgDJ88XTsqczoxEMliSrpijKZHhbJQldhAmObj/RbrN3sU5dcokuXmWJWsdQAhiMJ9bTayWsL1C9fbbCRhw==",
         "dependencies": {
           "System.Text.Encodings.Web": "8.0.0"
-        }
-      },
-      "System.Text.RegularExpressions": {
-        "type": "Transitive",
-        "resolved": "4.3.1",
-        "contentHash": "N0kNRrWe4+nXOWlpLT4LAY5brb8caNFlUuIRpraCVMDLYutKkol1aV079rQjLuSxKMJT2SpBQsYX9xbcTMmzwg==",
-        "dependencies": {
-          "System.Runtime": "4.3.1"
         }
       },
       "System.Threading": {
@@ -2986,11 +2774,11 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
@@ -3006,9 +2794,9 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
         }
@@ -3019,7 +2807,7 @@
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Infrastructure": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.31, )",
           "Ensure.That": "[10.1.0, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[8.0.8, )"
         }
@@ -3027,25 +2815,25 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.31, )",
           "Ensure.That": "[10.1.0, )"
         }
       },
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
@@ -3061,9 +2849,9 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
         }
@@ -3074,7 +2862,7 @@
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Infrastructure": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.31, )",
           "Ensure.That": "[10.1.0, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[8.0.8, )"
         }
@@ -3082,22 +2870,22 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.31, )",
           "Ensure.That": "[10.1.0, )"
         }
       },
       "BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Extensions": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Presentation.Web.Client": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Common.Extensions": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Presentation.Web.Client": "[3.0.3-preview.0.31, )",
           "Ensure.That": "[10.1.0, )",
           "Humanizer.Core": "[2.14.1, )",
           "Microsoft.AspNetCore.Components.WebAssembly": "[8.0.8, )",
@@ -3119,9 +2907,9 @@
       "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.27, )",
-          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.31, )",
           "Ensure.That": "[10.1.0, )"
         }
       },
@@ -3129,7 +2917,7 @@
         "type": "Project",
         "dependencies": {
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.27, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.31, )",
           "Ensure.That": "[10.1.0, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[8.0.8, )"
         }
@@ -3161,203 +2949,325 @@
       },
       "BridgingIT.DevKit.Application.Commands": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "eEHzwPFxDS5xQ3jpRWdbxKYOkQBdhubXaeA2AnwP8yw5nk6FO0ZQQPZ3vpD3hLrSHAnqkAXoCrS/WUf6Dpi26A==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "HJL3Ze62FIQFvCLeBB5xy7QPs1Kj/YdsQAcVJYiDR7j4hKyfqyGpf/1ffFKxZuBk+se4oNeTCyXZWuYldZ04iA==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Domain.Mediator": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Domain.Mediator": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
           "Humanizer.Core": "2.14.1",
           "MediatR": "12.4.0",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
           "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "Microsoft.Extensions.Caching.Memory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
           "Polly": "8.4.1",
           "Polly.Contrib.Simmy": "0.3.0",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Application.Queries": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "DyyemQ5rQ+U2/DsqaKytTLT6tbAZdAlKBIbnfTv1GOijopoF1vlJpRv3JWCVNIIMBr3J0vXoOk2cFZ79ZErAug==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "Ag0DLGEIB9zckxwGU7xHM2A971knMr0QyJkUSUmDX/UxUKQbSjUmV5izYjbHi9JVtd0Y8n5HfAiXqz4sQjDuiw==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
           "Humanizer.Core": "2.14.1",
           "MediatR": "12.4.0",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
           "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "Microsoft.Extensions.Caching.Memory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
           "Polly": "8.4.1",
           "Polly.Contrib.Simmy": "0.3.0",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Common.Mapping": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "UFV5JJin1N1AmyiwnNEmxD/2OhOGdATwIqHli9XOKVJEiam4IpgQQyXfhNvxQ3nSxovWApUzPJpmT8HlwcVeUA==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "xv0hQ3B+rkla7YZnjHmfXSJOM4WURQjqOUelhpBPMjZR5f9gOwGw85e3XAT8J24jJzj/ycAGtlEC+LdIFX7cuQ==",
         "dependencies": {
           "AutoMapper": "13.0.1",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
           "Mapster": "7.4.0",
           "Mapster.DependencyInjection": "1.0.1",
+          "MessagePack": "2.5.172",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.Configuration.Binder": "8.0.2",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Common.Modules": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "uw/cLK/2m4R1nM92/WNTHdiZpPi8N7d4d1nsUNJhNcLO/eEGAtWRJmTkLPNLpNhfX1szzHCzvqTXVymyObGtCA==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "QstDKndwtA+kwb8oSMOppQkGeZI4imwtAg++SeVzjZlAKwmLfg4ZvIUVayKOCUrnHiQSe6O/y+Si4PQ6kP1HNQ==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
+          "MessagePack": "2.5.172",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
           "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
           "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
           "Scrutor": "4.2.2",
           "Serilog": "4.0.1",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Domain": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "UaPF+t8YbofWnCa/tZn5YWyfFa/UTs4Sx1ZhLi4A3TKyeWT6O7SDhW2Fn1Jbe7AHW5uunIKvdqRt5Ru+WCTB/g==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "M6AtEOVY5VEH98z6CMdWXeEXqNhn4vbgiQDwDjyFr07mtw433kNIgzTOJqo+jSDlGcGHh3A6NJe2dpnHULWSSg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
           "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
           "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
           "Scrutor": "4.2.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Domain.CodeGen": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "ASOgwjtwJRN5GDV6zjCHxicOvW10Fs9WVAMH89EMp3TYi4DVZv+o6dyi8B1zytMsrXdrsStgr4av/5wwnTie4A==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "vZ1+wrUuN4rqnoJmZ/rPicVqnVpWs2tx76t0EO5sRm/mXVSJaC5NHR5gQ0N51fk2MNsQpl3AIzcPYuGuUeDd6Q==",
         "dependencies": {
           "Ensure.That": "10.1.0",
+          "Humanizer.Core": "2.14.1",
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "4.11.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Domain.Mediator": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "6H8kGYiQmPG+nt0KVHr3Ov3aExC9SKqunkI+VEz0g5cEpUJ1SruHfbH3HGLxnwygXp6csyY+ecdWOy2anLxqnw==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "3cAQL3fUDvmE9KG8DR5To0bM15CDMbbZ+Nxw2Ror0JoWspKW5z6J7JZsgm19mkvxVLBNjIVWWvWKB02TgMYInw==",
         "dependencies": {
-          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
           "MediatR": "12.4.0",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
           "Scrutor": "4.2.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Infrastructure.EntityFramework": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "IdEiwORjG+S/jSpP52qWBL3qCfXv+9QVwuL+Yu1Mi+59aDXUNITHEwUY++sqfO8Ux18OlJEVrHZ01VvPonLDGg==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "Zv7a+iZLnfdsYR+8A8Lhl9Ntr+TnEvta1+SKK8+vIWrFdBl825emPA9z4BnIkUBaDsOUbHHNjROTqFtg1XpP3A==",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Messaging": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Application.Storage": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Domain.Mediator": "3.0.3-preview.0.27",
-          "BridgingIT.DevKit.Domain.Outbox": "3.0.3-preview.0.27",
+          "BridgingIT.DevKit.Application.Messaging": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Application.Storage": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Domain.Mediator": "3.0.3-preview.0.31",
+          "BridgingIT.DevKit.Domain.Outbox": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
+          "MediatR": "12.4.0",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
           "Microsoft.EntityFrameworkCore": "8.0.8",
           "Microsoft.EntityFrameworkCore.InMemory": "8.0.8",
           "Microsoft.EntityFrameworkCore.Relational": "8.0.8",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
+          "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Caching.Memory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Linq.Dynamic.Core": "1.4.5",
-          "System.Net.Http": "4.3.4",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "kRe81lSbM+xEzVD6CKjobNTd4v3shjfQvDc7fGh9sDalTujH9FIri9DVqpWyZnpWdl4Xq59dw5sofmWMKWpRpA==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "wIJq/aifFtBQC6K4kKaCPIOZVHAY/pjpy8+3IOaipZBcnsrhOdvpZdjGj7h4NSXK40/z4TWkveQPTnCIo+CbBQ==",
         "dependencies": {
           "AspNetCore.HealthChecks.SqlServer": "8.0.2",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework": "3.0.3-preview.0.27",
+          "Azure.Identity": "1.12.0",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "3.0.3-preview.0.31",
           "Ensure.That": "10.1.0",
+          "FluentValidation": "11.9.2",
+          "Humanizer.Core": "2.14.1",
+          "MediatR": "12.4.0",
+          "MediatR.Contracts": "2.0.1",
+          "MessagePack": "2.5.172",
           "Microsoft.Data.SqlClient": "5.2.2",
+          "Microsoft.EntityFrameworkCore": "8.0.8",
+          "Microsoft.EntityFrameworkCore.InMemory": "8.0.8",
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.8",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.8",
+          "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Caching.Memory": "8.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.8",
+          "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Hosting": "8.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "8.0.8",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
+          "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0",
           "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
+          "NewId": "4.0.1",
+          "Newtonsoft.Json": "13.0.3",
+          "Polly": "8.4.1",
+          "Polly.Contrib.Simmy": "0.3.0",
+          "Scrutor": "4.2.2",
+          "Serilog": "4.0.1",
+          "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
+          "System.Linq.Dynamic.Core": "1.4.5",
           "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
       "BridgingIT.DevKit.Presentation.Web.Client": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.27, )",
-        "resolved": "3.0.3-preview.0.27",
-        "contentHash": "cV4//MXvPWwYumTiPiSSzj9IHKebLhuLwF5gdYW6iG83fZOEqEGj7Od+8jbzuHv5XgK1tRm0iJazDfFG+MPgYw==",
+        "requested": "[3.0.3-preview.0.31, )",
+        "resolved": "3.0.3-preview.0.31",
+        "contentHash": "7xXlYL2xWuobDu1+MVs149//HqnT1ctkPCp03s6GY+2TUH1LZ8YlaiNqb+Fo7TjUdFKvzB1QkLxHq3YzwdzZCQ==",
         "dependencies": {
           "Ensure.That": "10.1.0",
+          "Microsoft.AspNetCore.Components.Web": "8.0.8",
           "Microsoft.AspNetCore.Components.WebAssembly": "8.0.8",
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
-          "System.IdentityModel.Tokens.Jwt": "8.0.2",
-          "System.Net.Http": "4.3.4",
-          "System.Text.Json": "8.0.4",
-          "System.Text.RegularExpressions": "4.3.1"
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "8.0.2",
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "System.Text.Json": "8.0.4"
         }
       },
       "Humanizer.Core": {
