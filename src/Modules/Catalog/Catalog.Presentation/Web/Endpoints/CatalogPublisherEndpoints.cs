@@ -25,16 +25,13 @@ public class CatalogPublisherEndpoints : EndpointsBase
             .WithTags("Catalog");
 
         group.MapGet("/{id}", GetPublisher).WithName("GetCatalogPublisher")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
         group.MapGet("/{id}/books", GetPublisherBooks).WithName("GetCatalogPublisherBooks")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
         group.MapGet(string.Empty, GetPublishers).WithName("GetCatalogPublishers")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
     }
 
     private static async Task<Results<Ok<PublisherModel>, NotFound, ProblemHttpResult>> GetPublisher(

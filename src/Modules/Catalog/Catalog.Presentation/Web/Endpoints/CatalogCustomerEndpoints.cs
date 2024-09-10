@@ -25,24 +25,19 @@ public class CatalogCustomerEndpoints : EndpointsBase
             .WithTags("Catalog");
 
         group.MapGet("/{id}", GetCustomer).WithName("GetCatalogCustomer")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
         group.MapGet(string.Empty, GetCustomers).WithName("GetCatalogCustomers")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
         group.MapPost(string.Empty, CreateCustomer).WithName("CreateCatalogCustomer")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
         group.MapPut("/{id}", UpdateCustomer).WithName("UpdateCatalogCustomer")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
         group.MapDelete("/{id}", DeleteCustomer).WithName("DeleteCatalogCustomer")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
     }
 
     private static async Task<Results<Ok<CustomerModel>, NotFound, ProblemHttpResult>> GetCustomer(

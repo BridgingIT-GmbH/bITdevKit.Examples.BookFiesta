@@ -25,16 +25,13 @@ public class CatalogCategoryEndpoints : EndpointsBase
             .WithTags("Catalog");
 
         group.MapGet("/{id}", GetCategory).WithName("GetCatalogCategory")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
         group.MapGet("/{id}/books", GetCategoryBooks).WithName("GetCatalogCategoryBooks")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
         group.MapGet(string.Empty, GetCategories).WithName("GetCatalogCategories")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
     }
 
     private static async Task<Results<Ok<CategoryModel>, NotFound, ProblemHttpResult>> GetCategory(

@@ -1,0 +1,13 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Presentation.Web.Server: Watch" type="RunDotNetWatch" factoryName="RunDotNetWatch">
+    <option name="exePath" value="$PROJECT_DIR$/src/Presentation.Web.Server/bin/Debug/net8.0/BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server.exe" />
+    <option name="programParameters" value="" />
+    <option name="projectFilePath" value="$PROJECT_DIR$/src/Presentation.Web.Server/Presentation.Web.Server.csproj" />
+    <option name="projectTfm" value="net8.0" />
+    <option name="suppressHotReload" value="true" />
+    <option name="useExternalConsole" value="false" />
+    <option name="watchParameters" value="" />
+    <option name="workingDirectory" value="$PROJECT_DIR$/src/Presentation.Web.Server" />
+    <method v="2" />
+  </configuration>
+</component>
