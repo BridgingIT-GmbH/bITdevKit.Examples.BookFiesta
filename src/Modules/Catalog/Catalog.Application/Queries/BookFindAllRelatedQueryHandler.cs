@@ -29,7 +29,7 @@ public class BookFindAllRelatedQueryHandler(
 
         return result.IsSuccess
             ? QueryResponse.For(
-                await recommendationService.BookFindAllRelatedAsync(result.Value, 5)) // TODO: available in new devkit release
+                await recommendationService.BookFindAllRelatedAsync(result.Value))
             : QueryResponse.For<IEnumerable<Book>>(result);
     }
 }
