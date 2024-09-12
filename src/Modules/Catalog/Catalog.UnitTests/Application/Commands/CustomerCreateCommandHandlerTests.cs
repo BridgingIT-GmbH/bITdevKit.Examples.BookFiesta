@@ -11,7 +11,7 @@ using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-[UnitTest("GettingStarted.Application")]
+[UnitTest("Catalog:Application")]
 public class CustomerCreateCommandHandlerTests
 {
     [Fact]

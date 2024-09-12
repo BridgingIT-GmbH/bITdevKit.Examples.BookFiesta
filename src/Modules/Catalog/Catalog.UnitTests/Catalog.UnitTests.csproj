@@ -38,12 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Presentation\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj" />
     <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" />
     <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" />
     <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj" />

@@ -7,14 +7,10 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
+[UnitTest("SharedKernel:Domain")]
 public class AverageRatingTests
 {
-    private readonly AverageRating sut;
-
-    public AverageRatingTests()
-    {
-        this.sut = AverageRating.Create(3, 1);
-    }
+    private readonly AverageRating sut = AverageRating.Create(3, 1);
 
     [Fact]
     public void Add_ValidRating_RatingAddedAndAmountIncremented()

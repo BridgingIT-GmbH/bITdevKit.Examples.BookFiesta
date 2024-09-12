@@ -43,20 +43,47 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public static Category Create(TenantId tenantId, string title, string description = null, int order = 0, Category parent = null)
     {
-        return new Category(tenantId, title, description, order, parent);
+        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+
+        var category = new Category(tenantId, title, description, order, parent);
+
+        // category.DomainEvents.Register(
+        //     new CategoryCreatedDomainEvent(category));
+
+        return category;
     }
 
     public Category SetTitle(string title)
     {
-        // Validate title
-        this.Title = title;
+        _ = title ?? throw new DomainRuleException("Category Title cannot be empty.");
+
+        if (title != this.Title)
+        {
+            this.Title = title;
+
+            // if (this.Id?.IsEmpty == false)
+            // {
+            //     this.DomainEvents.Register(
+            //         new CategoryUpdatedDomainEvent(this), true);
+            // }
+        }
+
         return this;
     }
 
     public Category SetDescription(string description)
     {
-        // Validate content
-        this.Description = description;
+        if (description != this.Description)
+        {
+            this.Description = description;
+
+            // if (this.Id?.IsEmpty == false)
+            // {
+            //     this.DomainEvents.Register(
+            //         new CategoryUpdatedDomainEvent(this), true);
+            // }
+        }
+
         return this;
     }
 

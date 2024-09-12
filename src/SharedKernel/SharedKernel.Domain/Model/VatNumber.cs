@@ -51,17 +51,16 @@ public class VatNumber : ValueObject
             {
                 throw new DomainRuleException($"Invalid VAT/EIN number ({value}) format for country {countryCode}.");
             }
-        }
-        else if (!GeneralVatFormat.IsMatch(value))
-        {
-            throw new DomainRuleException($"Invalid VAT number  ({value}) format.");
-        }
-        else
-        {
-            Console.WriteLine($"Warning: No specific validation for VAT number ({value})  country code {countryCode}.");
+
+            return new VatNumber(countryCode, number);
         }
 
-        return new VatNumber(countryCode, number);
+        if (GeneralVatFormat.IsMatch(value))
+        {
+            return new VatNumber(countryCode, number);
+        }
+
+        throw new DomainRuleException($"Invalid VAT number  ({value}) format.");
     }
 
     public static bool TryParse(string value, out VatNumber result)
@@ -84,10 +83,10 @@ public class VatNumber : ValueObject
     {
         if (this.CountryCode == "US")
         {
-            return $"{this.CountryCode}{this.Number[..2]}-{this.Number[2..]}";
+            return $"{this.CountryCode}{this.Number[..2]}-{this.Number[2..]}".Replace("--", "-");
         }
 
-        return $"{this.CountryCode}{this.Number}";
+        return $"{this.CountryCode}{this.Number}".Replace("--", "-");
     }
 
     public bool IsValid()

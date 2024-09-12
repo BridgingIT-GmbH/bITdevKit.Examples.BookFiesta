@@ -13,7 +13,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     private Publisher() { } // Private constructor required by EF Core
 
-    private Publisher(TenantId tenantId, string name, string description, EmailAddress contactEmail = null, Address address = null, Website website = null)
+    private Publisher(TenantId tenantId, string name, string description = null, EmailAddress contactEmail = null, Address address = null, Website website = null)
     {
         this.TenantId = tenantId;
         this.SetName(name);
@@ -39,8 +39,10 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     //public IEnumerable<PublisherBook> Books => this.books;
 
-    public static Publisher Create(TenantId tenantId, string name, string description, EmailAddress contactEmail = null, Address address = null, Website website = null)
+    public static Publisher Create(TenantId tenantId, string name, string description = null, EmailAddress contactEmail = null, Address address = null, Website website = null)
     {
+        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+
         var publisher = new Publisher(tenantId, name, description, contactEmail, address, website);
 
         publisher.DomainEvents.Register(
@@ -51,12 +53,18 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     public Publisher SetName(string name)
     {
+        _ = name ?? throw new DomainRuleException("Publisher Name cannot be empty.");
+
         // Validate name
         if (!string.IsNullOrEmpty(name) && name != this.Name)
         {
             this.Name = name;
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
+                    new PublisherUpdatedDomainEvent(this), true);
+            }
         }
 
         return this;
@@ -65,11 +73,15 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
     public Publisher SetDescription(string description)
     {
         // Validate description
-        if (!string.IsNullOrEmpty(description) && description != this.Description)
+        if (description != this.Description)
         {
             this.Description = description;
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
+                    new PublisherUpdatedDomainEvent(this), true);
+            }
         }
 
         return this;
@@ -80,8 +92,12 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
         if (email != this.ContactEmail)
         {
             this.ContactEmail = email;
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
+                    new PublisherUpdatedDomainEvent(this), true);
+            }
         }
 
         return this;
@@ -93,8 +109,12 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
         if (address != null && address != this.Address)
         {
             this.Address = address;
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
+                    new PublisherUpdatedDomainEvent(this), true);
+            }
         }
 
         return this;
@@ -106,8 +126,12 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
         if (website != null && website != this.Website)
         {
             this.Website = website;
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
+                    new PublisherUpdatedDomainEvent(this), true);
+            }
         }
 
         return this;

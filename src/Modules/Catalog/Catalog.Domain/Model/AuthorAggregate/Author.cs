@@ -13,7 +13,7 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
     private Author() { } // Private constructor required by EF Core
 
-    private Author(TenantId tenantId, PersonFormalName name, string biography)
+    private Author(TenantId tenantId, PersonFormalName name, string biography = null)
     {
         this.TenantId = tenantId;
         this.SetName(name);
@@ -34,12 +34,30 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
     public static Author Create(TenantId tenantId, PersonFormalName name, string biography = null)
     {
-        return new Author(tenantId, name, biography);
+        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+
+        var author = new Author(tenantId, name, biography);
+
+        author.DomainEvents.Register(
+            new AuthorCreatedDomainEvent(author));
+
+        return author;
     }
 
     public Author SetName(PersonFormalName name)
     {
-        this.PersonName = name;
+        _ = name ?? throw new DomainRuleException("Customer Name cannot be empty.");
+
+        if (this.PersonName != name)
+        {
+            this.PersonName = name;
+
+            if (this.Id?.IsEmpty == false)
+            {
+                this.DomainEvents.Register(
+                    new AuthorUpdatedDomainEvent(this), true);
+            }
+        }
 
         return this;
     }

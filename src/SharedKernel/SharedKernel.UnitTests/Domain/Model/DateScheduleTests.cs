@@ -13,14 +13,10 @@ using Bogus;
 using Shouldly;
 using Xunit;
 
+[UnitTest("SharedKernel:Domain")]
 public class DateScheduleTests
 {
-    private readonly Faker faker;
-
-    public DateScheduleTests()
-    {
-        this.faker = new Faker();
-    }
+    private readonly Faker faker = new();
 
     [Fact]
     public void Create_ValidDates_ReturnsSchedule()

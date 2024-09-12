@@ -59,6 +59,8 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public static Book Create(TenantId tenantId, string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
     {
+        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+
         var book = new Book(tenantId, title, description, isbn, price, publisher, publishedDate);
 
         book.DomainEvents.Register(

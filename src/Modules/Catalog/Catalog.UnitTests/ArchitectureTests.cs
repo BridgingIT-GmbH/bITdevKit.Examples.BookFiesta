@@ -1,4 +1,9 @@
-﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests;
+﻿// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests;
 
 using System.Reflection;
 using BridgingIT.DevKit.Application.Commands;
@@ -8,15 +13,30 @@ using Dumpify;
 using NetArchTest.Rules;
 using Shouldly;
 
-public class TypesFixture
-{
-    public Types Types { get; } = Types.FromPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-}
-
 #pragma warning disable CS9113 // Parameter is unread.
+//[Module("Catalog")]
+[Category("SystemTest")]
+[SystemTest("Catalog:Architecture")]
+//[UnitTest("Architecture")]
 public class ArchitectureTests(ITestOutputHelper output, TypesFixture fixture) : IClassFixture<TypesFixture>
 #pragma warning restore CS9113 // Parameter is unread.
 {
+    // [Fact]
+    // public void Module_ShouldNot_HaveDependencyOnOtherModules()
+    // {
+    //     var result = fixture.Types
+    //         //.That()
+    //             //.DoNotResideInNamespaceContaining("Contracts")
+    //         .Slice().ByNamespacePrefix("BridgingIT.DevKit.Examples.BookFiesta.Modules")
+    //         .Should()
+    //             .NotHaveDependenciesBetweenSlices().GetResult();
+    //
+    //     // TODO: references to Modules.OTHER.Application.Contracts should be ignored as they are allowed (cross module refs)
+    //
+    //     output.WriteLine(result.LoadedTypes.DumpText());
+    //     result.IsSuccessful.ShouldBeTrue("Module should not have dependencies on other modules.\n" + result.FailingTypes.DumpText());
+    // }
+
     [Fact]
     public void ApplicationCommand_Should_ResideInApplication()
     {
@@ -166,4 +186,9 @@ public class ArchitectureTests(ITestOutputHelper output, TypesFixture fixture) :
     //              .NotHaveDependenciesBetweenSlices()
     //              .GetResult();
     //}
+}
+
+public class TypesFixture
+{
+    public Types Types { get; } = Types.FromPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 }

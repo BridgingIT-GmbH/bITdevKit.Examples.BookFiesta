@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Model;
 
-[DebuggerDisplay("Full={ToString()}")]
+[DebuggerDisplay("Name={ToString()}")]
 public partial class PersonFormalName : ValueObject
 {
     private static readonly Regex NamePartRegex = Regexes.NamePartRegex();
@@ -72,7 +72,7 @@ public partial class PersonFormalName : ValueObject
             fullName = $"{fullName}, {this.Suffix}";
         }
 
-        return fullName;
+        return fullName.Trim().Trim(',');
     }
 
     protected override IEnumerable<object> GetAtomicValues()
@@ -91,7 +91,7 @@ public partial class PersonFormalName : ValueObject
     {
         if (!parts.SafeAny())
         {
-            throw new ArgumentException("Person name parts cannot be empty.");
+            throw new ArgumentException("PersonFormalName parts cannot be empty.");
         }
 
         foreach (var part in parts)
@@ -107,12 +107,12 @@ public partial class PersonFormalName : ValueObject
     {
         if (string.IsNullOrWhiteSpace(namePart))
         {
-            throw new ArgumentException("Person name part cannot be empty.");
+            throw new ArgumentException("PersonFormalName part cannot be empty.");
         }
 
         if (!NamePartRegex.IsMatch(namePart))
         {
-            throw new ArgumentException("Person name part contains invalid characters.");
+            throw new ArgumentException("PersonFormalName part contains invalid characters.");
         }
     }
 
@@ -125,7 +125,7 @@ public partial class PersonFormalName : ValueObject
 
         if (!TitleSuffixRegex.IsMatch(value))
         {
-            throw new ArgumentException($"Person name {propertyName.ToLower()} contains invalid characters.");
+            throw new ArgumentException($"PersonFormalName {propertyName.ToLower()} contains invalid characters.");
         }
     }
 

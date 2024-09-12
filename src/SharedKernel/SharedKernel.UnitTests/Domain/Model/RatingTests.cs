@@ -10,6 +10,7 @@ using Shouldly;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
+[UnitTest("SharedKernel:Domain")]
 public class RatingTests
 {
     [Fact]

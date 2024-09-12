@@ -29,19 +29,26 @@ public class Tag : Entity<TagId>, IConcurrent
     public static implicit operator string(Tag tag) => tag?.Name; // allows a Tag value to be implicitly converted to a string.
 
     public static Tag Create(TenantId tenantId, string name, string category)
-        => new(tenantId, name, category);
-
-    public Tag SetName(string name)
     {
-        // Validate name
-        this.Name = name;
+        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+
+        return new Tag(tenantId, name, category);
+    }
+
+    public Tag SetName(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            throw new DomainRuleException("Tag name cannot be empty.");
+        }
+
+        this.Name = value;
         return this;
     }
 
-    public Tag SetCategory(string category)
+    public Tag SetCategory(string value)
     {
-        // Validate category
-        this.Category = category;
+        this.Category = value;
         return this;
     }
 }
