@@ -39,7 +39,7 @@ public class Address : ValueObject
         var address = new Address(name, line1, line2, postalCode, city, country);
         if (!IsValid(address))
         {
-            throw new DomainRuleException("Invalid email address");
+            throw new DomainRuleException("Invalid address");
         }
 
         return address;
