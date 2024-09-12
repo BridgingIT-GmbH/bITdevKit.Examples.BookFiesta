@@ -23,7 +23,7 @@ public class OrganizationCompanyEndpoints : EndpointsBase
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapGet(string.Empty, GetCompanies).WithName("GetOrganizationCompanies")
+        group.MapGet("/", GetCompanies).WithName("GetOrganizationCompanies")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
@@ -31,7 +31,7 @@ public class OrganizationCompanyEndpoints : EndpointsBase
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapPost(string.Empty, CreateCompany).WithName("CreateOrganizationCompany")
+        group.MapPost("/", CreateCompany).WithName("CreateOrganizationCompany")
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 

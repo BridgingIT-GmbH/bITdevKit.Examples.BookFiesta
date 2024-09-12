@@ -27,10 +27,10 @@ public class CatalogBookEndpoints : EndpointsBase
         group.MapGet("/{id}", GetBook).WithName("GetCatalogBook")
             .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
-        group.MapGet(string.Empty, GetBooks).WithName("GetCatalogBooks")
+        group.MapGet("/", GetBooks).WithName("GetCatalogBooks")
             .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
 
-        group.MapPost(string.Empty, CreateBook).WithName("CreateCatalogBook")
+        group.MapPost("/", CreateBook).WithName("CreateCatalogBook")
             .Produces<ProblemDetails>(400).Produces<ProblemDetails>(500);
     }
 
