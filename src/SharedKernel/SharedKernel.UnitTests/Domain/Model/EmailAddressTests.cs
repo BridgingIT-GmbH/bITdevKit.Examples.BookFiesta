@@ -9,6 +9,7 @@ using Bogus;
 using DevKit.Domain;
 using SharedKernel.Domain;
 
+[UnitTest("SharedKernel:Domain")]
 public class EmailAddressTests
 {
     private readonly Faker faker;

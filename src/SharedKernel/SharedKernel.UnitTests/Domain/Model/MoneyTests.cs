@@ -9,6 +9,7 @@ using Bogus;
 using DevKit.Domain;
 using SharedKernel.Domain;
 
+[UnitTest("SharedKernel:Domain")]
 public class MoneyTests
 {
     private readonly Faker faker = new();

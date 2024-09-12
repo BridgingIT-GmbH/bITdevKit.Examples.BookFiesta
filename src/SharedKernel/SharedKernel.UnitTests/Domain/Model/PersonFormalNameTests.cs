@@ -8,6 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 using Bogus;
 using SharedKernel.Domain;
 
+[UnitTest("SharedKernel:Domain")]
 public class PersonFormalNameTests
 {
     private readonly Faker faker = new();

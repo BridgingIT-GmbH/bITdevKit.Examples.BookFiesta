@@ -4,6 +4,7 @@ using Bogus;
 using DevKit.Domain;
 using SharedKernel.Domain;
 
+[UnitTest("SharedKernel:Domain")]
 public class PhoneNumberTests
 {
     public static IEnumerable<object[]> ValidPhoneNumbers()
