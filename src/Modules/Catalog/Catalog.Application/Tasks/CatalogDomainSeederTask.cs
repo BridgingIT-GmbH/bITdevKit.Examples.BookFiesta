@@ -33,7 +33,7 @@ public class CatalogDomainSeederTask(
 
     private async Task<Customer[]> SeedCustomers(IGenericRepository<Customer> repository, TenantId[] tenantIds)
     {
-        var entities = CatalogSeedModels.Customers.Create(tenantIds);
+        var entities = CatalogSeedEntities.Customers.Create(tenantIds);
 
         foreach (var entity in entities)
         {
@@ -49,7 +49,7 @@ public class CatalogDomainSeederTask(
 
     private async Task<Tag[]> SeedTags(IGenericRepository<Tag> repository, TenantId[] tenantIds)
     {
-        var entities = CatalogSeedModels.Tags.Create(tenantIds);
+        var entities = CatalogSeedEntities.Tags.Create(tenantIds);
 
         foreach (var entity in entities)
         {
@@ -64,7 +64,7 @@ public class CatalogDomainSeederTask(
 
     private async Task<Category[]> SeedCategories(IGenericRepository<Category> repository, TenantId[] tenantIds)
     {
-        var entities = CatalogSeedModels.Categories.Create(tenantIds);
+        var entities = CatalogSeedEntities.Categories.Create(tenantIds);
 
         foreach (var entity in entities)
         {
@@ -80,7 +80,7 @@ public class CatalogDomainSeederTask(
 
     private async Task<Publisher[]> SeedPublishers(IGenericRepository<Publisher> repository, TenantId[] tenantIds)
     {
-        var entities = CatalogSeedModels.Publishers.Create(tenantIds);
+        var entities = CatalogSeedEntities.Publishers.Create(tenantIds);
 
         foreach (var entity in entities)
         {
@@ -96,7 +96,7 @@ public class CatalogDomainSeederTask(
 
     private async Task<Book[]> SeedBooks(IGenericRepository<Book> repository, TenantId[] tenantIds, Tag[] tags, Category[] categories, Publisher[] publishers, Author[] authors)
     {
-        var entities = CatalogSeedModels.Books.Create(tenantIds, tags, categories, publishers, authors);
+        var entities = CatalogSeedEntities.Books.Create(tenantIds, tags, categories, publishers, authors);
 
         foreach (var entity in entities)
         {
@@ -112,7 +112,7 @@ public class CatalogDomainSeederTask(
 
     private async Task<Author[]> SeedAuthors(IGenericRepository<Author> repository, TenantId[] tenantIds, Tag[] tags)
     {
-        var entities = CatalogSeedModels.Authors.Create(tenantIds, tags);
+        var entities = CatalogSeedEntities.Authors.Create(tenantIds, tags);
 
         foreach (var entity in entities)
         {

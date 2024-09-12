@@ -25,15 +25,20 @@ public partial class EmailAddress : ValueObject
     public static implicit operator string(EmailAddress email) => email.Value;
     public static implicit operator EmailAddress(string email) => Create(email);
 
-    public static EmailAddress Create(string email)
+    public static EmailAddress Create(string value)
     {
-        email = Normalize(email);
-        if (!IsValid(email))
+        if (string.IsNullOrEmpty(value))
+        {
+            return null; //throw new DomainRuleException("EmailAddress cannot be empty.");
+        }
+
+        value = Normalize(value);
+        if (!IsValid(value))
         {
             throw new DomainRuleException("Invalid email address");
         }
 
-        return new EmailAddress(email);
+        return new EmailAddress(value);
     }
 
     public override string ToString() => this.Value;
@@ -43,9 +48,9 @@ public partial class EmailAddress : ValueObject
         yield return this.Value;
     }
 
-    private static string Normalize(string email)
+    private static string Normalize(string value)
     {
-        return email?.Trim()?.ToLowerInvariant() ?? string.Empty;
+        return value?.Trim().ToLowerInvariant() ?? string.Empty;
     }
 
     [GeneratedRegex(@"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]

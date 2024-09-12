@@ -12,7 +12,8 @@ using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [IntegrationTest("Presentation.Web")]
-public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture) : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
+public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture)
+    : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
 {
     private readonly CustomWebApplicationFactoryFixture<Program> fixture = fixture.WithOutput(output);
 
@@ -30,12 +31,12 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
-        response.Should().MatchInContent($"*{model.PersonName.Parts[0]}*");
-        response.Should().MatchInContent($"*{model.PersonName.Parts[1]}*");
-        response.Should().MatchInContent($"*{model.Email}*");
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
+        responseModel.PersonName.Parts[0].Should().Be(model.PersonName.Parts[0]);
+        responseModel.PersonName.Parts[1].Should().Be(model.PersonName.Parts[1]);
+        responseModel.Email.Should().Be(model.Email);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -53,7 +54,7 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be404NotFound(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().Be404NotFound();
     }
 
     [Theory]
@@ -69,17 +70,12 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
-        response.Should().Satisfy<ICollection<CustomerModel>>(
-            model =>
-            {
-                model.ShouldNotBeNull();
-            });
-        response.Should().MatchInContent($"*{model.PersonName.Parts[0]}*");
-        response.Should().MatchInContent($"*{model.PersonName.Parts[1]}*");
-        response.Should().MatchInContent($"*{model.Email}*");
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<ICollection<CustomerModel>>();
         responseModel.ShouldNotBeNull();
+        responseModel.Should().Contain(m => m.PersonName.Parts[0] == model.PersonName.Parts[0]);
+        responseModel.Should().Contain(m => m.PersonName.Parts[1] == model.PersonName.Parts[1]);
+        responseModel.Should().Contain(m => m.Email == model.Email);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -90,7 +86,7 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
         TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
-        var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
+        var customer = CatalogSeedEntities.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
@@ -120,10 +116,12 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be201Created(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().Be201Created();
         response.Headers.Location.Should().NotBeNull();
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
+        responseModel.Should().BeEquivalentTo(model, options => options.Excluding(m => m.Id).Excluding(m => m.PersonName));
+        //responseModel.PersonName.Should().Be(model.PersonName);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -134,7 +132,7 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
         TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
-        var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
+        var customer = CatalogSeedEntities.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
@@ -164,7 +162,7 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be400BadRequest(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().Be400BadRequest();
         response.Should().MatchInContent("*[ValidationException]*");
     }
 
@@ -186,12 +184,13 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().Be200Ok();
         response.Headers.Location.Should().BeNull();
-        response.Should().MatchInContent($"*{model.PersonName.Parts[0]}*");
-        response.Should().MatchInContent($"*{model.PersonName.Parts[1]}*");
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
+        responseModel.Should().BeEquivalentTo(model, options => options.Excluding(m => m.PersonName));
+        responseModel.PersonName.Parts[0].Should().Be(model.PersonName.Parts[0]);
+        responseModel.PersonName.Parts[1].Should().Be(model.PersonName.Parts[1]);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -209,14 +208,14 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().Be200Ok();
         response.Headers.Location.Should().BeNull();
     }
 
     private async Task<CustomerModel> PostCustomerCreate(string route)
     {
         TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
-        var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
+        var customer = CatalogSeedEntities.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,

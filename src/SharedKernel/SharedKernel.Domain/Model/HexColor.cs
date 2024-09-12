@@ -25,17 +25,17 @@ public class HexColor : ValueObject
 
     public static implicit operator string(HexColor color) => color.Value;
 
-    public static implicit operator HexColor(string color) => Create(color);
+    public static implicit operator HexColor(string value) => Create(value);
 
-    public static HexColor Create(string color)
+    public static HexColor Create(string value)
     {
-        color = Normalize(color);
-        if (!IsValid(color))
+        value = Normalize(value);
+        if (!IsValid(value))
         {
-            throw new DomainRuleException($"Invalid hex color format: {color}. Use the format #RGB or #RRGGBB.");
+            throw new DomainRuleException($"Invalid hex color format: {value}. Use the format #RGB or #RRGGBB.");
         }
 
-        return new HexColor(color);
+        return new HexColor(value);
     }
 
     public static HexColor Create(byte r, byte g, byte b)
@@ -43,14 +43,14 @@ public class HexColor : ValueObject
         return Create($"#{r:X2}{g:X2}{b:X2}");
     }
 
-    public static bool IsValid(string color)
+    public static bool IsValid(string value)
     {
-        return string.IsNullOrWhiteSpace(color) || HexColorRegex.IsMatch(color);
+        return string.IsNullOrWhiteSpace(value) || HexColorRegex.IsMatch(value);
     }
 
     public override string ToString() => this.Value;
 
-    public (byte R, byte G, byte B) ToRGB()
+    public (byte R, byte G, byte B) ToRgb()
     {
         var hex = this.Value.TrimStart('#');
         return (
@@ -65,14 +65,14 @@ public class HexColor : ValueObject
         yield return this.Value;
     }
 
-    private static string Normalize(string color)
+    private static string Normalize(string value)
     {
-        color = color?.ToUpperInvariant() ?? string.Empty;
-        if (color.Length == 4) // #RGB format
+        value = value?.ToUpperInvariant() ?? string.Empty;
+        if (value.Length == 4) // #RGB format
         {
-            return $"#{color[1]}{color[1]}{color[2]}{color[2]}{color[3]}{color[3]}";
+            return $"#{value[1]}{value[1]}{value[2]}{value[2]}{value[3]}{value[3]}";
         }
 
-        return color;
+        return value;
     }
 }

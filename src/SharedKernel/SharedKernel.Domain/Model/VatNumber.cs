@@ -30,42 +30,45 @@ public class VatNumber : ValueObject
 
     public string Number { get; }
 
-    public static VatNumber Create(string vatNumber)
+    public static implicit operator string(VatNumber vatNumber) =>vatNumber.ToString();
+
+    public static implicit operator VatNumber(string value) => Create(value);
+
+    public static VatNumber Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(vatNumber))
+        if (string.IsNullOrEmpty(value))
         {
-            throw new DomainRuleException("VAT/EIN number cannot be empty.");
+            return null; //throw new DomainRuleException("VatNumber number cannot be empty.");
         }
 
-        vatNumber = vatNumber.ToUpperInvariant().Replace(" ", string.Empty);
-
-        var countryCode = vatNumber[..2];
-        var number = vatNumber[2..];
+        value = Normalize(value);
+        var countryCode = value[..2];
+        var number = value[2..];
 
         if (CountryVatFormats.TryGetValue(countryCode, out var regex))
         {
-            if (!regex.IsMatch(vatNumber))
+            if (!regex.IsMatch(value))
             {
-                throw new DomainRuleException($"Invalid VAT/EIN number format for country {countryCode}.");
+                throw new DomainRuleException($"Invalid VAT/EIN number ({value}) format for country {countryCode}.");
             }
         }
-        else if (!GeneralVatFormat.IsMatch(vatNumber))
+        else if (!GeneralVatFormat.IsMatch(value))
         {
-            throw new DomainRuleException("Invalid VAT number format.");
+            throw new DomainRuleException($"Invalid VAT number  ({value}) format.");
         }
         else
         {
-            Console.WriteLine($"Warning: No specific validation for VAT number country code {countryCode}.");
+            Console.WriteLine($"Warning: No specific validation for VAT number ({value})  country code {countryCode}.");
         }
 
         return new VatNumber(countryCode, number);
     }
 
-    public static bool TryParse(string vatNumber, out VatNumber result)
+    public static bool TryParse(string value, out VatNumber result)
     {
         try
         {
-            result = Create(vatNumber);
+            result = Create(value);
 
             return true;
         }
@@ -98,5 +101,12 @@ public class VatNumber : ValueObject
     {
         yield return this.CountryCode;
         yield return this.Number;
+    }
+
+    private static string Normalize(string value)
+    {
+        return value?.ToUpperInvariant()
+            .Replace(" ", string.Empty)
+            .Replace("--", "-");
     }
 }

@@ -28,9 +28,9 @@ public class AverageRating : ValueObject
 
     public static implicit operator double(AverageRating rating) => rating.Value ?? 0;
 
-    public static AverageRating Create(double value = 0, int numRatings = 0)
+    public static AverageRating Create(double value = 0, int amount = 0)
     {
-        return new AverageRating(value, numRatings);
+        return new AverageRating(value, amount);
     }
 
     public void Add(Rating rating)

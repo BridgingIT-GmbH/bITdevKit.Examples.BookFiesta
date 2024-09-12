@@ -20,7 +20,7 @@ public class CustomerCreateCommandHandlerTests
         // Arrange
         var repository = Substitute.For<IGenericRepository<Customer>>();
         TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
-        var customer = CatalogSeedModels.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
+        var customer = CatalogSeedEntities.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,

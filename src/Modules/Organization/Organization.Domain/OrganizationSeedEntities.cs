@@ -8,7 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-public static class OrganizationSeedModels
+public static class OrganizationSeedEntities
 {
     private static string GetSuffix(long ticks) => ticks > 0 ? $"-{ticks}" : string.Empty;
 

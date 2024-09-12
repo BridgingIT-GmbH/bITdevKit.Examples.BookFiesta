@@ -18,6 +18,4 @@ public class CustomerModel
     public AddressModel Address { get; set; }
 
     public string Email { get; set; }
-
-    public string Version { get; set; }
 }

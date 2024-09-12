@@ -34,8 +34,9 @@ public class Money : DecimalValueObject
     public bool IsZero() => this.Amount == 0;
 
 #pragma warning disable SA1201 // Elements should appear in the correct order
-    public static implicit operator decimal(Money value) => value.Amount; // allows a Money value to be implicitly converted to a decimal.
-    public static implicit operator string(Money value) => value.ToString(); // allows a Money value to be implicitly converted to a string.
+    public static implicit operator decimal(Money money) => money.Amount; // allows a Money value to be implicitly converted to a decimal.
+
+    public static implicit operator string(Money money) => money.ToString(); // allows a Money value to be implicitly converted to a string.
     //public static implicit operator Money(decimal amount) => new(amount, currency);
 #pragma warning restore SA1201 // Elements should appear in the correct order
 

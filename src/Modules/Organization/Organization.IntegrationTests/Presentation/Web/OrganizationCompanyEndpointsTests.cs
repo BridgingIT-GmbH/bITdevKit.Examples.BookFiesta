@@ -12,7 +12,8 @@ using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [IntegrationTest("Presentation.Web")]
-public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture) : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
+public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture)
+    : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
 {
     private readonly CustomWebApplicationFactoryFixture<Program> fixture = fixture.WithOutput(output);
 
@@ -30,12 +31,10 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
-        response.Should().MatchInContent($"*{model.Name}*");
-        response.Should().MatchInContent($"*{model.RegistrationNumber}*");
-        response.Should().MatchInContent($"*{model.ContactEmail}*");
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
+        responseModel.Should().BeEquivalentTo(model);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -52,7 +51,7 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be404NotFound(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().Be404NotFound();
     }
 
     [Theory]
@@ -68,17 +67,12 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
-        response.Should().Satisfy<ICollection<CompanyModel>>(
-            model =>
-            {
-                model.ShouldNotBeNull();
-            });
-        response.Should().MatchInContent($"*{model.Name}*");
-        response.Should().MatchInContent($"*{model.RegistrationNumber}*");
-        response.Should().MatchInContent($"*{model.ContactEmail}*");
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<ICollection<CompanyModel>>();
         responseModel.ShouldNotBeNull();
+        responseModel.Should().Contain(c => c.Name == model.Name);
+        responseModel.Should().Contain(c => c.RegistrationNumber == model.RegistrationNumber);
+        responseModel.Should().Contain(c => c.ContactEmail == model.ContactEmail);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -92,7 +86,7 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
             TenantIdFactory.CreateForName("Tenant_AcmeBooks"),
             TenantIdFactory.CreateForName("Tenant_TechBooks")
             ];
-        var company = OrganizationSeedModels.Companies.Create(DateTime.UtcNow.Ticks)[0];
+        var company = OrganizationSeedEntities.Companies.Create(DateTime.UtcNow.Ticks)[0];
         var model = new CompanyModel
         {
             Name = company.Name,
@@ -117,20 +111,21 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be201Created(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().Be201Created();
         response.Headers.Location.Should().NotBeNull();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
+        responseModel.Should().BeEquivalentTo(model, options => options.Excluding(m => m.Id));
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
     [Theory]
     [InlineData("api/organization/companies")]
-    public async Task Post_InvalidEntity_ReturnsBadRequest(string route)
+    public async Task Post_InvalidModel_ReturnsBadRequest(string route)
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        var company = OrganizationSeedModels.Companies.Create(DateTime.UtcNow.Ticks)[0];
+        var company = OrganizationSeedEntities.Companies.Create(DateTime.UtcNow.Ticks)[0];
         var model = new CompanyModel
         {
             Name = string.Empty,
@@ -155,11 +150,12 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be400BadRequest(); // https://github.com/adrianiftode/FluentAssertions.Web
-        response.Should().MatchInContent("*[ValidationException]*");
-        response.Should().MatchInContent($"*{nameof(model.Name)}*");
-        response.Should().MatchInContent($"*{nameof(model.RegistrationNumber)}*");
-        response.Should().MatchInContent($"*{nameof(model.ContactEmail)}*");
+        response.Should().Be400BadRequest();
+        var responseModel = await response.Content.ReadAsStringAsync();
+        responseModel.Should().Contain("ValidationException");
+        responseModel.Should().Contain(nameof(model.Name));
+        responseModel.Should().Contain(nameof(model.RegistrationNumber));
+        responseModel.Should().Contain(nameof(model.ContactEmail));
     }
 
     [Theory]
@@ -180,11 +176,10 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
-        response.Should().MatchInContent($"*{model.Name}*");
-        response.Should().MatchInContent($"*{model.RegistrationNumber}*");
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
+        responseModel.Should().BeEquivalentTo(model);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -202,18 +197,21 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok(); // https://github.com/adrianiftode/FluentAssertions.Web
+        response.Should().Be200Ok();
         response.Headers.Location.Should().BeNull();
     }
 
     private async Task<CompanyModel> PostCompanyCreate(string route)
     {
-        var company = OrganizationSeedModels.Companies.Create(DateTime.UtcNow.Ticks)[0];
+        var company = OrganizationSeedEntities.Companies.Create(DateTime.UtcNow.Ticks)[0];
         var model = new CompanyModel
         {
             Name = company.Name,
             RegistrationNumber = company.RegistrationNumber,
             ContactEmail = company.ContactEmail,
+            ContactPhone = company.ContactPhone,
+            Website = company.Website,
+            VatNumber = company.VatNumber,
             Address = new AddressModel
             {
                 Name = company.Address.Name,

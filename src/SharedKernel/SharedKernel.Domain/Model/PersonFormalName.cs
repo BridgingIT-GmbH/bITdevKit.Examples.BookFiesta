@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Model;
 
+[DebuggerDisplay("Full={ToString()}")]
 public partial class PersonFormalName : ValueObject
 {
     private static readonly Regex NamePartRegex = Regexes.NamePartRegex();

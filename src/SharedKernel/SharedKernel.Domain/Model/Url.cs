@@ -29,26 +29,22 @@ public partial class Url : ValueObject
 
     public static implicit operator string(Url url) => url.Value;
 
-    public static implicit operator Url(string url) => Create(url);
+    public static implicit operator Url(string value) => Create(value);
 
-    public static Url Create(string url)
+    public static Url Create(string value)
     {
-        var normalizedUrl = NormalizeUrl(url);
+        if (string.IsNullOrEmpty(value))
+        {
+            return null; //throw new DomainRuleException("Url cannot be empty.");
+        }
 
+        var normalizedUrl = Normalize(value);
         if (!IsValid(normalizedUrl))
         {
-            throw new DomainRuleException($"Invalid URL format: {url}");
+            throw new DomainRuleException($"Invalid URL format: {value}");
         }
 
         return new Url(normalizedUrl);
-    }
-
-    public static bool IsValid(string url)
-    {
-        url = NormalizeUrl(url);
-        var type = DetermineType(url);
-
-        return IsValid(url, type);
     }
 
     public bool IsAbsolute() => this.Type == UrlType.Absolute;
@@ -57,19 +53,19 @@ public partial class Url : ValueObject
 
     public bool IsLocal() => this.Type == UrlType.Local;
 
-    public string ToAbsolute(string baseUrl)
+    public string ToAbsolute(string value)
     {
         if (this.IsAbsolute())
         {
             return this.Value;
         }
 
-        if (string.IsNullOrWhiteSpace(baseUrl))
+        if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("Base URL is required for converting relative or local URLs to absolute.", nameof(baseUrl));
+            throw new ArgumentException("Base URL is required for converting relative or local URLs to absolute.", nameof(value));
         }
 
-        var normalizedBaseUrl = NormalizeUrl(baseUrl);
+        var normalizedBaseUrl = Normalize(value);
         return this.IsRelative()
             ? $"{normalizedBaseUrl}{this.Value}"
             : $"{normalizedBaseUrl}/{this.Value}";
@@ -83,22 +79,22 @@ public partial class Url : ValueObject
         yield return this.Type;
     }
 
-    private static string NormalizeUrl(string url)
+    private static string Normalize(string value)
     {
-        return url.Trim().TrimEnd('/');
+        return value?.Trim()?.TrimEnd('/');
     }
 
-    private static UrlType DetermineType(string url)
+    private static UrlType DetermineType(string value)
     {
-        if (AbsoluteUrlRegex.IsMatch(url))
+        if (AbsoluteUrlRegex.IsMatch(value))
         {
             return UrlType.Absolute;
         }
-        else if (RelativeUrlRegex.IsMatch(url))
+        else if (RelativeUrlRegex.IsMatch(value))
         {
             return UrlType.Relative;
         }
-        else if (LocalUrlRegex.IsMatch(url))
+        else if (LocalUrlRegex.IsMatch(value))
         {
             return UrlType.Local;
         }
@@ -106,18 +102,18 @@ public partial class Url : ValueObject
         return UrlType.Invalid;
     }
 
-    private static bool IsValid(string url, UrlType type)
+    private static bool IsValid(string value)
     {
-        if (string.IsNullOrEmpty(url))
-        {
-            return true;
-        }
+        return IsValid(value, DetermineType(value));
+    }
 
+    private static bool IsValid(string value, UrlType type)
+    {
         return type switch
         {
-            UrlType.Absolute => AbsoluteUrlRegex.IsMatch(url),
-            UrlType.Relative => RelativeUrlRegex.IsMatch(url),
-            UrlType.Local => LocalUrlRegex.IsMatch(url),
+            UrlType.Absolute => AbsoluteUrlRegex.IsMatch(value),
+            UrlType.Relative => RelativeUrlRegex.IsMatch(value),
+            UrlType.Local => LocalUrlRegex.IsMatch(value),
             _ => false
         };
     }

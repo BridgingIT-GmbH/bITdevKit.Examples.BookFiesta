@@ -8,7 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-public static class CatalogSeedModels
+public static class CatalogSeedEntities
 {
     private static string GetSuffix(long ticks) => ticks > 0 ? $"-{ticks}" : string.Empty;
 

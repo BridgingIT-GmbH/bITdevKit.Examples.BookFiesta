@@ -28,24 +28,27 @@ public class PhoneNumber : ValueObject
 
     public string Number { get; private set; }
 
-    public static PhoneNumber Create(string phoneNumber)
+    public static implicit operator string(PhoneNumber phoneNumber) =>phoneNumber.ToString();
+
+    public static implicit operator PhoneNumber(string value) => Create(value);
+
+    public static PhoneNumber Create(string value)
     {
-        if (!IsValid(phoneNumber))
+        if (string.IsNullOrEmpty(value))
+        {
+            return null; //throw new DomainRuleException("PhoneNumber cannot be empty.");
+        }
+
+        if (!IsValid(value))
         {
             throw new DomainRuleException("Invalid phone number format.");
         }
 
-        var cleanNumber = CleanNumber(phoneNumber);
+        var cleanNumber = CleanNumber(value);
         var countryCode = ExtractCountryCode(cleanNumber);
         var number = cleanNumber[countryCode.Length..];
 
         return new PhoneNumber(countryCode, number);
-    }
-
-    public static bool IsValid(string phoneNumber)
-    {
-        return !string.IsNullOrWhiteSpace(phoneNumber) &&
-            PhoneRegex.IsMatch(CleanNumber(phoneNumber));
     }
 
     public override string ToString()
@@ -59,20 +62,26 @@ public class PhoneNumber : ValueObject
         yield return this.Number;
     }
 
-    private static string CleanNumber(string phoneNumber)
+    private static bool IsValid(string value)
     {
-        return new string(phoneNumber.Where(char.IsDigit).ToArray());
+        return !string.IsNullOrWhiteSpace(value) &&
+               PhoneRegex.IsMatch(CleanNumber(value));
     }
 
-    private static string ExtractCountryCode(string cleanNumber)
+    private static string CleanNumber(string value)
     {
-        if (cleanNumber.StartsWith("00"))
+        return new string(value.Where(char.IsDigit).ToArray());
+    }
+
+    private static string ExtractCountryCode(string value)
+    {
+        if (value.StartsWith("00"))
         {
-            return cleanNumber.Substring(2, 1);
+            return value.Substring(2, 1);
         }
 
-        return cleanNumber.StartsWith(Prefix)
-            ? cleanNumber.Substring(1, 1)
+        return value.StartsWith(Prefix)
+            ? value.Substring(1, 1)
             : string.Empty;
     }
 }

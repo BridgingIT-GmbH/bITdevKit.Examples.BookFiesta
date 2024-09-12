@@ -130,11 +130,11 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
         return this;
     }
 
-    public Company SetContactPhone(PhoneNumber phone)
+    public Company SetContactPhone(PhoneNumber phoneNumber)
     {
-        if (phone != this.ContactPhone)
+        if (phoneNumber != this.ContactPhone)
         {
-            this.ContactPhone = phone;
+            this.ContactPhone = phoneNumber;
 
             if (this.Id?.IsEmpty == false)
             {

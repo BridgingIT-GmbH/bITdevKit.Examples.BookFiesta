@@ -23,17 +23,22 @@ public partial class Website : ValueObject
 
     public static implicit operator string(Website website) => website?.Value; // allows a Website value to be implicitly converted to a string.
 
-    public static implicit operator Website(string website) => Create(website);
+    public static implicit operator Website(string value) => Create(value);
 
-    public static Website Create(string website)
+    public static Website Create(string value)
     {
-        website = Normalize(website);
-        if (!IsValid(website))
+        if (string.IsNullOrEmpty(value))
+        {
+            return null;  //throw new DomainRuleException("Website cannot be empty.");
+        }
+
+        value = Normalize(value);
+        if (!IsValidRegex().IsMatch(value))
         {
             throw new DomainRuleException("Invalid website");
         }
 
-        return new Website(website);
+        return new Website(value);
     }
 
     public override string ToString() => this.Value;
@@ -43,25 +48,15 @@ public partial class Website : ValueObject
         yield return this.Value;
     }
 
-    private static bool IsValid(string value)
+    private static string Normalize(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
+        value = value?.Trim().ToLowerInvariant() ?? string.Empty;
+        if (value?.StartsWith("http://") != false || value.StartsWith("https://"))
         {
-            return false;
+            return value;
         }
 
-        return IsValidRegex().IsMatch(value);
-    }
-
-    private static string Normalize(string website)
-    {
-        website = website?.Trim()?.ToLowerInvariant() ?? string.Empty;
-        if (website?.StartsWith("http://") != false || website.StartsWith("https://"))
-        {
-            return website;
-        }
-
-        return "https://" + website;
+        return "https://" + value;
     }
 
     [GeneratedRegex(@"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$", RegexOptions.IgnoreCase, "en-US")]

@@ -23,7 +23,7 @@ public class OrganizationDomainSeederTask(
 
     private async Task<Company[]> SeedCompanies(IGenericRepository<Company> repository)
     {
-        var entities = OrganizationSeedModels.Companies.Create();
+        var entities = OrganizationSeedEntities.Companies.Create();
 
         foreach (var entity in entities)
         {
@@ -39,7 +39,7 @@ public class OrganizationDomainSeederTask(
 
     private async Task<Tenant[]> SeedTenants(IGenericRepository<Tenant> repository, Company[] companies)
     {
-        var entities = OrganizationSeedModels.Tenants.Create(companies);
+        var entities = OrganizationSeedEntities.Tenants.Create(companies);
 
         foreach (var entity in entities)
         {
