@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.UnitTests;
 
 using System.Reflection;
 using BridgingIT.DevKit.Application.Commands;
@@ -14,11 +14,11 @@ using NetArchTest.Rules;
 using Shouldly;
 
 #pragma warning disable CS9113 // Parameter is unread.
-//[Module("Catalog")]
+//[Module("Organization")]
 [Category("SystemTest")]
-[SystemTest("Catalog:Architecture")]
+[SystemTest("Organization:Architecture")]
 //[UnitTest("Architecture")]
-public class ArchitectureTests(ITestOutputHelper output, TypesFixture fixture) : IClassFixture<TypesFixture>
+public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixture fixture) : IClassFixture<TypesFixture>
 #pragma warning restore CS9113 // Parameter is unread.
 {
     // [Fact]
