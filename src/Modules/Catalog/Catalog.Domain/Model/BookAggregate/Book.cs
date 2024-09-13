@@ -17,7 +17,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     private Book() { } // Private constructor required by EF Core
 
-    private Book(TenantId tenantId, string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
+    private Book(TenantId tenantId, string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly? publishedDate = null)
     {
         this.TenantId = tenantId;
         this.SetTitle(title);
@@ -41,7 +41,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public BookPublisher Publisher { get; private set; }
 
-    public DateOnly PublishedDate { get; private set; }
+    public DateOnly? PublishedDate { get; private set; }
 
     public AverageRating AverageRating { get; private set; }
 
@@ -71,8 +71,9 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book SetTitle(string title)
     {
-        // Validate title
-        if (title != this.Title)
+        _ = title ?? throw new DomainRuleException("Book Title cannot be empty.");
+
+        if (this.Title != title)
         {
             this.Title = title;
             this.ReindexKeywords();
@@ -86,8 +87,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book SetDescription(string description)
     {
-        // Validate description
-        if (description != this.Description)
+        if (this.Description != description)
         {
             this.Description = description;
             this.ReindexKeywords();
@@ -101,37 +101,65 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book SetIsbn(BookIsbn isbn)
     {
-        this.Isbn = isbn;
+        _ = isbn ?? throw new DomainRuleException("Book Isbn cannot be empty.");
+
+        if (this.Isbn != isbn)
+        {
+            this.Isbn = isbn;
+
+            this.DomainEvents.Register(
+                new BookUpdatedDomainEvent(this.TenantId, this), true);
+        }
+
         return this;
     }
 
     public Book SetPrice(Money price)
     {
-        // Validate price is > 0
-        this.Price = price;
+        _ = price ?? throw new DomainRuleException("Book Price cannot be empty.");
+
+        // TODO: Validate price is > 0
+        if (this.Price != price)
+        {
+            this.Price = price;
+
+            this.DomainEvents.Register(
+                new BookUpdatedDomainEvent(this.TenantId, this), true);
+        }
+
         return this;
     }
 
     public Book SetPublisher(Publisher publisher)
     {
-        // Validate publisher
-        this.Publisher = BookPublisher.Create(publisher);
+        _ = publisher ?? throw new DomainRuleException("Book Publisher cannot be empty.");
+
+        var bookPublisher = BookPublisher.Create(publisher);
+        if (this.Publisher != bookPublisher)
+        {
+            this.DomainEvents.Register(
+                new BookUpdatedDomainEvent(this.TenantId, this), true);
+        }
+
         return this;
     }
 
-    public Book SetPublishedDate(DateOnly publishedDate)
+    public Book SetPublishedDate(DateOnly? publishedDate)
     {
-        // Validate published date
-        this.PublishedDate = publishedDate;
+        if (this.PublishedDate != publishedDate)
+        {
+            this.PublishedDate = publishedDate;
+
+            this.DomainEvents.Register(
+                new BookUpdatedDomainEvent(this.TenantId, this), true);
+        }
+
         return this;
     }
 
     public Book AddRating(Rating rating)
     {
-        if (rating == null)
-        {
-            return this;
-        }
+        _ = rating ?? throw new DomainRuleException("Book Rating cannot be empty.");
 
         this.AverageRating.Add(rating);
 
@@ -140,7 +168,9 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book AssignAuthor(Author author, int position = 0)
     {
-        if (!this.authors.Any(e => e.AuthorId == author.Id))
+        _ = author ?? throw new DomainRuleException("Book Author cannot be empty.");
+
+        if (this.authors.All(e => e.AuthorId != author.Id))
         {
             this.authors.Add(
                 BookAuthor.Create(author, position == 0 ? this.authors.Count + 1 : 0));

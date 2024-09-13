@@ -20,7 +20,12 @@ public class BookPublisher : ValueObject
 
     public string Name { get; private set; }
 
-    public static BookPublisher Create(Publisher publisher) => new(publisher.Id, publisher.Name);
+    public static BookPublisher Create(Publisher publisher)
+    {
+        _ = publisher ?? throw new DomainRuleException("BookPublisher Publisher cannot be empty.");
+
+        return new BookPublisher(publisher.Id, publisher.Name);
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

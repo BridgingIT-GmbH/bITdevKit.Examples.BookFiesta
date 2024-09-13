@@ -31,7 +31,8 @@ public class BookChapter : Entity<BookChapterId>
 
     public BookChapter SetTitle(string title)
     {
-        // Validate title
+        _ = title ?? throw new DomainRuleException("BookChapter Title cannot be empty.");
+
         this.Title = title;
         return this;
     }

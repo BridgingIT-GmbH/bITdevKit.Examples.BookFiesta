@@ -70,6 +70,9 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
         builder.Property(e => e.Description)
             .IsRequired(false);
 
+        builder.Property(e => e.PublishedDate)
+                .IsRequired(false);
+
         builder.OwnsOne(e => e.Isbn, b =>
         {
             b.Property(e => e.Value)

@@ -56,7 +56,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
         _ = name ?? throw new DomainRuleException("Publisher Name cannot be empty.");
 
         // Validate name
-        if (!string.IsNullOrEmpty(name) && name != this.Name)
+        if (this.Name != name)
         {
             this.Name = name;
 
@@ -72,8 +72,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     public Publisher SetDescription(string description)
     {
-        // Validate description
-        if (description != this.Description)
+        if (this.Description != description)
         {
             this.Description = description;
 
@@ -89,7 +88,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     public Publisher SetContactEmail(EmailAddress email)
     {
-        if (email != this.ContactEmail)
+        if (this.ContactEmail != email)
         {
             this.ContactEmail = email;
 
@@ -106,7 +105,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
     public Publisher SetAddress(Address address)
     {
         // Validate address
-        if (address != null && address != this.Address)
+        if (this.Address != address)
         {
             this.Address = address;
 
@@ -123,7 +122,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
     public Publisher SetWebsite(Website website)
     {
         // Validate website
-        if (website != null && website != this.Website)
+        if (this.Website != website)
         {
             this.Website = website;
 

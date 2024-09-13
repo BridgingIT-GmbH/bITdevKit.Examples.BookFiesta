@@ -303,7 +303,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                     Price = table.Column<decimal>(type: "decimal(5,2)", nullable: true, defaultValue: 0m),
                     PublisherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     PublisherName = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
-                    PublishedDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    PublishedDate = table.Column<DateOnly>(type: "date", nullable: true),
                     AverageRating = table.Column<decimal>(type: "decimal(5,2)", nullable: true),
                     AverageRatingAmount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

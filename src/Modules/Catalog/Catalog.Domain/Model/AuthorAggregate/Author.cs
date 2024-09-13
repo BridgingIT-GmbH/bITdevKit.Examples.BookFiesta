@@ -39,14 +39,14 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
         var author = new Author(tenantId, name, biography);
 
         author.DomainEvents.Register(
-            new AuthorCreatedDomainEvent(author));
+            new AuthorCreatedDomainEvent(tenantId, author));
 
         return author;
     }
 
     public Author SetName(PersonFormalName name)
     {
-        _ = name ?? throw new DomainRuleException("Customer Name cannot be empty.");
+        _ = name ?? throw new DomainRuleException("Author Name cannot be empty.");
 
         if (this.PersonName != name)
         {
@@ -55,7 +55,7 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
             if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(
-                    new AuthorUpdatedDomainEvent(this), true);
+                    new AuthorUpdatedDomainEvent(this.TenantId, this), true);
             }
         }
 
@@ -64,15 +64,20 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
     public Author SetBiography(string biography)
     {
-        // Validate biography
-        this.Biography = biography;
+        if (this.Biography != biography)
+        {
+            this.Biography = biography;
+
+            this.DomainEvents.Register(
+                new AuthorUpdatedDomainEvent(this.TenantId, this), true);
+        }
 
         return this;
     }
 
     public Author AssignBook(Book book)
     {
-        if (!this.books.Any(e => e.BookId == book.Id))
+        if (this.books.All(e => e.BookId != book.Id))
         {
             this.books.Add(AuthorBook.Create(book));
 

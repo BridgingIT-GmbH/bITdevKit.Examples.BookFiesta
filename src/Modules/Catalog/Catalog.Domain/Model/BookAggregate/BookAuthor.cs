@@ -25,7 +25,12 @@ public class BookAuthor : ValueObject
 
     public int Position { get; private set; }
 
-    public static BookAuthor Create(Author author, int position) => new(author.Id, author.PersonName, position);
+    public static BookAuthor Create(Author author, int position)
+    {
+        _ = author ?? throw new DomainRuleException("BookAuthor Author cannot be empty.");
+
+        return new BookAuthor(author.Id, author.PersonName, position);
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

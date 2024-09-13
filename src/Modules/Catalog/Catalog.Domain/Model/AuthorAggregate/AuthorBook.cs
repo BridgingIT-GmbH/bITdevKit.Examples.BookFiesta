@@ -22,7 +22,12 @@ public class AuthorBook : ValueObject
 
     public string Title { get; }
 
-    public static AuthorBook Create(Book book) => new(book.Id, book.Title);
+    public static AuthorBook Create(Book book)
+    {
+        _ = book ?? throw new DomainRuleException("AuthorBook Book cannot be empty.");
+
+        return new AuthorBook(book.Id, book.Title);
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

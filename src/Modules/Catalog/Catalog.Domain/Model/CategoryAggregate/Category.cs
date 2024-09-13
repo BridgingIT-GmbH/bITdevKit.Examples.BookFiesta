@@ -57,7 +57,7 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
     {
         _ = title ?? throw new DomainRuleException("Category Title cannot be empty.");
 
-        if (title != this.Title)
+        if (this.Title != title)
         {
             this.Title = title;
 
@@ -73,7 +73,7 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public Category SetDescription(string description)
     {
-        if (description != this.Description)
+        if (this.Description != description)
         {
             this.Description = description;
 
