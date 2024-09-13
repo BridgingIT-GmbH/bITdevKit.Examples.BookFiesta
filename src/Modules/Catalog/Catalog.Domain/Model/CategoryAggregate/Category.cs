@@ -57,71 +57,89 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
     {
         _ = title ?? throw new DomainRuleException("Category Title cannot be empty.");
 
-        if (this.Title != title)
+        if (this.Title == title)
         {
-            this.Title = title;
-
-            // if (this.Id?.IsEmpty == false)
-            // {
-            //     this.DomainEvents.Register(
-            //         new CategoryUpdatedDomainEvent(this), true);
-            // }
+            return this;
         }
+
+        this.Title = title;
+
+        // if (this.Id?.IsEmpty == false)
+        // {
+        //     this.DomainEvents.Register(
+        //         new CategoryUpdatedDomainEvent(this), true);
+        // }
 
         return this;
     }
 
     public Category SetDescription(string description)
     {
-        if (this.Description != description)
+        if (this.Description == description)
         {
-            this.Description = description;
-
-            // if (this.Id?.IsEmpty == false)
-            // {
-            //     this.DomainEvents.Register(
-            //         new CategoryUpdatedDomainEvent(this), true);
-            // }
+            return this;
         }
+
+        this.Description = description;
+
+        // if (this.Id?.IsEmpty == false)
+        // {
+        //     this.DomainEvents.Register(
+        //         new CategoryUpdatedDomainEvent(this), true);
+        // }
 
         return this;
     }
 
     public Category AddBook(Book book)
     {
-        if (!this.books.Contains(book))
+        _ = book ?? throw new DomainRuleException("Category Book cannot be empty.");
+
+        if (this.books.Contains(book))
         {
-            this.books.Add(book);
+            return this;
         }
+
+        this.books.Add(book);
 
         return this;
     }
 
     public Category RemoveBook(Book book)
     {
+        _ = book ?? throw new DomainRuleException("Category Book cannot be empty.");
+
         this.books.Remove(book);
 
         return this;
     }
 
-    public Category AddChild(Category child)
+    public Category AddChild(Category category)
     {
-        if (!this.children.Contains(child))
+        _ = category ?? throw new DomainRuleException("Category cannot be empty.");
+
+        if (this.children.Contains(category))
         {
-            this.children.Add(child);
-            child.SetParent(this);
+            return this;
         }
+
+        this.children.Add(category);
+        category.SetParent(this);
 
         return this;
     }
 
-    public Category RemoveChild(Category child)
+    public Category RemoveChild(Category category)
     {
-        if (this.children.Contains(child))
+        _ = category ?? throw new DomainRuleException("Category cannot be empty.");
+
+        if (!this.children.Contains(category))
         {
-            this.children.Remove(child);
-            child.RemoveParent();
+            return this;
         }
+
+        this.children.Remove(category);
+        category.RemoveParent();
 
         return this;
     }

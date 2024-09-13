@@ -57,7 +57,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Guid Version { get; set; }
 
-    public static Book Create(TenantId tenantId, string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly publishedDate)
+    public static Book Create(TenantId tenantId, string title, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly? publishedDate = null)
     {
         _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
 
@@ -73,28 +73,32 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         _ = title ?? throw new DomainRuleException("Book Title cannot be empty.");
 
-        if (this.Title != title)
+        if (this.Title == title)
         {
-            this.Title = title;
-            this.ReindexKeywords();
-
-            this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this.TenantId, this), true);
+            return this;
         }
+
+        this.Title = title;
+        this.ReindexKeywords();
+
+        this.DomainEvents.Register(
+            new BookUpdatedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
 
     public Book SetDescription(string description)
     {
-        if (this.Description != description)
+        if (this.Description == description)
         {
-            this.Description = description;
-            this.ReindexKeywords();
-
-            this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this.TenantId, this), true);
+            return this;
         }
+
+        this.Description = description;
+        this.ReindexKeywords();
+
+        this.DomainEvents.Register(
+            new BookUpdatedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -103,13 +107,15 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         _ = isbn ?? throw new DomainRuleException("Book Isbn cannot be empty.");
 
-        if (this.Isbn != isbn)
+        if (this.Isbn == isbn)
         {
-            this.Isbn = isbn;
-
-            this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this.TenantId, this), true);
+            return this;
         }
+
+        this.Isbn = isbn;
+
+        this.DomainEvents.Register(
+            new BookUpdatedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -118,14 +124,16 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         _ = price ?? throw new DomainRuleException("Book Price cannot be empty.");
 
-        // TODO: Validate price is > 0
-        if (this.Price != price)
+        if (this.Price == price)
         {
-            this.Price = price;
-
-            this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this.TenantId, this), true);
+            return this;
         }
+
+        // TODO: Validate price is > 0
+        this.Price = price;
+
+        this.DomainEvents.Register(
+            new BookUpdatedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -135,24 +143,30 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         _ = publisher ?? throw new DomainRuleException("Book Publisher cannot be empty.");
 
         var bookPublisher = BookPublisher.Create(publisher);
-        if (this.Publisher != bookPublisher)
+        if (this.Publisher == bookPublisher)
         {
-            this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this.TenantId, this), true);
+            return this;
         }
+
+        this.Publisher = bookPublisher;
+
+        this.DomainEvents.Register(
+            new BookUpdatedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
 
     public Book SetPublishedDate(DateOnly? publishedDate)
     {
-        if (this.PublishedDate != publishedDate)
+        if (this.PublishedDate == publishedDate)
         {
-            this.PublishedDate = publishedDate;
-
-            this.DomainEvents.Register(
-                new BookUpdatedDomainEvent(this.TenantId, this), true);
+            return this;
         }
+
+        this.PublishedDate = publishedDate;
+
+        this.DomainEvents.Register(
+            new BookUpdatedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -170,15 +184,17 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         _ = author ?? throw new DomainRuleException("Book Author cannot be empty.");
 
-        if (this.authors.All(e => e.AuthorId != author.Id))
+        if (this.authors.Any(e => e.AuthorId == author.Id))
         {
-            this.authors.Add(
-                BookAuthor.Create(author, position == 0 ? this.authors.Count + 1 : 0));
-            this.ReindexKeywords();
-
-            this.DomainEvents.Register(
-                new BookAuthorAssignedDomainEvent(this, author));
+            return this;
         }
+
+        this.authors.Add(
+            BookAuthor.Create(author, position == 0 ? this.authors.Count + 1 : 0));
+        this.ReindexKeywords();
+
+        this.DomainEvents.Register(
+            new BookAuthorAssignedDomainEvent(this, author));
 
         return this;
     }
@@ -231,15 +247,17 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     public Book UpdateChapter(BookChapterId id, string title, int number, string content = null)
     {
         var chapter = this.chapters.SingleOrDefault(c => c.Id == id);
-        if (chapter != null)
+        if (chapter == null)
         {
-            chapter.SetTitle(title);
-            chapter.SetNumber(number);
-            chapter.SetContent(content);
-
-            this.chapters = this.ReindexChapters(this.chapters);
-            this.ReindexKeywords();
+            return this;
         }
+
+        chapter.SetTitle(title);
+        chapter.SetNumber(number);
+        chapter.SetContent(content);
+
+        this.chapters = this.ReindexChapters(this.chapters);
+        this.ReindexKeywords();
 
         return this;
     }
@@ -252,11 +270,13 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     public Book RemoveChapter(int number)
     {
         var chapter = this.chapters.SingleOrDefault(c => c.Number == number);
-        if (chapter != null)
+        if (chapter == null)
         {
-            this.RemoveChapter(chapter.Id);
-            this.ReindexKeywords();
+            return this;
         }
+
+        this.RemoveChapter(chapter.Id);
+        this.ReindexKeywords();
 
         return this;
     }
@@ -272,11 +292,13 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book AddCategory(Category category)
     {
-        if (!this.categories.Contains(category))
+        if (this.categories.Contains(category))
         {
-            this.categories.Add(category);
-            this.ReindexKeywords();
+            return this;
         }
+
+        this.categories.Add(category);
+        this.ReindexKeywords();
 
         return this;
     }
@@ -291,24 +313,28 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book AddTag(Tag tag)
     {
-        if (!this.tags.Contains(tag))
+        if (this.tags.Contains(tag))
         {
-            DomainRules.Apply([new TagMustBelongToTenantRule(tag, this.TenantId)]);
-
-            this.tags.Add(tag);
-            this.ReindexKeywords();
+            return this;
         }
+
+        DomainRules.Apply([new TagMustBelongToTenantRule(tag, this.TenantId)]);
+
+        this.tags.Add(tag);
+        this.ReindexKeywords();
 
         return this;
     }
 
     public Book RemoveTag(Tag tag)
     {
-        if (!this.tags.Contains(tag))
+        if (this.tags.Contains(tag))
         {
-            this.tags.Remove(tag);
-            this.ReindexKeywords();
+            return this;
         }
+
+        this.tags.Remove(tag);
+        this.ReindexKeywords();
 
         return this;
     }

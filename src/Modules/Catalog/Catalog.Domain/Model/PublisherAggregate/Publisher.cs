@@ -56,15 +56,17 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
         _ = name ?? throw new DomainRuleException("Publisher Name cannot be empty.");
 
         // Validate name
-        if (this.Name != name)
+        if (this.Name == name)
         {
-            this.Name = name;
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                    new PublisherUpdatedDomainEvent(this), true);
-            }
+        this.Name = name;
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -72,15 +74,17 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     public Publisher SetDescription(string description)
     {
-        if (this.Description != description)
+        if (this.Description == description)
         {
-            this.Description = description;
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                    new PublisherUpdatedDomainEvent(this), true);
-            }
+        this.Description = description;
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -88,15 +92,17 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     public Publisher SetContactEmail(EmailAddress email)
     {
-        if (this.ContactEmail != email)
+        if (this.ContactEmail == email)
         {
-            this.ContactEmail = email;
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                    new PublisherUpdatedDomainEvent(this), true);
-            }
+        this.ContactEmail = email;
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -105,15 +111,17 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
     public Publisher SetAddress(Address address)
     {
         // Validate address
-        if (this.Address != address)
+        if (this.Address == address)
         {
-            this.Address = address;
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                    new PublisherUpdatedDomainEvent(this), true);
-            }
+        this.Address = address;
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -122,15 +130,17 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
     public Publisher SetWebsite(Website website)
     {
         // Validate website
-        if (this.Website != website)
+        if (this.Website == website)
         {
-            this.Website = website;
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                    new PublisherUpdatedDomainEvent(this), true);
-            }
+        this.Website = website;
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(
+                new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;

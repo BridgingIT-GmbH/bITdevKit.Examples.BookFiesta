@@ -48,15 +48,17 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
     {
         _ = name ?? throw new DomainRuleException("Customer Name cannot be empty.");
 
-        if (this.PersonName != name)
+        if (this.PersonName == name)
         {
-            this.PersonName = name;
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                    new CustomerUpdatedDomainEvent(this), true);
-            }
+        this.PersonName = name;
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(
+                new CustomerUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -66,15 +68,17 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
     {
         _ = email ?? throw new DomainRuleException("Customer Email cannot be empty.");
 
-        if (email != this.Email)
+        if (email == this.Email)
         {
-            this.Email = email;
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                    new CustomerUpdatedDomainEvent(this), true);
-            }
+        this.Email = email;
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(
+                new CustomerUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -82,15 +86,17 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
     public Customer SetAddress(Address address)
     {
-        if (address != this.Address)
+        if (address == this.Address)
         {
-            this.Address = address;
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
+        this.Address = address;
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(
                 new CustomerUpdatedDomainEvent(this), true);
-            }
         }
 
         return this;

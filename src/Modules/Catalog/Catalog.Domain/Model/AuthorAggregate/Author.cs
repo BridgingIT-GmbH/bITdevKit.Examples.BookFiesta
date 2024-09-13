@@ -48,26 +48,15 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
     {
         _ = name ?? throw new DomainRuleException("Author Name cannot be empty.");
 
-        if (this.PersonName != name)
+        if (this.PersonName == name)
         {
-            this.PersonName = name;
-
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(
-                    new AuthorUpdatedDomainEvent(this.TenantId, this), true);
-            }
+            return this;
         }
 
-        return this;
-    }
+        this.PersonName = name;
 
-    public Author SetBiography(string biography)
-    {
-        if (this.Biography != biography)
+        if (this.Id?.IsEmpty == false)
         {
-            this.Biography = biography;
-
             this.DomainEvents.Register(
                 new AuthorUpdatedDomainEvent(this.TenantId, this), true);
         }
@@ -75,15 +64,32 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
         return this;
     }
 
+    public Author SetBiography(string biography)
+    {
+        if (this.Biography == biography)
+        {
+            return this;
+        }
+
+        this.Biography = biography;
+
+        this.DomainEvents.Register(
+            new AuthorUpdatedDomainEvent(this.TenantId, this), true);
+
+        return this;
+    }
+
     public Author AssignBook(Book book)
     {
-        if (this.books.All(e => e.BookId != book.Id))
+        if (this.books.Any(e => e.BookId == book.Id))
         {
-            this.books.Add(AuthorBook.Create(book));
-
-            this.DomainEvents.Register(
-                new AuthorBookAssignedDomainEvent(this, book));
+            return this;
         }
+
+        this.books.Add(AuthorBook.Create(book));
+
+        this.DomainEvents.Register(
+            new AuthorBookAssignedDomainEvent(this, book));
 
         return this;
     }
@@ -106,12 +112,14 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
     public Author AddTag(Tag tag)
     {
-        if (!this.tags.Contains(tag))
+        if (this.tags.Contains(tag))
         {
-            DomainRules.Apply([new TagMustBelongToTenantRule(tag, this.TenantId)]);
-
-            this.tags.Add(tag);
+            return this;
         }
+
+        DomainRules.Apply([new TagMustBelongToTenantRule(tag, this.TenantId)]);
+
+        this.tags.Add(tag);
 
         return this;
     }
