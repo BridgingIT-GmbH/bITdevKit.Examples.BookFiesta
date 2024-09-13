@@ -27,16 +27,23 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
 
         // Act
         var response = await this.fixture.CreateClient()
-            .GetAsync(route.Replace("[TENANTID]", model.TenantId) + $"/{model.Id}").AnyContext();
+            .GetAsync(route.Replace("[TENANTID]", model.TenantId) + $"/{model.Id}")
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok();
+        response.Should()
+            .Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.PersonName.Parts[0].Should().Be(model.PersonName.Parts[0]);
-        responseModel.PersonName.Parts[1].Should().Be(model.PersonName.Parts[1]);
-        responseModel.Email.Should().Be(model.Email);
+        responseModel.PersonName.Parts[0]
+            .Should()
+            .Be(model.PersonName.Parts[0]);
+        responseModel.PersonName.Parts[1]
+            .Should()
+            .Be(model.PersonName.Parts[1]);
+        responseModel.Email.Should()
+            .Be(model.Email);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -50,11 +57,13 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
 
         // Act
         var response = await this.fixture.CreateClient()
-            .GetAsync(route.Replace("[TENANTID]", tenantIds[0]) + $"/{Guid.NewGuid()}").AnyContext();
+            .GetAsync(route.Replace("[TENANTID]", tenantIds[0]) + $"/{Guid.NewGuid()}")
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be404NotFound();
+        response.Should()
+            .Be404NotFound();
     }
 
     [Theory]
@@ -66,16 +75,21 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         var model = await this.PostCustomerCreate(route);
 
         var response = await this.fixture.CreateClient()
-            .GetAsync(route.Replace("[TENANTID]", model.TenantId)).AnyContext();
+            .GetAsync(route.Replace("[TENANTID]", model.TenantId))
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok();
+        response.Should()
+            .Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<ICollection<CustomerModel>>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should().Contain(m => m.PersonName.Parts[0] == model.PersonName.Parts[0]);
-        responseModel.Should().Contain(m => m.PersonName.Parts[1] == model.PersonName.Parts[1]);
-        responseModel.Should().Contain(m => m.Email == model.Email);
+        responseModel.Should()
+            .Contain(m => m.PersonName.Parts[0] == model.PersonName.Parts[0]);
+        responseModel.Should()
+            .Contain(m => m.PersonName.Parts[1] == model.PersonName.Parts[1]);
+        responseModel.Should()
+            .Contain(m => m.Email == model.Email);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -90,12 +104,7 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
-            PersonName = new PersonFormalNameModel
-            {
-                Parts = customer.PersonName.Parts.ToArray(),
-                Title = customer.PersonName.Title,
-                Suffix = customer.PersonName.Suffix
-            },
+            PersonName = new PersonFormalNameModel { Parts = customer.PersonName.Parts.ToArray(), Title = customer.PersonName.Title, Suffix = customer.PersonName.Suffix },
             Email = customer.Email,
             Address = new AddressModel
             {
@@ -105,22 +114,27 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
                 PostalCode = customer.Address.PostalCode,
                 City = customer.Address.City,
                 Country = customer.Address.Country
-            },
+            }
         };
-        var content = new StringContent(
-            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
-            .PostAsync(route.Replace("[TENANTID]", model.TenantId), content).AnyContext();
+            .PostAsync(route.Replace("[TENANTID]", model.TenantId), content)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be201Created();
-        response.Headers.Location.Should().NotBeNull();
+        response.Should()
+            .Be201Created();
+        response.Headers.Location.Should()
+            .NotBeNull();
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should().BeEquivalentTo(model, options => options.Excluding(m => m.Id).Excluding(m => m.PersonName));
+        responseModel.Should()
+            .BeEquivalentTo(model,
+                options => options.Excluding(m => m.Id)
+                    .Excluding(m => m.PersonName));
         //responseModel.PersonName.Should().Be(model.PersonName);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
@@ -136,12 +150,7 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
-            PersonName = new PersonFormalNameModel
-            {
-                Parts = customer.PersonName.Parts.ToArray(),
-                Title = customer.PersonName.Title,
-                Suffix = customer.PersonName.Suffix
-            },
+            PersonName = new PersonFormalNameModel { Parts = customer.PersonName.Parts.ToArray(), Title = customer.PersonName.Title, Suffix = customer.PersonName.Suffix },
             Email = string.Empty,
             Address = new AddressModel
             {
@@ -151,19 +160,21 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
                 PostalCode = customer.Address.PostalCode,
                 City = customer.Address.City,
                 Country = customer.Address.Country
-            },
+            }
         };
-        var content = new StringContent(
-            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
-            .PostAsync(route.Replace("[TENANTID]", model.TenantId), content).AnyContext();
+            .PostAsync(route.Replace("[TENANTID]", model.TenantId), content)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be400BadRequest();
-        response.Should().MatchInContent("*[ValidationException]*");
+        response.Should()
+            .Be400BadRequest();
+        response.Should()
+            .MatchInContent("*[ValidationException]*");
     }
 
     [Theory]
@@ -175,22 +186,29 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         var model = await this.PostCustomerCreate(route);
         model.PersonName.Parts[0] += "changedA";
         model.PersonName.Parts[1] += "changedB";
-        var content = new StringContent(
-            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
-            .PutAsync(route.Replace("[TENANTID]", model.TenantId) + $"/{model.Id}", content).AnyContext();
+            .PutAsync(route.Replace("[TENANTID]", model.TenantId) + $"/{model.Id}", content)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok();
-        response.Headers.Location.Should().BeNull();
+        response.Should()
+            .Be200Ok();
+        response.Headers.Location.Should()
+            .BeNull();
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should().BeEquivalentTo(model, options => options.Excluding(m => m.PersonName));
-        responseModel.PersonName.Parts[0].Should().Be(model.PersonName.Parts[0]);
-        responseModel.PersonName.Parts[1].Should().Be(model.PersonName.Parts[1]);
+        responseModel.Should()
+            .BeEquivalentTo(model, options => options.Excluding(m => m.PersonName));
+        responseModel.PersonName.Parts[0]
+            .Should()
+            .Be(model.PersonName.Parts[0]);
+        responseModel.PersonName.Parts[1]
+            .Should()
+            .Be(model.PersonName.Parts[1]);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -204,12 +222,15 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
 
         // Act
         var response = await this.fixture.CreateClient()
-            .DeleteAsync(route.Replace("[TENANTID]", model.TenantId) + $"/{model.Id}").AnyContext();
+            .DeleteAsync(route.Replace("[TENANTID]", model.TenantId) + $"/{model.Id}")
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok();
-        response.Headers.Location.Should().BeNull();
+        response.Should()
+            .Be200Ok();
+        response.Headers.Location.Should()
+            .BeNull();
     }
 
     private async Task<CustomerModel> PostCustomerCreate(string route)
@@ -219,12 +240,7 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
-            PersonName = new PersonFormalNameModel
-            {
-                Parts = customer.PersonName.Parts.ToArray(),
-                Title = customer.PersonName.Title,
-                Suffix = customer.PersonName.Suffix
-            },
+            PersonName = new PersonFormalNameModel { Parts = customer.PersonName.Parts.ToArray(), Title = customer.PersonName.Title, Suffix = customer.PersonName.Suffix },
             Email = customer.Email,
             Address = new AddressModel
             {
@@ -234,12 +250,12 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
                 PostalCode = customer.Address.PostalCode,
                 City = customer.Address.City,
                 Country = customer.Address.Country
-            },
+            }
         };
-        var content = new StringContent(
-            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
         var response = await this.fixture.CreateClient()
-            .PostAsync(route.Replace("[TENANTID]", model.TenantId), content).AnyContext();
+            .PostAsync(route.Replace("[TENANTID]", model.TenantId), content)
+            .AnyContext();
         response.EnsureSuccessStatusCode();
 
         return await response.Content.ReadAsAsync<CustomerModel>();

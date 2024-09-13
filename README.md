@@ -3,15 +3,18 @@ cs![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.G
 
 # Architecture overview
 
-> An application built using .NET 8 and following a Domain-Driven Design approach by using the BridgingIT DevKit.
+> An application built using .NET 8 and following a Domain-Driven Design approach by using the
+> BridgingIT DevKit.
 
 ## Features
+
 - Application Commands/Queries
 - Domain Model, ValueObjects, Events, Rules, TypedIds, Repositories
 - Presentation Model
 - Unit & Integration Tests
 
 ## Frameworks
+
 - [.NET 8](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/overview)
 - [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
 - [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet)
@@ -20,7 +23,8 @@ cs![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.G
 
 ## Architecture
 
-The architecture is structured around key DDD principles, ensuring that the domain model is at the core of the application. 
+The architecture is structured around key DDD principles, ensuring that the domain model is at the
+core of the application.
 The solution is divided into several layers:
 
 - **Domain**: Contains the core business logic and domain model.
@@ -32,9 +36,11 @@ The solution is divided into several layers:
 ## Modules
 
 ### Organization Module
+
 [see](./src/Modules/Organization/Organization-README.md)
 
 ### Catalog Module
+
 [see](./src/Modules/Catalog/Catalog-README.md)
 
 ## Getting Started
@@ -48,17 +54,22 @@ TODO
 
 ### Running the Application
 
-The supporting containers should first be started with `docker-compose up` or `docker-compose up -d`.
+The supporting containers should first be started with `docker-compose up` or
+`docker-compose up -d`.
 Then the Presentation.Web.Server project can be set as the startup project.
 On `CTRL+F5` this will start the host at [https://localhost:7144](https://localhost:7144).
 
-- [SQL Server](https://learn.microsoft.com/en-us/sql/sql-server/?view=sql-server-ver16) details: `Server=127.0.0.1,14339;Database=bit_devkit_bookfiesta;User=sa;Password=Abcd1234!;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;encrypt=false;`
-- [Swagger UI](https://swagger.io/docs/) is available [here](https://localhost:7144/swagger/index.html).
-- [Seq](https://docs.datalust.co/docs/an-overview-of-seq) Dashboard is available [here](http://localhost:15349).
+- [SQL Server](https://learn.microsoft.com/en-us/sql/sql-server/?view=sql-server-ver16) details:
+  `Server=127.0.0.1,14339;Database=bit_devkit_bookfiesta;User=sa;Password=Abcd1234!;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;encrypt=false;`
+- [Swagger UI](https://swagger.io/docs/) is
+  available [here](https://localhost:7144/swagger/index.html).
+- [Seq](https://docs.datalust.co/docs/an-overview-of-seq) Dashboard is
+  available [here](http://localhost:15349).
 
 ### Architecture Overview
 
-The solution, powered by bITDevKit, is structured around key architectural layers and the references between them:
+The solution, powered by bITDevKit, is structured around key architectural layers and the references
+between them:
 
 ```mermaid
 graph TD
@@ -99,9 +110,11 @@ Key Points:
 
 - Domain layer remains independent, not referencing other layers
 - Infrastructure layer doesn't directly reference the Application or Domain layer
-- Adheres to the DI principle: high-level layers (Domain, Application) don't depend on low-level layer (Infrastructure), but both depend on abstractions
+- Adheres to the DI principle: high-level layers (Domain, Application) don't depend on low-level
+  layer (Infrastructure), but both depend on abstractions
 
-This layering structure enforces clean architecture principles, ensuring separation of concerns and maintaining the independence of core business logic.
+This layering structure enforces clean architecture principles, ensuring separation of concerns and
+maintaining the independence of core business logic.
 
 #### Request Procesing Flow
 
@@ -201,8 +214,6 @@ public class CustomerCreateCommandHandler
 
 #### Queries
 
-
-
 ### Domain
 
 Defining your core business logic with domain models and aggregates.
@@ -239,7 +250,8 @@ public class AppDbContext : DbContext
 
 ### Presentation
 
-Serves as the entry point for external interactions, focusing on delivering data and services to clients.
+Serves as the entry point for external interactions, focusing on delivering data and services to
+clients.
 
 #### CompositeRoot (Registrations)
 
@@ -322,8 +334,6 @@ public class CustomersController : ControllerBase
     }
 }
 ````
-
-
 
 ### Testing the API
 

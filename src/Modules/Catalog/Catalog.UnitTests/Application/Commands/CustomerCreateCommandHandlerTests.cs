@@ -24,12 +24,7 @@ public class CustomerCreateCommandHandlerTests
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
-            PersonName = new PersonFormalNameModel
-            {
-                Parts = customer.PersonName.Parts.ToArray(),
-                Title = customer.PersonName.Title,
-                Suffix = customer.PersonName.Suffix
-            },
+            PersonName = new PersonFormalNameModel { Parts = customer.PersonName.Parts.ToArray(), Title = customer.PersonName.Title, Suffix = customer.PersonName.Suffix },
             Email = customer.Email,
             Address = new AddressModel
             {
@@ -39,7 +34,7 @@ public class CustomerCreateCommandHandlerTests
                 PostalCode = customer.Address.PostalCode,
                 City = customer.Address.City,
                 Country = customer.Address.Country
-            },
+            }
         };
         var command = new CustomerCreateCommand(tenantIds[0], model);
         var sut = new CustomerCreateCommandHandler(Substitute.For<ILoggerFactory>(), repository);
@@ -49,8 +44,11 @@ public class CustomerCreateCommandHandlerTests
 
         // Assert
         response?.Result.ShouldNotBeNull();
-        response.Result.Value.PersonName.Parts.ToArray()[0].ShouldBe(command.Model.PersonName.Parts[0]);
-        response.Result.Value.PersonName.Parts.ToArray()[1].ShouldBe(command.Model.PersonName.Parts[1]);
-        await repository.Received(1).InsertAsync(Arg.Any<Customer>(), CancellationToken.None);
+        response.Result.Value.PersonName.Parts.ToArray()[0]
+            .ShouldBe(command.Model.PersonName.Parts[0]);
+        response.Result.Value.PersonName.Parts.ToArray()[1]
+            .ShouldBe(command.Model.PersonName.Parts[1]);
+        await repository.Received(1)
+            .InsertAsync(Arg.Any<Customer>(), CancellationToken.None);
     }
 }

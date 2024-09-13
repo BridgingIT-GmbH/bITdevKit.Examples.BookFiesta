@@ -7,12 +7,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation;
 
 using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.JobScheduling;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation.Web;
+using Application;
+using Domain;
+using Infrastructure;
+using Web;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -31,30 +31,25 @@ public class CatalogModule : WebModuleBase
 
         services.AddJobScheduling()
             .WithJob<EchoJob>(CronExpressions.Every5Minutes); // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
-                                                              //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
+        //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
         services.AddStartupTasks()
-            .WithTask<CatalogDomainSeederTask>(o => o
-                .Enabled(environment?.IsDevelopment() == true)
+            .WithTask<CatalogDomainSeederTask>(o => o.Enabled(environment?.IsDevelopment() == true)
                 .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
 
-        services.AddSqlServerDbContext<CatalogDbContext>(o => o
-                .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
-                .UseLogger(true, environment?.IsDevelopment() == true),
-                o => o
-                    .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+        services.AddSqlServerDbContext<CatalogDbContext>(o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
+                    .UseLogger(true, environment?.IsDevelopment() == true),
+                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
                     .CommandTimeout(30))
             .WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
             //.WithDatabaseCreatorService(o => o
             //    .StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup(false))
-            .WithDatabaseMigratorService(o => o
-                .StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
+            .WithDatabaseMigratorService(o => o.StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
                 .Enabled(environment?.IsDevelopment() == true)
                 .DeleteOnStartup(false))
-            .WithOutboxDomainEventService(o => o
-                .ProcessingInterval("00:00:30")
+            .WithOutboxDomainEventService(o => o.ProcessingInterval("00:00:30")
                 .StartupDelay("00:00:15")
                 .PurgeOnStartup()
                 .ProcessingModeImmediate());

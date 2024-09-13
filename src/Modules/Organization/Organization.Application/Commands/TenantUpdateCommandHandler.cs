@@ -8,33 +8,26 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application
 using System.Threading;
 using System.Threading.Tasks;
 using BridgingIT.DevKit.Application.Commands;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
-public class TenantUpdateCommandHandler(
-    ILoggerFactory loggerFactory,
-    IMapper mapper,
-    IGenericRepository<Tenant> tenantRepository,
-    IGenericRepository<Company> companyRepository)
-        : CommandHandlerBase<TenantUpdateCommand, Result<Tenant>>(loggerFactory)
+public class TenantUpdateCommandHandler(ILoggerFactory loggerFactory, IMapper mapper, IGenericRepository<Tenant> tenantRepository, IGenericRepository<Company> companyRepository)
+    : CommandHandlerBase<TenantUpdateCommand, Result<Tenant>>(loggerFactory)
 {
-    public override async Task<CommandResponse<Result<Tenant>>> Process(
-        TenantUpdateCommand command, CancellationToken cancellationToken)
+    public override async Task<CommandResponse<Result<Tenant>>> Process(TenantUpdateCommand command, CancellationToken cancellationToken)
     {
-        var companyResult = await companyRepository.FindOneResultAsync(
-            CompanyId.Create(command.Model.CompanyId), cancellationToken: cancellationToken);
+        var companyResult = await companyRepository.FindOneResultAsync(CompanyId.Create(command.Model.CompanyId), cancellationToken: cancellationToken);
 
         if (companyResult.IsFailure)
         {
             return CommandResponse.For<Tenant>(companyResult);
         }
 
-        var tenantResult = await tenantRepository.FindOneResultAsync(
-        TenantId.Create(command.Model.Id), cancellationToken: cancellationToken);
+        var tenantResult = await tenantRepository.FindOneResultAsync(TenantId.Create(command.Model.Id), cancellationToken: cancellationToken);
 
         if (tenantResult.IsFailure)
         {
@@ -44,11 +37,10 @@ public class TenantUpdateCommandHandler(
         //var tenant = TenantModelMapper.Map(command.Model, tenantResult.Value);
         var tenant = mapper.Map<TenantModel, Tenant>(command.Model, tenantResult.Value);
 
-        await DomainRules.ApplyAsync([
-            TenantRules.NameMustBeUnique(tenantRepository, tenant),
-        ], cancellationToken);
+        await DomainRules.ApplyAsync([TenantRules.NameMustBeUnique(tenantRepository, tenant)], cancellationToken);
 
-        await tenantRepository.UpdateAsync(tenant, cancellationToken).AnyContext();
+        await tenantRepository.UpdateAsync(tenant, cancellationToken)
+            .AnyContext();
 
         return CommandResponse.Success(tenant);
     }

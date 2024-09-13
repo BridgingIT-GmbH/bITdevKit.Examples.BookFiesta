@@ -103,3 +103,4 @@
 // //    var result = (await mediator.Send(new CustomerDeleteCommand { Id = id }, cancellationToken)).Result;
 // //    return result.ToDeletedActionResult<CustomerModel>();
 // //});
+

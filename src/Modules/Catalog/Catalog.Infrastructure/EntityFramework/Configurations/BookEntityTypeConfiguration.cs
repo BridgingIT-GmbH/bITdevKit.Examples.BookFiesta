@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -36,26 +36,27 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
             .IsClustered(false);
 
         //builder.Navigation(e => e.BookAuthors).AutoInclude();
-        builder.Navigation(e => e.Categories).AutoInclude();
-        builder.Navigation(e => e.Chapters).AutoInclude();
-        builder.Navigation(e => e.Tags).AutoInclude();
-        builder.Navigation(e => e.Keywords).AutoInclude();
+        builder.Navigation(e => e.Categories)
+            .AutoInclude();
+        builder.Navigation(e => e.Chapters)
+            .AutoInclude();
+        builder.Navigation(e => e.Tags)
+            .AutoInclude();
+        builder.Navigation(e => e.Keywords)
+            .AutoInclude();
 
-        builder.Property(e => e.Version).IsConcurrencyToken();
+        builder.Property(e => e.Version)
+            .IsConcurrencyToken();
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
-            .HasConversion(
-                id => id.Value,
-                value => BookId.Create(value));
+            .HasConversion(id => id.Value, value => BookId.Create(value));
 
         //builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
         builder.Property(e => e.TenantId)
-            .HasConversion(
-                id => id.Value,
-                value => TenantId.Create(value))
+            .HasConversion(id => id.Value, value => TenantId.Create(value))
             .IsRequired();
 
         //builder.HasIndex(e => e.TenantId);
@@ -65,56 +66,71 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
         //    .IsRequired();
 
         builder.Property(e => e.Title)
-            .IsRequired().HasMaxLength(512);
+            .IsRequired()
+            .HasMaxLength(512);
+
+        builder.Property(e => e.Edition)
+            .IsRequired(false)
+            .HasMaxLength(256);
 
         builder.Property(e => e.Description)
             .IsRequired(false);
 
         builder.Property(e => e.PublishedDate)
-                .IsRequired(false);
+            .IsRequired(false);
 
-        builder.OwnsOne(e => e.Isbn, b =>
-        {
-            b.Property(e => e.Value)
-                .HasColumnName("Isbn")
-                .IsRequired().HasMaxLength(32);
-            b.Property(e => e.Type)
-                .HasColumnName("IsbnType")
-                .IsRequired(false).HasMaxLength(32);
-
-            b.HasIndex(nameof(BookIsbn.Value))
-                .IsUnique();
-        });
-
-        builder.OwnsOne(e => e.AverageRating, b =>
-        {
-            b.Property(e => e.Value)
-                .HasColumnName("AverageRating")
-                //.HasDefaultValue(0m)
-                .IsRequired(false).HasColumnType("decimal(5,2)");
-
-            b.Property(e => e.Amount)
-                .HasColumnName("AverageRatingAmount")
-                .HasDefaultValue(0)
-                .IsRequired();
-        });
-        builder.Navigation(e => e.AverageRating).IsRequired();
-
-        builder.OwnsOne(e => e.Price, b =>
-        {
-            b.Property(e => e.Amount)
-                .HasColumnName("Price")
-                .HasDefaultValue(0)
-                .IsRequired().HasColumnType("decimal(5,2)");
-
-            b.OwnsOne(e => e.Currency, b =>
+        builder.OwnsOne(e => e.Isbn,
+            b =>
             {
-                b.Property(e => e.Code)
-                    .HasColumnName("PriceCurrency")
-                    .HasDefaultValue("USD")
-                    .IsRequired().HasMaxLength(8);
+                b.Property(e => e.Value)
+                    .HasColumnName("Isbn")
+                    .IsRequired()
+                    .HasMaxLength(32);
+                b.Property(e => e.Type)
+                    .HasColumnName("IsbnType")
+                    .IsRequired(false)
+                    .HasMaxLength(32);
+
+                b.HasIndex(nameof(BookIsbn.Value))
+                    .IsUnique();
             });
-        });
+
+        builder.OwnsOne(e => e.AverageRating,
+            b =>
+            {
+                b.Property(e => e.Value)
+                    .HasColumnName("AverageRating")
+                    //.HasDefaultValue(0m)
+                    .IsRequired(false)
+                    .HasColumnType("decimal(5,2)");
+
+                b.Property(e => e.Amount)
+                    .HasColumnName("AverageRatingAmount")
+                    .HasDefaultValue(0)
+                    .IsRequired();
+            });
+        builder.Navigation(e => e.AverageRating)
+            .IsRequired();
+
+        builder.OwnsOne(e => e.Price,
+            b =>
+            {
+                b.Property(e => e.Amount)
+                    .HasColumnName("Price")
+                    .HasDefaultValue(0)
+                    .IsRequired()
+                    .HasColumnType("decimal(5,2)");
+
+                b.OwnsOne(e => e.Currency,
+                    b =>
+                    {
+                        b.Property(e => e.Code)
+                            .HasColumnName("PriceCurrency")
+                            .HasDefaultValue("USD")
+                            .IsRequired()
+                            .HasMaxLength(8);
+                    });
+            });
 
         builder.HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
             .WithMany()
@@ -129,81 +145,92 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
         //builder.OwnsOne(e => e.AuditState, b => b.ToJson());
 
         builder.Metadata.FindNavigation(nameof(Book.Authors))
-                    .SetPropertyAccessMode(PropertyAccessMode.Field);
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 
     private static void ConfigureBookAuthors(EntityTypeBuilder<Book> builder)
     {
-        builder.OwnsMany(e => e.Authors, b =>
-        {
-            b.ToTable("BookAuthors")
-                .HasKey("BookId", "AuthorId");
-            b.HasIndex("BookId", "AuthorId");
+        builder.OwnsMany(e => e.Authors,
+            b =>
+            {
+                b.ToTable("BookAuthors")
+                    .HasKey("BookId", "AuthorId");
+                b.HasIndex("BookId", "AuthorId");
 
-            b.WithOwner().HasForeignKey("BookId");
+                b.WithOwner()
+                    .HasForeignKey("BookId");
 
-            b.Property(r => r.AuthorId)
-                .IsRequired()
-                .HasConversion(
-                    id => id.Value,
-                    value => AuthorId.Create(value));
-            b.HasOne(typeof(Author)).WithMany().HasForeignKey(nameof(AuthorId)); // FK -> Author.Id
+                b.Property(r => r.AuthorId)
+                    .IsRequired()
+                    .HasConversion(id => id.Value, value => AuthorId.Create(value));
+                b.HasOne(typeof(Author))
+                    .WithMany()
+                    .HasForeignKey(nameof(AuthorId)); // FK -> Author.Id
 
-            b.Property(r => r.Name)
-                .IsRequired().HasMaxLength(2048);
+                b.Property(r => r.Name)
+                    .IsRequired()
+                    .HasMaxLength(2048);
 
-            b.Property(r => r.Position)
-                .IsRequired().HasDefaultValue(0);
-        });
+                b.Property(r => r.Position)
+                    .IsRequired()
+                    .HasDefaultValue(0);
+            });
     }
 
     private static void ConfigureBookCategories(EntityTypeBuilder<Book> builder)
     {
         // https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#many-to-many-with-join-table-foreign-key-names
         builder.HasMany(e => e.Categories)
-            .WithMany(e => e.Books).UsingEntity(
-            "BookCategories",
-            l => l.HasOne(typeof(Category)).WithMany().HasForeignKey(nameof(CategoryId)),
-            r => r.HasOne(typeof(Book)).WithMany().HasForeignKey(nameof(BookId)));
+            .WithMany(e => e.Books)
+            .UsingEntity("BookCategories",
+                l => l.HasOne(typeof(Category))
+                    .WithMany()
+                    .HasForeignKey(nameof(CategoryId)),
+                r => r.HasOne(typeof(Book))
+                    .WithMany()
+                    .HasForeignKey(nameof(BookId)));
     }
 
     private static void ConfigureBookChapters(EntityTypeBuilder<Book> builder)
     {
-        builder.OwnsMany(e => e.Chapters, b =>
-        {
-            b.ToTable("BookChapters");
-            b.WithOwner().HasForeignKey("BookId");
-            b.HasKey("Id", "BookId");
+        builder.OwnsMany(e => e.Chapters,
+            b =>
+            {
+                b.ToTable("BookChapters");
+                b.WithOwner()
+                    .HasForeignKey("BookId");
+                b.HasKey("Id", "BookId");
 
-            b.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasConversion(
-                    id => id.Value,
-                    value => BookChapterId.Create(value));
+                b.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasConversion(id => id.Value, value => BookChapterId.Create(value));
 
-            b.Property("Title")
-                .IsRequired().HasMaxLength(256);
-            b.Property("Content")
-                .IsRequired(false);
-        });
+                b.Property("Title")
+                    .IsRequired()
+                    .HasMaxLength(256);
+                b.Property("Content")
+                    .IsRequired(false);
+            });
     }
 
     private static void ConfigureBookPublisher(EntityTypeBuilder<Book> builder)
     {
-        builder.OwnsOne(e => e.Publisher, b =>
-        {
-            b.Property(r => r.PublisherId)
-                .HasColumnName("PublisherId")
-                .IsRequired()
-                .HasConversion(
-                    id => id.Value,
-                    value => PublisherId.Create(value));
-            b.HasOne(typeof(Publisher)).WithMany().HasForeignKey(nameof(PublisherId)); // FK -> Publisher.Id
+        builder.OwnsOne(e => e.Publisher,
+            b =>
+            {
+                b.Property(r => r.PublisherId)
+                    .HasColumnName("PublisherId")
+                    .IsRequired()
+                    .HasConversion(id => id.Value, value => PublisherId.Create(value));
+                b.HasOne(typeof(Publisher))
+                    .WithMany()
+                    .HasForeignKey(nameof(PublisherId)); // FK -> Publisher.Id
 
-            b.Property(e => e.Name)
-                .HasColumnName("PublisherName")
-                .IsRequired().HasMaxLength(512);
-        });
+                b.Property(e => e.Name)
+                    .HasColumnName("PublisherName")
+                    .IsRequired()
+                    .HasMaxLength(512);
+            });
     }
 
     private static void ConfigureBookKeywords(EntityTypeBuilder<BookKeyword> builder)
@@ -214,9 +241,7 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
-            .HasConversion(
-                id => id.Value,
-                value => BookKeywordId.Create(value));
+            .HasConversion(id => id.Value, value => BookKeywordId.Create(value));
 
         builder.Property(e => e.Text)
             .IsRequired()

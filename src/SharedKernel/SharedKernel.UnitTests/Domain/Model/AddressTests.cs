@@ -50,8 +50,7 @@ public class AddressTests
         var country = string.Empty;
 
         // Act & Assert
-        Should.Throw<DomainRuleException>(() =>
-                Address.Create(name, line1, line2, postalCode, city, country))
+        Should.Throw<DomainRuleException>(() => Address.Create(name, line1, line2, postalCode, city, country))
             .Message.ShouldBe("Invalid address");
     }
 
@@ -69,8 +68,7 @@ public class AddressTests
 
         // Act
         var atomicValues = sut.GetType()
-            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
-            .Invoke(sut, null) as IEnumerable<object>;
+            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.Invoke(sut, null) as IEnumerable<object>;
 
         // Assert
         atomicValues.ShouldNotBeNull();

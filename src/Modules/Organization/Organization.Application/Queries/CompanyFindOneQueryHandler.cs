@@ -6,22 +6,16 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
 using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Domain;
 using Microsoft.Extensions.Logging;
 
-public class CompanyFindOneQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Company> repository)
-        : QueryHandlerBase<CompanyFindOneQuery, Result<Company>>(loggerFactory)
+public class CompanyFindOneQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Company> repository) : QueryHandlerBase<CompanyFindOneQuery, Result<Company>>(loggerFactory)
 {
-    public override async Task<QueryResponse<Result<Company>>> Process(
-        CompanyFindOneQuery query, CancellationToken cancellationToken)
+    public override async Task<QueryResponse<Result<Company>>> Process(CompanyFindOneQuery query, CancellationToken cancellationToken)
     {
-        return QueryResponse.For(
-            await repository.FindOneResultAsync(
-                CompanyId.Create(query.CompanyId),
-                cancellationToken: cancellationToken).AnyContext());
+        return QueryResponse.For(await repository.FindOneResultAsync(CompanyId.Create(query.CompanyId), cancellationToken: cancellationToken)
+            .AnyContext());
     }
 }

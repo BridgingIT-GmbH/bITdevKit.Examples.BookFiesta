@@ -9,9 +9,7 @@ public partial class BookIsbn : ValueObject
     private static readonly Regex Isbn10Regex = Regexes.Isbn10Regex();
     private static readonly Regex Isbn13Regex = Regexes.Isbn13Regex();
 
-    private BookIsbn()
-    {
-    }
+    private BookIsbn() { }
 
     private BookIsbn(string value)
     {
@@ -34,17 +32,25 @@ public partial class BookIsbn : ValueObject
 
     public string Type { get; private set; }
 
-    public static implicit operator BookIsbn(string value) => Create(value); // allows a String value to be implicitly converted to a BookIsbn object.
+    public static implicit operator BookIsbn(string value)
+    {
+        return Create(value);
+        // allows a String value to be implicitly converted to a BookIsbn object.
+    }
 
-    public static implicit operator string(BookIsbn isbn) => isbn.Value; // allows a BookIsbn value to be implicitly converted to a String.
+    public static implicit operator string(BookIsbn isbn)
+    {
+        return isbn.Value;
+        // allows a BookIsbn value to be implicitly converted to a String.
+    }
 
     public static BookIsbn Create(string value)
     {
-        value = value
-            ?.ToUpperInvariant()
+        value = value?.ToUpperInvariant()
             ?.Replace("ISBN-10", string.Empty)
             ?.Replace("ISBN-13", string.Empty)
-            ?.Replace("ISBN", string.Empty)?.Trim() ?? string.Empty;
+            ?.Replace("ISBN", string.Empty)
+            ?.Trim() ?? string.Empty;
 
         return new BookIsbn(value);
     }

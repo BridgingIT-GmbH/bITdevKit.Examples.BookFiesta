@@ -21,7 +21,7 @@ public class CustomerFindAllQueryHandlerTests
         var expectedCustomers = new List<Customer>
         {
             Customer.Create(tenantIds[0], PersonFormalName.Create(["John", "Doe"]), EmailAddress.Create("john.doe@example.com")),
-            Customer.Create(tenantIds[0], PersonFormalName.Create(["Mary", "Jane"]), EmailAddress.Create("mary.jane@example.com")),
+            Customer.Create(tenantIds[0], PersonFormalName.Create(["Mary", "Jane"]), EmailAddress.Create("mary.jane@example.com"))
         };
 
         var repository = Substitute.For<IGenericRepository<Customer>>();
@@ -35,7 +35,9 @@ public class CustomerFindAllQueryHandlerTests
 
         // Assert
         response?.Result.ShouldNotBeNull();
-        response.Result.Value.Count().ShouldBe(expectedCustomers.Count);
-        await repository.Received(1).FindAllAsync(cancellationToken: CancellationToken.None);
+        response.Result.Value.Count()
+            .ShouldBe(expectedCustomers.Count);
+        await repository.Received(1)
+            .FindAllAsync(cancellationToken: CancellationToken.None);
     }
 }

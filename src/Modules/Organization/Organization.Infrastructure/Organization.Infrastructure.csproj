@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BridgingIT.DevKit.Infrastructure.EntityFramework" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="BridgingIT.DevKit.Infrastructure.EntityFramework"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -18,13 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Infrastructure\SharedKernel.Infrastructure.csproj" />
-    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" />
-    <ProjectReference Include="..\$(ModuleName).Domain\$(ModuleName).Domain.csproj" />
+    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Infrastructure\SharedKernel.Infrastructure.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Domain\$(ModuleName).Domain.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EntityFramework\Migrations\" />
+    <Folder Include="EntityFramework\Migrations\"/>
   </ItemGroup>
 
 </Project>

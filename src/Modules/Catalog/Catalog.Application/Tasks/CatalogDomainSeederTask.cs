@@ -7,9 +7,9 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using System.Threading;
 using System.Threading.Tasks;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 public class CatalogDomainSeederTask(

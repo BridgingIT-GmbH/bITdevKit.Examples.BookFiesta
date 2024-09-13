@@ -16,9 +16,7 @@ public abstract class TenantAwareEntityTypeConfiguration<TEntity> : IEntityTypeC
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
         builder.Property<TenantId>("TenantId")
-            .HasConversion(
-                id => id.Value,
-                value => TenantId.Create(value))
+            .HasConversion(id => id.Value, value => TenantId.Create(value))
             .IsRequired();
 
         builder.HasIndex("TenantId");
@@ -41,9 +39,7 @@ public class TenantReferenceEntityTypeConfiguration : IEntityTypeConfiguration<T
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
-            .HasConversion(
-                id => id.Value,
-                value => TenantId.Create(value));
+            .HasConversion(id => id.Value, value => TenantId.Create(value));
 
         builder.ToTable(tb => tb.ExcludeFromMigrations());
     }

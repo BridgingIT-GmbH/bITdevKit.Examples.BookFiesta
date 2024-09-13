@@ -6,24 +6,20 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Commands;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
-public class CustomerUpdateCommandHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Customer> repository)
-        : CommandHandlerBase<CustomerUpdateCommand, Result<Customer>>(loggerFactory)
+public class CustomerUpdateCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
+    : CommandHandlerBase<CustomerUpdateCommand, Result<Customer>>(loggerFactory)
 {
-    public override async Task<CommandResponse<Result<Customer>>> Process(
-        CustomerUpdateCommand command, CancellationToken cancellationToken)
+    public override async Task<CommandResponse<Result<Customer>>> Process(CustomerUpdateCommand command, CancellationToken cancellationToken)
     {
         var tenantId = TenantId.Create(command.TenantId); // TODO: use in findone query or check later > notfoundexception
-        var customerResult = await repository.FindOneResultAsync(
-            CustomerId.Create(command.Model.Id), cancellationToken: cancellationToken);
+        var customerResult = await repository.FindOneResultAsync(CustomerId.Create(command.Model.Id), cancellationToken: cancellationToken);
 
         if (customerResult.IsFailure)
         {
@@ -32,14 +28,16 @@ public class CustomerUpdateCommandHandler(
 
         DomainRules.Apply([]);
 
-        customerResult.Value.SetName(
-            PersonFormalName.Create(command.Model.PersonName.Parts, command.Model.PersonName.Title, command.Model.PersonName.Suffix));
-        customerResult.Value.SetAddress(
-            Address.Create(
-                command.Model.Address.Name, command.Model.Address.Line1, command.Model.Address.Line2,
-                command.Model.Address.PostalCode, command.Model.Address.City, command.Model.Address.Country));
+        customerResult.Value.SetName(PersonFormalName.Create(command.Model.PersonName.Parts, command.Model.PersonName.Title, command.Model.PersonName.Suffix));
+        customerResult.Value.SetAddress(Address.Create(command.Model.Address.Name,
+            command.Model.Address.Line1,
+            command.Model.Address.Line2,
+            command.Model.Address.PostalCode,
+            command.Model.Address.City,
+            command.Model.Address.Country));
 
-        await repository.UpsertAsync(customerResult.Value, cancellationToken).AnyContext();
+        await repository.UpsertAsync(customerResult.Value, cancellationToken)
+            .AnyContext();
 
         return CommandResponse.Success(customerResult.Value);
     }

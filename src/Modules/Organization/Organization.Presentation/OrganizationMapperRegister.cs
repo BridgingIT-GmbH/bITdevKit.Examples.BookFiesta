@@ -7,8 +7,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentatio
 
 using System.Linq;
 using BridgingIT.DevKit.Domain.Model;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Application;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Mapster;
@@ -25,11 +25,7 @@ public class OrganizationMapperRegister : IRegister
     {
         config.ForType<CompanyModel, Company>()
             .IgnoreNullValues(true)
-            .ConstructUsing(src => Company.Create(
-                src.Name,
-                src.RegistrationNumber,
-                EmailAddress.Create(src.ContactEmail),
-                MapAddress(src.Address)))
+            .ConstructUsing(src => Company.Create(src.Name, src.RegistrationNumber, EmailAddress.Create(src.ContactEmail), MapAddress(src.Address)))
             .AfterMapping((src, dest) =>
             {
                 if (dest.Id != null)
@@ -70,11 +66,9 @@ public class OrganizationMapperRegister : IRegister
 
         config.ForType<(TenantSubscriptionModel subscriptionModel, Tenant tenant), TenantSubscription>()
             .IgnoreNullValues(true)
-            .ConstructUsing(src =>
-                TenantSubscription.Create(
-                    src.tenant,
-                    Enumeration.FromId<TenantSubscriptionPlanType>(src.subscriptionModel.PlanType),
-                    DateSchedule.Create(src.subscriptionModel.Schedule.StartDate, src.subscriptionModel.Schedule.EndDate)))
+            .ConstructUsing(src => TenantSubscription.Create(src.tenant,
+                Enumeration.FromId<TenantSubscriptionPlanType>(src.subscriptionModel.PlanType),
+                DateSchedule.Create(src.subscriptionModel.Schedule.StartDate, src.subscriptionModel.Schedule.EndDate)))
             .AfterMapping((src, dest) =>
             {
                 if (dest.Id != null)
@@ -111,13 +105,7 @@ public class OrganizationMapperRegister : IRegister
             return null;
         }
 
-        return Address.Create(
-            source.Name,
-            source.Line1,
-            source.Line2,
-            source.PostalCode,
-            source.City,
-            source.Country);
+        return Address.Create(source.Name, source.Line1, source.Line2, source.PostalCode, source.City, source.Country);
     }
 
     private static void MapSubscriptions(TenantSubscriptionModel[] sources, Tenant destination)

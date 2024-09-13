@@ -7,7 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
@@ -20,117 +20,117 @@ public class Currency : ValueObject
     {
         // source: https://www.xe.com/symbols/
         Currencies = new Dictionary<string, string>()
-            {
-                { "ALL", "Lek" },
-                { "AFN", "؋" },
-                { "ARS", "$" },
-                { "AWG", "ƒ" },
-                { "AUD", "$" },
-                { "AZN", "₼" },
-                { "BSD", "$" },
-                { "BBD", "$" },
-                { "BYN", "Br" },
-                { "BZD", "BZ$" },
-                { "BMD", "$" },
-                { "BOB", "$b" },
-                { "BAM", "KM" },
-                { "BWP", "P" },
-                { "BGN", "лв" },
-                { "BRL", "R$" },
-                { "BND", "$" },
-                { "KHR", "៛" },
-                { "CAD", "$" },
-                { "KYD", "$" },
-                { "CLP", "$" },
-                { "CNY", "¥" },
-                { "COP", "$" },
-                { "CRC", "₡" },
-                { "HRK", "kn" },
-                { "CUP", "₱" },
-                { "CZK", "Kč" },
-                { "DKK", "kr" },
-                { "DOP", "RD$" },
-                { "XCD", "$" },
-                { "EGP", "£" },
-                { "SVC", "$" },
-                { "EUR", "€" },
-                { "FKP", "£" },
-                { "FJD", "$" },
-                { "GHS", "¢" },
-                { "GIP", "£" },
-                { "GTQ", "Q" },
-                { "GGP", "£" },
-                { "GYD", "$" },
-                { "HNL", "L" },
-                { "HKD", "$" },
-                { "HUF", "Ft" },
-                { "ISK", "kr" },
-                { "INR", "₹" },
-                { "IDR", "Rp" },
-                { "IRR", "﷼" },
-                { "IMP", "£" },
-                { "ILS", "₪" },
-                { "JMD", "J$" },
-                { "JPY", "¥" },
-                { "JEP", "£" },
-                { "KZT", "лв" },
-                { "KPW", "₩" },
-                { "KRW", "₩" },
-                { "KGS", "лв" },
-                { "LAK", "₭" },
-                { "LBP", "£" },
-                { "LRD", "$" },
-                { "MKD", "ден" },
-                { "MYR", "RM" },
-                { "MUR", "₨" },
-                { "MXN", "$" },
-                { "MNT", "₮" },
-                { "MZN", "MT" },
-                { "NAD", "$" },
-                { "NPR", "₨" },
-                { "ANG", "ƒ" },
-                { "NZD", "$" },
-                { "NIO", "C$" },
-                { "NGN", "₦" },
-                { "NOK", "kr" },
-                { "OMR", "﷼" },
-                { "PKR", "₨" },
-                { "PAB", "B/." },
-                { "PYG", "Gs" },
-                { "PEN", "S/." },
-                { "PHP", "₱" },
-                { "PLN", "zł" },
-                { "QAR", "﷼" },
-                { "RON", "lei" },
-                { "RUB", "₽" },
-                { "SHP", "£" },
-                { "SAR", "﷼" },
-                { "RSD", "Дин." },
-                { "SCR", "₨" },
-                { "SGD", "$" },
-                { "SBD", "$" },
-                { "SOS", "S" },
-                { "ZAR", "R" },
-                { "LKR", "₨" },
-                { "SEK", "kr" },
-                { "CHF", "CHF" },
-                { "SRD", "$" },
-                { "SYP", "£" },
-                { "TWD", "NT$" },
-                { "THB", "฿" },
-                { "TTD", "TT$" },
-                { "TRY", "₺" },
-                { "TVD", "$" },
-                { "UAH", "₴" },
-                { "GBP", "£" },
-                { "USD", "$" },
-                { "UYU", "$U" },
-                { "UZS", "лв" },
-                { "VEF", "Bs" },
-                { "VND", "₫" },
-                { "YER", "﷼" },
-                { "ZWD", "Z$" },
-            };
+        {
+            { "ALL", "Lek" },
+            { "AFN", "؋" },
+            { "ARS", "$" },
+            { "AWG", "ƒ" },
+            { "AUD", "$" },
+            { "AZN", "₼" },
+            { "BSD", "$" },
+            { "BBD", "$" },
+            { "BYN", "Br" },
+            { "BZD", "BZ$" },
+            { "BMD", "$" },
+            { "BOB", "$b" },
+            { "BAM", "KM" },
+            { "BWP", "P" },
+            { "BGN", "лв" },
+            { "BRL", "R$" },
+            { "BND", "$" },
+            { "KHR", "៛" },
+            { "CAD", "$" },
+            { "KYD", "$" },
+            { "CLP", "$" },
+            { "CNY", "¥" },
+            { "COP", "$" },
+            { "CRC", "₡" },
+            { "HRK", "kn" },
+            { "CUP", "₱" },
+            { "CZK", "Kč" },
+            { "DKK", "kr" },
+            { "DOP", "RD$" },
+            { "XCD", "$" },
+            { "EGP", "£" },
+            { "SVC", "$" },
+            { "EUR", "€" },
+            { "FKP", "£" },
+            { "FJD", "$" },
+            { "GHS", "¢" },
+            { "GIP", "£" },
+            { "GTQ", "Q" },
+            { "GGP", "£" },
+            { "GYD", "$" },
+            { "HNL", "L" },
+            { "HKD", "$" },
+            { "HUF", "Ft" },
+            { "ISK", "kr" },
+            { "INR", "₹" },
+            { "IDR", "Rp" },
+            { "IRR", "﷼" },
+            { "IMP", "£" },
+            { "ILS", "₪" },
+            { "JMD", "J$" },
+            { "JPY", "¥" },
+            { "JEP", "£" },
+            { "KZT", "лв" },
+            { "KPW", "₩" },
+            { "KRW", "₩" },
+            { "KGS", "лв" },
+            { "LAK", "₭" },
+            { "LBP", "£" },
+            { "LRD", "$" },
+            { "MKD", "ден" },
+            { "MYR", "RM" },
+            { "MUR", "₨" },
+            { "MXN", "$" },
+            { "MNT", "₮" },
+            { "MZN", "MT" },
+            { "NAD", "$" },
+            { "NPR", "₨" },
+            { "ANG", "ƒ" },
+            { "NZD", "$" },
+            { "NIO", "C$" },
+            { "NGN", "₦" },
+            { "NOK", "kr" },
+            { "OMR", "﷼" },
+            { "PKR", "₨" },
+            { "PAB", "B/." },
+            { "PYG", "Gs" },
+            { "PEN", "S/." },
+            { "PHP", "₱" },
+            { "PLN", "zł" },
+            { "QAR", "﷼" },
+            { "RON", "lei" },
+            { "RUB", "₽" },
+            { "SHP", "£" },
+            { "SAR", "﷼" },
+            { "RSD", "Дин." },
+            { "SCR", "₨" },
+            { "SGD", "$" },
+            { "SBD", "$" },
+            { "SOS", "S" },
+            { "ZAR", "R" },
+            { "LKR", "₨" },
+            { "SEK", "kr" },
+            { "CHF", "CHF" },
+            { "SRD", "$" },
+            { "SYP", "£" },
+            { "TWD", "NT$" },
+            { "THB", "฿" },
+            { "TTD", "TT$" },
+            { "TRY", "₺" },
+            { "TVD", "$" },
+            { "UAH", "₴" },
+            { "GBP", "£" },
+            { "USD", "$" },
+            { "UYU", "$U" },
+            { "UZS", "лв" },
+            { "VEF", "Bs" },
+            { "VND", "₫" },
+            { "YER", "﷼" },
+            { "ZWD", "Z$" }
+        };
     }
 
     private Currency() { } // Private constructor required by EF Core
@@ -360,10 +360,21 @@ public class Currency : ValueObject
 
     public string Code { get; private set; }
 
-    public string Symbol => Currencies.First(c => c.Key == this.Code).Value;
+    public string Symbol =>
+        Currencies.First(c => c.Key == this.Code)
+            .Value;
 
-    public static implicit operator string(Currency currency) => currency?.Code; // allows a Currency value to be implicitly converted to a string.
-    public static implicit operator Currency(string value) => new(value); // allows a string value to be implicitly converted to a Currency object.
+    public static implicit operator string(Currency currency)
+    {
+        return currency?.Code;
+        // allows a Currency value to be implicitly converted to a string.
+    }
+
+    public static implicit operator Currency(string value)
+    {
+        return new Currency(value);
+        // allows a string value to be implicitly converted to a Currency object.
+    }
 
     public static Currency Create(string code)
     {
@@ -375,7 +386,11 @@ public class Currency : ValueObject
         return new Currency(code); //Currencies.First(c => c.Key == code).Value; //Currencies[code];
     }
 
-    public override string ToString() => $"{this.Symbol}"; // https://social.technet.microsoft.com/wiki/contents/articles/27931.currency-formatting-in-c.aspx
+    public override string ToString()
+    {
+        return $"{this.Symbol}";
+        // https://social.technet.microsoft.com/wiki/contents/articles/27931.currency-formatting-in-c.aspx
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

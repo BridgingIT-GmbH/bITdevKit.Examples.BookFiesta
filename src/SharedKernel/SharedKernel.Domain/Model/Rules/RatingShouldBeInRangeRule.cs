@@ -22,5 +22,7 @@ public class RatingShouldBeInRangeRule(int value) : DomainRuleBase
 public static partial class RatingRules
 {
     public static IDomainRule ShouldBeInRange(int value)
-        => new RatingShouldBeInRangeRule(value);
+    {
+        return new RatingShouldBeInRangeRule(value);
+    }
 }

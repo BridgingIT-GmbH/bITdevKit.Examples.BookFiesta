@@ -1,7 +1,7 @@
 ﻿namespace Aspire.Hosting;
 
 using System;
-using Aspire.Hosting.ApplicationModel;
+using ApplicationModel;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 /// <summary>
@@ -14,7 +14,7 @@ public class HealthCheckAnnotation(Func<IResource, CancellationToken, Task<IHeal
 
     public static HealthCheckAnnotation Create(Func<string, IHealthCheck> connectionStringFactory)
     {
-        return new(async (resource, token) =>
+        return new HealthCheckAnnotation(async (resource, token) =>
         {
             if (resource is not IResourceWithConnectionString c)
             {

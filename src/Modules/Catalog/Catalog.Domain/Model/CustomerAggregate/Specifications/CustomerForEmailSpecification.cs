@@ -3,8 +3,7 @@
 using BridgingIT.DevKit.Domain.Specifications;
 using System.Linq.Expressions;
 
-public class CustomerForEmailSpecification(TenantId tenantId, EmailAddress email)
-    : Specification<Customer>
+public class CustomerForEmailSpecification(TenantId tenantId, EmailAddress email) : Specification<Customer>
 {
     public override Expression<Func<Customer, bool>> ToExpression()
     {
@@ -15,8 +14,12 @@ public class CustomerForEmailSpecification(TenantId tenantId, EmailAddress email
 public static partial class CustomerSpecifications
 {
     public static Specification<Customer> ForEmail(TenantId tenantId, EmailAddress email)
-        => new CustomerForEmailSpecification(tenantId, email);
+    {
+        return new CustomerForEmailSpecification(tenantId, email);
+    }
 
     public static Specification<Customer> ForEmail2(TenantId tenantId, EmailAddress email) // INFO: short version to define a specification
-        => new(e => e.TenantId == tenantId && e.Email.Value == email.Value);
+    {
+        return new Specification<Customer>(e => e.TenantId == tenantId && e.Email.Value == email.Value);
+    }
 }

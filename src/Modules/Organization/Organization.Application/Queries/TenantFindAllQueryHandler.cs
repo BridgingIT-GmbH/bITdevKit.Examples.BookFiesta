@@ -8,31 +8,25 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Domain.Specifications;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Domain;
 using Microsoft.Extensions.Logging;
 
-public class TenantFindAllQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Tenant> repository)
-        : QueryHandlerBase<TenantFindAllQuery, Result<IEnumerable<Tenant>>>(loggerFactory)
+public class TenantFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Tenant> repository)
+    : QueryHandlerBase<TenantFindAllQuery, Result<IEnumerable<Tenant>>>(loggerFactory)
 {
-    public override async Task<QueryResponse<Result<IEnumerable<Tenant>>>> Process(
-        TenantFindAllQuery query, CancellationToken cancellationToken)
+    public override async Task<QueryResponse<Result<IEnumerable<Tenant>>>> Process(TenantFindAllQuery query, CancellationToken cancellationToken)
     {
         var specifications = new List<ISpecification<Tenant>>();
 
         if (!query.CompanyId.IsNullOrEmpty())
         {
-            specifications.Add(
-                TenantSpecifications.ForCompany(CompanyId.Create(query.CompanyId)));
+            specifications.Add(TenantSpecifications.ForCompany(CompanyId.Create(query.CompanyId)));
         }
 
-        return QueryResponse.For(
-                await repository.FindAllResultAsync(
-                    specifications,
-                    new FindOptions<Tenant>() { Order = new OrderOption<Tenant>(e => e.Name) }, cancellationToken: cancellationToken).AnyContext());
+        return QueryResponse.For(await repository.FindAllResultAsync(specifications, new FindOptions<Tenant>() { Order = new OrderOption<Tenant>(e => e.Name) }, cancellationToken)
+            .AnyContext());
     }
 }

@@ -14,7 +14,7 @@ public class VatNumber : ValueObject
         ["DE"] = new Regex(@"^DE[0-9]{9}$", RegexOptions.Compiled),
         ["GB"] = new Regex(@"^GB([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})$", RegexOptions.Compiled),
         ["FR"] = new Regex(@"^FR[A-Z0-9]{2}[0-9]{9}$", RegexOptions.Compiled),
-        ["US"] = new Regex(@"^US[0-9]{2}-[0-9]{7}$", RegexOptions.Compiled),
+        ["US"] = new Regex(@"^US[0-9]{2}-[0-9]{7}$", RegexOptions.Compiled)
         // Add more countries as needed
     };
 
@@ -30,9 +30,15 @@ public class VatNumber : ValueObject
 
     public string Number { get; }
 
-    public static implicit operator string(VatNumber vatNumber) =>vatNumber.ToString();
+    public static implicit operator string(VatNumber vatNumber)
+    {
+        return vatNumber.ToString();
+    }
 
-    public static implicit operator VatNumber(string value) => Create(value);
+    public static implicit operator VatNumber(string value)
+    {
+        return Create(value);
+    }
 
     public static VatNumber Create(string value)
     {

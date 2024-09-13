@@ -6,27 +6,25 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using System.Threading.Tasks;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 
-public class CustomerEmailMustBeUniqueRule(
-    IGenericRepository<Customer> repository,
-    Customer customer) : DomainRuleBase
+public class CustomerEmailMustBeUniqueRule(IGenericRepository<Customer> repository, Customer customer) : DomainRuleBase
 {
     public override string Message => "Customer email should be unique";
 
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
-        return !(await repository.FindAllAsync(
-            CustomerSpecifications.ForEmail(customer.TenantId, customer.Email), cancellationToken: cancellationToken)).SafeAny();
+        return !(await repository.FindAllAsync(CustomerSpecifications.ForEmail(customer.TenantId, customer.Email), cancellationToken: cancellationToken)).SafeAny();
     }
 }
 
 public static partial class CustomerRules
 {
-    public static IDomainRule EmailMustBeUnique(
-        IGenericRepository<Customer> repository,
-        Customer customer) => new CustomerEmailMustBeUniqueRule(repository, customer);
+    public static IDomainRule EmailMustBeUnique(IGenericRepository<Customer> repository, Customer customer)
+    {
+        return new CustomerEmailMustBeUniqueRule(repository, customer);
+    }
 }

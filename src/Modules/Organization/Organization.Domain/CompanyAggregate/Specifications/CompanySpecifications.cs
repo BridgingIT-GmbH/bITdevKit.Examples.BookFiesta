@@ -8,8 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 using BridgingIT.DevKit.Domain.Specifications;
 using System.Linq.Expressions;
 
-public class CompanyForNameSpecification(string name)
-    : Specification<Company>
+public class CompanyForNameSpecification(string name) : Specification<Company>
 {
     public override Expression<Func<Company, bool>> ToExpression()
     {
@@ -29,10 +28,14 @@ public class CompanyForNameSpecification(string name)
 public static partial class CompanySpecifications
 {
     public static Specification<Company> ForName(string name)
-        => new CompanyForNameSpecification(name);
+    {
+        return new CompanyForNameSpecification(name);
+    }
 
     public static Specification<Company> ForName2(string name) // INFO: short version to define a specification
-        => new(e => e.Name == name);
+    {
+        return new Specification<Company>(e => e.Name == name);
+    }
 
     //public static Specification<Company> ForTenant(TenantId tenantId)
     //    => new CompanyForTenantSpecification(tenantId);

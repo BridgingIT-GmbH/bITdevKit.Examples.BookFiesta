@@ -5,6 +5,4 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class BookCreatedMessage
-{
-}
+public class BookCreatedMessage { }

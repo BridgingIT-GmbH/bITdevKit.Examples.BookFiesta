@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Using Include="System" />
-    <Using Include="System.Text" />
-    <Using Include="System.Linq" />
+    <Using Include="System"/>
+    <Using Include="System.Text"/>
+    <Using Include="System.Linq"/>
   </ItemGroup>
 
   <PropertyGroup>
@@ -27,7 +27,7 @@
   </ItemGroup>-->
 
   <ItemGroup>
-    <PackageReference Include="Ensure.That" />
+    <PackageReference Include="Ensure.That"/>
     <PackageReference Include="StyleCop.Analyzers" PrivateAssets="All" IncludeAssets="runtime; build; native; contentfiles; analyzers"/>
   </ItemGroup>
 

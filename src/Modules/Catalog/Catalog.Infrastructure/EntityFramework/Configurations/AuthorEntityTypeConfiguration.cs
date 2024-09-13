@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -28,23 +28,21 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
             .HasKey(e => e.Id)
             .IsClustered(false);
 
-        builder.Navigation(e => e.Tags).AutoInclude();
+        builder.Navigation(e => e.Tags)
+            .AutoInclude();
 
-        builder.Property(e => e.Version).IsConcurrencyToken();
+        builder.Property(e => e.Version)
+            .IsConcurrencyToken();
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
-            .HasConversion(
-                id => id.Value,
-                value => AuthorId.Create(value));
+            .HasConversion(id => id.Value, value => AuthorId.Create(value));
 
         //builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
         builder.Property(e => e.TenantId)
-            .HasConversion(
-                id => id.Value,
-                value => TenantId.Create(value))
+            .HasConversion(id => id.Value, value => TenantId.Create(value))
             .IsRequired();
 
         //builder.HasIndex(e => e.TenantId);
@@ -55,30 +53,34 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
         //    .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(a => a.Biography)
-            .IsRequired(false).HasMaxLength(4096);
+            .IsRequired(false)
+            .HasMaxLength(4096);
 
-        builder.OwnsOne(e => e.PersonName, b =>
-        {
-            b.Property(e => e.Title)
-                .HasColumnName("PersonNameTitle")
-                .IsRequired(false).HasMaxLength(64);
-            b.Property(e => e.Parts)
-                .HasColumnName("PersonNameParts")
-                .IsRequired(true).HasMaxLength(1024)
-                .HasConversion(
-                    parts => string.Join("|", parts),
-                    value => value.Split("|", StringSplitOptions.RemoveEmptyEntries),
-                    new ValueComparer<IEnumerable<string>>(
-                        (c1, c2) => c1.SequenceEqual(c2),
-                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                        c => c.AsEnumerable()));
-            b.Property(e => e.Suffix)
-                .HasColumnName("PersonNameSuffix")
-                .IsRequired(false).HasMaxLength(64);
-            b.Property(e => e.Full)
-                .HasColumnName("PersonNameFull")
-                .IsRequired(true).HasMaxLength(2048);
-        });
+        builder.OwnsOne(e => e.PersonName,
+            b =>
+            {
+                b.Property(e => e.Title)
+                    .HasColumnName("PersonNameTitle")
+                    .IsRequired(false)
+                    .HasMaxLength(64);
+                b.Property(e => e.Parts)
+                    .HasColumnName("PersonNameParts")
+                    .IsRequired(true)
+                    .HasMaxLength(1024)
+                    .HasConversion(parts => string.Join("|", parts),
+                        value => value.Split("|", StringSplitOptions.RemoveEmptyEntries),
+                        new ValueComparer<IEnumerable<string>>((c1, c2) => c1.SequenceEqual(c2),
+                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                            c => c.AsEnumerable()));
+                b.Property(e => e.Suffix)
+                    .HasColumnName("PersonNameSuffix")
+                    .IsRequired(false)
+                    .HasMaxLength(64);
+                b.Property(e => e.Full)
+                    .HasColumnName("PersonNameFull")
+                    .IsRequired(true)
+                    .HasMaxLength(2048);
+            });
 
         builder.HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
             .WithMany()
@@ -91,28 +93,31 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
         // Assuming a many-to-many relationship is managed through BookEntityTypeConfiguration
 
         builder.Metadata.FindNavigation(nameof(Author.Books))
-           .SetPropertyAccessMode(PropertyAccessMode.Field);
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 
     private static void ConfigureAuthorBooks(EntityTypeBuilder<Author> builder)
     {
-        builder.OwnsMany(e => e.Books, b =>
-        {
-            b.ToTable("AuthorBooks")
-                .HasKey("AuthorId", "BookId");
-            b.HasIndex("AuthorId", "BookId");
+        builder.OwnsMany(e => e.Books,
+            b =>
+            {
+                b.ToTable("AuthorBooks")
+                    .HasKey("AuthorId", "BookId");
+                b.HasIndex("AuthorId", "BookId");
 
-            b.WithOwner().HasForeignKey("AuthorId");
+                b.WithOwner()
+                    .HasForeignKey("AuthorId");
 
-            b.Property(r => r.BookId)
-                .IsRequired()
-                .HasConversion(
-                    id => id.Value,
-                    value => BookId.Create(value));
-            b.HasOne(typeof(Book)).WithMany().HasForeignKey(nameof(BookId)); // FK -> Book.Id
+                b.Property(r => r.BookId)
+                    .IsRequired()
+                    .HasConversion(id => id.Value, value => BookId.Create(value));
+                b.HasOne(typeof(Book))
+                    .WithMany()
+                    .HasForeignKey(nameof(BookId)); // FK -> Book.Id
 
-            b.Property(r => r.Title)
-                .IsRequired().HasMaxLength(512);
-        });
+                b.Property(r => r.Title)
+                    .IsRequired()
+                    .HasMaxLength(512);
+            });
     }
 }

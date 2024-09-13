@@ -12,9 +12,7 @@ public class AverageRating : ValueObject
 {
     private double value;
 
-    private AverageRating()
-    {
-    }
+    private AverageRating() { }
 
     private AverageRating(double value, int amount)
     {
@@ -22,11 +20,18 @@ public class AverageRating : ValueObject
         this.Amount = amount;
     }
 
-    public double? Value { get => this.Amount > 0 ? this.value : null; private set => this.value = value!.Value; }
+    public double? Value
+    {
+        get => this.Amount > 0 ? this.value : null;
+        private set => this.value = value!.Value;
+    }
 
     public int Amount { get; private set; }
 
-    public static implicit operator double(AverageRating rating) => rating.Value ?? 0;
+    public static implicit operator double(AverageRating rating)
+    {
+        return rating.Value ?? 0;
+    }
 
     public static AverageRating Create(double value = 0, int amount = 0)
     {

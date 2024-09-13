@@ -6,27 +6,25 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using System.Threading.Tasks;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 
-public class BookIsbnMustBeUniqueRule(
-    IGenericRepository<Book> repository,
-    Book book) : DomainRuleBase
+public class BookIsbnMustBeUniqueRule(IGenericRepository<Book> repository, Book book) : DomainRuleBase
 {
     public override string Message => "Book ISBN should be unique";
 
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
-        return !(await repository.FindAllAsync(
-            BookSpecifications.ForIsbn(book.Isbn), cancellationToken: cancellationToken)).SafeAny();
+        return !(await repository.FindAllAsync(BookSpecifications.ForIsbn(book.Isbn), cancellationToken: cancellationToken)).SafeAny();
     }
 }
 
 public static partial class BookRules
 {
-    public static IDomainRule IsbnMustBeUnique(
-        IGenericRepository<Book> repository,
-        Book book) => new BookIsbnMustBeUniqueRule(repository, book);
+    public static IDomainRule IsbnMustBeUnique(IGenericRepository<Book> repository, Book book)
+    {
+        return new BookIsbnMustBeUniqueRule(repository, book);
+    }
 }

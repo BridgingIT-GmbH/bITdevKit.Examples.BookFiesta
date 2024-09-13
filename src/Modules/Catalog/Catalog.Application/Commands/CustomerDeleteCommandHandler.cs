@@ -6,24 +6,20 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Commands;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
 
-public class CustomerDeleteCommandHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Customer> repository)
-        : CommandHandlerBase<CustomerDeleteCommand, Result<Customer>>(loggerFactory)
+public class CustomerDeleteCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
+    : CommandHandlerBase<CustomerDeleteCommand, Result<Customer>>(loggerFactory)
 {
-    public override async Task<CommandResponse<Result<Customer>>> Process(
-        CustomerDeleteCommand command, CancellationToken cancellationToken)
+    public override async Task<CommandResponse<Result<Customer>>> Process(CustomerDeleteCommand command, CancellationToken cancellationToken)
     {
         var tenantId = TenantId.Create(command.TenantId); // TODO: use in findone query or check later > notfoundexception
-        var customerResult = await repository.FindOneResultAsync(
-            CustomerId.Create(command.Id), cancellationToken: cancellationToken);
+        var customerResult = await repository.FindOneResultAsync(CustomerId.Create(command.Id), cancellationToken: cancellationToken);
 
         if (customerResult.IsFailure)
         {
@@ -32,7 +28,8 @@ public class CustomerDeleteCommandHandler(
 
         DomainRules.Apply([]);
 
-        await repository.DeleteAsync(customerResult.Value, cancellationToken).AnyContext();
+        await repository.DeleteAsync(customerResult.Value, cancellationToken)
+            .AnyContext();
 
         return CommandResponse.Success(customerResult.Value);
     }

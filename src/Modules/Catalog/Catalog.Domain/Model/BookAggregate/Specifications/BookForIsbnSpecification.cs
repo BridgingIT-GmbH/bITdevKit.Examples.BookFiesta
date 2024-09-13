@@ -3,8 +3,7 @@
 using BridgingIT.DevKit.Domain.Specifications;
 using System.Linq.Expressions;
 
-public class BookForIsbnSpecification(BookIsbn isbn)
-    : Specification<Book>
+public class BookForIsbnSpecification(BookIsbn isbn) : Specification<Book>
 {
     public override Expression<Func<Book, bool>> ToExpression()
     {
@@ -15,8 +14,12 @@ public class BookForIsbnSpecification(BookIsbn isbn)
 public static partial class BookSpecifications
 {
     public static Specification<Book> ForIsbn(BookIsbn isbn)
-        => new BookForIsbnSpecification(isbn);
+    {
+        return new BookForIsbnSpecification(isbn);
+    }
 
     public static Specification<Book> ForIsbn2(BookIsbn isbn) // INFO: short version to define a specification
-        => new(e => e.Isbn.Value == isbn.Value);
+    {
+        return new Specification<Book>(e => e.Isbn.Value == isbn.Value);
+    }
 }

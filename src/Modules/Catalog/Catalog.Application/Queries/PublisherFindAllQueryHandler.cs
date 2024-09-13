@@ -8,21 +8,17 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 using Microsoft.Extensions.Logging;
 
-public class PublisherFindAllQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Publisher> repository)
-        : QueryHandlerBase<PublisherFindAllQuery, Result<IEnumerable<Publisher>>>(loggerFactory)
+public class PublisherFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Publisher> repository)
+    : QueryHandlerBase<PublisherFindAllQuery, Result<IEnumerable<Publisher>>>(loggerFactory)
 {
-    public override async Task<QueryResponse<Result<IEnumerable<Publisher>>>> Process(
-        PublisherFindAllQuery query, CancellationToken cancellationToken)
+    public override async Task<QueryResponse<Result<IEnumerable<Publisher>>>> Process(PublisherFindAllQuery query, CancellationToken cancellationToken)
     {
-        return QueryResponse.For(
-            await repository.FindAllResultAsync(
-                new FindOptions<Publisher>() { Order = new OrderOption<Publisher>(e => e.Name) }, cancellationToken: cancellationToken).AnyContext());
+        return QueryResponse.For(await repository.FindAllResultAsync(new FindOptions<Publisher>() { Order = new OrderOption<Publisher>(e => e.Name) }, cancellationToken)
+            .AnyContext());
     }
 }

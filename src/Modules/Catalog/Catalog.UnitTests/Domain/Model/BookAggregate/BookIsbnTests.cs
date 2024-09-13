@@ -42,8 +42,7 @@ public class BookIsbnTests
         else
         {
             // Act & Assert
-            Should.Throw<ArgumentException>(() =>
-                BookIsbn.Create(isbnValue));
+            Should.Throw<ArgumentException>(() => BookIsbn.Create(isbnValue));
         }
     }
 }

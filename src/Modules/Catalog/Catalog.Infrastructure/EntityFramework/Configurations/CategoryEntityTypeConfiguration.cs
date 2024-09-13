@@ -7,7 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 
@@ -21,24 +21,22 @@ public class CategoryEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
             .HasKey(e => e.Id)
             .IsClustered(false);
 
-        builder.Navigation(e => e.Parent).AutoInclude(false);
+        builder.Navigation(e => e.Parent)
+            .AutoInclude(false);
         //builder.Navigation(e => e.Children).AutoInclude();
 
-        builder.Property(e => e.Version).IsConcurrencyToken();
+        builder.Property(e => e.Version)
+            .IsConcurrencyToken();
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
-            .HasConversion(
-                id => id.Value,
-                value => CategoryId.Create(value));
+            .HasConversion(id => id.Value, value => CategoryId.Create(value));
 
         //builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
         builder.Property(e => e.TenantId)
-            .HasConversion(
-                id => id.Value,
-                value => TenantId.Create(value))
+            .HasConversion(id => id.Value, value => TenantId.Create(value))
             .IsRequired();
         //builder.HasIndex(e => e.TenantId);
         //builder.HasOne("organization.Tenants")
@@ -47,13 +45,15 @@ public class CategoryEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
         //    .IsRequired();
 
         builder.Property(e => e.Title)
-            .IsRequired().HasMaxLength(512);
+            .IsRequired()
+            .HasMaxLength(512);
 
         builder.Property(e => e.Description)
             .IsRequired(false);
 
         builder.Property(e => e.Order)
-            .IsRequired(true).HasDefaultValue(0);
+            .IsRequired(true)
+            .HasDefaultValue(0);
 
         builder.HasMany(c => c.Children)
             .WithOne(c => c.Parent)

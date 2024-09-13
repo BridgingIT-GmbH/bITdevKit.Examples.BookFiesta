@@ -7,13 +7,11 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application
 
 using System.Threading;
 using System.Threading.Tasks;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Domain;
 
-public class OrganizationDomainSeederTask(
-    IGenericRepository<Company> companyRepository,
-    IGenericRepository<Tenant> tenantRepository) : IStartupTask
+public class OrganizationDomainSeederTask(IGenericRepository<Company> companyRepository, IGenericRepository<Tenant> tenantRepository) : IStartupTask
 {
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {

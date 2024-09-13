@@ -10,7 +10,6 @@ using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Value={Value}")]
-
 public partial class EmailAddress : ValueObject
 {
     private EmailAddress() { } // Private constructor required by EF Core
@@ -22,8 +21,15 @@ public partial class EmailAddress : ValueObject
 
     public string Value { get; private set; }
 
-    public static implicit operator string(EmailAddress email) => email.Value;
-    public static implicit operator EmailAddress(string email) => Create(email);
+    public static implicit operator string(EmailAddress email)
+    {
+        return email.Value;
+    }
+
+    public static implicit operator EmailAddress(string email)
+    {
+        return Create(email);
+    }
 
     public static EmailAddress Create(string value)
     {
@@ -41,7 +47,10 @@ public partial class EmailAddress : ValueObject
         return new EmailAddress(value);
     }
 
-    public override string ToString() => this.Value;
+    public override string ToString()
+    {
+        return this.Value;
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
@@ -50,14 +59,19 @@ public partial class EmailAddress : ValueObject
 
     private static string Normalize(string value)
     {
-        return value?.Trim().ToLowerInvariant() ?? string.Empty;
+        return value?.Trim()
+            .ToLowerInvariant() ?? string.Empty;
     }
 
-    [GeneratedRegex(@"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+    [GeneratedRegex(
+        @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
+        RegexOptions.IgnoreCase | RegexOptions.Compiled,
+        "en-US")]
     private static partial Regex IsValidRegex();
 
     private static bool IsValid(string email)
     {
-        return !string.IsNullOrEmpty(email) && email.Length <= 255 && IsValidRegex().IsMatch(email);
+        return !string.IsNullOrEmpty(email) && email.Length <= 255 && IsValidRegex()
+            .IsMatch(email);
     }
 }

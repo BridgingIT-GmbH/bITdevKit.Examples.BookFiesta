@@ -7,8 +7,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Common;
+using Domain;
 
 public interface ICatalogQueryService
 {

@@ -56,7 +56,7 @@ public class HexColorTests
     public void ImplicitConversion_StringToHexColor_ReturnsHexColorInstance()
     {
         // Arrange
-        string hexColor = "#ABC";
+        var hexColor = "#ABC";
 
         // Act
         HexColor sut = hexColor;
@@ -100,12 +100,13 @@ public class HexColorTests
 
         // Act
         var atomicValues = sut.GetType()
-            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
-            .Invoke(sut, null) as IEnumerable<object>;
+            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            ?.Invoke(sut, null) as IEnumerable<object>;
 
         // Assert
         atomicValues.ShouldNotBeNull();
-        atomicValues.Single().ShouldBe("#789ABC");
+        atomicValues.Single()
+            .ShouldBe("#789ABC");
     }
 
     [Fact]
@@ -153,17 +154,23 @@ public class HexColorTests
     public void IsValid_ValidHexColors_ReturnsTrue()
     {
         // Act & Assert
-        HexColor.IsValid("#000").ShouldBeTrue();
-        HexColor.IsValid("#FFFFFF").ShouldBeTrue();
-        HexColor.IsValid("#1a2B3c").ShouldBeTrue();
+        HexColor.IsValid("#000")
+            .ShouldBeTrue();
+        HexColor.IsValid("#FFFFFF")
+            .ShouldBeTrue();
+        HexColor.IsValid("#1a2B3c")
+            .ShouldBeTrue();
     }
 
     [Fact]
     public void IsValid_InvalidHexColors_ReturnsFalse()
     {
         // Act & Assert
-        HexColor.IsValid("#GGG").ShouldBeFalse();
-        HexColor.IsValid("#GGGGGG").ShouldBeFalse();
-        HexColor.IsValid("Invalid").ShouldBeFalse();
+        HexColor.IsValid("#GGG")
+            .ShouldBeFalse();
+        HexColor.IsValid("#GGGGGG")
+            .ShouldBeFalse();
+        HexColor.IsValid("Invalid")
+            .ShouldBeFalse();
     }
 }

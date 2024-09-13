@@ -6,27 +6,25 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
 using System.Threading.Tasks;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Domain;
 
-public class TenantNameMustBeUniqueRule(
-    IGenericRepository<Tenant> repository,
-    Tenant tenant) : DomainRuleBase
+public class TenantNameMustBeUniqueRule(IGenericRepository<Tenant> repository, Tenant tenant) : DomainRuleBase
 {
     public override string Message => "Tenant name should be unique";
 
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
-        return !(await repository.FindAllAsync(
-            TenantSpecifications.ForName(tenant.Name), cancellationToken: cancellationToken)).SafeAny();
+        return !(await repository.FindAllAsync(TenantSpecifications.ForName(tenant.Name), cancellationToken: cancellationToken)).SafeAny();
     }
 }
 
 public static partial class TenantRules
 {
-    public static IDomainRule NameMustBeUnique(
-        IGenericRepository<Tenant> repository,
-        Tenant tenant) => new TenantNameMustBeUniqueRule(repository, tenant);
+    public static IDomainRule NameMustBeUnique(IGenericRepository<Tenant> repository, Tenant tenant)
+    {
+        return new TenantNameMustBeUniqueRule(repository, tenant);
+    }
 }

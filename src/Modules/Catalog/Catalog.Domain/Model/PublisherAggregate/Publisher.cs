@@ -35,6 +35,9 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     public Website Website { get; private set; }
 
+    /// <summary>
+    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    /// </summary>
     public Guid Version { get; set; }
 
     //public IEnumerable<PublisherBook> Books => this.books;
@@ -45,8 +48,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
         var publisher = new Publisher(tenantId, name, description, contactEmail, address, website);
 
-        publisher.DomainEvents.Register(
-                new PublisherCreatedDomainEvent(publisher), true);
+        publisher.DomainEvents.Register(new PublisherCreatedDomainEvent(publisher), true);
 
         return publisher;
     }
@@ -65,8 +67,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+            this.DomainEvents.Register(new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -83,8 +84,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+            this.DomainEvents.Register(new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -101,8 +101,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+            this.DomainEvents.Register(new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -120,8 +119,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+            this.DomainEvents.Register(new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -139,8 +137,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new PublisherUpdatedDomainEvent(this), true);
+            this.DomainEvents.Register(new PublisherUpdatedDomainEvent(this), true);
         }
 
         return this;

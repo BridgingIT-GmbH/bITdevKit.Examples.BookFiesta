@@ -39,7 +39,7 @@ services:
     volumes:
       - seq:/data
     networks:
-    - bdk_bookfiesta
+      - bdk_bookfiesta
 
   jaeger:
     image: jaegertracing/all-in-one:latest

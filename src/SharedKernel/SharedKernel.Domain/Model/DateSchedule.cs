@@ -72,8 +72,7 @@ public class DateSchedule : ValueObject, IComparable<DateSchedule>
 
         if (this.IsOpenEnded || other.IsOpenEnded)
         {
-            return this.StartDate <= (other.EndDate ?? DateOnly.MaxValue) &&
-                   other.StartDate <= (this.EndDate ?? DateOnly.MaxValue);
+            return this.StartDate <= (other.EndDate ?? DateOnly.MaxValue) && other.StartDate <= (this.EndDate ?? DateOnly.MaxValue);
         }
 
         return this.StartDate <= other.EndDate.Value && other.StartDate <= this.EndDate.Value;

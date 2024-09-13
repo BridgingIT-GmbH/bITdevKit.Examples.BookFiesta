@@ -10,26 +10,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Using Include="Microsoft.Extensions.DependencyInjection" />
-    <Using Include="Microsoft.Extensions.Logging" />
-    <Using Include="BridgingIT.DevKit.Common" />
-    <Using Include="Dumpify" />
-    <Using Include="FluentAssertions" />
-    <Using Include="NSubstitute" />
-    <Using Include="Shouldly" />
-    <Using Include="Xunit" />
-    <Using Include="Xunit.Abstractions" />
+    <Using Include="Microsoft.Extensions.DependencyInjection"/>
+    <Using Include="Microsoft.Extensions.Logging"/>
+    <Using Include="BridgingIT.DevKit.Common"/>
+    <Using Include="Dumpify"/>
+    <Using Include="FluentAssertions"/>
+    <Using Include="NSubstitute"/>
+    <Using Include="Shouldly"/>
+    <Using Include="Xunit"/>
+    <Using Include="Xunit.Abstractions"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BridgingIT.DevKit.Common.Utilities.Xunit" />
-    <PackageReference Include="Dumpify" />
-    <PackageReference Include="FluentAssertions.Web" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="NetArchTest.eNhancedEdition" />
-    <PackageReference Include="NSubstitute" />
-    <PackageReference Include="Shouldly" />
-    <PackageReference Include="xunit" />
+    <PackageReference Include="BridgingIT.DevKit.Common.Utilities.Xunit"/>
+    <PackageReference Include="Dumpify"/>
+    <PackageReference Include="FluentAssertions.Web"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+    <PackageReference Include="NetArchTest.eNhancedEdition"/>
+    <PackageReference Include="NSubstitute"/>
+    <PackageReference Include="Shouldly"/>
+    <PackageReference Include="xunit"/>
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -41,10 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj" />
-    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" />
-    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" />
-    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj"/>
   </ItemGroup>
 
 </Project>

@@ -37,8 +37,13 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public IEnumerable<Book> Books => this.books.OrderBy(e => e.Title);
 
-    public IEnumerable<Category> Children => this.children.OrderBy(e => e.Order).ThenBy(e => e.Title);
+    public IEnumerable<Category> Children =>
+        this.children.OrderBy(e => e.Order)
+            .ThenBy(e => e.Title);
 
+    /// <summary>
+    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    /// </summary>
     public Guid Version { get; set; }
 
     public static Category Create(TenantId tenantId, string title, string description = null, int order = 0, Category parent = null)

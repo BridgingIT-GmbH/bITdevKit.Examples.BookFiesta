@@ -6,35 +6,50 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
 using BridgingIT.DevKit.Application.Commands;
-using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Common;
+using Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
-public class TenantUpdateCommand(TenantModel model)
-    : CommandRequestBase<Result<Tenant>>
+public class TenantUpdateCommand(TenantModel model) : CommandRequestBase<Result<Tenant>>
 {
     public TenantModel Model { get; } = model;
 
-    public override ValidationResult Validate() =>
-        new Validator().Validate(this);
+    public override ValidationResult Validate()
+    {
+        return new Validator().Validate(this);
+    }
 
     public class Validator : AbstractValidator<TenantUpdateCommand>
     {
         public Validator()
         {
-            this.RuleFor(c => c.Model).SetValidator(new ModelValidator());
+            this.RuleFor(c => c.Model)
+                .SetValidator(new ModelValidator());
         }
 
         private class ModelValidator : AbstractValidator<TenantModel>
         {
             public ModelValidator()
             {
-                this.RuleFor(m => m).NotNull().NotEmpty().WithMessage("Must not be empty.");
-                this.RuleFor(m => m.Id).MustNotBeDefaultOrEmptyGuid().WithMessage("Must not be empty.");
-                this.RuleFor(m => m.CompanyId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
-                this.RuleFor(m => m.Name).NotNull().NotEmpty().WithMessage("Must not be empty.");
-                this.RuleFor(m => m.ContactEmail).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m)
+                    .NotNull()
+                    .NotEmpty()
+                    .WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Id)
+                    .MustNotBeDefaultOrEmptyGuid()
+                    .WithMessage("Must not be empty.");
+                this.RuleFor(m => m.CompanyId)
+                    .MustNotBeDefaultOrEmptyGuid()
+                    .WithMessage("Must be valid and not be empty.");
+                this.RuleFor(m => m.Name)
+                    .NotNull()
+                    .NotEmpty()
+                    .WithMessage("Must not be empty.");
+                this.RuleFor(m => m.ContactEmail)
+                    .NotNull()
+                    .NotEmpty()
+                    .WithMessage("Must not be empty.");
             }
         }
     }

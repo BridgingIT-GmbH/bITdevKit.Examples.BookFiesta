@@ -6,27 +6,33 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Common;
+using Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
-public class BookFindAllForCategoryQuery(string tenantId, string categoryId)
-    : QueryRequestBase<Result<IEnumerable<Book>>>
+public class BookFindAllForCategoryQuery(string tenantId, string categoryId) : QueryRequestBase<Result<IEnumerable<Book>>>
 {
     public string TenantId { get; } = tenantId;
 
     public string CategoryId { get; } = categoryId;
 
-    public override ValidationResult Validate() =>
-        new Validator().Validate(this);
+    public override ValidationResult Validate()
+    {
+        return new Validator().Validate(this);
+    }
 
     public class Validator : AbstractValidator<BookFindAllForCategoryQuery>
     {
         public Validator()
         {
-            this.RuleFor(c => c.CategoryId).NotNull().NotEmpty().WithMessage("Must not be empty.");
-            this.RuleFor(c => c.CategoryId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.CategoryId)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Must not be empty.");
+            this.RuleFor(c => c.CategoryId)
+                .MustNotBeDefaultOrEmptyGuid()
+                .WithMessage("Must be valid and not be empty.");
         }
     }
 }

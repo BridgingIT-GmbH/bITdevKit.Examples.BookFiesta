@@ -8,37 +8,42 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Domain;
 using Microsoft.Extensions.Logging;
 
-public class CategoryFindAllQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Category> repository)
-        : QueryHandlerBase<CategoryFindAllQuery, Result<IEnumerable<Category>>>(loggerFactory)
+public class CategoryFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Category> repository)
+    : QueryHandlerBase<CategoryFindAllQuery, Result<IEnumerable<Category>>>(loggerFactory)
 {
-    public override async Task<QueryResponse<Result<IEnumerable<Category>>>> Process(
-        CategoryFindAllQuery query, CancellationToken cancellationToken)
+    public override async Task<QueryResponse<Result<IEnumerable<Category>>>> Process(CategoryFindAllQuery query, CancellationToken cancellationToken)
     {
-        var categories = await repository.FindAllResultAsync(cancellationToken: cancellationToken).AnyContext();
-        this.PrintCategories(categories.Value.SafeNull().Where(c => c.Parent == null).OrderBy(e => e.Order));
+        var categories = await repository.FindAllResultAsync(cancellationToken: cancellationToken)
+            .AnyContext();
+        this.PrintCategories(categories.Value.SafeNull()
+            .Where(c => c.Parent == null)
+            .OrderBy(e => e.Order));
 
         if (query.Flatten)
         {
             categories.Value = this.FlattenCategories(categories.Value);
 
-            return QueryResponse.Success(categories.Value.SafeNull().AsEnumerable());
+            return QueryResponse.Success(categories.Value.SafeNull()
+                .AsEnumerable());
         }
 
         return QueryResponse.Success(categories.Value.SafeNull()
-            .Where(c => c.Parent == null).OrderBy(e => e.Order).AsEnumerable());
+            .Where(c => c.Parent == null)
+            .OrderBy(e => e.Order)
+            .AsEnumerable());
     }
 
     private IEnumerable<Category> FlattenCategories(IEnumerable<Category> categories)
     {
         return categories.SafeAny()
-            ? categories.SelectMany(c => new[] { c }.Concat(c.Children)).ToList().DistinctBy(c => c.Id)
+            ? categories.SelectMany(c => new[] { c }.Concat(c.Children))
+                .ToList()
+                .DistinctBy(c => c.Id)
             : [];
     }
 

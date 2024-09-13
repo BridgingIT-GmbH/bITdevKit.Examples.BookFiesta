@@ -7,12 +7,11 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using System.Collections.Generic;
 using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Common;
+using Domain;
 using FluentValidation;
 
-public class CategoryFindAllQuery(string tenantId)
-    : QueryRequestBase<Result<IEnumerable<Category>>>
+public class CategoryFindAllQuery(string tenantId) : QueryRequestBase<Result<IEnumerable<Category>>>
 {
     public string TenantId { get; } = tenantId;
 
@@ -22,7 +21,9 @@ public class CategoryFindAllQuery(string tenantId)
     {
         public Validator()
         {
-            this.RuleFor(c => c.TenantId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.TenantId)
+                .MustNotBeDefaultOrEmptyGuid()
+                .WithMessage("Must be valid and not be empty.");
         }
     }
 }

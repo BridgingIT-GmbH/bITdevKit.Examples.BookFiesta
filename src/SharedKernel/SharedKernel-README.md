@@ -1,14 +1,21 @@
 SharedKernel![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookFiesta/main/bITDevKit_Logo.png)
 =====================================
+
 # SharedKernel Component Overview
 
-> The SharedKernel is a crucial component in our Domain-Driven Design (DDD) architecture. It contains common elements, concepts, and utilities that are shared across multiple bounded contexts or modules in the system. These shared elements can come from any layer of the application architecture, including the domain layer, application layer, infrastructure layer, and presentation layer.
+> The SharedKernel is a crucial component in our Domain-Driven Design (DDD) architecture. It
+> contains common elements, concepts, and utilities that are shared across multiple bounded contexts
+> or modules in the system. These shared elements can come from any layer of the application
+> architecture, including the domain layer, application layer, infrastructure layer, and
+> presentation
+> layer.
 
 ## Domain Layer
 
 The following value objects are part of the domain layer within the SharedKernel:
 
 ### 1. Address
+
 - Represents a general physical address
 - Contains fields for name, line1, line2, postal code, city, and country
 
@@ -26,6 +33,7 @@ classDiagram
 ```
 
 ### 2. AverageRating
+
 - Represents an average rating with the total number of ratings
 - Provides methods to add or remove individual ratings
 
@@ -41,6 +49,7 @@ classDiagram
 ```
 
 ### 3. Currency
+
 - Represents a monetary currency
 - Provides a list of world currencies with their symbols
 
@@ -57,6 +66,7 @@ classDiagram
 ```
 
 ### 4. EmailAddress
+
 - Represents a valid email address
 - Validates the email format using a regular expression
 
@@ -69,6 +79,7 @@ classDiagram
 ```
 
 ### 5. HexColor
+
 - Represents a color in hexadecimal format
 - Provides methods to create from string or RGB values
 
@@ -83,6 +94,7 @@ classDiagram
 ```
 
 ### 6. Money
+
 - Represents a monetary amount with a specific currency
 - Provides arithmetic operations (addition, subtraction)
 
@@ -98,6 +110,7 @@ classDiagram
 ```
 
 ### 7. PersonFormalName
+
 - Represents a person's formal name
 - Stores name parts, title, and suffix separately
 
@@ -113,6 +126,7 @@ classDiagram
 ```
 
 ### 8. PhoneNumber
+
 - Represents a phone number with country code
 - Validates phone number format
 
@@ -126,6 +140,7 @@ classDiagram
 ```
 
 ### 9. Rating
+
 - Represents a single rating value
 - Provides static methods for common ratings (Poor, Fair, Good, etc.)
 
@@ -143,6 +158,7 @@ classDiagram
 ```
 
 ### 10. Schedule
+
 - Represents a time period with a start date and an optional end date
 - Supports open-ended schedules
 
@@ -159,6 +175,7 @@ classDiagram
 ```
 
 ### 11. TenantId
+
 - Represents a unique identifier for a tenant
 - Implements the AggregateRootId<Guid> class
 
@@ -174,6 +191,7 @@ classDiagram
 ```
 
 ### 12. Url
+
 - Represents a URL (Uniform Resource Locator)
 - Supports absolute, relative, and local URLs
 
@@ -191,6 +209,7 @@ classDiagram
 ```
 
 ### 13. VatNumber
+
 - Represents a VAT (Value Added Tax) or EIN (Employer Identification Number)
 - Supports country-specific formatting
 
@@ -205,6 +224,7 @@ classDiagram
 ```
 
 ### 14. Website
+
 - Represents a website address
 - Normalizes and validates website URLs
 
@@ -218,7 +238,8 @@ classDiagram
 
 ## Usage
 
-These domain layer components are designed to be immutable and self-validating, ensuring that domain logic is consistently applied across the entire system.
+These domain layer components are designed to be immutable and self-validating, ensuring that domain
+logic is consistently applied across the entire system.
 
 Example usage:
 

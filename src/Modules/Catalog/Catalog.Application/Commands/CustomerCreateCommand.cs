@@ -6,39 +6,58 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Commands;
-using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Common;
+using Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
-public class CustomerCreateCommand(string tenantId, CustomerModel model)
-    : CommandRequestBase<Result<Customer>>
+public class CustomerCreateCommand(string tenantId, CustomerModel model) : CommandRequestBase<Result<Customer>>
 {
     public string TenantId { get; } = tenantId;
 
     public CustomerModel Model { get; } = model;
 
-    public override ValidationResult Validate() =>
-        new Validator().Validate(this);
+    public override ValidationResult Validate()
+    {
+        return new Validator().Validate(this);
+    }
 
     public class Validator : AbstractValidator<CustomerCreateCommand>
     {
         public Validator()
         {
-            this.RuleFor(c => c.TenantId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must not be empty or invalid.");
-            this.RuleFor(c => c.TenantId).Must((command, tenantId) => tenantId == command.Model.TenantId).WithMessage("Must be equal to Model.TenantId.");
-            this.RuleFor(c => c.Model).SetValidator(new ModelValidator());
+            this.RuleFor(c => c.TenantId)
+                .MustNotBeDefaultOrEmptyGuid()
+                .WithMessage("Must not be empty or invalid.");
+            this.RuleFor(c => c.TenantId)
+                .Must((command, tenantId) => tenantId == command.Model.TenantId)
+                .WithMessage("Must be equal to Model.TenantId.");
+            this.RuleFor(c => c.Model)
+                .SetValidator(new ModelValidator());
         }
 
         private class ModelValidator : AbstractValidator<CustomerModel>
         {
             public ModelValidator()
             {
-                this.RuleFor(m => m).NotNull().NotEmpty().WithMessage("Must not be empty.");
-                this.RuleFor(m => m.Id).MustBeDefaultOrEmptyGuid().WithMessage("Must be empty.");
-                this.RuleFor(m => m.PersonName).NotNull().NotEmpty().WithMessage("Must not be empty.");
-                this.RuleFor(m => m.PersonName.Parts).NotEmpty().WithMessage("Must not be empty.");
-                this.RuleFor(m => m.Email).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m)
+                    .NotNull()
+                    .NotEmpty()
+                    .WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Id)
+                    .MustBeDefaultOrEmptyGuid()
+                    .WithMessage("Must be empty.");
+                this.RuleFor(m => m.PersonName)
+                    .NotNull()
+                    .NotEmpty()
+                    .WithMessage("Must not be empty.");
+                this.RuleFor(m => m.PersonName.Parts)
+                    .NotEmpty()
+                    .WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Email)
+                    .NotNull()
+                    .NotEmpty()
+                    .WithMessage("Must not be empty.");
             }
         }
     }

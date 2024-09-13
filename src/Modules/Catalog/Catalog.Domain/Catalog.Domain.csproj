@@ -9,13 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BridgingIT.DevKit.Domain" />
+    <PackageReference Include="BridgingIT.DevKit.Domain"/>
     <PackageReference Include="BridgingIT.DevKit.Domain.CodeGen" OutputItemType="Analyzer"/>
-    <PackageReference Include="BridgingIT.DevKit.Domain.Mediator" />
+    <PackageReference Include="BridgingIT.DevKit.Domain.Mediator"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Domain\SharedKernel.Domain.csproj" />
+    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Domain\SharedKernel.Domain.csproj"/>
   </ItemGroup>
 
 </Project>

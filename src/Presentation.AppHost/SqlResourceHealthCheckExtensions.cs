@@ -1,6 +1,6 @@
 ﻿namespace Aspire.Hosting;
 
-using Aspire.Hosting.ApplicationModel;
+using ApplicationModel;
 using HealthChecks.SqlServer;
 
 public static class SqlResourceHealthCheckExtensions

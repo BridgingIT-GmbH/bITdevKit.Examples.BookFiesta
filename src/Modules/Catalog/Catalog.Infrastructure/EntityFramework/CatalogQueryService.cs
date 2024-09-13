@@ -7,16 +7,14 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Domain.Specifications;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Application;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 
-public class CatalogQueryService(
-    IGenericRepository<Book> bookRepository, CatalogDbContext dbContext)
-    : ICatalogQueryService
+public class CatalogQueryService(IGenericRepository<Book> bookRepository, CatalogDbContext dbContext) : ICatalogQueryService
 {
     /// <summary>
     /// Retrieves a collection of related books based on the provided book.
@@ -30,7 +28,9 @@ public class CatalogQueryService(
             return Result<IEnumerable<Book>>.Failure();
         }
 
-        var bookKeywords = book.Keywords.SafeNull().Select(k => k.Text).ToList();
+        var bookKeywords = book.Keywords.SafeNull()
+            .Select(k => k.Text)
+            .ToList();
         var relatedBookIds = await dbContext.Books.SelectMany(e => e.Keywords)
             .Where(ki => bookKeywords.Contains(ki.Text) && ki.BookId != book.Id)
             .GroupBy(ki => ki.BookId)
@@ -39,7 +39,6 @@ public class CatalogQueryService(
             .Select(g => g.Key)
             .ToListAsync();
 
-        return await bookRepository.FindAllResultAsync(
-            new Specification<Book>(e => relatedBookIds.Contains(e.Id)));
+        return await bookRepository.FindAllResultAsync(new Specification<Book>(e => relatedBookIds.Contains(e.Id)));
     }
 }

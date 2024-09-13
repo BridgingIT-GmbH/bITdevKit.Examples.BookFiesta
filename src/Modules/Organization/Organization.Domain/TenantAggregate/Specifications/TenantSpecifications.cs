@@ -27,14 +27,22 @@ public class TenantForCompanySpecification(CompanyId companyId) : Specification<
 public static partial class TenantSpecifications
 {
     public static Specification<Tenant> ForName(string name)
-        => new TenantForNameSpecification(name);
+    {
+        return new TenantForNameSpecification(name);
+    }
 
     public static Specification<Tenant> ForName2(string name) // INFO: short version to define a specification
-        => new(e => e.Name == name);
+    {
+        return new Specification<Tenant>(e => e.Name == name);
+    }
 
     public static Specification<Tenant> ForCompany(CompanyId companyId)
-        => new TenantForCompanySpecification(companyId);
+    {
+        return new TenantForCompanySpecification(companyId);
+    }
 
     public static Specification<Tenant> ForCompany2(CompanyId companyId) // INFO: short version to define a specification
-        => new(e => e.CompanyId == companyId);
+    {
+        return new Specification<Tenant>(e => e.CompanyId == companyId);
+    }
 }

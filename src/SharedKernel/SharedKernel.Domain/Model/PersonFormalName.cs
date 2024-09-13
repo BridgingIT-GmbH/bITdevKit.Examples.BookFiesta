@@ -8,7 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Name={ToString()}")]
@@ -36,17 +36,17 @@ public partial class PersonFormalName : ValueObject
 
     public string Full
     {
-        get
-        {
-            return this.ToString();
-        }
+        get => this.ToString();
         set // needs to be private
-        {
-            _ = value;
-        }
+            =>
+                _ = value;
     }
 
-    public static implicit operator string(PersonFormalName name) => name?.ToString(); // allows a PersonFormalName value to be implicitly converted to a string.
+    public static implicit operator string(PersonFormalName name)
+    {
+        return name?.ToString();
+        // allows a PersonFormalName value to be implicitly converted to a string.
+    }
 
     public static PersonFormalName Create(IEnumerable<string> parts, string title = null, string suffix = null)
     {
@@ -72,7 +72,8 @@ public partial class PersonFormalName : ValueObject
             fullName = $"{fullName}, {this.Suffix}";
         }
 
-        return fullName.Trim().Trim(',');
+        return fullName.Trim()
+            .Trim(',');
     }
 
     protected override IEnumerable<object> GetAtomicValues()

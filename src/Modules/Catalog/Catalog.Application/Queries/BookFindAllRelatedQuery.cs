@@ -6,8 +6,8 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Common;
+using Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
@@ -17,15 +17,22 @@ public class BookFindAllRelatedQuery(string tenantId, string bookId) : QueryRequ
 
     public string BookId { get; } = bookId;
 
-    public override ValidationResult Validate() =>
-        new Validator().Validate(this);
+    public override ValidationResult Validate()
+    {
+        return new Validator().Validate(this);
+    }
 
     public class Validator : AbstractValidator<BookFindAllRelatedQuery>
     {
         public Validator()
         {
-            this.RuleFor(c => c.BookId).NotNull().NotEmpty().WithMessage("Must not be empty.");
-            this.RuleFor(c => c.BookId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.BookId)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Must not be empty.");
+            this.RuleFor(c => c.BookId)
+                .MustNotBeDefaultOrEmptyGuid()
+                .WithMessage("Must be valid and not be empty.");
         }
     }
 }

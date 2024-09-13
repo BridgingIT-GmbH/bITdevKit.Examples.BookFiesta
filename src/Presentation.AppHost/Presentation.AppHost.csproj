@@ -11,14 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" />
-    <PackageReference Include="Aspire.Hosting.SqlServer" />
-    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" />
-    <PackageReference Include="AspNetCore.HealthChecks.Uris" />
+    <PackageReference Include="Aspire.Hosting.AppHost"/>
+    <PackageReference Include="Aspire.Hosting.SqlServer"/>
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer"/>
+    <PackageReference Include="AspNetCore.HealthChecks.Uris"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Presentation.Web.Server\Presentation.Web.Server.csproj" />
+    <ProjectReference Include="..\Presentation.Web.Server\Presentation.Web.Server.csproj"/>
   </ItemGroup>
 
 </Project>

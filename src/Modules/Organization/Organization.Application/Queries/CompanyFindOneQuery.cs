@@ -6,8 +6,8 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
 using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Common;
+using Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
@@ -15,14 +15,18 @@ public class CompanyFindOneQuery(string companyId) : QueryRequestBase<Result<Com
 {
     public string CompanyId { get; } = companyId;
 
-    public override ValidationResult Validate() =>
-        new Validator().Validate(this);
+    public override ValidationResult Validate()
+    {
+        return new Validator().Validate(this);
+    }
 
     public class Validator : AbstractValidator<CompanyFindOneQuery>
     {
         public Validator()
         {
-            this.RuleFor(c => c.CompanyId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.CompanyId)
+                .MustNotBeDefaultOrEmptyGuid()
+                .WithMessage("Must be valid and not be empty.");
         }
     }
 }

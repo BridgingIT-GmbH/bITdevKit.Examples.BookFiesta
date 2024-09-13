@@ -8,9 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using System.Threading.Tasks;
 using BridgingIT.DevKit.Domain.Repositories;
 
-public class TagMustBelongToTenantRule(
-    Tag tag,
-    TenantId tenantId) : DomainRuleBase
+public class TagMustBelongToTenantRule(Tag tag, TenantId tenantId) : DomainRuleBase
 {
     private readonly Tag tag = tag;
     private readonly TenantId tenantId = tenantId;
@@ -25,7 +23,8 @@ public class TagMustBelongToTenantRule(
 
 public static partial class TagRules
 {
-    public static IDomainRule TagMustBelongToTenant(
-        Tag tag,
-        TenantId tenantId) => new TagMustBelongToTenantRule(tag, tenantId);
+    public static IDomainRule TagMustBelongToTenant(Tag tag, TenantId tenantId)
+    {
+        return new TagMustBelongToTenantRule(tag, tenantId);
+    }
 }

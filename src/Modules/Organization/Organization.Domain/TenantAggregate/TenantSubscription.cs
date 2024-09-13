@@ -32,23 +32,24 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 
     public TenantSubscriptionBillingCycle BillingCycle { get; private set; }
 
+    /// <summary>
+    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    /// </summary>
     public Guid Version { get; set; }
 
-    public static TenantSubscription Create(
-        Tenant tenant,
-        TenantSubscriptionPlanType planType,
-        DateSchedule schedule)
+    public static TenantSubscription Create(Tenant tenant, TenantSubscriptionPlanType planType, DateSchedule schedule)
     {
         var subscription = new TenantSubscription(tenant, planType, schedule);
 
-        tenant.DomainEvents.Register(
-                new TenantSubscriptionCreatedDomainEvent(subscription), true);
+        tenant.DomainEvents.Register(new TenantSubscriptionCreatedDomainEvent(subscription), true);
 
         return subscription;
     }
 
-    public bool IsActive(DateOnly date) =>
-        this.Status == TenantSubscriptionStatus.Approved && this.Schedule.IsActive(date);
+    public bool IsActive(DateOnly date)
+    {
+        return Equals(this.Status, TenantSubscriptionStatus.Approved) && this.Schedule.IsActive(date);
+    }
 
     public TenantSubscription SetPlanType(TenantSubscriptionPlanType planType)
     {
@@ -69,14 +70,12 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
             }
 
             // Set default billing cycle for paid plans
-            if (planType.IsPaid &&
-                this.BillingCycle == TenantSubscriptionBillingCycle.Never)
+            if (planType.IsPaid && this.BillingCycle == TenantSubscriptionBillingCycle.Never)
             {
                 this.SetBillingCycle(TenantSubscriptionBillingCycle.Monthly);
             }
 
-            this.Tenant.DomainEvents.Register(
-                new TenantSubscriptionUpdatedDomainEvent(this), true);
+            this.Tenant.DomainEvents.Register(new TenantSubscriptionUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -93,8 +92,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
         {
             this.Schedule = schedule;
 
-            this.Tenant.DomainEvents.Register(
-                new TenantSubscriptionUpdatedDomainEvent(this), true);
+            this.Tenant.DomainEvents.Register(new TenantSubscriptionUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -111,8 +109,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 
             this.BillingCycle = billingCycle ?? TenantSubscriptionBillingCycle.Monthly;
 
-            this.Tenant.DomainEvents.Register(
-                new TenantSubscriptionUpdatedDomainEvent(this), true);
+            this.Tenant.DomainEvents.Register(new TenantSubscriptionUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -126,8 +123,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
             // TODO: check valid transitions
             this.Status = status;
 
-            this.Tenant.DomainEvents.Register(
-                new TenantSubscriptionUpdatedDomainEvent(this), true);
+            this.Tenant.DomainEvents.Register(new TenantSubscriptionUpdatedDomainEvent(this), true);
         }
 
         return this;

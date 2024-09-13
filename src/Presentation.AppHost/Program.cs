@@ -16,4 +16,5 @@ builder.AddProject<Projects.Presentation_Web_Server>("presentation-web-server")
 
 //TODO: add SEQ integration https://learn.microsoft.com/en-us/dotnet/aspire/logging/seq-integration?tabs=dotnet-cli
 
-builder.Build().Run();
+builder.Build()
+    .Run();

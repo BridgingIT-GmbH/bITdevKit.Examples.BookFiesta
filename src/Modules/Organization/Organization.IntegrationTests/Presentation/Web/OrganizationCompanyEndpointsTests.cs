@@ -6,8 +6,8 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.IntegrationTests.Presentation;
 
 using System.Text.Json;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Application;
+using Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
@@ -27,14 +27,17 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
 
         // Act
         var response = await this.fixture.CreateClient()
-            .GetAsync(route + $"/{model.Id}").AnyContext();
+            .GetAsync(route + $"/{model.Id}")
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok();
+        response.Should()
+            .Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should().BeEquivalentTo(model);
+        responseModel.Should()
+            .BeEquivalentTo(model);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -47,11 +50,13 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
 
         // Act
         var response = await this.fixture.CreateClient()
-            .GetAsync(route + $"/{Guid.NewGuid()}").AnyContext();
+            .GetAsync(route + $"/{Guid.NewGuid()}")
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be404NotFound();
+        response.Should()
+            .Be404NotFound();
     }
 
     [Theory]
@@ -63,16 +68,21 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         var model = await this.PostCompanyCreate(route);
 
         var response = await this.fixture.CreateClient()
-            .GetAsync(route).AnyContext();
+            .GetAsync(route)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok();
+        response.Should()
+            .Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<ICollection<CompanyModel>>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should().Contain(c => c.Name == model.Name);
-        responseModel.Should().Contain(c => c.RegistrationNumber == model.RegistrationNumber);
-        responseModel.Should().Contain(c => c.ContactEmail == model.ContactEmail);
+        responseModel.Should()
+            .Contain(c => c.Name == model.Name);
+        responseModel.Should()
+            .Contain(c => c.RegistrationNumber == model.RegistrationNumber);
+        responseModel.Should()
+            .Contain(c => c.ContactEmail == model.ContactEmail);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -82,10 +92,7 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        TenantId[] tenantIds = [
-            TenantIdFactory.CreateForName("Tenant_AcmeBooks"),
-            TenantIdFactory.CreateForName("Tenant_TechBooks")
-            ];
+        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
         var company = OrganizationSeedEntities.Companies.Create(DateTime.UtcNow.Ticks)[0];
         var model = new CompanyModel
         {
@@ -100,22 +107,25 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
                 PostalCode = company.Address.PostalCode,
                 City = company.Address.City,
                 Country = company.Address.Country
-            },
+            }
         };
-        var content = new StringContent(
-            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
-            .PostAsync(route, content).AnyContext();
+            .PostAsync(route, content)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be201Created();
-        response.Headers.Location.Should().NotBeNull();
+        response.Should()
+            .Be201Created();
+        response.Headers.Location.Should()
+            .NotBeNull();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should().BeEquivalentTo(model, options => options.Excluding(m => m.Id));
+        responseModel.Should()
+            .BeEquivalentTo(model, options => options.Excluding(m => m.Id));
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -139,23 +149,28 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
                 PostalCode = company.Address.PostalCode,
                 City = company.Address.City,
                 Country = company.Address.Country
-            },
+            }
         };
-        var content = new StringContent(
-            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
-            .PostAsync(route, content).AnyContext();
+            .PostAsync(route, content)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be400BadRequest();
+        response.Should()
+            .Be400BadRequest();
         var responseModel = await response.Content.ReadAsStringAsync();
-        responseModel.Should().Contain("ValidationException");
-        responseModel.Should().Contain(nameof(model.Name));
-        responseModel.Should().Contain(nameof(model.RegistrationNumber));
-        responseModel.Should().Contain(nameof(model.ContactEmail));
+        responseModel.Should()
+            .Contain("ValidationException");
+        responseModel.Should()
+            .Contain(nameof(model.Name));
+        responseModel.Should()
+            .Contain(nameof(model.RegistrationNumber));
+        responseModel.Should()
+            .Contain(nameof(model.ContactEmail));
     }
 
     [Theory]
@@ -167,19 +182,21 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
         var model = await this.PostCompanyCreate(route);
         model.Name += "changed";
         model.RegistrationNumber += "changed";
-        var content = new StringContent(
-            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
-            .PutAsync(route + $"/{model.Id}", content).AnyContext();
+            .PutAsync(route + $"/{model.Id}", content)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok();
+        response.Should()
+            .Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should().BeEquivalentTo(model);
+        responseModel.Should()
+            .BeEquivalentTo(model);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -193,12 +210,15 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
 
         // Act
         var response = await this.fixture.CreateClient()
-            .DeleteAsync(route + $"/{model.Id}").AnyContext();
+            .DeleteAsync(route + $"/{model.Id}")
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should().Be200Ok();
-        response.Headers.Location.Should().BeNull();
+        response.Should()
+            .Be200Ok();
+        response.Headers.Location.Should()
+            .BeNull();
     }
 
     private async Task<CompanyModel> PostCompanyCreate(string route)
@@ -220,12 +240,12 @@ public class OrganizationCompanyEndpointsTests(ITestOutputHelper output, CustomW
                 PostalCode = company.Address.PostalCode,
                 City = company.Address.City,
                 Country = company.Address.Country
-            },
+            }
         };
-        var content = new StringContent(
-            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
         var response = await this.fixture.CreateClient()
-            .PostAsync(route, content).AnyContext();
+            .PostAsync(route, content)
+            .AnyContext();
         response.EnsureSuccessStatusCode();
 
         return await response.Content.ReadAsAsync<CompanyModel>();

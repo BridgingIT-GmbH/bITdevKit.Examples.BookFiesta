@@ -9,16 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BridgingIT.DevKit.Common.Mapping" />
-    <PackageReference Include="BridgingIT.DevKit.Application.Commands" />
-    <PackageReference Include="BridgingIT.DevKit.Application.JobScheduling" />
-    <PackageReference Include="BridgingIT.DevKit.Application.Queries" />
-    <PackageReference Include="BridgingIT.DevKit.Application.Utilities" />
+    <PackageReference Include="BridgingIT.DevKit.Common.Mapping"/>
+    <PackageReference Include="BridgingIT.DevKit.Application.Commands"/>
+    <PackageReference Include="BridgingIT.DevKit.Application.JobScheduling"/>
+    <PackageReference Include="BridgingIT.DevKit.Application.Queries"/>
+    <PackageReference Include="BridgingIT.DevKit.Application.Utilities"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\$(ModuleName).Application.Contracts\$(ModuleName).Application.Contracts.csproj" />
-    <ProjectReference Include="..\$(ModuleName).Domain\$(ModuleName).Domain.csproj" />
+    <ProjectReference Include="..\$(ModuleName).Application.Contracts\$(ModuleName).Application.Contracts.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Domain\$(ModuleName).Domain.csproj"/>
   </ItemGroup>
 
 </Project>

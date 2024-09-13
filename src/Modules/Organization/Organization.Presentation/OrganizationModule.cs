@@ -5,12 +5,12 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 
-using BridgingIT.DevKit.Common;
+using Common;
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation.Web;
+using Application;
+using Domain;
+using Infrastructure;
+using Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -31,25 +31,20 @@ public class OrganizationModule : WebModuleBase
         //                                                      //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
         services.AddStartupTasks()
-            .WithTask<OrganizationDomainSeederTask>(o => o
-                .Enabled(environment?.IsDevelopment() == true)
+            .WithTask<OrganizationDomainSeederTask>(o => o.Enabled(environment?.IsDevelopment() == true)
                 .StartupDelay(moduleConfiguration.SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)
 
-        services.AddSqlServerDbContext<OrganizationDbContext>(o => o
-                .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
-                .UseLogger(true, environment?.IsDevelopment() == true),
-                o => o
-                    .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+        services.AddSqlServerDbContext<OrganizationDbContext>(o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
+                    .UseLogger(true, environment?.IsDevelopment() == true),
+                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
                     .CommandTimeout(30))
             .WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
             //.WithDatabaseCreatorService(o => o
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup())
-            .WithDatabaseMigratorService(o => o
-                .Enabled(environment?.IsDevelopment() == true)
+            .WithDatabaseMigratorService(o => o.Enabled(environment?.IsDevelopment() == true)
                 .DeleteOnStartup(false))
-            .WithOutboxDomainEventService(o => o
-                .ProcessingInterval("00:00:30")
+            .WithOutboxDomainEventService(o => o.ProcessingInterval("00:00:30")
                 .StartupDelay("00:00:15")
                 .PurgeOnStartup()
                 .ProcessingModeImmediate());

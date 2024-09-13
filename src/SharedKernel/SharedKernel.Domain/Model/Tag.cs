@@ -24,9 +24,16 @@ public class Tag : Entity<TagId>, IConcurrent
 
     public string Category { get; private set; }
 
+    /// <summary>
+    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    /// </summary>
     public Guid Version { get; set; }
 
-    public static implicit operator string(Tag tag) => tag?.Name; // allows a Tag value to be implicitly converted to a string.
+    public static implicit operator string(Tag tag)
+    {
+        return tag?.Name;
+        // allows a Tag value to be implicitly converted to a string.
+    }
 
     public static Tag Create(TenantId tenantId, string name, string category)
     {

@@ -27,9 +27,15 @@ public partial class Url : ValueObject
 
     public UrlType Type => DetermineType(this.Value);
 
-    public static implicit operator string(Url url) => url.Value;
+    public static implicit operator string(Url url)
+    {
+        return url.Value;
+    }
 
-    public static implicit operator Url(string value) => Create(value);
+    public static implicit operator Url(string value)
+    {
+        return Create(value);
+    }
 
     public static Url Create(string value)
     {
@@ -47,11 +53,20 @@ public partial class Url : ValueObject
         return new Url(normalizedUrl);
     }
 
-    public bool IsAbsolute() => this.Type == UrlType.Absolute;
+    public bool IsAbsolute()
+    {
+        return this.Type == UrlType.Absolute;
+    }
 
-    public bool IsRelative() => this.Type == UrlType.Relative;
+    public bool IsRelative()
+    {
+        return this.Type == UrlType.Relative;
+    }
 
-    public bool IsLocal() => this.Type == UrlType.Local;
+    public bool IsLocal()
+    {
+        return this.Type == UrlType.Local;
+    }
 
     public string ToAbsolute(string value)
     {
@@ -66,12 +81,13 @@ public partial class Url : ValueObject
         }
 
         var normalizedBaseUrl = Normalize(value);
-        return this.IsRelative()
-            ? $"{normalizedBaseUrl}{this.Value}"
-            : $"{normalizedBaseUrl}/{this.Value}";
+        return this.IsRelative() ? $"{normalizedBaseUrl}{this.Value}" : $"{normalizedBaseUrl}/{this.Value}";
     }
 
-    public override string ToString() => this.Value;
+    public override string ToString()
+    {
+        return this.Value;
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
@@ -81,7 +97,8 @@ public partial class Url : ValueObject
 
     private static string Normalize(string value)
     {
-        return value?.Trim()?.TrimEnd('/');
+        return value?.Trim()
+            ?.TrimEnd('/');
     }
 
     private static UrlType DetermineType(string value)
@@ -120,8 +137,10 @@ public partial class Url : ValueObject
 
     [GeneratedRegex(@"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
     private static partial Regex AbsoluteRegex();
+
     [GeneratedRegex(@"^(\/|\.\.?\/)([\w\.-]+\/?)*$", RegexOptions.Compiled)]
     private static partial Regex RelativeRegex();
+
     [GeneratedRegex(@"^[\w\.-]+(\/[\w\.-]+)*\/?$", RegexOptions.Compiled)]
     private static partial Regex LocalRegex();
 }

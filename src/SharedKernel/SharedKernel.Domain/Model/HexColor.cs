@@ -23,9 +23,15 @@ public class HexColor : ValueObject
 
     public string Value { get; }
 
-    public static implicit operator string(HexColor color) => color.Value;
+    public static implicit operator string(HexColor color)
+    {
+        return color.Value;
+    }
 
-    public static implicit operator HexColor(string value) => Create(value);
+    public static implicit operator HexColor(string value)
+    {
+        return Create(value);
+    }
 
     public static HexColor Create(string value)
     {
@@ -48,16 +54,15 @@ public class HexColor : ValueObject
         return string.IsNullOrWhiteSpace(value) || HexColorRegex.IsMatch(value);
     }
 
-    public override string ToString() => this.Value;
+    public override string ToString()
+    {
+        return this.Value;
+    }
 
     public (byte R, byte G, byte B) ToRgb()
     {
         var hex = this.Value.TrimStart('#');
-        return (
-            Convert.ToByte(hex.Substring(0, 2), 16),
-            Convert.ToByte(hex.Substring(2, 2), 16),
-            Convert.ToByte(hex.Substring(4, 2), 16)
-        );
+        return (Convert.ToByte(hex.Substring(0, 2), 16), Convert.ToByte(hex.Substring(2, 2), 16), Convert.ToByte(hex.Substring(4, 2), 16));
     }
 
     protected override IEnumerable<object> GetAtomicValues()

@@ -27,17 +27,33 @@ public class Money : DecimalValueObject
 
     public Currency Currency { get; private set; }
 
-    public static Money Zero() => Create(0);
+    public static Money Zero()
+    {
+        return Create(0);
+    }
 
-    public static Money Zero(Currency currency) => Create(0, currency);
+    public static Money Zero(Currency currency)
+    {
+        return Create(0, currency);
+    }
 
-    public bool IsZero() => this.Amount == 0;
+    public bool IsZero()
+    {
+        return this.Amount == 0;
+    }
 
 #pragma warning disable SA1201 // Elements should appear in the correct order
-    public static implicit operator decimal(Money money) => money?.Amount ?? 0; // allows a Money value to be implicitly converted to a decimal.
+    public static implicit operator decimal(Money money)
+    {
+        return money?.Amount ?? 0;
+        // allows a Money value to be implicitly converted to a decimal.
+    }
 
-    public static implicit operator string(Money money) => money?.ToString() ?? string.Empty; // allows a Money value to be implicitly converted to a string.
-    //public static implicit operator Money(decimal amount) => new(amount, currency);
+    public static implicit operator string(Money money)
+    {
+        return money?.ToString() ?? string.Empty;
+        // allows a Money value to be implicitly converted to a string.
+    }
 #pragma warning restore SA1201 // Elements should appear in the correct order
 
     public static bool operator ==(Money a, Money b)
@@ -55,7 +71,10 @@ public class Money : DecimalValueObject
         return a.Amount.Equals(b.Amount) && a.Currency.Equals(b.Currency);
     }
 
-    public static bool operator !=(Money a, Money b) => !(a == b);
+    public static bool operator !=(Money a, Money b)
+    {
+        return !(a == b);
+    }
 
     public static Money operator +(Money a, Money b)
     {
@@ -64,7 +83,7 @@ public class Money : DecimalValueObject
             throw new InvalidOperationException("Cannot calculate money with different currencies");
         }
 
-        return new(a.Amount + b.Amount, a.Currency);
+        return new Money(a.Amount + b.Amount, a.Currency);
     }
 
     public static Money operator -(Money a, Money b)
@@ -74,7 +93,7 @@ public class Money : DecimalValueObject
             throw new InvalidOperationException("Cannot calculate money with different currencies");
         }
 
-        return new(a.Amount - b.Amount, a.Currency);
+        return new Money(a.Amount - b.Amount, a.Currency);
     }
 
     public static Money Create(decimal amount)
@@ -112,8 +131,10 @@ public class Money : DecimalValueObject
             .Aggregate((x, y) => x ^ y);
     }
 
-    public override string ToString() =>
-        this.Format(this.Amount, this.Currency.Code);
+    public override string ToString()
+    {
+        return this.Format(this.Amount, this.Currency.Code);
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
@@ -132,9 +153,9 @@ public class Money : DecimalValueObject
         EnsureArg.IsNotNullOrEmpty(currencyCode, nameof(currencyCode));
 
         var culture = (from c in CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                       let r = this.CreateRegionInfo(c.Name)
-                       where r != null && string.Equals(r.ISOCurrencySymbol, currencyCode, StringComparison.OrdinalIgnoreCase)
-                       select c).FirstOrDefault();
+            let r = this.CreateRegionInfo(c.Name)
+            where r != null && string.Equals(r.ISOCurrencySymbol, currencyCode, StringComparison.OrdinalIgnoreCase)
+            select c).FirstOrDefault();
 
         if (culture == null)
         {

@@ -44,7 +44,7 @@ public class CurrencyTests
     public void ImplicitConversion_StringToCurrency_ReturnsCurrencyInstance()
     {
         // Arrange
-        string currencyCode = "EUR";
+        var currencyCode = "EUR";
 
         // Act
         Currency sut = currencyCode;
@@ -89,12 +89,12 @@ public class CurrencyTests
 
         // Act
         var atomicValues = sut.GetType()
-            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
-            .Invoke(sut, null) as IEnumerable<object>;
+            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.Invoke(sut, null) as IEnumerable<object>;
 
         // Assert
         atomicValues.ShouldNotBeNull();
-        atomicValues.Single().ShouldBe("CAD");
+        atomicValues.Single()
+            .ShouldBe("CAD");
     }
 
     [Fact]

@@ -10,9 +10,7 @@ using System.Xml.Linq;
 [TypedEntityId<Guid>]
 public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 {
-    private Customer()
-    {
-    }
+    private Customer() { }
 
     private Customer(TenantId tenantId, PersonFormalName name, EmailAddress email, Address address = null)
     {
@@ -30,6 +28,9 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
     public EmailAddress Email { get; private set; }
 
+    /// <summary>
+    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    /// </summary>
     public Guid Version { get; set; }
 
     public static Customer Create(TenantId tenantId, PersonFormalName name, EmailAddress email, Address address = null)
@@ -38,8 +39,7 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
         var customer = new Customer(tenantId, name, email, address);
 
-        customer.DomainEvents.Register(
-            new CustomerCreatedDomainEvent(customer));
+        customer.DomainEvents.Register(new CustomerCreatedDomainEvent(customer));
 
         return customer;
     }
@@ -57,8 +57,7 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new CustomerUpdatedDomainEvent(this), true);
+            this.DomainEvents.Register(new CustomerUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -77,8 +76,7 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new CustomerUpdatedDomainEvent(this), true);
+            this.DomainEvents.Register(new CustomerUpdatedDomainEvent(this), true);
         }
 
         return this;
@@ -95,8 +93,7 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new CustomerUpdatedDomainEvent(this), true);
+            this.DomainEvents.Register(new CustomerUpdatedDomainEvent(this), true);
         }
 
         return this;

@@ -49,7 +49,7 @@ public class EmailAddressTests
     {
         // Arrange
         string nullEmail = null;
-        string emptyEmail = string.Empty;
+        var emptyEmail = string.Empty;
 
         // Act
         var nullResult = EmailAddress.Create(nullEmail);
@@ -64,7 +64,7 @@ public class EmailAddressTests
     public void ImplicitConversion_StringToEmailAddress_ReturnsEmailAddressInstance()
     {
         // Arrange
-        string email = this.faker.Internet.Email();
+        var email = this.faker.Internet.Email();
 
         // Act
         EmailAddress sut = email;
@@ -116,7 +116,8 @@ public class EmailAddressTests
 
         // Assert
         atomicValues.ShouldNotBeNull();
-        atomicValues.Single().ShouldBe(email.ToLowerInvariant());
+        atomicValues.Single()
+            .ShouldBe(email.ToLowerInvariant());
     }
 
     [Fact]

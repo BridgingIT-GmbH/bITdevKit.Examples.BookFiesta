@@ -30,6 +30,9 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
     public IEnumerable<Tag> Tags => this.tags.OrderBy(e => e.Name);
 
+    /// <summary>
+    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    /// </summary>
     public Guid Version { get; set; }
 
     public static Author Create(TenantId tenantId, PersonFormalName name, string biography = null)
@@ -38,8 +41,7 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
         var author = new Author(tenantId, name, biography);
 
-        author.DomainEvents.Register(
-            new AuthorCreatedDomainEvent(tenantId, author));
+        author.DomainEvents.Register(new AuthorCreatedDomainEvent(tenantId, author));
 
         return author;
     }
@@ -57,8 +59,7 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
         if (this.Id?.IsEmpty == false)
         {
-            this.DomainEvents.Register(
-                new AuthorUpdatedDomainEvent(this.TenantId, this), true);
+            this.DomainEvents.Register(new AuthorUpdatedDomainEvent(this.TenantId, this), true);
         }
 
         return this;
@@ -73,8 +74,7 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
         this.Biography = biography;
 
-        this.DomainEvents.Register(
-            new AuthorUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new AuthorUpdatedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -88,8 +88,7 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
         this.books.Add(AuthorBook.Create(book));
 
-        this.DomainEvents.Register(
-            new AuthorBookAssignedDomainEvent(this, book));
+        this.DomainEvents.Register(new AuthorBookAssignedDomainEvent(this, book));
 
         return this;
     }

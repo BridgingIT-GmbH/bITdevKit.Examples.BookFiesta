@@ -247,8 +247,7 @@ public class MoneyTests
         var invalidCurrencyCode = "XYZ";
 
         // Act & Assert
-        Should.Throw<DomainRuleException>(() =>
-                Money.Create(amount, Currency.Create(invalidCurrencyCode)))
+        Should.Throw<DomainRuleException>(() => Money.Create(amount, Currency.Create(invalidCurrencyCode)))
             .Message.ShouldBe($"Invalid currency code: {invalidCurrencyCode}");
     }
 

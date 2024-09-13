@@ -11,9 +11,7 @@ using BridgingIT.DevKit.Domain.Model;
 [DebuggerDisplay("Value={Value}")]
 public class Rating : ValueObject
 {
-    private Rating()
-    {
-    }
+    private Rating() { }
 
     private Rating(int value)
     {
@@ -22,22 +20,34 @@ public class Rating : ValueObject
 
     public int Value { get; private set; }
 
-    public static Rating Poor() => new(1);
+    public static Rating Poor()
+    {
+        return new Rating(1);
+    }
 
-    public static Rating Fair() => new(2);
+    public static Rating Fair()
+    {
+        return new Rating(2);
+    }
 
-    public static Rating Good() => new(3);
+    public static Rating Good()
+    {
+        return new Rating(3);
+    }
 
-    public static Rating VeryGood() => new(4);
+    public static Rating VeryGood()
+    {
+        return new Rating(4);
+    }
 
-    public static Rating Excellent() => new(5);
+    public static Rating Excellent()
+    {
+        return new Rating(5);
+    }
 
     public static Rating Create(int value)
     {
-        DomainRules.Apply(
-        [
-            RatingRules.ShouldBeInRange(value),
-        ]);
+        DomainRules.Apply([RatingRules.ShouldBeInRange(value)]);
 
         return new Rating(value);
     }

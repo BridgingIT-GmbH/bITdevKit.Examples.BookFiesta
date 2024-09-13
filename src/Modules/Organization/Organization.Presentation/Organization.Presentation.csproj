@@ -9,17 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BridgingIT.DevKit.Common.Mapping" />
-    <PackageReference Include="BridgingIT.DevKit.Common.Modules" />
-    <PackageReference Include="BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer" />
-    <PackageReference Include="BridgingIT.DevKit.Presentation.Web" />
-    <PackageReference Include="BridgingIT.DevKit.Presentation.Serilog" />
+    <PackageReference Include="BridgingIT.DevKit.Common.Mapping"/>
+    <PackageReference Include="BridgingIT.DevKit.Common.Modules"/>
+    <PackageReference Include="BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer"/>
+    <PackageReference Include="BridgingIT.DevKit.Presentation.Web"/>
+    <PackageReference Include="BridgingIT.DevKit.Presentation.Serilog"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" />
-    <ProjectReference Include="..\$(ModuleName).Domain\$(ModuleName).Domain.csproj" />
-    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" />
+    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Domain\$(ModuleName).Domain.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj"/>
   </ItemGroup>
 
 </Project>

@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BridgingIT.DevKit.Infrastructure.EntityFramework" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="BridgingIT.DevKit.Infrastructure.EntityFramework"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharedKernel.Domain\SharedKernel.Domain.csproj" />
+    <ProjectReference Include="..\SharedKernel.Domain\SharedKernel.Domain.csproj"/>
   </ItemGroup>
 
 </Project>

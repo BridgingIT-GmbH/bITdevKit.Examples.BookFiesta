@@ -159,8 +159,8 @@ public class PersonFormalNameTests
 
         // Act
         var atomicValues = sut.GetType()
-            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
-            .Invoke(sut, null) as IEnumerable<object>;
+            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            ?.Invoke(sut, null) as IEnumerable<object>;
 
         // Assert
         atomicValues.ShouldNotBeNull();

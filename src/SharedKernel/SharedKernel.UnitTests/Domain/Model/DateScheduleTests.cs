@@ -53,9 +53,7 @@ public class DateScheduleTests
         var startDate = this.faker.Date.PastDateOnly();
         var endDate = this.faker.Date.FutureDateOnly();
         var sut = DateSchedule.Create(startDate, endDate);
-        var testDate = this.faker.Date.Between(
-            startDate.ToDateTime(TimeOnly.MinValue),
-            endDate.ToDateTime(TimeOnly.MinValue));
+        var testDate = this.faker.Date.Between(startDate.ToDateTime(TimeOnly.MinValue), endDate.ToDateTime(TimeOnly.MinValue));
 
         // Act
         var result = sut.IsActive(DateOnly.FromDateTime(testDate));
@@ -172,7 +170,9 @@ public class DateScheduleTests
         var sut = DateSchedule.Create(startDate, endDate);
 
         // Act
-        var result = sut.GetType().GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(sut, null) as IEnumerable<object>;
+        var result = sut.GetType()
+            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .Invoke(sut, null) as IEnumerable<object>;
 
         // Assert
         result.ShouldNotBeNull();

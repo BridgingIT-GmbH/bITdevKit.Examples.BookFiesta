@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor;
 using MudBlazor.Services;
 using Polly;
+
 #pragma warning restore SA1200 // Using directives should be placed correctly
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -33,11 +34,13 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 });
 
-await builder.Build().RunAsync();
+await builder.Build()
+    .RunAsync();
 
 static HttpClient HttpClientFactory(IServiceProvider serviceProvider, IConfiguration configuration)
 {
-    var httpClient = serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("backend-api");
+    var httpClient = serviceProvider.GetRequiredService<IHttpClientFactory>()
+        .CreateClient("backend-api");
     httpClient.DefaultRequestHeaders.Accept.Clear();
     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     return httpClient;

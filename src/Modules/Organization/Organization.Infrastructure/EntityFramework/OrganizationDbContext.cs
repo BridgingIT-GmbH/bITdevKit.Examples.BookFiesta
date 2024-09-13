@@ -5,12 +5,12 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
-public class OrganizationDbContext(DbContextOptions<OrganizationDbContext> options)
-    : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext, IOutboxMessageContext
+public class OrganizationDbContext(DbContextOptions<OrganizationDbContext> options) : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext,
+    IOutboxMessageContext
 {
     public DbSet<Tenant> Tenants { get; set; }
 

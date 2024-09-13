@@ -39,14 +39,16 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     //public IReadOnlyCollection<TenantId> TenantIds => this.tenantIds.AsReadOnly(); // TODO
 
+    /// <summary>
+    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    /// </summary>
     public Guid Version { get; set; }
 
     public static Company Create(string name, string registrationNumber, EmailAddress contactEmail, Address address = null)
     {
         var company = new Company(name, registrationNumber, contactEmail, address);
 
-        company.DomainEvents.Register(
-            new CompanyCreatedDomainEvent(company), true);
+        company.DomainEvents.Register(new CompanyCreatedDomainEvent(company), true);
 
         return company;
     }
@@ -61,8 +63,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
             if (this.Id?.IsEmpty == false)
             {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
+                this.DomainEvents.Register(new CompanyUpdatedDomainEvent(this), true);
             }
         }
 
@@ -77,8 +78,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
             if (this.Id?.IsEmpty == false)
             {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
+                this.DomainEvents.Register(new CompanyUpdatedDomainEvent(this), true);
             }
         }
 
@@ -95,8 +95,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
             if (this.Id?.IsEmpty == false)
             {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
+                this.DomainEvents.Register(new CompanyUpdatedDomainEvent(this), true);
             }
         }
 
@@ -113,8 +112,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
             if (this.Id?.IsEmpty == false)
             {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
+                this.DomainEvents.Register(new CompanyUpdatedDomainEvent(this), true);
             }
         }
 
@@ -129,8 +127,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
             if (this.Id?.IsEmpty == false)
             {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
+                this.DomainEvents.Register(new CompanyUpdatedDomainEvent(this), true);
             }
         }
 
@@ -145,8 +142,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
             if (this.Id?.IsEmpty == false)
             {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
+                this.DomainEvents.Register(new CompanyUpdatedDomainEvent(this), true);
             }
         }
 
@@ -161,8 +157,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
             if (this.Id?.IsEmpty == false)
             {
-                this.DomainEvents.Register(
-                new CompanyUpdatedDomainEvent(this), true);
+                this.DomainEvents.Register(new CompanyUpdatedDomainEvent(this), true);
             }
         }
 
