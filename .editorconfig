@@ -162,6 +162,9 @@ dotnet_diagnostic.rcs1036.severity = warning
 # IDE0055: Fix formatting
 dotnet_diagnostic.ide0055.severity = suggestion
 
+# SA1408: Conditional Expressions Must Declare Precedence
+dotnet_diagnostic.SA1408.severity = none
+
 [*]
 
 # ReSharper properties
