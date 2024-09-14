@@ -47,10 +47,11 @@ public partial class BookIsbn : ValueObject
     public static BookIsbn Create(string value)
     {
         value = value?.ToUpperInvariant()
-            ?.Replace("ISBN-10", string.Empty)
-            ?.Replace("ISBN-13", string.Empty)
-            ?.Replace("ISBN", string.Empty)
-            ?.Trim() ?? string.Empty;
+                ?.Replace("ISBN-10", string.Empty)
+                ?.Replace("ISBN-13", string.Empty)
+                ?.Replace("ISBN", string.Empty)
+                ?.Trim() ??
+            string.Empty;
 
         return new BookIsbn(value);
     }

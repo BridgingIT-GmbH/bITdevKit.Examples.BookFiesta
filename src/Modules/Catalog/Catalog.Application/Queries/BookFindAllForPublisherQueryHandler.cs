@@ -23,7 +23,8 @@ public class BookFindAllForPublisherQueryHandler(ILoggerFactory loggerFactory, I
         var publisherId = PublisherId.Create(query.PublisherId);
 
         var result = await repository.FindAllResultAsync(new Specification<Book>(e => e.Publisher.PublisherId == publisherId), cancellationToken: cancellationToken)
-            .AnyContext() ?? throw new EntityNotFoundException();
+                .AnyContext() ??
+            throw new EntityNotFoundException();
 
         return QueryResponse.For(result);
     }

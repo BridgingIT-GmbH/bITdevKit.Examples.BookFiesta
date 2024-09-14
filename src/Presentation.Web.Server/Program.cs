@@ -340,7 +340,8 @@ void ConfigureTracing(TracerProviderBuilder provider)
         provider.AddAzureMonitorTraceExporter(o =>
         {
             o.ConnectionString = builder.Configuration["Tracing:AzureMonitor:ConnectionString"]
-                .EmptyToNull() ?? Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+                    .EmptyToNull() ??
+                Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
         });
     }
 

@@ -40,6 +40,7 @@ public class AverageRating : ValueObject
 
     public void Add(Rating rating)
     {
+        // ReSharper disable once ArrangeRedundantParentheses
         this.Value = ((this.value * this.Amount) + rating.Value) / ++this.Amount;
     }
 
@@ -50,6 +51,7 @@ public class AverageRating : ValueObject
             return;
         }
 
+        // ReSharper disable once ArrangeRedundantParentheses
         this.Value = ((this.Value * this.Amount) - rating.Value) / --this.Amount;
     }
 

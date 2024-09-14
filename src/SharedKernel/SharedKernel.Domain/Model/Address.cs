@@ -57,7 +57,10 @@ public class Address : ValueObject
 
     private static bool IsValid(Address address)
     {
-        return !string.IsNullOrEmpty(address.Name) && !string.IsNullOrEmpty(address.Line1) && !string.IsNullOrEmpty(address.PostalCode) && !string.IsNullOrEmpty(address.Country) &&
-               !string.IsNullOrEmpty(address.Country);
+        return !string.IsNullOrEmpty(address.Name) &&
+            !string.IsNullOrEmpty(address.Line1) &&
+            !string.IsNullOrEmpty(address.PostalCode) &&
+            !string.IsNullOrEmpty(address.Country) &&
+            !string.IsNullOrEmpty(address.Country);
     }
 }

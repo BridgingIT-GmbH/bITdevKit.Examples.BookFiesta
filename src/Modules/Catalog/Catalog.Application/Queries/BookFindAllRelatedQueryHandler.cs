@@ -21,7 +21,8 @@ public class BookFindAllRelatedQueryHandler(ILoggerFactory loggerFactory, IGener
     {
         var bookId = BookId.Create(query.BookId);
         var result = await repository.FindOneResultAsync(bookId, cancellationToken: cancellationToken)
-            .AnyContext() ?? throw new EntityNotFoundException();
+                .AnyContext() ??
+            throw new EntityNotFoundException();
 
         return result.IsSuccess ? QueryResponse.For(await recommendationService.BookFindAllRelatedAsync(result.Value)) : QueryResponse.For<IEnumerable<Book>>(result);
     }

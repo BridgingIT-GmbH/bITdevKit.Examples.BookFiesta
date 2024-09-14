@@ -231,7 +231,9 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         return this.AddChapter(title,
             this.chapters.LastOrDefault()
-                ?.Number + 1 ?? 1,
+                ?.Number +
+            1 ??
+            1,
             content);
     }
 

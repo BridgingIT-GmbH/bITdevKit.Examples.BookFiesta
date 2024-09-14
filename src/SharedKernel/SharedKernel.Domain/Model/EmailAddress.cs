@@ -60,7 +60,8 @@ public partial class EmailAddress : ValueObject
     private static string Normalize(string value)
     {
         return value?.Trim()
-            .ToLowerInvariant() ?? string.Empty;
+                .ToLowerInvariant() ??
+            string.Empty;
     }
 
     [GeneratedRegex(
@@ -71,7 +72,9 @@ public partial class EmailAddress : ValueObject
 
     private static bool IsValid(string email)
     {
-        return !string.IsNullOrEmpty(email) && email.Length <= 255 && IsValidRegex()
-            .IsMatch(email);
+        return !string.IsNullOrEmpty(email) &&
+            email.Length <= 255 &&
+            IsValidRegex()
+                .IsMatch(email);
     }
 }
