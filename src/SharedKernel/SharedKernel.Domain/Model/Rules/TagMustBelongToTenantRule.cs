@@ -10,14 +10,11 @@ using BridgingIT.DevKit.Domain.Repositories;
 
 public class TagMustBelongToTenantRule(Tag tag, TenantId tenantId) : DomainRuleBase
 {
-    private readonly Tag tag = tag;
-    private readonly TenantId tenantId = tenantId;
-
-    public override string Message => $"Tag should belong to tenant {this.tenantId}";
+    public override string Message => $"Tag should belong to tenant {tenantId}";
 
     public override Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
-        return Task.FromResult(this.tag.TenantId == this.tenantId);
+        return Task.FromResult(tag.TenantId == tenantId);
     }
 }
 
