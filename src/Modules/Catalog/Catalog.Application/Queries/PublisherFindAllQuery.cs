@@ -9,6 +9,7 @@ using Common;
 using DevKit.Application.Queries;
 using Domain;
 using FluentValidation;
+using SharedKernel.Application;
 
 public class PublisherFindAllQuery(string tenantId) : QueryRequestBase<Result<IEnumerable<Publisher>>>, ITenantAware
 {

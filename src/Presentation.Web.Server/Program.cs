@@ -4,6 +4,7 @@
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
 using System.Runtime.InteropServices;

@@ -10,6 +10,7 @@ using DevKit.Application.Queries;
 using Domain;
 using FluentValidation;
 using FluentValidation.Results;
+using SharedKernel.Application;
 
 public class PublisherFindOneQuery(string tenantId, string bookId) : QueryRequestBase<Result<Publisher>>, ITenantAware
 {

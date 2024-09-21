@@ -13,19 +13,19 @@ public class BookModel
 
     public string Title { get; set; }
 
-    public string Description { get; private set; }
+    public string Description { get; set; }
 
-    public string Isbn { get; private set; }
+    public string Isbn { get; set; }
 
-    public decimal Price { get; private set; }
+    public decimal Price { get; set; }
 
-    public BookPublisherModel Publisher { get; private set; }
+    public BookPublisherModel Publisher { get; set; }
 
-    public DateOnly PublishedDate { get; private set; }
+    public DateOnly PublishedDate { get; set; }
 
-    public IEnumerable<string> Keywords { get; private set; }
+    public IEnumerable<string> Keywords { get; set; }
 
-    public IEnumerable<BookAuthorModel> Authors { get; private set; }
+    public IEnumerable<BookAuthorModel> Authors { get; set; }
 
     public BookCategoryModel[] Categories { get; set; }
 

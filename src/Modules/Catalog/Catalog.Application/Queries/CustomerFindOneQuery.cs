@@ -10,6 +10,7 @@ using DevKit.Application.Queries;
 using Domain;
 using FluentValidation;
 using FluentValidation.Results;
+using SharedKernel.Application;
 
 public class CustomerFindOneQuery(string tenantId, string customerId) : QueryRequestBase<Result<Customer>>, ITenantAware
 {

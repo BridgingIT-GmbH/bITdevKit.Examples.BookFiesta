@@ -3,13 +3,13 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 
 using Common;
 using DevKit.Application.Commands;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Organization.Application;
+using Modules.Organization.Application;
 
 public class TenantAwareCommandBehavior<TRequest, TResponse>(
     ILoggerFactory loggerFactory,

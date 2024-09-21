@@ -10,6 +10,7 @@ using DevKit.Application.Commands;
 using Domain;
 using FluentValidation;
 using FluentValidation.Results;
+using SharedKernel.Application;
 
 public class CustomerCreateCommand(string tenantId, CustomerModel model) : CommandRequestBase<Result<Customer>>, ITenantAware
 {
