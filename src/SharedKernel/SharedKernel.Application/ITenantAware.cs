@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 
-public interface ITenantAware // TODO: move to sharedkernel (Application)
+public interface ITenantAware
 {
     string TenantId { get; }
 }

@@ -11,6 +11,13 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Modules.Organization.Application;
 
+/// <summary>
+/// A behavior for handling tenant-aware queries in the application. This class is responsible for
+/// checking if a request implements the ITenantAware interface and ensuring the tenant exists and is active
+/// before allowing the request to proceed.
+/// </summary>
+/// <typeparam name="TRequest">The type of request implementing IRequest.</typeparam>
+/// <typeparam name="TResponse">The type of response returned by the request.</typeparam>
 public class TenantAwareQueryBehavior<TRequest, TResponse>(
     ILoggerFactory loggerFactory,
     IOrganizationModuleClient organizationModuleClient)
