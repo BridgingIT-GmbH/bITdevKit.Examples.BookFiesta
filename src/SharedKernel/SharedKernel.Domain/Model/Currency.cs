@@ -19,7 +19,7 @@ public class Currency : ValueObject
     static Currency()
     {
         // source: https://www.xe.com/symbols/
-        Currencies = new Dictionary<string, string>()
+        Currencies = new Dictionary<string, string>
         {
             { "ALL", "Lek" },
             { "AFN", "؋" },

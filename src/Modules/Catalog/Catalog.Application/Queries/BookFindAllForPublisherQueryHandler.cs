@@ -5,13 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using BridgingIT.DevKit.Application.Queries;
 using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Domain.Specifications;
+using DevKit.Application.Queries;
+using DevKit.Domain;
+using DevKit.Domain.Repositories;
+using DevKit.Domain.Specifications;
 using Domain;
 using Microsoft.Extensions.Logging;
 

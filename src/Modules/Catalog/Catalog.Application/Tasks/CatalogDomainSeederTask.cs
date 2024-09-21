@@ -5,12 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using System.Threading;
-using System.Threading.Tasks;
 using Common;
-using BridgingIT.DevKit.Domain.Repositories;
+using DevKit.Domain.Repositories;
 using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using SharedKernel.Domain;
 
 public class CatalogDomainSeederTask(
     IGenericRepository<Customer> customerRepository,

@@ -26,7 +26,7 @@ public class TenantFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRep
             specifications.Add(TenantSpecifications.ForCompany(CompanyId.Create(query.CompanyId)));
         }
 
-        return QueryResponse.For(await repository.FindAllResultAsync(specifications, new FindOptions<Tenant>() { Order = new OrderOption<Tenant>(e => e.Name) }, cancellationToken)
+        return QueryResponse.For(await repository.FindAllResultAsync(specifications, new FindOptions<Tenant> { Order = new OrderOption<Tenant>(e => e.Name) }, cancellationToken)
             .AnyContext());
     }
 }

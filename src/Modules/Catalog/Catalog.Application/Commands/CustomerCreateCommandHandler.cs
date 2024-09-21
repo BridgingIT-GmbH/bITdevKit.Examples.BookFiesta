@@ -5,25 +5,25 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using System.Threading;
-using System.Threading.Tasks;
-using BridgingIT.DevKit.Application.Commands;
 using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Repositories;
+using DevKit.Application.Commands;
+using DevKit.Domain;
+using DevKit.Domain.Repositories;
 using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
+using SharedKernel.Domain;
 
 public class CustomerCreateCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
     : CommandHandlerBase<CustomerCreateCommand, Result<Customer>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Customer>>> Process(CustomerCreateCommand command, CancellationToken cancellationToken)
     {
-        var customer = Customer.Create(TenantId.Create(command.TenantId),
+        var customer = Customer.Create(
+            TenantId.Create(command.TenantId),
             PersonFormalName.Create(command.Model.PersonName.Parts, command.Model.PersonName.Title, command.Model.PersonName.Suffix),
             EmailAddress.Create(command.Model.Email),
-            Address.Create(command.Model.Address.Name,
+            Address.Create(
+                command.Model.Address.Name,
                 command.Model.Address.Line1,
                 command.Model.Address.Line2,
                 command.Model.Address.PostalCode,

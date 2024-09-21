@@ -18,7 +18,7 @@ public class CompanyFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRe
 {
     public override async Task<QueryResponse<Result<IEnumerable<Company>>>> Process(CompanyFindAllQuery query, CancellationToken cancellationToken)
     {
-        return QueryResponse.For(await repository.FindAllResultAsync(new FindOptions<Company>() { Order = new OrderOption<Company>(e => e.Name) }, cancellationToken)
+        return QueryResponse.For(await repository.FindAllResultAsync(new FindOptions<Company> { Order = new OrderOption<Company>(e => e.Name) }, cancellationToken)
             .AnyContext());
     }
 }

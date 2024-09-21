@@ -1712,14 +1712,6 @@
           "Microsoft.Extensions.Options": "8.0.0"
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions": {
-        "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "RIFgaqoaINxkM2KTOw72dmilDmTrYA0ns2KW4lDz4gZ2+o6IQ894CzmdL3StM2oh7QQq44nCWiqKqc4qUI9Jmg==",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1"
-        }
-      },
       "Microsoft.Extensions.Logging.ApplicationInsights": {
         "type": "Transitive",
         "resolved": "2.22.0",
@@ -2772,6 +2764,8 @@
           "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
         }
       },
@@ -2833,7 +2827,9 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": {
         "type": "Project",
         "dependencies": {
+          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application.Contracts": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
         }
       },
@@ -2887,6 +2883,15 @@
           "MudBlazor": "[7.7.0, )",
           "Newtonsoft.Json": "[13.0.3, )",
           "System.ComponentModel.Annotations": "[5.0.0, )"
+        }
+      },
+      "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application": {
+        "type": "Project",
+        "dependencies": {
+          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.31, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
+          "Ensure.That": "[10.1.0, )",
+          "Microsoft.Extensions.Logging.Abstractions": "[8.0.1, )"
         }
       },
       "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application.Contracts": {
@@ -3364,6 +3369,15 @@
         "requested": "[8.0.7, )",
         "resolved": "8.0.8",
         "contentHash": "WYIsqP/A6dH/LWJznrvgoNPc7Q+CUJD0E78765GL3aonBtyFK1BKtPzBvvlnrr3SVqSO2r6xJCLgCEiCMG1gfA=="
+      },
+      "Microsoft.Extensions.Logging.Abstractions": {
+        "type": "CentralTransitive",
+        "requested": "[8.0.1, )",
+        "resolved": "8.0.1",
+        "contentHash": "RIFgaqoaINxkM2KTOw72dmilDmTrYA0ns2KW4lDz4gZ2+o6IQ894CzmdL3StM2oh7QQq44nCWiqKqc4qUI9Jmg==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1"
+        }
       },
       "Microsoft.Extensions.ServiceDiscovery": {
         "type": "CentralTransitive",

@@ -5,10 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using BridgingIT.DevKit.Application.Queries;
 using Common;
-using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Domain.Specifications;
+using DevKit.Application.Queries;
+using DevKit.Domain.Repositories;
+using DevKit.Domain.Specifications;
 using Domain;
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +19,8 @@ public class BookFindAllForCategoryQueryHandler(ILoggerFactory loggerFactory, IG
     {
         var categoryId = CategoryId.Create(query.CategoryId);
 
-        return QueryResponse.For(await repository.FindAllResultAsync(new Specification<Book>(e => e.Categories.Any(c => c.Id == categoryId)), cancellationToken: cancellationToken)
-            .AnyContext());
+        return QueryResponse.For(
+            await repository.FindAllResultAsync(new Specification<Book>(e => e.Categories.Any(c => c.Id == categoryId)), cancellationToken: cancellationToken)
+                .AnyContext());
     }
 }

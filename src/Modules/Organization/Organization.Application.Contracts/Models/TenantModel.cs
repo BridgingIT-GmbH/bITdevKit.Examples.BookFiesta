@@ -17,6 +17,8 @@ public class TenantModel
 
     public string ContactEmail { get; set; }
 
+    public bool IsActive { get; set; }
+
     public TenantBrandingModel Branding { get; set; }
 
     public TenantSubscriptionModel[] Subscriptions { get; set; }

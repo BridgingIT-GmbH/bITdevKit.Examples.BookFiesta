@@ -5,15 +5,15 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using System.Threading.Tasks;
 using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Repositories;
+using DevKit.Domain;
+using DevKit.Domain.Repositories;
 using Domain;
 
 public class CustomerEmailMustBeUniqueRule(IGenericRepository<Customer> repository, Customer customer) : DomainRuleBase
 {
-    public override string Message => "Customer email should be unique";
+    public override string Message
+        => "Customer email should be unique";
 
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
@@ -21,7 +21,7 @@ public class CustomerEmailMustBeUniqueRule(IGenericRepository<Customer> reposito
     }
 }
 
-public static partial class CustomerRules
+public static class CustomerRules
 {
     public static IDomainRule EmailMustBeUnique(IGenericRepository<Customer> repository, Customer customer)
     {

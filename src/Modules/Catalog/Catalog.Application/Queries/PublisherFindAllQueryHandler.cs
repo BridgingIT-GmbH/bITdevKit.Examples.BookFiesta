@@ -5,11 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using BridgingIT.DevKit.Application.Queries;
 using Common;
-using BridgingIT.DevKit.Domain.Repositories;
+using DevKit.Application.Queries;
+using DevKit.Domain.Repositories;
 using Domain;
 using Microsoft.Extensions.Logging;
 
@@ -18,7 +16,8 @@ public class PublisherFindAllQueryHandler(ILoggerFactory loggerFactory, IGeneric
 {
     public override async Task<QueryResponse<Result<IEnumerable<Publisher>>>> Process(PublisherFindAllQuery query, CancellationToken cancellationToken)
     {
-        return QueryResponse.For(await repository.FindAllResultAsync(new FindOptions<Publisher>() { Order = new OrderOption<Publisher>(e => e.Name) }, cancellationToken)
-            .AnyContext());
+        return QueryResponse.For(
+            await repository.FindAllResultAsync(new FindOptions<Publisher> { Order = new OrderOption<Publisher>(e => e.Name) }, cancellationToken)
+                .AnyContext());
     }
 }

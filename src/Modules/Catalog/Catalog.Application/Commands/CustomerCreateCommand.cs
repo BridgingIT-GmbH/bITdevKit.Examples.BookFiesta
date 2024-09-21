@@ -5,13 +5,13 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using BridgingIT.DevKit.Application.Commands;
 using Common;
+using DevKit.Application.Commands;
 using Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
-public class CustomerCreateCommand(string tenantId, CustomerModel model) : CommandRequestBase<Result<Customer>>
+public class CustomerCreateCommand(string tenantId, CustomerModel model) : CommandRequestBase<Result<Customer>>, ITenantAware
 {
     public string TenantId { get; } = tenantId;
 

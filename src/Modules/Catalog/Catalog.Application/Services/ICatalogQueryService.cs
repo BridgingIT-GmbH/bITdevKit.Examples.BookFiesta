@@ -5,15 +5,13 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Common;
 using Domain;
 
 public interface ICatalogQueryService
 {
     /// <summary>
-    /// Retrieves a collection of related books based on the provided book and limit.
+    ///     Retrieves a collection of related books based on the provided book and limit.
     /// </summary>
     /// <param name="book">The book to find related books for.</param>
     /// <param name="limit">The maximum number of related books to retrieve (default is 5).</param>

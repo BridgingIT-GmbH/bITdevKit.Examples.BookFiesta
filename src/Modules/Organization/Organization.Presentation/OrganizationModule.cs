@@ -30,6 +30,8 @@ public class OrganizationModule : WebModuleBase
         //    .WithJob<EchoJob>(CronExpressions.Every5Minutes); // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
         //                                                      //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
+        services.AddScoped<IOrganizationModuleClient, OrganizationModuleClient>();
+
         services.AddStartupTasks()
             .WithTask<OrganizationDomainSeederTask>(o => o.Enabled(environment?.IsDevelopment() == true)
                 .StartupDelay(moduleConfiguration.SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)

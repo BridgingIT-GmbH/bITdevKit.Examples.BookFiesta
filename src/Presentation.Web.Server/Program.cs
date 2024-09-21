@@ -3,6 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
 using System.Runtime.InteropServices;
@@ -69,12 +70,14 @@ builder.Services.AddCommands()
     .WithBehavior(typeof(ModuleScopeCommandBehavior<,>))
     //.WithBehavior(typeof(ChaosExceptionCommandBehavior<,>))
     .WithBehavior(typeof(RetryCommandBehavior<,>))
-    .WithBehavior(typeof(TimeoutCommandBehavior<,>));
+    .WithBehavior(typeof(TimeoutCommandBehavior<,>))
+    .WithBehavior(typeof(TenantAwareCommandBehavior<,>));
 builder.Services.AddQueries()
     .WithBehavior(typeof(ModuleScopeQueryBehavior<,>))
     //.WithBehavior(typeof(ChaosExceptionQueryBehavior<,>))
     .WithBehavior(typeof(RetryQueryBehavior<,>))
-    .WithBehavior(typeof(TimeoutQueryBehavior<,>));
+    .WithBehavior(typeof(TimeoutQueryBehavior<,>))
+    .WithBehavior(typeof(TenantAwareQueryBehavior<,>));
 
 builder.Services.AddJobScheduling(o => o.StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]), builder.Configuration)
     //.WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)

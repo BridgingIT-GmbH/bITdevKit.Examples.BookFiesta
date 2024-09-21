@@ -47,6 +47,10 @@ public class OrganizationMapperRegister : IRegister
 
     private static void RegisterTenant(TypeAdapterConfig config)
     {
+        config.ForType<Tenant, TenantModel>()
+            .IgnoreNullValues(true)
+            .Map(dest => dest.IsActive, src => src.IsActive());
+
         config.ForType<TenantModel, Tenant>()
             .IgnoreNullValues(true)
             .ConstructUsing(src => Tenant.Create(src.CompanyId, src.Name, EmailAddress.Create(src.ContactEmail)))

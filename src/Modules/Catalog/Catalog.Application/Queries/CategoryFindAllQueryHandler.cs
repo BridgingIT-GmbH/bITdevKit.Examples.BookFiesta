@@ -5,11 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using BridgingIT.DevKit.Application.Queries;
 using Common;
-using BridgingIT.DevKit.Domain.Repositories;
+using DevKit.Application.Queries;
+using DevKit.Domain.Repositories;
 using Domain;
 using Microsoft.Extensions.Logging;
 
@@ -20,28 +18,35 @@ public class CategoryFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericR
     {
         var categories = await repository.FindAllResultAsync(cancellationToken: cancellationToken)
             .AnyContext();
-        this.PrintCategories(categories.Value.SafeNull()
-            .Where(c => c.Parent == null)
-            .OrderBy(e => e.Order));
+        this.PrintCategories(
+            categories.Value.SafeNull()
+                .Where(c => c.Parent == null)
+                .OrderBy(e => e.Order));
 
         if (query.Flatten)
         {
             categories.Value = this.FlattenCategories(categories.Value);
 
-            return QueryResponse.Success(categories.Value.SafeNull()
-                .AsEnumerable());
+            return QueryResponse.Success(
+                categories.Value.SafeNull()
+                    .AsEnumerable());
         }
 
-        return QueryResponse.Success(categories.Value.SafeNull()
-            .Where(c => c.Parent == null)
-            .OrderBy(e => e.Order)
-            .AsEnumerable());
+        return QueryResponse.Success(
+            categories.Value.SafeNull()
+                .Where(c => c.Parent == null)
+                .OrderBy(e => e.Order)
+                .AsEnumerable());
     }
 
     private IEnumerable<Category> FlattenCategories(IEnumerable<Category> categories)
     {
         return categories.SafeAny()
-            ? categories.SelectMany(c => new[] { c }.Concat(c.Children))
+            ? categories.SelectMany(
+                    c => new[]
+                    {
+                        c
+                    }.Concat(c.Children))
                 .ToList()
                 .DistinctBy(c => c.Id)
             : [];

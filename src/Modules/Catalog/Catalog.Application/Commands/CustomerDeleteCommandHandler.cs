@@ -5,13 +5,13 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using BridgingIT.DevKit.Application.Commands;
 using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Repositories;
+using DevKit.Application.Commands;
+using DevKit.Domain;
+using DevKit.Domain.Repositories;
 using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.Extensions.Logging;
+using SharedKernel.Domain;
 
 public class CustomerDeleteCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
     : CommandHandlerBase<CustomerDeleteCommand, Result<Customer>>(loggerFactory)

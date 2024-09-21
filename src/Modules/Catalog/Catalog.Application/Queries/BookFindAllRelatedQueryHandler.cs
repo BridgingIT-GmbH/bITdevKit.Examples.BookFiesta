@@ -5,12 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using BridgingIT.DevKit.Application.Queries;
 using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Repositories;
+using DevKit.Application.Queries;
+using DevKit.Domain;
+using DevKit.Domain.Repositories;
 using Domain;
 using Microsoft.Extensions.Logging;
 
@@ -24,6 +22,8 @@ public class BookFindAllRelatedQueryHandler(ILoggerFactory loggerFactory, IGener
                 .AnyContext() ??
             throw new EntityNotFoundException();
 
-        return result.IsSuccess ? QueryResponse.For(await recommendationService.BookFindAllRelatedAsync(result.Value)) : QueryResponse.For<IEnumerable<Book>>(result);
+        return result.IsSuccess
+            ? QueryResponse.For(await recommendationService.BookFindAllRelatedAsync(result.Value))
+            : QueryResponse.For<IEnumerable<Book>>(result);
     }
 }
