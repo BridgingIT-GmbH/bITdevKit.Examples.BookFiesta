@@ -92,7 +92,7 @@ public class OrganizationModule : WebModuleBase
         IConfiguration configuration = null,
         IWebHostEnvironment environment = null)
     {
-        new OrganizationCompanyEndpoints().Map(app);
+        new OrganizationCompanyEndpoint().Map(app);
         new OrganizationTenantEndpoints().Map(app);
 
         return app;

@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Routing;
 /// <summary>
 ///     Specifies the external API for this module that will be exposed for the outside boundary
 /// </summary>
-public class OrganizationCompanyEndpoints : EndpointsBase
+public class OrganizationCompanyEndpoint : EndpointsBase
 {
     /// <summary>
     ///     Maps the endpoints for the Organization Company to the specified route builder.

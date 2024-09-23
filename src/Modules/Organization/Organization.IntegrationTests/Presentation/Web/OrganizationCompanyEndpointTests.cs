@@ -13,7 +13,7 @@ using SharedKernel.Application;
 using SharedKernel.Domain;
 
 [IntegrationTest("Organization:Presentation")]
-public class OrganizationCompanyEndpointsTests(
+public class OrganizationCompanyEndpointTests(
     ITestOutputHelper output,
     CustomWebApplicationFactoryFixture<Program> fixture)
     : IClassFixture<
