@@ -24,7 +24,7 @@ public class TestEnvironmentFixture : IAsyncLifetime
             .Build();
 
         this.SqlContainer = new MsSqlBuilder()
-            //.WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
             .WithNetworkAliases(this.NetworkName)
             .WithExposedPort(1433)
             .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))

@@ -171,7 +171,7 @@ stages:
             inputs:
               command: test
               projects: "**/*[Tt]ests/*IntegrationTests.csproj"
-              arguments: "--configuration $(buildConfiguration) --no-restore --no-build --nologo  --filter FullyQualifiedName!~EndpointTests"
+              arguments: "--configuration $(buildConfiguration) --no-restore --no-build --nologo"
 
           # - task: DotNetCoreCLI@2
           #   displayName: Dotnet test (end2end)
