@@ -104,6 +104,19 @@ stages:
               performMultiLevelLookup: true
               includePreviewVersions: false
 
+          - task: Bash@3
+            displayName: Aspire setup environment
+            continueOnError: true
+            inputs:
+              targetType: 'inline'
+              script: |
+                dotnet workload update
+                dotnet workload install aspire
+
+          - bash: |
+              docker compose up -d
+            displayName: Docker start containers
+
           - bash: |
               export ASPNETCORE_ENVIRONMENT=Development
               whereis dotnet
