@@ -16,19 +16,19 @@ trigger:
   paths:
     exclude:
       - README.md
-
 pr:
   autoCancel: 'true'
   branches:
     include:
       - main
-
 resources:
   - repo: self
     fetchDepth: '0'
 
 #######################################################################################################
 # VERSION
+#
+# This stage is responsible for versioning the build with MinVer.
 #
 stages:
   - stage: version
@@ -45,7 +45,8 @@ stages:
           - checkout: self
             fetchDepth: '0'
 
-          - task: UseDotNet@2 # https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops
+          # Use .NET SDK
+          - task: UseDotNet@2
             displayName: Use .NET SDK
             condition: succeeded()
             inputs:
@@ -53,6 +54,7 @@ stages:
               performMultiLevelLookup: true
               includePreviewVersions: false
 
+          # Inspect environment variables and .NET SDK details
           - bash: |
               export ASPNETCORE_ENVIRONMENT=Development
               whereis dotnet
@@ -60,6 +62,7 @@ stages:
             displayName: Inspect environment
             condition: succeeded()
 
+          # Install MinVer CLI for managing versions
           - task: DotNetCoreCLI@2
             displayName: 'Install version tool'
             inputs:
@@ -67,6 +70,7 @@ stages:
               custom: 'tool'
               arguments: 'install --global minver-cli --version 4.3.0'
 
+          # Calculate version using MinVer
           - powershell: |
               $version = $(minver -v d) # https://github.com/adamralph/minver#options
               $buildName = "$version" # + "_" + $env:BUILD_SOURCEBRANCHNAME
@@ -75,12 +79,15 @@ stages:
             displayName: Calculate version
             name: CalculateVersion
 
+          # Show environment variables for debugging
           - powershell: |
               Get-ChildItem Env:
             displayName: Show environment variables
 
   #######################################################################################################
   # BUILD
+  #
+  # This stage is responsible for restoring, building, and testing the solution.
   #
   - stage: build
     displayName: Build stage
@@ -96,7 +103,8 @@ stages:
           - checkout: self
             fetchDepth: '0'
 
-          - task: UseDotNet@2 # https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops
+          # Use .NET SDK
+          - task: UseDotNet@2
             displayName: Use .NET SDK
             condition: succeeded()
             inputs:
@@ -104,6 +112,7 @@ stages:
               performMultiLevelLookup: true
               includePreviewVersions: false
 
+          # Setup Aspire environment with necessary workloads
           - task: Bash@3
             displayName: Aspire setup environment
             continueOnError: true
@@ -113,10 +122,12 @@ stages:
                 dotnet workload update
                 dotnet workload install aspire
 
+          # Start necessary Docker containers
           - bash: |
               docker compose up -d
             displayName: Docker start containers
 
+          # Inspect environment variables and .NET SDK details
           - bash: |
               export ASPNETCORE_ENVIRONMENT=Development
               whereis dotnet
@@ -124,6 +135,7 @@ stages:
             displayName: Inspect environment
             condition: succeeded()
 
+          # Restore .NET projects
           - task: DotNetCoreCLI@2
             displayName: Dotnet restore
             condition: succeeded()
@@ -131,6 +143,7 @@ stages:
               command: restore
               projects: '**/*.csproj'
 
+          # Build .NET projects
           - task: DotNetCoreCLI@2
             displayName: Dotnet build
             condition: succeeded()
@@ -139,6 +152,7 @@ stages:
               projects: "$(solution)"
               arguments: "--configuration $(buildConfiguration) --no-restore --nologo"
 
+          # Perform vulnerability scan on NuGet packages
           - task: Bash@3
             displayName: Vulnerability scan (nuget)
             continueOnError: true
@@ -148,15 +162,18 @@ stages:
                 dotnet list $(Build.SourcesDirectory)/BridgingIT.DevKit.sln package --vulnerable --include-transitive 2>&1 | tee build.log
                 test `grep -cm 1 'has the following vulnerable packages' build.log` = 0
 
+          # Start necessary Docker containers
           - bash: |
               docker compose up -d
             displayName: Docker start containers
 
+          # List Docker containers for verification
           - bash: |
               docker ps -a
             displayName: Docker list containers
             condition: succeeded()
 
+          # Run unit tests
           - task: DotNetCoreCLI@2
             displayName: Dotnet test (unit)
             condition: succeeded()
@@ -165,6 +182,7 @@ stages:
               projects: "**/*[Tt]ests/*UnitTests.csproj"
               arguments: "--configuration $(buildConfiguration) --no-restore --no-build --nologo"
 
+          # Run integration tests
           - task: DotNetCoreCLI@2
             displayName: Dotnet test (integration)
             condition: succeeded()
@@ -173,14 +191,7 @@ stages:
               projects: "**/*[Tt]ests/*IntegrationTests.csproj"
               arguments: "--configuration $(buildConfiguration) --no-restore --no-build --nologo  --filter FullyQualifiedName!~EndpointTests"
 
-          # - task: DotNetCoreCLI@2
-          #   displayName: Dotnet test (end2end)
-          #   condition: succeeded()
-          #   inputs:
-          #     command: test
-          #     projects: "**/*[Tt]ests/*EndToEndTests.csproj"
-          #     arguments: "--configuration $(buildConfiguration) --no-restore --no-build --nologo --filter FullyQualifiedName!~Examples"
-
+          # Clean up Docker containers and images
           - bash: |
               docker compose stop
               docker container stop $(docker container ls -aq)
