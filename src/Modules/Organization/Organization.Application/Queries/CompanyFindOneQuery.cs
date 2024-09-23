@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class CompanyFindOneQuery(
-    string companyId) : QueryRequestBase<Result<Company>>
+public class CompanyFindOneQuery(string companyId) : QueryRequestBase<Result<Company>>
 {
     public string CompanyId { get; } = companyId;
 

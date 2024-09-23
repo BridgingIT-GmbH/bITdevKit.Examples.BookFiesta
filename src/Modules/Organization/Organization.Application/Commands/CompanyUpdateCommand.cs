@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class CompanyUpdateCommand(
-    CompanyModel model) : CommandRequestBase<Result<Company>>
+public class CompanyUpdateCommand(CompanyModel model) : CommandRequestBase<Result<Company>>
 {
     public CompanyModel Model { get; } = model;
 

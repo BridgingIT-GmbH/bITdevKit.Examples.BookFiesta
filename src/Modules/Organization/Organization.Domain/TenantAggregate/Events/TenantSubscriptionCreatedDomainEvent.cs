@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-public class TenantSubscriptionCreatedDomainEvent(
-    TenantSubscription subscription) : DomainEventBase
+public class TenantSubscriptionCreatedDomainEvent(TenantSubscription subscription) : DomainEventBase
 {
     public TenantId TenantId { get; } = subscription.Tenant.Id;
 

@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-public class TenantDeactivatedDomainEvent(
-    Tenant tenant) : DomainEventBase
+public class TenantDeactivatedDomainEvent(Tenant tenant) : DomainEventBase
 {
     public TenantId TenantId { get; } = tenant.Id;
 }

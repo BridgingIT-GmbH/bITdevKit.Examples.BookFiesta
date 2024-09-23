@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class CompanyDeleteCommand(
-    string id) : CommandRequestBase<Result<Company>>
+public class CompanyDeleteCommand(string id) : CommandRequestBase<Result<Company>>
 {
     public string Id { get; } = id;
 

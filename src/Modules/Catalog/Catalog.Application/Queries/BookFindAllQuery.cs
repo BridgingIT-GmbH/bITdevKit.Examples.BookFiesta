@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class BookFindAllQuery(
-    string tenantId) : QueryRequestBase<Result<IEnumerable<Book>>>,
+public class BookFindAllQuery(string tenantId) : QueryRequestBase<Result<IEnumerable<Book>>>,
     ITenantAware
 {
     public string TenantId { get; } = tenantId;

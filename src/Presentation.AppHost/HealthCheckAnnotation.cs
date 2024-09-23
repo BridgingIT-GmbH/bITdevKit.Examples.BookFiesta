@@ -6,8 +6,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 ///     An annotation that associates a health check factory with a resource
 /// </summary>
 /// <param name="healthCheckFactory">A function that creates the health check</param>
-public class HealthCheckAnnotation(
-    Func<IResource, CancellationToken, Task<IHealthCheck?>> healthCheckFactory)
+public class HealthCheckAnnotation(Func<IResource, CancellationToken, Task<IHealthCheck?>> healthCheckFactory)
     : IResourceAnnotation
 {
     public Func<IResource, CancellationToken, Task<IHealthCheck?>> HealthCheckFactory { get; } =

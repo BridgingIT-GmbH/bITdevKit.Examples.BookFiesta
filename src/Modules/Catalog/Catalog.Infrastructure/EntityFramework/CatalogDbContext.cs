@@ -9,8 +9,7 @@ using DevKit.Infrastructure.EntityFramework;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
-public class CatalogDbContext(
-    DbContextOptions<CatalogDbContext> options)
+public class CatalogDbContext(DbContextOptions<CatalogDbContext> options)
     : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext,
         IOutboxMessageContext
 {

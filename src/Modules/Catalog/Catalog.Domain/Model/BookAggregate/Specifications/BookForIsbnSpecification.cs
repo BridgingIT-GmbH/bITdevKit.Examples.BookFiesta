@@ -3,8 +3,7 @@
 using System.Linq.Expressions;
 using DevKit.Domain.Specifications;
 
-public class BookForIsbnSpecification(
-    BookIsbn isbn) : Specification<Book>
+public class BookForIsbnSpecification(BookIsbn isbn) : Specification<Book>
 {
     public override Expression<Func<Book, bool>> ToExpression()
     {

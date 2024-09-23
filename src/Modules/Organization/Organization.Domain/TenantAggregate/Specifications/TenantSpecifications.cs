@@ -8,8 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 using System.Linq.Expressions;
 using DevKit.Domain.Specifications;
 
-public class TenantForNameSpecification(
-    string name) : Specification<Tenant>
+public class TenantForNameSpecification(string name) : Specification<Tenant>
 {
     public override Expression<Func<Tenant, bool>> ToExpression()
     {
@@ -17,8 +16,7 @@ public class TenantForNameSpecification(
     }
 }
 
-public class TenantForCompanySpecification(
-    CompanyId companyId) : Specification<Tenant>
+public class TenantForCompanySpecification(CompanyId companyId) : Specification<Tenant>
 {
     public override Expression<Func<Tenant, bool>> ToExpression()
     {

@@ -166,7 +166,8 @@ public class OrganizationCompanyEndpointsTests(
 
         // Act
         var response = await this.fixture.CreateClient()
-            .PostAsync(route, content).AnyContext();
+            .PostAsync(route, content)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
@@ -199,7 +200,8 @@ public class OrganizationCompanyEndpointsTests(
 
         // Act
         var response = await this.fixture.CreateClient()
-            .PutAsync(route + $"/{model.Id}", content).AnyContext();
+            .PutAsync(route + $"/{model.Id}", content)
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
@@ -222,7 +224,8 @@ public class OrganizationCompanyEndpointsTests(
 
         // Act
         var response = await this.fixture.CreateClient()
-            .DeleteAsync(route + $"/{model.Id}").AnyContext();
+            .DeleteAsync(route + $"/{model.Id}")
+            .AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
@@ -258,7 +261,8 @@ public class OrganizationCompanyEndpointsTests(
             Encoding.UTF8,
             MediaTypeNames.Application.Json);
         var response = await this.fixture.CreateClient()
-            .PostAsync(route, content).AnyContext();
+            .PostAsync(route, content)
+            .AnyContext();
         response.EnsureSuccessStatusCode();
 
         return await response.Content.ReadAsAsync<CompanyModel>();

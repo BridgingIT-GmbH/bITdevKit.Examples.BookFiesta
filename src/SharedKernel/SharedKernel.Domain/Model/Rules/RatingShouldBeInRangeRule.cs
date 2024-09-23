@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-public class RatingShouldBeInRangeRule(
-    int value) : DomainRuleBase
+public class RatingShouldBeInRangeRule(int value) : DomainRuleBase
 {
     private readonly double? value = value;
 

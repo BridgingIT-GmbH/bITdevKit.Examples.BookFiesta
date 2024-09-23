@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-public class CompanyUpdatedDomainEvent(
-    Company company) : DomainEventBase
+public class CompanyUpdatedDomainEvent(Company company) : DomainEventBase
 {
     //public TenantId TenantId { get; } = company.TenantIds;
 

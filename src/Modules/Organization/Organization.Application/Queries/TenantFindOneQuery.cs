@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class TenantFindOneQuery(
-    string tenantId) : QueryRequestBase<Result<Tenant>>
+public class TenantFindOneQuery(string tenantId) : QueryRequestBase<Result<Tenant>>
 {
     public string TenantId { get; } = tenantId;
 

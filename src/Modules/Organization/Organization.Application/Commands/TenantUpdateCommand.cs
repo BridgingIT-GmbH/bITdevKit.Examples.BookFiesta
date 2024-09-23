@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class TenantUpdateCommand(
-    TenantModel model) : CommandRequestBase<Result<Tenant>>
+public class TenantUpdateCommand(TenantModel model) : CommandRequestBase<Result<Tenant>>
 {
     public TenantModel Model { get; } = model;
 

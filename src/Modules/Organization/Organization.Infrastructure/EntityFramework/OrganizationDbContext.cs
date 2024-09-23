@@ -9,8 +9,7 @@ using DevKit.Infrastructure.EntityFramework;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
-public class OrganizationDbContext(
-    DbContextOptions<OrganizationDbContext> options)
+public class OrganizationDbContext(DbContextOptions<OrganizationDbContext> options)
     : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext,
         IOutboxMessageContext
 {

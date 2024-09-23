@@ -5,8 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
-public class CategoryCreatedDomainEvent(
-    Category category) : DomainEventBase
+public class CategoryCreatedDomainEvent(Category category) : DomainEventBase
 {
     public CategoryId CategoryId { get; } = category.Id;
 }
