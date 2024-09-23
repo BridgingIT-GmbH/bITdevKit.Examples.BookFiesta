@@ -170,17 +170,21 @@ dotnet_diagnostic.sa1408.severity = none
 # ReSharper properties
 resharper_apply_on_completion = true
 resharper_autodetect_indent_settings = true
+resharper_blank_lines_before_block_statements = 0
+resharper_continuous_indent_multiplier = 1
 resharper_csharp_keep_blank_lines_in_code = 1
 resharper_csharp_max_line_length = 120
+resharper_csharp_wrap_after_declaration_lpar = true
 resharper_csharp_wrap_arguments_style = chop_if_long
 resharper_csharp_wrap_before_first_type_parameter_constraint = true
 resharper_csharp_wrap_multiple_type_parameter_constraints_style = chop_always
+resharper_csharp_wrap_parameters_style = chop_if_long
 resharper_enforce_line_ending_style = true
 resharper_keep_existing_arrangement = false
 resharper_keep_user_linebreaks = true
 resharper_use_roslyn_logic_for_evident_types = true
 resharper_wrap_chained_method_calls = chop_if_long
-resharper_wrap_primary_constructor_parameters_style = chop_always
+resharper_wrap_primary_constructor_parameters_style = chop_if_long
 
 # Microsoft .NET properties
 csharp_preferred_modifier_order = private, public, protected, internal, abstract, virtual, sealed, static, override, new, readonly, extern, unsafe, volatile, async, file, required:suggestion
