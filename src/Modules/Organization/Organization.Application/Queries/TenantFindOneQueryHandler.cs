@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class TenantFindOneQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Tenant> repository)
+public class TenantFindOneQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Tenant> repository)
     : QueryHandlerBase<TenantFindOneQuery, Result<Tenant>>(loggerFactory)
 {
     public override async Task<QueryResponse<Result<Tenant>>> Process(

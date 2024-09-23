@@ -5,36 +5,25 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class CategoryFindAllQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Category> repository)
+public class CategoryFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Category> repository)
     : QueryHandlerBase<CategoryFindAllQuery, Result<IEnumerable<Category>>>(loggerFactory)
 {
     public override async Task<QueryResponse<Result<IEnumerable<Category>>>> Process(
         CategoryFindAllQuery query,
         CancellationToken cancellationToken)
     {
-        var categories = await repository.FindAllResultAsync(cancellationToken: cancellationToken)
-            .AnyContext();
-        this.PrintCategories(
-            categories.Value.SafeNull()
-                .Where(c => c.Parent == null)
-                .OrderBy(e => e.Order));
+        var categories = await repository.FindAllResultAsync(cancellationToken: cancellationToken).AnyContext();
+        this.PrintCategories(categories.Value.SafeNull().Where(c => c.Parent == null).OrderBy(e => e.Order));
 
         if (query.Flatten)
         {
             categories.Value = this.FlattenCategories(categories.Value);
 
-            return QueryResponse.Success(
-                categories.Value.SafeNull()
-                    .AsEnumerable());
+            return QueryResponse.Success(categories.Value.SafeNull().AsEnumerable());
         }
 
         return QueryResponse.Success(
-            categories.Value.SafeNull()
-                .Where(c => c.Parent == null)
-                .OrderBy(e => e.Order)
-                .AsEnumerable());
+            categories.Value.SafeNull().Where(c => c.Parent == null).OrderBy(e => e.Order).AsEnumerable());
     }
 
     private IEnumerable<Category> FlattenCategories(IEnumerable<Category> categories)

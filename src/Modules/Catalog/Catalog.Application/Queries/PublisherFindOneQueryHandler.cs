@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class PublisherFindOneQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Publisher> repository)
+public class PublisherFindOneQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Publisher> repository)
     : QueryHandlerBase<PublisherFindOneQuery, Result<Publisher>>(loggerFactory)
 {
     public override async Task<QueryResponse<Result<Publisher>>> Process(

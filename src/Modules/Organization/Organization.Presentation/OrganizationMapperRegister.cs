@@ -52,17 +52,11 @@ public class OrganizationMapperRegister : IRegister
 
     private static void RegisterTenant(TypeAdapterConfig config)
     {
-        config.ForType<Tenant, TenantModel>()
-            .IgnoreNullValues(true)
-            .Map(dest => dest.IsActive, src => src.IsActive());
+        config.ForType<Tenant, TenantModel>().IgnoreNullValues(true).Map(dest => dest.IsActive, src => src.IsActive());
 
         config.ForType<TenantModel, Tenant>()
             .IgnoreNullValues(true)
-            .ConstructUsing(
-                src => Tenant.Create(
-                    src.CompanyId,
-                    src.Name,
-                    EmailAddress.Create(src.ContactEmail)))
+            .ConstructUsing(src => Tenant.Create(src.CompanyId, src.Name, EmailAddress.Create(src.ContactEmail)))
             .AfterMapping(
                 (src, dest) =>
                 {
@@ -78,9 +72,7 @@ public class OrganizationMapperRegister : IRegister
                     MapBranding(src.Branding, dest);
                 });
 
-        config
-            .ForType<(TenantSubscriptionModel subscriptionModel, Tenant tenant),
-                TenantSubscription>()
+        config.ForType<(TenantSubscriptionModel subscriptionModel, Tenant tenant), TenantSubscription>()
             .IgnoreNullValues(true)
             .ConstructUsing(
                 src => TenantSubscription.Create(
@@ -137,13 +129,7 @@ public class OrganizationMapperRegister : IRegister
             return null;
         }
 
-        return Address.Create(
-            source.Name,
-            source.Line1,
-            source.Line2,
-            source.PostalCode,
-            source.City,
-            source.Country);
+        return Address.Create(source.Name, source.Line1, source.Line2, source.PostalCode, source.City, source.Country);
     }
 
     private static void MapSubscriptions(TenantSubscriptionModel[] sources, Tenant destination)
@@ -161,13 +147,11 @@ public class OrganizationMapperRegister : IRegister
 
         foreach (var subscriptionModel in newSubscriptionModels)
         {
-            var existingSubscription =
-                existingSubscriptions.Find(s => s.Id.Value.ToString() == subscriptionModel.Id);
+            var existingSubscription = existingSubscriptions.Find(s => s.Id.Value.ToString() == subscriptionModel.Id);
             if (existingSubscription == null)
             {
                 var newSubscription =
-                    (subscriptionModel, destination)
-                    .Adapt<TenantSubscription>(); // use destination too (tenant)
+                    (subscriptionModel, destination).Adapt<TenantSubscription>(); // use destination too (tenant)
                 destination.AddSubscription(newSubscription);
             }
             else

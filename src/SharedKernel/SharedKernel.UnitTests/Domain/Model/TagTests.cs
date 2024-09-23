@@ -150,9 +150,6 @@ public class TagTests
 
     private Tag CreateTag()
     {
-        return Tag.Create(
-            TenantId.Create(this.faker.Random.Guid()),
-            this.faker.Lorem.Word(),
-            this.faker.Lorem.Word());
+        return Tag.Create(TenantId.Create(this.faker.Random.Guid()), this.faker.Lorem.Word(), this.faker.Lorem.Word());
     }
 }

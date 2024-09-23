@@ -9,8 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 public class HealthCheckAnnotation(Func<IResource, CancellationToken, Task<IHealthCheck?>> healthCheckFactory)
     : IResourceAnnotation
 {
-    public Func<IResource, CancellationToken, Task<IHealthCheck?>> HealthCheckFactory { get; } =
-        healthCheckFactory;
+    public Func<IResource, CancellationToken, Task<IHealthCheck?>> HealthCheckFactory { get; } = healthCheckFactory;
 
     public static HealthCheckAnnotation Create(Func<string, IHealthCheck> connectionStringFactory)
     {

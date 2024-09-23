@@ -9,13 +9,7 @@ public class Address : ValueObject
 {
     private Address() { } // Private constructor required by EF Core
 
-    private Address(
-        string name,
-        string line1,
-        string line2,
-        string postalCode,
-        string city,
-        string country)
+    private Address(string name, string line1, string line2, string postalCode, string city, string country)
     {
         this.Name = name;
         this.Line1 = line1;

@@ -10,9 +10,7 @@ using System.Text.RegularExpressions;
 [DebuggerDisplay("Value={Value}")]
 public class HexColor : ValueObject
 {
-    private static readonly Regex HexColorRegex = new(
-        @"^#(?:[0-9a-fA-F]{3}){1,2}$",
-        RegexOptions.Compiled);
+    private static readonly Regex HexColorRegex = new(@"^#(?:[0-9a-fA-F]{3}){1,2}$", RegexOptions.Compiled);
 
     private HexColor() { } // Private constructor required by EF Core
 

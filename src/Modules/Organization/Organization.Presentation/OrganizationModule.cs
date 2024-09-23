@@ -26,8 +26,9 @@ public class OrganizationModule : WebModuleBase
         IWebHostEnvironment environment = null)
     {
         var moduleConfiguration =
-            this.Configure<OrganizationModuleConfiguration,
-                OrganizationModuleConfiguration.Validator>(services, configuration);
+            this.Configure<OrganizationModuleConfiguration, OrganizationModuleConfiguration.Validator>(
+                services,
+                configuration);
 
         //services.AddScoped<IOrganizationQueryService, OrganizationQueryService>();
 
@@ -47,15 +48,12 @@ public class OrganizationModule : WebModuleBase
         services.AddSqlServerDbContext<OrganizationDbContext>(
                 o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
                     .UseLogger(true, environment?.IsDevelopment() == true),
-                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
-                    .CommandTimeout(30))
+                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery).CommandTimeout(30))
             .WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
             //.WithDatabaseCreatorService(o => o
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup())
-            .WithDatabaseMigratorService(
-                o => o.Enabled(environment?.IsDevelopment() == true)
-                    .DeleteOnStartup(false))
+            .WithDatabaseMigratorService(o => o.Enabled(environment?.IsDevelopment() == true).DeleteOnStartup(false))
             .WithOutboxDomainEventService(
                 o => o.ProcessingInterval("00:00:30")
                     .StartupDelay("00:00:15")

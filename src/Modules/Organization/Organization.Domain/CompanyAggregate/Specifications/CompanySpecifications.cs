@@ -32,8 +32,7 @@ public static class CompanySpecifications
         return new CompanyForNameSpecification(name);
     }
 
-    public static Specification<Company>
-        ForName2(string name) // INFO: short version to define a specification
+    public static Specification<Company> ForName2(string name) // INFO: short version to define a specification
     {
         return new Specification<Company>(e => e.Name == name);
     }

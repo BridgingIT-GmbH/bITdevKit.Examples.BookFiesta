@@ -464,8 +464,7 @@ public class Currency : ValueObject
     public string Code { get; private set; }
 
     public string Symbol
-        => Currencies.First(c => c.Key == this.Code)
-            .Value;
+        => Currencies.First(c => c.Key == this.Code).Value;
 
     public static implicit operator string(Currency currency)
     {

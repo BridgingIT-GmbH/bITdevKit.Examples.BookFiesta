@@ -88,15 +88,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
 
-        var book = new Book(
-            tenantId,
-            title,
-            edition,
-            description,
-            isbn,
-            price,
-            publisher,
-            publishedDate);
+        var book = new Book(tenantId, title, edition, description, isbn, price, publisher, publishedDate);
 
         book.DomainEvents.Register(new BookCreatedDomainEvent(tenantId, book), true);
 
@@ -258,13 +250,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book AddChapter(string title, string content = null)
     {
-        return this.AddChapter(
-            title,
-            this.chapters.LastOrDefault()
-                ?.Number +
-            1 ??
-            1,
-            content);
+        return this.AddChapter(title, this.chapters.LastOrDefault()?.Number + 1 ?? 1, content);
     }
 
     public Book AddChapter(string title, int number, string content = null)
@@ -389,8 +375,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     private List<BookChapter> ReindexChapters(IEnumerable<BookChapter> chapters)
     {
         // First, sort the chapters by their number to ensure they are in order.
-        var sortedChapters = chapters.OrderBy(c => c.Number)
-            .ToList();
+        var sortedChapters = chapters.OrderBy(c => c.Number).ToList();
 
         // Use a HashSet to keep track of used numbers to easily identify gaps.
         var usedNumbers = new HashSet<int>();
@@ -402,8 +387,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
             // If the current chapter's number is already used or it's less than the expected number,
             // and the expected number hasn't been used, then set the chapter number to the expected number.
-            if ((usedNumbers.Contains(currentChapter.Number) ||
-                currentChapter.Number < expectedNumber) &&
+            if ((usedNumbers.Contains(currentChapter.Number) || currentChapter.Number < expectedNumber) &&
                 !usedNumbers.Contains(expectedNumber))
             {
                 currentChapter.SetNumber(expectedNumber);
@@ -434,33 +418,15 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     private List<string> ReindexKeywords()
     {
         var keywords = new HashSet<string>();
-        keywords.UnionWith(
-            this.Title.SafeNull()
-                .ToLower()
-                .Split(' ')
-                .Where(word => word.Length > 3));
+        keywords.UnionWith(this.Title.SafeNull().ToLower().Split(' ').Where(word => word.Length > 3));
         //keywords.UnionWith(this.Edition.SafeNull().ToLower().Split(' ').Where(word => word.Length > 3));
+        keywords.UnionWith(this.Description.SafeNull().ToLower().Split(' ').Where(word => word.Length > 3));
         keywords.UnionWith(
-            this.Description.SafeNull()
-                .ToLower()
-                .Split(' ')
-                .Where(word => word.Length > 3));
-        keywords.UnionWith(
-            this.authors.SafeNull()
-                .SelectMany(
-                    a => a.Name.ToLower()
-                        .Split(' ')
-                        .Where(word => word.Length > 3)));
+            this.authors.SafeNull().SelectMany(a => a.Name.ToLower().Split(' ').Where(word => word.Length > 3)));
         //newKeywords.UnionWith(this.categories.SafeNull().SelectMany(c => c.Name.ToLower().Split(' ').Where(word => word.Length > 3)));
+        keywords.UnionWith(this.tags.SafeNull().Select(t => t.Name.ToLower()));
         keywords.UnionWith(
-            this.tags.SafeNull()
-                .Select(t => t.Name.ToLower()));
-        keywords.UnionWith(
-            this.chapters.SafeNull()
-                .SelectMany(
-                    c => c.Title.ToLower()
-                        .Split(' ')
-                        .Where(word => word.Length > 3)));
+            this.chapters.SafeNull().SelectMany(c => c.Title.ToLower().Split(' ').Where(word => word.Length > 3)));
 
         UpdateKeywords(keywords);
 
@@ -471,8 +437,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
             var existingKeywords = this.keywords.ToDictionary(ki => ki.Text);
 
             // Remove keywords that are no longer present
-            foreach (var keyword in existingKeywords.Keys.Except(newKeywords)
-                         .ToList())
+            foreach (var keyword in existingKeywords.Keys.Except(newKeywords).ToList())
             {
                 this.keywords.Remove(existingKeywords[keyword]);
             }

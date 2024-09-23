@@ -53,11 +53,8 @@ public class CustomerCreateCommandHandlerTests
 
         // Assert
         response?.Result.ShouldNotBeNull();
-        response.Result.Value.PersonName.Parts.ToArray()[0]
-            .ShouldBe(command.Model.PersonName.Parts[0]);
-        response.Result.Value.PersonName.Parts.ToArray()[1]
-            .ShouldBe(command.Model.PersonName.Parts[1]);
-        await repository.Received(1)
-            .InsertAsync(Arg.Any<Customer>(), CancellationToken.None);
+        response.Result.Value.PersonName.Parts.ToArray()[0].ShouldBe(command.Model.PersonName.Parts[0]);
+        response.Result.Value.PersonName.Parts.ToArray()[1].ShouldBe(command.Model.PersonName.Parts[1]);
+        await repository.Received(1).InsertAsync(Arg.Any<Customer>(), CancellationToken.None);
     }
 }

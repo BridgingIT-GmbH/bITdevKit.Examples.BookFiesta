@@ -10,11 +10,7 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
 {
     private Customer() { }
 
-    private Customer(
-        TenantId tenantId,
-        PersonFormalName name,
-        EmailAddress email,
-        Address address = null)
+    private Customer(TenantId tenantId, PersonFormalName name, EmailAddress email, Address address = null)
     {
         this.TenantId = tenantId;
         this.SetName(name);
@@ -35,11 +31,7 @@ public class Customer : AuditableAggregateRoot<CustomerId>, IConcurrent
     /// </summary>
     public Guid Version { get; set; }
 
-    public static Customer Create(
-        TenantId tenantId,
-        PersonFormalName name,
-        EmailAddress email,
-        Address address = null)
+    public static Customer Create(TenantId tenantId, PersonFormalName name, EmailAddress email, Address address = null)
     {
         _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
 

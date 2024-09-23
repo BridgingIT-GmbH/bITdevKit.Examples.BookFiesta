@@ -17,10 +17,7 @@ using NetArchTest.Rules;
 [Category("SystemTest")]
 [SystemTest("Catalog:Architecture")]
 //[UnitTest("Architecture")]
-public class CatalogArchitectureTests(
-    ITestOutputHelper output,
-    TypesFixture fixture)
-    : IClassFixture<TypesFixture>
+public class CatalogArchitectureTests(ITestOutputHelper output, TypesFixture fixture) : IClassFixture<TypesFixture>
 #pragma warning restore CS9113 // Parameter is unread.
 {
     // [Fact]
@@ -175,8 +172,7 @@ public class CatalogArchitectureTests(
             .GetResult();
 
         result.IsSuccessful.ShouldBeTrue(
-            "Domain entity should not have a public constructor.\n" +
-            result.FailingTypes.DumpText());
+            "Domain entity should not have a public constructor.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -191,8 +187,7 @@ public class CatalogArchitectureTests(
             .GetResult();
 
         result.IsSuccessful.ShouldBeTrue(
-            "Domain entity should have a parameterless constructor.\n" +
-            result.FailingTypes.DumpText());
+            "Domain entity should have a parameterless constructor.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -207,8 +202,7 @@ public class CatalogArchitectureTests(
             .GetResult();
 
         result.IsSuccessful.ShouldBeTrue(
-            "Domain valueobjects should not have a public constructor.\n" +
-            result.FailingTypes.DumpText());
+            "Domain valueobjects should not have a public constructor.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -223,8 +217,7 @@ public class CatalogArchitectureTests(
             .GetResult();
 
         result.IsSuccessful.ShouldBeTrue(
-            "Domain valueobject should have a parameterless constructor.\n" +
-            result.FailingTypes.DumpText());
+            "Domain valueobject should have a parameterless constructor.\n" + result.FailingTypes.DumpText());
     }
 
     //public void Test2()
@@ -240,8 +233,5 @@ public class CatalogArchitectureTests(
 
 public class TypesFixture
 {
-    public Types Types { get; } = Types.FromPath(
-        Path.GetDirectoryName(
-            Assembly.GetExecutingAssembly()
-                .Location));
+    public Types Types { get; } = Types.FromPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 }

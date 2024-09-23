@@ -7,9 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using DevKit.Domain.Specifications;
 
-public class BookFindAllForPublisherQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Book> repository)
+public class BookFindAllForPublisherQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Book> repository)
     : QueryHandlerBase<BookFindAllForPublisherQuery, Result<IEnumerable<Book>>>(loggerFactory)
 {
     public override async Task<QueryResponse<Result<IEnumerable<Book>>>> Process(

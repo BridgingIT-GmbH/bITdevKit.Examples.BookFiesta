@@ -18,9 +18,7 @@ public class CompanyDeleteCommand(string id) : CommandRequestBase<Result<Company
     {
         public Validator()
         {
-            this.RuleFor(c => c.Id)
-                .MustNotBeDefaultOrEmptyGuid()
-                .WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.Id).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
         }
     }
 }

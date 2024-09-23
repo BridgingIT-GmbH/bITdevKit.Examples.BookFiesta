@@ -34,21 +34,16 @@ public class CustomerFindAllQueryHandlerTests
         };
 
         var repository = Substitute.For<IGenericRepository<Customer>>();
-        repository.FindAllAsync(cancellationToken: CancellationToken.None)
-            .Returns(expectedCustomers.AsEnumerable());
+        repository.FindAllAsync(cancellationToken: CancellationToken.None).Returns(expectedCustomers.AsEnumerable());
 
         var sut = new CustomerFindAllQueryHandler(Substitute.For<ILoggerFactory>(), repository);
 
         // Act
-        var response = await sut.Process(
-            new CustomerFindAllQuery(tenantIds[0]),
-            CancellationToken.None);
+        var response = await sut.Process(new CustomerFindAllQuery(tenantIds[0]), CancellationToken.None);
 
         // Assert
         response?.Result.ShouldNotBeNull();
-        response.Result.Value.Count()
-            .ShouldBe(expectedCustomers.Count);
-        await repository.Received(1)
-            .FindAllAsync(cancellationToken: CancellationToken.None);
+        response.Result.Value.Count().ShouldBe(expectedCustomers.Count);
+        await repository.Received(1).FindAllAsync(cancellationToken: CancellationToken.None);
     }
 }

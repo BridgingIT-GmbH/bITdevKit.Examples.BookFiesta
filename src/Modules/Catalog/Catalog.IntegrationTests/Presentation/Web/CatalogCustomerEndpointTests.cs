@@ -13,14 +13,10 @@ using SharedKernel.Application;
 using SharedKernel.Domain;
 
 [IntegrationTest("Catalog:Presentation")]
-public class CatalogCustomerEndpointTests(
-    ITestOutputHelper output,
-    CustomWebApplicationFactoryFixture<Program> fixture)
-    : IClassFixture<
-        CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
+public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture)
+    : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
 {
-    private readonly CustomWebApplicationFactoryFixture<Program> fixture =
-        fixture.WithOutput(output);
+    private readonly CustomWebApplicationFactoryFixture<Program> fixture = fixture.WithOutput(output);
 
     [Theory]
     [InlineData("api/tenants/[TENANTID]/catalog/customers")]
@@ -37,18 +33,12 @@ public class CatalogCustomerEndpointTests(
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be200Ok();
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.PersonName.Parts[0]
-            .Should()
-            .Be(model.PersonName.Parts[0]);
-        responseModel.PersonName.Parts[1]
-            .Should()
-            .Be(model.PersonName.Parts[1]);
-        responseModel.Email.Should()
-            .Be(model.Email);
+        responseModel.PersonName.Parts[0].Should().Be(model.PersonName.Parts[0]);
+        responseModel.PersonName.Parts[1].Should().Be(model.PersonName.Parts[1]);
+        responseModel.Email.Should().Be(model.Email);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -70,8 +60,7 @@ public class CatalogCustomerEndpointTests(
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be404NotFound();
+        response.Should().Be404NotFound();
     }
 
     [Theory]
@@ -88,16 +77,12 @@ public class CatalogCustomerEndpointTests(
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be200Ok();
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<ICollection<CustomerModel>>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should()
-            .Contain(m => m.PersonName.Parts[0] == model.PersonName.Parts[0]);
-        responseModel.Should()
-            .Contain(m => m.PersonName.Parts[1] == model.PersonName.Parts[1]);
-        responseModel.Should()
-            .Contain(m => m.Email == model.Email);
+        responseModel.Should().Contain(m => m.PersonName.Parts[0] == model.PersonName.Parts[0]);
+        responseModel.Should().Contain(m => m.PersonName.Parts[1] == model.PersonName.Parts[1]);
+        responseModel.Should().Contain(m => m.Email == model.Email);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -145,17 +130,12 @@ public class CatalogCustomerEndpointTests(
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be201Created();
-        response.Headers.Location.Should()
-            .NotBeNull();
+        response.Should().Be201Created();
+        response.Headers.Location.Should().NotBeNull();
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
         responseModel.Should()
-            .BeEquivalentTo(
-                model,
-                options => options.Excluding(m => m.Id)
-                    .Excluding(m => m.PersonName));
+            .BeEquivalentTo(model, options => options.Excluding(m => m.Id).Excluding(m => m.PersonName));
         //responseModel.PersonName.Should().Be(model.PersonName);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
@@ -204,10 +184,8 @@ public class CatalogCustomerEndpointTests(
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be400BadRequest();
-        response.Should()
-            .MatchInContent("*[ValidationException]*");
+        response.Should().Be400BadRequest();
+        response.Should().MatchInContent("*[ValidationException]*");
     }
 
     [Theory]
@@ -231,20 +209,13 @@ public class CatalogCustomerEndpointTests(
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be200Ok();
-        response.Headers.Location.Should()
-            .BeNull();
+        response.Should().Be200Ok();
+        response.Headers.Location.Should().BeNull();
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should()
-            .BeEquivalentTo(model, options => options.Excluding(m => m.PersonName));
-        responseModel.PersonName.Parts[0]
-            .Should()
-            .Be(model.PersonName.Parts[0]);
-        responseModel.PersonName.Parts[1]
-            .Should()
-            .Be(model.PersonName.Parts[1]);
+        responseModel.Should().BeEquivalentTo(model, options => options.Excluding(m => m.PersonName));
+        responseModel.PersonName.Parts[0].Should().Be(model.PersonName.Parts[0]);
+        responseModel.PersonName.Parts[1].Should().Be(model.PersonName.Parts[1]);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -263,10 +234,8 @@ public class CatalogCustomerEndpointTests(
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be200Ok();
-        response.Headers.Location.Should()
-            .BeNull();
+        response.Should().Be200Ok();
+        response.Headers.Location.Should().BeNull();
     }
 
     private async Task<CustomerModel> PostCustomerCreate(string route)

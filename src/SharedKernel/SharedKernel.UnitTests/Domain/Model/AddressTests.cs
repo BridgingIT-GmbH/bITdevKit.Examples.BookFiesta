@@ -68,9 +68,10 @@ public class AddressTests
         var sut = Address.Create(name, line1, line2, postalCode, city, country);
 
         // Act
-        var atomicValues = sut.GetType()
-            .GetMethod("GetAtomicValues", BindingFlags.NonPublic | BindingFlags.Instance)!
-            .Invoke(sut, null) as IEnumerable<object>;
+        var atomicValues =
+            sut.GetType().GetMethod("GetAtomicValues", BindingFlags.NonPublic | BindingFlags.Instance)!.Invoke(
+                sut,
+                null) as IEnumerable<object>;
 
         // Assert
         atomicValues.ShouldNotBeNull();

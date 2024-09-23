@@ -106,8 +106,7 @@ public class HexColorTests
 
         // Assert
         atomicValues.ShouldNotBeNull();
-        atomicValues.Single()
-            .ShouldBe("#789ABC");
+        atomicValues.Single().ShouldBe("#789ABC");
     }
 
     [Fact]
@@ -155,23 +154,17 @@ public class HexColorTests
     public void IsValid_ValidHexColors_ReturnsTrue()
     {
         // Act & Assert
-        HexColor.IsValid("#000")
-            .ShouldBeTrue();
-        HexColor.IsValid("#FFFFFF")
-            .ShouldBeTrue();
-        HexColor.IsValid("#1a2B3c")
-            .ShouldBeTrue();
+        HexColor.IsValid("#000").ShouldBeTrue();
+        HexColor.IsValid("#FFFFFF").ShouldBeTrue();
+        HexColor.IsValid("#1a2B3c").ShouldBeTrue();
     }
 
     [Fact]
     public void IsValid_InvalidHexColors_ReturnsFalse()
     {
         // Act & Assert
-        HexColor.IsValid("#GGG")
-            .ShouldBeFalse();
-        HexColor.IsValid("#GGGGGG")
-            .ShouldBeFalse();
-        HexColor.IsValid("Invalid")
-            .ShouldBeFalse();
+        HexColor.IsValid("#GGG").ShouldBeFalse();
+        HexColor.IsValid("#GGGGGG").ShouldBeFalse();
+        HexColor.IsValid("Invalid").ShouldBeFalse();
     }
 }

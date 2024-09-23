@@ -22,8 +22,7 @@ public class OrganizationTenantEndpoints : EndpointsBase
     /// <param name="app">The IEndpointRouteBuilder instance used to define routes.</param>
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/organization/tenants")
-            .WithTags("Organization");
+        var group = app.MapGroup("api/organization/tenants").WithTags("Organization");
 
         group.MapGet("/{id}", TenantFindOne)
             .WithName("GetOrganizationTenant")
@@ -55,8 +54,9 @@ public class OrganizationTenantEndpoints : EndpointsBase
             TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<TenantModel>>, ProblemHttpResult>>
-        TenantFindAll([FromServices] IMediator mediator, [FromServices] IMapper mapper)
+    private static async Task<Results<Ok<IEnumerable<TenantModel>>, ProblemHttpResult>> TenantFindAll(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper)
     {
         var result = (await mediator.Send(new TenantFindAllQuery())).Result;
 
@@ -73,9 +73,7 @@ public class OrganizationTenantEndpoints : EndpointsBase
         var result = (await mediator.Send(new TenantCreateCommand(model))).Result;
 
         return result.IsSuccess
-            ? TypedResults.Created(
-                $"api/tenants/{result.Value.Id}",
-                mapper.Map<Tenant, TenantModel>(result.Value))
+            ? TypedResults.Created($"api/tenants/{result.Value.Id}", mapper.Map<Tenant, TenantModel>(result.Value))
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 }

@@ -5,9 +5,7 @@ using System.Text.RegularExpressions;
 [DebuggerDisplay("CountryCode={CountryCode}, Number={Number}")]
 public class VatNumber : ValueObject
 {
-    private static readonly Regex GeneralVatFormat = new(
-        @"^[A-Z]{2}[0-9A-Z]+$",
-        RegexOptions.Compiled);
+    private static readonly Regex GeneralVatFormat = new(@"^[A-Z]{2}[0-9A-Z]+$", RegexOptions.Compiled);
 
     private static readonly Dictionary<string, Regex> CountryVatFormats = new()
     {
@@ -110,8 +108,6 @@ public class VatNumber : ValueObject
 
     private static string Normalize(string value)
     {
-        return value?.ToUpperInvariant()
-            .Replace(" ", string.Empty)
-            .Replace("--", "-");
+        return value?.ToUpperInvariant().Replace(" ", string.Empty).Replace("--", "-");
     }
 }

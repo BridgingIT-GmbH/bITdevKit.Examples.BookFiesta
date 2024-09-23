@@ -61,8 +61,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public bool IsActive(DateOnly date)
     {
-        return this.Activated &&
-            this.subscriptions.Any(e => e.IsActive(date));
+        return this.Activated && this.subscriptions.Any(e => e.IsActive(date));
     }
 
     public Tenant SetCompany(CompanyId companyId)

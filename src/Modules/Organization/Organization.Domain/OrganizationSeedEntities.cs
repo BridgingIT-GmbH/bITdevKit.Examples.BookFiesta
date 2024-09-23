@@ -77,10 +77,7 @@ public static class OrganizationSeedEntities
             [
                 .. new[]
                 {
-                    Tenant.Create(
-                            companies[0].Id,
-                            $"AcmeBooks{GetSuffix(ticks)}",
-                            $"books@acme{GetSuffix(ticks)}.com")
+                    Tenant.Create(companies[0].Id, $"AcmeBooks{GetSuffix(ticks)}", $"books@acme{GetSuffix(ticks)}.com")
                         .AddSubscription()
                         .SetSchedule(
                             DateSchedule.Create(

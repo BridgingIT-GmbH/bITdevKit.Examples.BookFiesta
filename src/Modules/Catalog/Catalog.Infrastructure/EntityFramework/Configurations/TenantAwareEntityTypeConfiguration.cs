@@ -10,8 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel.Domain;
 
-public abstract class TenantAwareEntityTypeConfiguration<TEntity>
-    : IEntityTypeConfiguration<TEntity>
+public abstract class TenantAwareEntityTypeConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
     where TEntity : class, IEntity
 {
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
@@ -34,9 +33,7 @@ public class TenantReferenceEntityTypeConfiguration : IEntityTypeConfiguration<T
 {
     public void Configure(EntityTypeBuilder<TenantReference> builder)
     {
-        builder.ToTable("Tenants", "organization")
-            .HasKey(e => e.Id)
-            .IsClustered(false);
+        builder.ToTable("Tenants", "organization").HasKey(e => e.Id).IsClustered(false);
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()

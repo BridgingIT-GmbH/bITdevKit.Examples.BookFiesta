@@ -20,8 +20,7 @@ public class CatalogBookEndpoints : EndpointsBase
 {
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/tenants/{tenantId}/catalog/books")
-            .WithTags("Catalog");
+        var group = app.MapGroup("api/tenants/{tenantId}/catalog/books").WithTags("Catalog");
 
         group.MapGet("/{id}", GetBook)
             .WithName("GetCatalogBook")

@@ -5,10 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class TenantNameMustBeUniqueRule(
-    IGenericRepository<Tenant> repository,
-    Tenant tenant)
-    : DomainRuleBase
+public class TenantNameMustBeUniqueRule(IGenericRepository<Tenant> repository, Tenant tenant) : DomainRuleBase
 {
     public override string Message
         => "Tenant name should be unique";

@@ -150,8 +150,7 @@ public class Money : DecimalValueObject
 
         var culture = (from c in CultureInfo.GetCultures(CultureTypes.SpecificCultures)
             let r = this.CreateRegionInfo(c.Name)
-            where r != null &&
-                string.Equals(r.ISOCurrencySymbol, currencyCode, StringComparison.OrdinalIgnoreCase)
+            where r != null && string.Equals(r.ISOCurrencySymbol, currencyCode, StringComparison.OrdinalIgnoreCase)
             select c).FirstOrDefault();
 
         if (culture == null)

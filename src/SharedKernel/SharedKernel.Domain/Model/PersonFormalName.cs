@@ -43,10 +43,7 @@ public partial class PersonFormalName : ValueObject
         // allows a PersonFormalName value to be implicitly converted to a string.
     }
 
-    public static PersonFormalName Create(
-        IEnumerable<string> parts,
-        string title = null,
-        string suffix = null)
+    public static PersonFormalName Create(IEnumerable<string> parts, string title = null, string suffix = null)
     {
         return Create(parts?.ToArray(), title, suffix);
     }
@@ -70,8 +67,7 @@ public partial class PersonFormalName : ValueObject
             fullName = $"{fullName}, {this.Suffix}";
         }
 
-        return fullName.Trim()
-            .Trim(',');
+        return fullName.Trim().Trim(',');
     }
 
     protected override IEnumerable<object> GetAtomicValues()

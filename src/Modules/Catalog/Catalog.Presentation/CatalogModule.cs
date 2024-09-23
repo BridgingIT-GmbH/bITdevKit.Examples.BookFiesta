@@ -40,8 +40,7 @@ public class CatalogModule : WebModuleBase
         //         c.BaseAddress = new Uri(configuration["Modules:OrganizationModule:ServiceUrl"]);
         //     });
 
-        services.AddJobScheduling()
-            .WithJob<EchoJob>(CronExpressions.Every5Minutes);
+        services.AddJobScheduling().WithJob<EchoJob>(CronExpressions.Every5Minutes);
         // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
         //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
@@ -53,8 +52,7 @@ public class CatalogModule : WebModuleBase
         services.AddSqlServerDbContext<CatalogDbContext>(
                 o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
                     .UseLogger(true, environment?.IsDevelopment() == true),
-                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
-                    .CommandTimeout(30))
+                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery).CommandTimeout(30))
             .WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
             //.WithDatabaseCreatorService(o => o
             //    .StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs

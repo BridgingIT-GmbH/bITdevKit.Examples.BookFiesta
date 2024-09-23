@@ -12,9 +12,8 @@ using DevKit.Domain.Specifications;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
-public class CatalogQueryService(
-    IGenericRepository<Book> bookRepository,
-    CatalogDbContext dbContext) : ICatalogQueryService
+public class CatalogQueryService(IGenericRepository<Book> bookRepository, CatalogDbContext dbContext)
+    : ICatalogQueryService
 {
     /// <summary>
     ///     Retrieves a collection of related books based on the provided book.
@@ -28,9 +27,7 @@ public class CatalogQueryService(
             return Result<IEnumerable<Book>>.Failure();
         }
 
-        var bookKeywords = book.Keywords.SafeNull()
-            .Select(k => k.Text)
-            .ToList();
+        var bookKeywords = book.Keywords.SafeNull().Select(k => k.Text).ToList();
         var relatedBookIds = await dbContext.Books.SelectMany(e => e.Keywords)
             .Where(ki => bookKeywords.Contains(ki.Text) && ki.BookId != book.Id)
             .GroupBy(ki => ki.BookId)

@@ -5,10 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class BookIsbnMustBeUniqueRule(
-    IGenericRepository<Book> repository,
-    Book book)
-    : DomainRuleBase
+public class BookIsbnMustBeUniqueRule(IGenericRepository<Book> repository, Book book) : DomainRuleBase
 {
     public override string Message
         => "Book ISBN should be unique";

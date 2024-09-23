@@ -18,8 +18,7 @@ public static class BookSpecifications
         return new BookForIsbnSpecification(isbn);
     }
 
-    public static Specification<Book>
-        ForIsbn2(BookIsbn isbn) // INFO: short version to define a specification
+    public static Specification<Book> ForIsbn2(BookIsbn isbn) // INFO: short version to define a specification
     {
         return new Specification<Book>(e => e.Isbn.Value == isbn.Value);
     }

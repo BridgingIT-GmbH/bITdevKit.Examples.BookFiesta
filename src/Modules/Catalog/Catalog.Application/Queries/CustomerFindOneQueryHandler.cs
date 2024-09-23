@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class CustomerFindOneQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Customer> repository)
+public class CustomerFindOneQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
     : QueryHandlerBase<CustomerFindOneQuery, Result<Customer>>(loggerFactory)
 {
     public override async Task<QueryResponse<Result<Customer>>> Process(

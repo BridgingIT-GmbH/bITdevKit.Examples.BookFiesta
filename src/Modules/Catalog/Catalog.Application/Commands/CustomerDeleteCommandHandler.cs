@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class CustomerDeleteCommandHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Customer> repository)
+public class CustomerDeleteCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
     : CommandHandlerBase<CustomerDeleteCommand, Result<Customer>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Customer>>> Process(
@@ -27,8 +25,7 @@ public class CustomerDeleteCommandHandler(
 
         DomainRules.Apply([]);
 
-        await repository.DeleteAsync(customerResult.Value, cancellationToken)
-            .AnyContext();
+        await repository.DeleteAsync(customerResult.Value, cancellationToken).AnyContext();
 
         return CommandResponse.Success(customerResult.Value);
     }

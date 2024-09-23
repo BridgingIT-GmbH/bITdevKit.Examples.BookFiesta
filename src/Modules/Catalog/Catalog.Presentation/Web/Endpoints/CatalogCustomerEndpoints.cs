@@ -20,8 +20,7 @@ public class CatalogCustomerEndpoints : EndpointsBase
 {
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/tenants/{tenantId}/catalog/customers")
-            .WithTags("Catalog");
+        var group = app.MapGroup("api/tenants/{tenantId}/catalog/customers").WithTags("Catalog");
 
         group.MapGet("/{id}", GetCustomer)
             .WithName("GetCatalogCustomer")
@@ -62,11 +61,10 @@ public class CatalogCustomerEndpoints : EndpointsBase
             TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<CustomerModel>>, ProblemHttpResult>>
-        GetCustomers(
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string tenantId)
+    private static async Task<Results<Ok<IEnumerable<CustomerModel>>, ProblemHttpResult>> GetCustomers(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId)
     {
         var result = (await mediator.Send(new CustomerFindAllQuery(tenantId))).Result;
 

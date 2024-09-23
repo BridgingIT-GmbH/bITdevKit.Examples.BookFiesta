@@ -31,8 +31,7 @@ public static class TenantSpecifications
         return new TenantForNameSpecification(name);
     }
 
-    public static Specification<Tenant>
-        ForName2(string name) // INFO: short version to define a specification
+    public static Specification<Tenant> ForName2(string name) // INFO: short version to define a specification
     {
         return new Specification<Tenant>(e => e.Name == name);
     }

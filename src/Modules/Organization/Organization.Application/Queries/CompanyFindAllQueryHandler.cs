@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class CompanyFindAllQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Company> repository)
+public class CompanyFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Company> repository)
     : QueryHandlerBase<CompanyFindAllQuery, Result<IEnumerable<Company>>>(loggerFactory)
 {
     public override async Task<QueryResponse<Result<IEnumerable<Company>>>> Process(

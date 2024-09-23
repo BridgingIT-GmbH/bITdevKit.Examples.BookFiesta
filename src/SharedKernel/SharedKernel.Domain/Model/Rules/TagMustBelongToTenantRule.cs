@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-public class TagMustBelongToTenantRule(
-    Tag tag,
-    TenantId tenantId) : DomainRuleBase
+public class TagMustBelongToTenantRule(Tag tag, TenantId tenantId) : DomainRuleBase
 {
     public override string Message
         => $"Tag should belong to tenant {tenantId}";

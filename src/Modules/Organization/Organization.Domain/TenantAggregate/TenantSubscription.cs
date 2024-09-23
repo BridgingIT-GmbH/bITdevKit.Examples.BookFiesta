@@ -14,10 +14,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 {
     private TenantSubscription() { } // Private constructor required by EF Core
 
-    private TenantSubscription(
-        Tenant tenant,
-        TenantSubscriptionPlanType planType,
-        DateSchedule schedule)
+    private TenantSubscription(Tenant tenant, TenantSubscriptionPlanType planType, DateSchedule schedule)
     {
         this.Tenant = tenant;
         this.SetPlanType(planType);
@@ -40,10 +37,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
     /// </summary>
     public Guid Version { get; set; }
 
-    public static TenantSubscription Create(
-        Tenant tenant,
-        TenantSubscriptionPlanType planType,
-        DateSchedule schedule)
+    public static TenantSubscription Create(Tenant tenant, TenantSubscriptionPlanType planType, DateSchedule schedule)
     {
         var subscription = new TenantSubscription(tenant, planType, schedule);
 
@@ -54,8 +48,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 
     public bool IsActive(DateOnly date)
     {
-        return Equals(this.Status, TenantSubscriptionStatus.Approved) &&
-            this.Schedule.IsActive(date);
+        return Equals(this.Status, TenantSubscriptionStatus.Approved) && this.Schedule.IsActive(date);
     }
 
     public TenantSubscription SetPlanType(TenantSubscriptionPlanType planType)

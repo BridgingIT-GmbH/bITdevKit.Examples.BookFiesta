@@ -38,8 +38,7 @@ public partial class Website : ValueObject
         }
 
         value = Normalize(value);
-        if (!IsValidRegex()
-                .IsMatch(value))
+        if (!IsValidRegex().IsMatch(value))
         {
             throw new DomainRuleException("Invalid website");
         }
@@ -59,9 +58,7 @@ public partial class Website : ValueObject
 
     private static string Normalize(string value)
     {
-        value = value?.Trim()
-                .ToLowerInvariant() ??
-            string.Empty;
+        value = value?.Trim().ToLowerInvariant() ?? string.Empty;
         if (value?.StartsWith("http://") != false || value.StartsWith("https://"))
         {
             return value;

@@ -33,8 +33,7 @@ public static class HttpEndpointHealthCheckExtensions
                     }
 
                     var endpoint = endpointName is null
-                        ? resourceWithEndpoints.GetEndpoints()
-                            .FirstOrDefault(e => e.Scheme is "http" or "https")
+                        ? resourceWithEndpoints.GetEndpoints().FirstOrDefault(e => e.Scheme is "http" or "https")
                         : resourceWithEndpoints.GetEndpoint(endpointName);
 
                     var url = endpoint?.Url;

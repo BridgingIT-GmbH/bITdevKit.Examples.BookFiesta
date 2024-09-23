@@ -11,9 +11,7 @@ using System.Text.RegularExpressions;
 public class PhoneNumber : ValueObject
 {
     // This regex pattern allows for 1 to 3 digit country codes, followed by the rest of the number
-    private static readonly Regex PhoneRegex = new(
-        @"^\+?(\d{1,3})([0-9\s\-\(\)\.]{1,20})$",
-        RegexOptions.Compiled);
+    private static readonly Regex PhoneRegex = new(@"^\+?(\d{1,3})([0-9\s\-\(\)\.]{1,20})$", RegexOptions.Compiled);
 
     // Source: ITU-T Recommendation E.164 (as of 2021)
     // Note: This list should be periodically reviewed and updated
@@ -72,8 +70,7 @@ public class PhoneNumber : ValueObject
         }
 
         var countryCode = ExtractCountryCode(cleanNumber);
-        var number = cleanNumber.Substring(countryCode.Length)
-            .TrimStart('0');
+        var number = cleanNumber.Substring(countryCode.Length).TrimStart('0');
 
         return new PhoneNumber(countryCode, number);
     }
@@ -96,9 +93,7 @@ public class PhoneNumber : ValueObject
 
     private static string CleanNumber(string value)
     {
-        return new string(
-            value.Where(c => char.IsDigit(c) && c != '+')
-                .ToArray()).TrimStart('0');
+        return new string(value.Where(c => char.IsDigit(c) && c != '+').ToArray()).TrimStart('0');
     }
 
     private static string ExtractCountryCode(string value)

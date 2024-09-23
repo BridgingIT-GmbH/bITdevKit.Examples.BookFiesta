@@ -82,9 +82,7 @@ public partial class Url : ValueObject
         }
 
         var normalizedBaseUrl = Normalize(value);
-        return this.IsRelative()
-            ? $"{normalizedBaseUrl}{this.Value}"
-            : $"{normalizedBaseUrl}/{this.Value}";
+        return this.IsRelative() ? $"{normalizedBaseUrl}{this.Value}" : $"{normalizedBaseUrl}/{this.Value}";
     }
 
     public override string ToString()
@@ -100,8 +98,7 @@ public partial class Url : ValueObject
 
     private static string Normalize(string value)
     {
-        return value?.Trim()
-            ?.TrimEnd('/');
+        return value?.Trim()?.TrimEnd('/');
     }
 
     private static UrlType DetermineType(string value)

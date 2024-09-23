@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class CustomerCreateCommandHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Customer> repository)
+public class CustomerCreateCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
     : CommandHandlerBase<CustomerCreateCommand, Result<Customer>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Customer>>> Process(
@@ -31,8 +29,7 @@ public class CustomerCreateCommandHandler(
 
         await DomainRules.ApplyAsync([CustomerRules.EmailMustBeUnique(repository, customer)], cancellationToken);
 
-        await repository.InsertAsync(customer, cancellationToken)
-            .AnyContext();
+        await repository.InsertAsync(customer, cancellationToken).AnyContext();
 
         return CommandResponse.Success(customer);
     }

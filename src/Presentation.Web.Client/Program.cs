@@ -35,13 +35,11 @@ builder.Services.AddMudServices(
         config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
     });
 
-await builder.Build()
-    .RunAsync();
+await builder.Build().RunAsync();
 
 static HttpClient HttpClientFactory(IServiceProvider serviceProvider, IConfiguration configuration)
 {
-    var httpClient = serviceProvider.GetRequiredService<IHttpClientFactory>()
-        .CreateClient("backend-api");
+    var httpClient = serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("backend-api");
     httpClient.DefaultRequestHeaders.Accept.Clear();
     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     return httpClient;

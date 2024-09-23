@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
-public class AuthorUpdatedDomainEvent(
-    TenantId tenantId,
-    Author author) : DomainEventBase
+public class AuthorUpdatedDomainEvent(TenantId tenantId, Author author) : DomainEventBase
 {
     public TenantId TenantId { get; } = tenantId;
 

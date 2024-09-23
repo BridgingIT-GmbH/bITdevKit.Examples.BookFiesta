@@ -6,10 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
 [DebuggerDisplay("Id={Id}, Value={Value}")]
-public class TenantSubscriptionStatus(
-    int id,
-    string value,
-    string description)
+public class TenantSubscriptionStatus(int id, string value, string description)
     : Enumeration(id, value)
 {
     public static TenantSubscriptionStatus Pending = new(1, nameof(Pending), "Lorem Ipsum");

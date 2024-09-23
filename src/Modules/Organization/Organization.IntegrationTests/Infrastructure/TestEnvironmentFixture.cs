@@ -19,12 +19,9 @@ public class TestEnvironmentFixture : IAsyncLifetime
     {
         this.Services.AddLogging(c => c.AddProvider(new XunitLoggerProvider(this.Output)));
 
-        this.Network = new NetworkBuilder()
-            .WithName(this.NetworkName)
-            .Build();
+        this.Network = new NetworkBuilder().WithName(this.NetworkName).Build();
 
-        this.SqlContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+        this.SqlContainer = new MsSqlBuilder().WithImage("mcr.microsoft.com/mssql/server:2022-latest")
             .WithNetworkAliases(this.NetworkName)
             .WithExposedPort(1433)
             .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
@@ -103,8 +100,7 @@ public class TestEnvironmentFixture : IAsyncLifetime
 
         if (this.Output is not null)
         {
-            optionsBuilder = new DbContextOptionsBuilder<OrganizationDbContext>()
-                .LogTo(this.Output.WriteLine);
+            optionsBuilder = new DbContextOptionsBuilder<OrganizationDbContext>().LogTo(this.Output.WriteLine);
         }
 
         optionsBuilder.UseSqlServer(this.SqlConnectionString);

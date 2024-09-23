@@ -47,8 +47,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        hubConnection = new HubConnectionBuilder().WithUrl(navigationManager.ToAbsoluteUri("/signalrhub"))
-            .Build();
+        hubConnection = new HubConnectionBuilder().WithUrl(navigationManager.ToAbsoluteUri("/signalrhub")).Build();
         hubConnection.On<string>(
             "CheckHealth",
             notification =>

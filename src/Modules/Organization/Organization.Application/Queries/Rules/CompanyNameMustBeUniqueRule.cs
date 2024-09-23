@@ -5,10 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-public class CompanyNameMustBeUniqueRule(
-    IGenericRepository<Company> repository,
-    Company company)
-    : DomainRuleBase
+public class CompanyNameMustBeUniqueRule(IGenericRepository<Company> repository, Company company) : DomainRuleBase
 {
     public override string Message
         => "Company name must be unique";
@@ -21,10 +18,7 @@ public class CompanyNameMustBeUniqueRule(
     }
 }
 
-public class CompanyMustHaveNoTenantsRule(
-    IGenericRepository<Tenant> repository,
-    Company company)
-    : DomainRuleBase
+public class CompanyMustHaveNoTenantsRule(IGenericRepository<Tenant> repository, Company company) : DomainRuleBase
 {
     public override string Message
         => "Company must have no tenants assigned";
@@ -39,16 +33,12 @@ public class CompanyMustHaveNoTenantsRule(
 
 public static class CompanyRules
 {
-    public static IDomainRule NameMustBeUnique(
-        IGenericRepository<Company> repository,
-        Company company)
+    public static IDomainRule NameMustBeUnique(IGenericRepository<Company> repository, Company company)
     {
         return new CompanyNameMustBeUniqueRule(repository, company);
     }
 
-    public static IDomainRule MustHaveNoTenants(
-        IGenericRepository<Tenant> repository,
-        Company company)
+    public static IDomainRule MustHaveNoTenants(IGenericRepository<Tenant> repository, Company company)
     {
         return new CompanyMustHaveNoTenantsRule(repository, company);
     }

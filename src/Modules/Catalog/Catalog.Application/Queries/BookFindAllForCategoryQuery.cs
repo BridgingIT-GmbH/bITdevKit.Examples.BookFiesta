@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class BookFindAllForCategoryQuery(
-    string tenantId,
-    string categoryId)
+public class BookFindAllForCategoryQuery(string tenantId, string categoryId)
     : QueryRequestBase<Result<IEnumerable<Book>>>, ITenantAware
 {
     public string TenantId { get; } = tenantId;
@@ -23,10 +21,7 @@ public class BookFindAllForCategoryQuery(
     {
         public Validator()
         {
-            this.RuleFor(c => c.CategoryId)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Must not be empty.");
+            this.RuleFor(c => c.CategoryId).NotNull().NotEmpty().WithMessage("Must not be empty.");
             this.RuleFor(c => c.CategoryId)
                 .MustNotBeDefaultOrEmptyGuid()
                 .WithMessage("Must be valid and not be empty.");

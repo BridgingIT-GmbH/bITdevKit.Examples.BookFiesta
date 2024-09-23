@@ -13,11 +13,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     private Company() { } // Private constructor required by EF Core
 
-    private Company(
-        string name,
-        string registrationNumber,
-        EmailAddress contactEmail,
-        Address address = null)
+    private Company(string name, string registrationNumber, EmailAddress contactEmail, Address address = null)
     {
         this.SetName(name);
         this.SetRegistrationNumber(registrationNumber);
@@ -93,8 +89,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     public Company SetRegistrationNumber(string registrationNumber)
     {
-        _ = registrationNumber ??
-            throw new DomainRuleException("Company RegistrationNumber cannot be empty.");
+        _ = registrationNumber ?? throw new DomainRuleException("Company RegistrationNumber cannot be empty.");
 
         if (registrationNumber != this.RegistrationNumber)
         {

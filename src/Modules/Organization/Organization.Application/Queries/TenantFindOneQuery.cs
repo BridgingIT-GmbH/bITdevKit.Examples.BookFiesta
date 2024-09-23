@@ -18,9 +18,7 @@ public class TenantFindOneQuery(string tenantId) : QueryRequestBase<Result<Tenan
     {
         public Validator()
         {
-            this.RuleFor(c => c.TenantId)
-                .MustNotBeDefaultOrEmptyGuid()
-                .WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.TenantId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
         }
     }
 }

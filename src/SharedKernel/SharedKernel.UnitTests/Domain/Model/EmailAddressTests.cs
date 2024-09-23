@@ -117,8 +117,7 @@ public class EmailAddressTests
 
         // Assert
         atomicValues.ShouldNotBeNull();
-        atomicValues.Single()
-            .ShouldBe(email.ToLowerInvariant());
+        atomicValues.Single().ShouldBe(email.ToLowerInvariant());
     }
 
     [Fact]

@@ -5,10 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class BookCreateCommand(
-    string tenantId,
-    BookModel model) : CommandRequestBase<Result<Book>>,
-    ITenantAware
+public class BookCreateCommand(string tenantId, BookModel model) : CommandRequestBase<Result<Book>>, ITenantAware
 {
     public string TenantId { get; } = tenantId;
 
@@ -23,45 +20,24 @@ public class BookCreateCommand(
     {
         public Validator()
         {
-            this.RuleFor(c => c.TenantId)
-                .MustNotBeDefaultOrEmptyGuid()
-                .WithMessage("Must not be empty or invalid.");
+            this.RuleFor(c => c.TenantId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must not be empty or invalid.");
             this.RuleFor(c => c.TenantId)
                 .Must((command, tenantId) => tenantId == command.Model.TenantId)
                 .WithMessage("Must be equal to Model.TenantId.");
-            this.RuleFor(c => c.Model)
-                .SetValidator(new ModelValidator());
+            this.RuleFor(c => c.Model).SetValidator(new ModelValidator());
         }
 
         private class ModelValidator : AbstractValidator<BookModel>
         {
             public ModelValidator()
             {
-                this.RuleFor(m => m)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("Must not be empty.");
-                this.RuleFor(m => m.Id)
-                    .MustBeDefaultOrEmptyGuid()
-                    .WithMessage("Must be empty.");
-                this.RuleFor(m => m.Title)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("Must not be empty.");
-                this.RuleFor(m => m.Isbn)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("Must not be empty.");
-                this.RuleFor(m => m.Publisher)
-                    .NotNull()
-                    .WithMessage("Must not be empty.");
-                this.RuleFor(m => m.Publisher.Id)
-                    .MustNotBeDefaultOrEmptyGuid()
-                    .WithMessage("Must not be empty.");
-                this.RuleFor(m => m.PublishedDate)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("Must not be empty.");
+                this.RuleFor(m => m).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Id).MustBeDefaultOrEmptyGuid().WithMessage("Must be empty.");
+                this.RuleFor(m => m.Title).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Isbn).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Publisher).NotNull().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Publisher.Id).MustNotBeDefaultOrEmptyGuid().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.PublishedDate).NotNull().NotEmpty().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Authors)
                     .NotNull()
                     .NotEmpty()
@@ -79,9 +55,7 @@ public class BookCreateCommand(
         {
             public BookAuthorValidator()
             {
-                this.RuleFor(c => c.Id)
-                    .MustNotBeDefaultOrEmptyGuid()
-                    .WithMessage("Must not be empty or invalid.");
+                this.RuleFor(c => c.Id).MustNotBeDefaultOrEmptyGuid().WithMessage("Must not be empty or invalid.");
             }
         }
 
@@ -89,9 +63,7 @@ public class BookCreateCommand(
         {
             public BookCategoryValidator()
             {
-                this.RuleFor(c => c.Id)
-                    .MustNotBeDefaultOrEmptyGuid()
-                    .WithMessage("Must not be empty or invalid.");
+                this.RuleFor(c => c.Id).MustNotBeDefaultOrEmptyGuid().WithMessage("Must not be empty or invalid.");
             }
         }
     }

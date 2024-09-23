@@ -20,8 +20,7 @@ public class CatalogCategoryEndpoints : EndpointsBase
 {
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/tenants/{tenantId}/catalog/categories")
-            .WithTags("Catalog");
+        var group = app.MapGroup("api/tenants/{tenantId}/catalog/categories").WithTags("Catalog");
 
         group.MapGet("/{id}", GetCategory)
             .WithName("GetCatalogCategory")
@@ -52,12 +51,11 @@ public class CatalogCategoryEndpoints : EndpointsBase
             TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>>
-        GetCategoryBooks(
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string tenantId,
-            [FromRoute] string id)
+    private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>> GetCategoryBooks(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id)
     {
         var result = (await mediator.Send(new BookFindAllForCategoryQuery(tenantId, id))).Result;
 
@@ -66,11 +64,10 @@ public class CatalogCategoryEndpoints : EndpointsBase
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<CategoryModel>>, ProblemHttpResult>>
-        GetCategories(
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string tenantId)
+    private static async Task<Results<Ok<IEnumerable<CategoryModel>>, ProblemHttpResult>> GetCategories(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId)
     {
         var result = (await mediator.Send(new CategoryFindAllQuery(tenantId))).Result;
 

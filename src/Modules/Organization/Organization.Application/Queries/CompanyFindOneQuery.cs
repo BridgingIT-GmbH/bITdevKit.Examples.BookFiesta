@@ -18,9 +18,7 @@ public class CompanyFindOneQuery(string companyId) : QueryRequestBase<Result<Com
     {
         public Validator()
         {
-            this.RuleFor(c => c.CompanyId)
-                .MustNotBeDefaultOrEmptyGuid()
-                .WithMessage("Must be valid and not be empty.");
+            this.RuleFor(c => c.CompanyId).MustNotBeDefaultOrEmptyGuid().WithMessage("Must be valid and not be empty.");
         }
     }
 }

@@ -31,9 +31,7 @@ public class OrganizationDomainSeederTask(
         return entities;
     }
 
-    private async Task<Tenant[]> SeedTenants(
-        IGenericRepository<Tenant> repository,
-        Company[] companies)
+    private async Task<Tenant[]> SeedTenants(IGenericRepository<Tenant> repository, Company[] companies)
     {
         var entities = OrganizationSeedEntities.Tenants.Create(companies);
 

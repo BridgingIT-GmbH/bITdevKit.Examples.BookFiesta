@@ -7,20 +7,14 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
 [DebuggerDisplay("Id={Id}, Title={Title}, Order={Order}, ParentId={Parent?.Id}")]
 [TypedEntityId<Guid>]
-public class
-    Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make this an aggregate root?
+public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make this an aggregate root?
 {
     private readonly List<Book> books = [];
     private readonly List<Category> children = [];
 
     private Category() { } // Private constructor required by EF Core
 
-    private Category(
-        TenantId tenantId,
-        string title,
-        string description = null,
-        int order = 0,
-        Category parent = null)
+    private Category(TenantId tenantId, string title, string description = null, int order = 0, Category parent = null)
     {
         this.TenantId = tenantId;
         this.SetTitle(title);
@@ -43,8 +37,7 @@ public class
         => this.books.OrderBy(e => e.Title);
 
     public IEnumerable<Category> Children
-        => this.children.OrderBy(e => e.Order)
-            .ThenBy(e => e.Title);
+        => this.children.OrderBy(e => e.Order).ThenBy(e => e.Title);
 
     /// <summary>
     ///     Gets or sets the concurrency token to handle optimistic concurrency.

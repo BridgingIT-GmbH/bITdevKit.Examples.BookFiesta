@@ -89,14 +89,14 @@ public class CurrencyTests
         var sut = Currency.Create("CAD");
 
         // Act
-        var atomicValues = sut.GetType()
-            .GetMethod("GetAtomicValues", BindingFlags.NonPublic | BindingFlags.Instance)!
-            .Invoke(sut, null) as IEnumerable<object>;
+        var atomicValues =
+            sut.GetType().GetMethod("GetAtomicValues", BindingFlags.NonPublic | BindingFlags.Instance)!.Invoke(
+                sut,
+                null) as IEnumerable<object>;
 
         // Assert
         atomicValues.ShouldNotBeNull();
-        atomicValues.Single()
-            .ShouldBe("CAD");
+        atomicValues.Single().ShouldBe("CAD");
     }
 
     [Fact]
@@ -116,7 +116,6 @@ public class CurrencyTests
         string nullCode = null;
 
         // Act & Assert
-        Should.Throw<DomainRuleException>(() => Currency.Create(nullCode))
-            .Message.ShouldBe("Invalid currency code: ");
+        Should.Throw<DomainRuleException>(() => Currency.Create(nullCode)).Message.ShouldBe("Invalid currency code: ");
     }
 }

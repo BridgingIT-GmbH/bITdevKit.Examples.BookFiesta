@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class CustomerFindAllQueryHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Customer> repository)
+public class CustomerFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
     : QueryHandlerBase<CustomerFindAllQuery, Result<IEnumerable<Customer>>>(loggerFactory)
 {
     public override async Task<QueryResponse<Result<IEnumerable<Customer>>>> Process(
@@ -15,7 +13,6 @@ public class CustomerFindAllQueryHandler(
         CancellationToken cancellationToken)
     {
         return QueryResponse.For(
-            await repository.FindAllResultAsync(cancellationToken: cancellationToken)
-                .AnyContext());
+            await repository.FindAllResultAsync(cancellationToken: cancellationToken).AnyContext());
     }
 }

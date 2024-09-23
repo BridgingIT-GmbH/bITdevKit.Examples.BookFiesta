@@ -16,11 +16,9 @@ using SharedKernel.Domain;
 public class OrganizationCompanyEndpointTests(
     ITestOutputHelper output,
     CustomWebApplicationFactoryFixture<Program> fixture)
-    : IClassFixture<
-        CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
+    : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
 {
-    private readonly CustomWebApplicationFactoryFixture<Program> fixture =
-        fixture.WithOutput(output);
+    private readonly CustomWebApplicationFactoryFixture<Program> fixture = fixture.WithOutput(output);
 
     [Theory]
     [InlineData("api/organization/companies")]
@@ -31,18 +29,14 @@ public class OrganizationCompanyEndpointTests(
         var model = await this.PostCompanyCreate(route);
 
         // Act
-        var response = await this.fixture.CreateClient()
-            .GetAsync(route + $"/{model.Id}")
-            .AnyContext();
+        var response = await this.fixture.CreateClient().GetAsync(route + $"/{model.Id}").AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be200Ok();
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should()
-            .BeEquivalentTo(model);
+        responseModel.Should().BeEquivalentTo(model);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -54,9 +48,7 @@ public class OrganizationCompanyEndpointTests(
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
 
         // Act
-        var response = await this.fixture.CreateClient()
-            .GetAsync(route + $"/{Guid.NewGuid()}")
-            .AnyContext();
+        var response = await this.fixture.CreateClient().GetAsync(route + $"/{Guid.NewGuid()}").AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
@@ -75,16 +67,12 @@ public class OrganizationCompanyEndpointTests(
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be200Ok();
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<ICollection<CompanyModel>>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should()
-            .Contain(c => c.Name == model.Name);
-        responseModel.Should()
-            .Contain(c => c.RegistrationNumber == model.RegistrationNumber);
-        responseModel.Should()
-            .Contain(c => c.ContactEmail == model.ContactEmail);
+        responseModel.Should().Contain(c => c.Name == model.Name);
+        responseModel.Should().Contain(c => c.RegistrationNumber == model.RegistrationNumber);
+        responseModel.Should().Contain(c => c.ContactEmail == model.ContactEmail);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -120,20 +108,15 @@ public class OrganizationCompanyEndpointTests(
             MediaTypeNames.Application.Json);
 
         // Act
-        var response = await this.fixture.CreateClient()
-            .PostAsync(route, content)
-            .AnyContext();
+        var response = await this.fixture.CreateClient().PostAsync(route, content).AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be201Created();
-        response.Headers.Location.Should()
-            .NotBeNull();
+        response.Should().Be201Created();
+        response.Headers.Location.Should().NotBeNull();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should()
-            .BeEquivalentTo(model, options => options.Excluding(m => m.Id));
+        responseModel.Should().BeEquivalentTo(model, options => options.Excluding(m => m.Id));
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -165,23 +148,16 @@ public class OrganizationCompanyEndpointTests(
             MediaTypeNames.Application.Json);
 
         // Act
-        var response = await this.fixture.CreateClient()
-            .PostAsync(route, content)
-            .AnyContext();
+        var response = await this.fixture.CreateClient().PostAsync(route, content).AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be400BadRequest();
+        response.Should().Be400BadRequest();
         var responseModel = await response.Content.ReadAsStringAsync();
-        responseModel.Should()
-            .Contain("ValidationException");
-        responseModel.Should()
-            .Contain(nameof(model.Name));
-        responseModel.Should()
-            .Contain(nameof(model.RegistrationNumber));
-        responseModel.Should()
-            .Contain(nameof(model.ContactEmail));
+        responseModel.Should().Contain("ValidationException");
+        responseModel.Should().Contain(nameof(model.Name));
+        responseModel.Should().Contain(nameof(model.RegistrationNumber));
+        responseModel.Should().Contain(nameof(model.ContactEmail));
     }
 
     [Theory]
@@ -199,18 +175,14 @@ public class OrganizationCompanyEndpointTests(
             MediaTypeNames.Application.Json);
 
         // Act
-        var response = await this.fixture.CreateClient()
-            .PutAsync(route + $"/{model.Id}", content)
-            .AnyContext();
+        var response = await this.fixture.CreateClient().PutAsync(route + $"/{model.Id}", content).AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be200Ok();
+        response.Should().Be200Ok();
         var responseModel = await response.Content.ReadAsAsync<CompanyModel>();
         responseModel.ShouldNotBeNull();
-        responseModel.Should()
-            .BeEquivalentTo(model);
+        responseModel.Should().BeEquivalentTo(model);
         this.fixture.Output.WriteLine($"ResponseModel: {responseModel.DumpText()}");
     }
 
@@ -223,16 +195,12 @@ public class OrganizationCompanyEndpointTests(
         var model = await this.PostCompanyCreate(route);
 
         // Act
-        var response = await this.fixture.CreateClient()
-            .DeleteAsync(route + $"/{model.Id}")
-            .AnyContext();
+        var response = await this.fixture.CreateClient().DeleteAsync(route + $"/{model.Id}").AnyContext();
         this.fixture.Output.WriteLine($"Finish Endpoint test for route: {route} (status={(int)response.StatusCode})");
 
         // Assert
-        response.Should()
-            .Be200Ok();
-        response.Headers.Location.Should()
-            .BeNull();
+        response.Should().Be200Ok();
+        response.Headers.Location.Should().BeNull();
     }
 
     private async Task<CompanyModel> PostCompanyCreate(string route)
@@ -260,9 +228,7 @@ public class OrganizationCompanyEndpointTests(
             JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()),
             Encoding.UTF8,
             MediaTypeNames.Application.Json);
-        var response = await this.fixture.CreateClient()
-            .PostAsync(route, content)
-            .AnyContext();
+        var response = await this.fixture.CreateClient().PostAsync(route, content).AnyContext();
         response.EnsureSuccessStatusCode();
 
         return await response.Content.ReadAsAsync<CompanyModel>();

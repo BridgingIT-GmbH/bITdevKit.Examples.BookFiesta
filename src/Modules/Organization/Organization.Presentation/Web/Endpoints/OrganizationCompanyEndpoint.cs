@@ -22,8 +22,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
     /// <param name="app">The IEndpointRouteBuilder instance used to define routes.</param>
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/organization/companies")
-            .WithTags("Organization");
+        var group = app.MapGroup("api/organization/companies").WithTags("Organization");
 
         group.MapGet("/{id}", CompanyFindOne)
             .WithName("GetOrganizationCompany")
@@ -56,11 +55,10 @@ public class OrganizationCompanyEndpoint : EndpointsBase
             .Produces<ProblemDetails>(500);
     }
 
-    private static async Task<Results<Ok<CompanyModel>, NotFound, ProblemHttpResult>>
-        CompanyFindOne(
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string id)
+    private static async Task<Results<Ok<CompanyModel>, NotFound, ProblemHttpResult>> CompanyFindOne(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string id)
     {
         var result = (await mediator.Send(new CompanyFindOneQuery(id))).Result;
 
@@ -69,11 +67,10 @@ public class OrganizationCompanyEndpoint : EndpointsBase
             TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<TenantModel>>, NotFound, ProblemHttpResult>>
-        CompanyFindAllTenants(
-            [FromServices] IMediator mediator,
-            [FromServices] IMapper mapper,
-            [FromRoute] string id)
+    private static async Task<Results<Ok<IEnumerable<TenantModel>>, NotFound, ProblemHttpResult>> CompanyFindAllTenants(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string id)
     {
         var result = (await mediator.Send(new TenantFindAllQuery { CompanyId = id })).Result;
 
@@ -82,8 +79,9 @@ public class OrganizationCompanyEndpoint : EndpointsBase
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<CompanyModel>>, ProblemHttpResult>>
-        CompanyFindAll([FromServices] IMediator mediator, [FromServices] IMapper mapper)
+    private static async Task<Results<Ok<IEnumerable<CompanyModel>>, ProblemHttpResult>> CompanyFindAll(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper)
     {
         var result = (await mediator.Send(new CompanyFindAllQuery())).Result;
 
@@ -100,9 +98,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
         var result = (await mediator.Send(new CompanyCreateCommand(model))).Result;
 
         return result.IsSuccess
-            ? TypedResults.Created(
-                $"api/companies/{result.Value.Id}",
-                mapper.Map<Company, CompanyModel>(result.Value))
+            ? TypedResults.Created($"api/companies/{result.Value.Id}", mapper.Map<Company, CompanyModel>(result.Value))
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 

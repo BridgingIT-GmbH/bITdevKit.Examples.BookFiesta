@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class CustomerUpdateCommandHandler(
-    ILoggerFactory loggerFactory,
-    IGenericRepository<Customer> repository)
+public class CustomerUpdateCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
     : CommandHandlerBase<CustomerUpdateCommand, Result<Customer>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Customer>>> Process(
@@ -41,8 +39,7 @@ public class CustomerUpdateCommandHandler(
                 command.Model.Address.City,
                 command.Model.Address.Country));
 
-        await repository.UpsertAsync(customerResult.Value, cancellationToken)
-            .AnyContext();
+        await repository.UpsertAsync(customerResult.Value, cancellationToken).AnyContext();
 
         return CommandResponse.Success(customerResult.Value);
     }

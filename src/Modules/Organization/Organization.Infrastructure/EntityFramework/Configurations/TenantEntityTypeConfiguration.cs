@@ -11,8 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel.Domain;
 
-public class TenantEntityTypeConfiguration
-    : IEntityTypeConfiguration<Tenant>, IEntityTypeConfiguration<TenantBranding>
+public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, IEntityTypeConfiguration<TenantBranding>
 {
     public void Configure(EntityTypeBuilder<Tenant> builder)
     {
@@ -27,35 +26,25 @@ public class TenantEntityTypeConfiguration
 
     private static void ConfigureTenants(EntityTypeBuilder<Tenant> builder)
     {
-        builder.ToTable("Tenants")
-            .HasKey(d => d.Id)
-            .IsClustered(false);
+        builder.ToTable("Tenants").HasKey(d => d.Id).IsClustered(false);
 
-        builder.Property(e => e.Version)
-            .IsConcurrencyToken();
+        builder.Property(e => e.Version).IsConcurrencyToken();
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
             .HasConversion(id => id.Value, value => TenantId.Create(value));
 
-        builder.Property(e => e.Name)
-            .IsRequired()
-            .HasMaxLength(512);
+        builder.Property(e => e.Name).IsRequired().HasMaxLength(512);
 
-        builder.Property(e => e.Description)
-            .IsRequired(false);
+        builder.Property(e => e.Description).IsRequired(false);
 
         builder.OwnsOne(
             e => e.ContactEmail,
             b =>
             {
-                b.Property(e => e.Value)
-                    .HasColumnName(nameof(Tenant.ContactEmail))
-                    .IsRequired()
-                    .HasMaxLength(256);
+                b.Property(e => e.Value).HasColumnName(nameof(Tenant.ContactEmail)).IsRequired().HasMaxLength(256);
             });
-        builder.Navigation(e => e.ContactEmail)
-            .IsRequired();
+        builder.Navigation(e => e.ContactEmail).IsRequired();
 
         builder
             .HasOne<
@@ -74,13 +63,10 @@ public class TenantEntityTypeConfiguration
             e => e.Subscriptions,
             b =>
             {
-                b.ToTable("TenantSubscriptions")
-                    .HasKey(e => e.Id)
-                    .IsClustered(false);
+                b.ToTable("TenantSubscriptions").HasKey(e => e.Id).IsClustered(false);
                 b.WithOwner(e => e.Tenant);
 
-                b.Property(e => e.Version)
-                    .IsConcurrencyToken();
+                b.Property(e => e.Version).IsConcurrencyToken();
 
                 b.Property(e => e.Id)
                     .ValueGeneratedOnAdd()
@@ -112,29 +98,23 @@ public class TenantEntityTypeConfiguration
                     e => e.Schedule,
                     b =>
                     {
-                        b.Property(e => e.StartDate)
-                            .IsRequired();
+                        b.Property(e => e.StartDate).IsRequired();
 
-                        b.Property(e => e.EndDate)
-                            .IsRequired(false);
+                        b.Property(e => e.EndDate).IsRequired(false);
                     });
-                b.Navigation(e => e.Schedule)
-                    .IsRequired();
+                b.Navigation(e => e.Schedule).IsRequired();
             });
     }
 
     private static void ConfigureTenantBranding(EntityTypeBuilder<TenantBranding> builder)
     {
-        builder.ToTable("TenantBrandings")
-            .HasKey(e => e.Id)
-            .IsClustered(false);
+        builder.ToTable("TenantBrandings").HasKey(e => e.Id).IsClustered(false);
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
             .HasConversion(id => id.Value, value => TenantBrandingId.Create(value));
 
-        builder.Property(e => e.TenantId)
-            .HasConversion(id => id.Value, value => TenantId.Create(value));
+        builder.Property(e => e.TenantId).HasConversion(id => id.Value, value => TenantId.Create(value));
 
         builder.HasOne<Tenant>()
             .WithOne(e => e.Branding)
@@ -151,8 +131,7 @@ public class TenantEntityTypeConfiguration
                     .IsRequired(false)
                     .HasMaxLength(16);
             });
-        builder.Navigation(e => e.PrimaryColor)
-            .IsRequired();
+        builder.Navigation(e => e.PrimaryColor).IsRequired();
 
         builder.OwnsOne(
             e => e.SecondaryColor,
@@ -163,8 +142,7 @@ public class TenantEntityTypeConfiguration
                     .IsRequired(false)
                     .HasMaxLength(16);
             });
-        builder.Navigation(e => e.SecondaryColor)
-            .IsRequired();
+        builder.Navigation(e => e.SecondaryColor).IsRequired();
 
         builder.OwnsOne(
             e => e.LogoUrl,
@@ -175,8 +153,7 @@ public class TenantEntityTypeConfiguration
                     .IsRequired(false)
                     .HasMaxLength(512);
             });
-        builder.Navigation(e => e.LogoUrl)
-            .IsRequired();
+        builder.Navigation(e => e.LogoUrl).IsRequired();
 
         builder.OwnsOne(
             e => e.FaviconUrl,
@@ -187,7 +164,6 @@ public class TenantEntityTypeConfiguration
                     .IsRequired(false)
                     .HasMaxLength(512);
             });
-        builder.Navigation(e => e.FaviconUrl)
-            .IsRequired();
+        builder.Navigation(e => e.FaviconUrl).IsRequired();
     }
 }

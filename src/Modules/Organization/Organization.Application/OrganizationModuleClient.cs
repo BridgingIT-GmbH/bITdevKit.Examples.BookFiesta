@@ -8,10 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application
 using EnsureThat;
 using MediatR;
 
-public class OrganizationModuleClient(
-    IMediator mediator,
-    IMapper mapper)
-    : IOrganizationModuleClient
+public class OrganizationModuleClient(IMediator mediator, IMapper mapper) : IOrganizationModuleClient
 {
     public async Task<Result<TenantModel>> TenantFindOne(string id)
     {
@@ -31,13 +28,10 @@ public static class ResultExtensions
 
         if (source?.IsFailure == true)
         {
-            return Result<TResult>.Failure()
-                .WithMessages(source?.Messages)
-                .WithErrors(source?.Errors);
+            return Result<TResult>.Failure().WithMessages(source?.Messages).WithErrors(source?.Errors);
         }
 
-        return Result<TResult>
-            .Success(source != null ? mapper.Map<TValue, TResult>(source.Value) : null)
+        return Result<TResult>.Success(source != null ? mapper.Map<TValue, TResult>(source.Value) : null)
             .WithMessages(source?.Messages)
             .WithErrors(source?.Errors);
     }

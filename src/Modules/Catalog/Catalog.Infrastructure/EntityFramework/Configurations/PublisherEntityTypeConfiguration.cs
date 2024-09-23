@@ -22,12 +22,9 @@ public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfigurati
 
     private static void ConfigurePublishersTable(EntityTypeBuilder<Publisher> builder)
     {
-        builder.ToTable("Publishers")
-            .HasKey(d => d.Id)
-            .IsClustered(false);
+        builder.ToTable("Publishers").HasKey(d => d.Id).IsClustered(false);
 
-        builder.Property(e => e.Version)
-            .IsConcurrencyToken();
+        builder.Property(e => e.Version).IsConcurrencyToken();
 
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
@@ -36,51 +33,30 @@ public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfigurati
         //builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
-        builder.Property(e => e.TenantId)
-            .HasConversion(id => id.Value, value => TenantId.Create(value))
-            .IsRequired();
+        builder.Property(e => e.TenantId).HasConversion(id => id.Value, value => TenantId.Create(value)).IsRequired();
         //builder.HasIndex(e => e.TenantId);
         //builder.HasOne("organization.Tenants")
         //    .WithMany()
         //    .HasForeignKey(nameof(TenantId))
         //    .IsRequired();
 
-        builder.Property(e => e.Name)
-            .IsRequired()
-            .HasMaxLength(512);
+        builder.Property(e => e.Name).IsRequired().HasMaxLength(512);
 
         builder.OwnsOne(
             e => e.Address,
             b =>
             {
-                b.Property(e => e.Name)
-                    .HasColumnName("AddressName")
-                    .HasMaxLength(512)
-                    .IsRequired();
+                b.Property(e => e.Name).HasColumnName("AddressName").HasMaxLength(512).IsRequired();
 
-                b.Property(e => e.Line1)
-                    .HasColumnName("AddressLine1")
-                    .HasMaxLength(256)
-                    .IsRequired();
+                b.Property(e => e.Line1).HasColumnName("AddressLine1").HasMaxLength(256).IsRequired();
 
-                b.Property(e => e.Line2)
-                    .HasColumnName("AddressLine2")
-                    .HasMaxLength(256);
+                b.Property(e => e.Line2).HasColumnName("AddressLine2").HasMaxLength(256);
 
-                b.Property(e => e.City)
-                    .HasColumnName("AddressCity")
-                    .HasMaxLength(128)
-                    .IsRequired();
+                b.Property(e => e.City).HasColumnName("AddressCity").HasMaxLength(128).IsRequired();
 
-                b.Property(e => e.PostalCode)
-                    .HasColumnName("AddressPostalCode")
-                    .HasMaxLength(32)
-                    .IsRequired();
+                b.Property(e => e.PostalCode).HasColumnName("AddressPostalCode").HasMaxLength(32).IsRequired();
 
-                b.Property(e => e.Country)
-                    .HasColumnName("AddressCountry")
-                    .HasMaxLength(128)
-                    .IsRequired();
+                b.Property(e => e.Country).HasColumnName("AddressCountry").HasMaxLength(128).IsRequired();
             });
 
         builder.OwnsOne(
@@ -92,23 +68,17 @@ public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfigurati
                     .IsRequired(false)
                     .HasMaxLength(256);
 
-                b.HasIndex(nameof(Customer.Email.Value))
-                    .IsUnique();
+                b.HasIndex(nameof(Customer.Email.Value)).IsUnique();
             });
-        builder.Navigation(e => e.ContactEmail)
-            .IsRequired();
+        builder.Navigation(e => e.ContactEmail).IsRequired();
 
         builder.OwnsOne(
             e => e.Website,
             b =>
             {
-                b.Property(e => e.Value)
-                    .HasColumnName(nameof(Publisher.Website))
-                    .IsRequired(false)
-                    .HasMaxLength(512);
+                b.Property(e => e.Value).HasColumnName(nameof(Publisher.Website)).IsRequired(false).HasMaxLength(512);
             });
-        builder.Navigation(e => e.Website)
-            .IsRequired();
+        builder.Navigation(e => e.Website).IsRequired();
 
         builder.OwnsOneAuditState(); // TODO: use ToJson variant
         //builder.OwnsOne(e => e.AuditState, b => b.ToJson());

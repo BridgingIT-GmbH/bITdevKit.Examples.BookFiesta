@@ -16,8 +16,7 @@ public class BookFindAllRelatedQueryHandler(
         CancellationToken cancellationToken)
     {
         var bookId = BookId.Create(query.BookId);
-        var result = await repository.FindOneResultAsync(bookId, cancellationToken: cancellationToken)
-                .AnyContext() ??
+        var result = await repository.FindOneResultAsync(bookId, cancellationToken: cancellationToken).AnyContext() ??
             throw new EntityNotFoundException();
 
         return result.IsSuccess

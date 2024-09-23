@@ -10,8 +10,7 @@ using Domain;
 using Microsoft.EntityFrameworkCore;
 
 public class OrganizationDbContext(DbContextOptions<OrganizationDbContext> options)
-    : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext,
-        IOutboxMessageContext
+    : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext, IOutboxMessageContext
 {
     public DbSet<Tenant> Tenants { get; set; }
 

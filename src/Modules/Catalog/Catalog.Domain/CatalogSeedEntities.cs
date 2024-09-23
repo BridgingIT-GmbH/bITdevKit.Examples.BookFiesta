@@ -29,24 +29,12 @@ public static class CatalogSeedEntities
                         tenants[0],
                         PersonFormalName.Create(["John", "Doe"]),
                         EmailAddress.Create($"john.doe{GetSuffix(ticks)}@example.com"),
-                        Address.Create(
-                            "J. Doe",
-                            "Main Street",
-                            string.Empty,
-                            "17100",
-                            "Anytown",
-                            "USA")),
+                        Address.Create("J. Doe", "Main Street", string.Empty, "17100", "Anytown", "USA")),
                     Customer.Create(
                         tenants[0],
                         PersonFormalName.Create(["Mary", "Jane"]),
                         EmailAddress.Create($"mary.jane{GetSuffix(ticks)}@example.com"),
-                        Address.Create(
-                            "M. Jane",
-                            "Maple Street",
-                            string.Empty,
-                            "17101",
-                            "Anytown",
-                            "USA"))
+                        Address.Create("M. Jane", "Maple Street", string.Empty, "17101", "Anytown", "USA"))
                 }.ForEach(e => e.Id = CustomerId.Create($"{GuidGenerator.Create($"Customer_{e.Email}")}"))
             ];
         }
@@ -62,18 +50,12 @@ public static class CatalogSeedEntities
                 {
                     Author.Create(
                             tenants[0],
-                            PersonFormalName.Create(
-                                ["Martin", "Fowler"],
-                                string.Empty,
-                                string.Empty),
+                            PersonFormalName.Create(["Martin", "Fowler"], string.Empty, string.Empty),
                             "Martin Fowler is a British software developer, author and international public speaker on software development, specializing in object-oriented analysis and design, UML, patterns, and agile software development methodologies, including extreme programming.")
                         .AddTag(tags[10]),
                     Author.Create(
                             tenants[0],
-                            PersonFormalName.Create(
-                                ["Robert", "C.", "Martin"],
-                                string.Empty,
-                                string.Empty),
+                            PersonFormalName.Create(["Robert", "C.", "Martin"], string.Empty, string.Empty),
                             "Robert C. Martin, colloquially called 'Uncle Bob', is an American software engineer, instructor, and best-selling author. He is most recognized for developing many software design principles and for being a founder of the influential Agile Manifesto.")
                         .AddTag(tags[10]),
                     Author.Create(
@@ -83,10 +65,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[10]),
                     Author.Create(
                             tenants[0],
-                            PersonFormalName.Create(
-                                ["Gregor", "Hohpe"],
-                                string.Empty,
-                                string.Empty),
+                            PersonFormalName.Create(["Gregor", "Hohpe"], string.Empty, string.Empty),
                             "Gregor Hohpe is a software architect and author known for his work on enterprise integration patterns and cloud computing.")
                         .AddTag(tags[10]),
                     Author.Create(
@@ -131,10 +110,7 @@ public static class CatalogSeedEntities
                         "John Vlissides was a software consultant, designer, and implementer with expertise in object-oriented technology and a co-author of Design Patterns."),
                     Author.Create(
                         tenants[0],
-                        PersonFormalName.Create(
-                            ["Chris", "Richardson"],
-                            string.Empty,
-                            string.Empty),
+                        PersonFormalName.Create(["Chris", "Richardson"], string.Empty, string.Empty),
                         "Chris Richardson is a developer and architect. He is a Java Champion, a JavaOne rock star and the author of POJOs in Action, which describes how to build enterprise Java applications with frameworks such as Spring and Hibernate."),
                     Author.Create(
                         tenants[0],
@@ -150,10 +126,7 @@ public static class CatalogSeedEntities
                         "James Rumbaugh is an American computer scientist and object-oriented methodologist who is best known for his work in creating the Object Modeling Technique and the Unified Modeling Language."),
                     Author.Create(
                         tenants[0],
-                        PersonFormalName.Create(
-                            ["Michael", "Feathers"],
-                            string.Empty,
-                            string.Empty),
+                        PersonFormalName.Create(["Michael", "Feathers"], string.Empty, string.Empty),
                         "Michael Feathers is a consultant and author in the field of software development. He is a specialist in software testing and process improvement."),
                     Author.Create(
                         tenants[0],
@@ -161,10 +134,7 @@ public static class CatalogSeedEntities
                         string.Empty),
                     Author.Create(
                         tenants[0],
-                        PersonFormalName.Create(
-                            ["George", "Fairbanks"],
-                            string.Empty,
-                            string.Empty),
+                        PersonFormalName.Create(["George", "Fairbanks"], string.Empty, string.Empty),
                         string.Empty),
                     Author.Create(
                         tenants[0],
@@ -212,24 +182,15 @@ public static class CatalogSeedEntities
                         string.Empty),
                     Author.Create(
                         tenants[0],
-                        PersonFormalName.Create(
-                            ["Michael", "T.", "Nygard"],
-                            string.Empty,
-                            string.Empty),
+                        PersonFormalName.Create(["Michael", "T.", "Nygard"], string.Empty, string.Empty),
                         string.Empty),
                     Author.Create(
                         tenants[0],
-                        PersonFormalName.Create(
-                            ["Martin", "L.", "Abbot"],
-                            string.Empty,
-                            string.Empty),
+                        PersonFormalName.Create(["Martin", "L.", "Abbot"], string.Empty, string.Empty),
                         string.Empty),
                     Author.Create(
                         tenants[0],
-                        PersonFormalName.Create(
-                            ["Michael", "T.", "Fisher"],
-                            string.Empty,
-                            string.Empty),
+                        PersonFormalName.Create(["Michael", "T.", "Fisher"], string.Empty, string.Empty),
                         string.Empty),
                     Author.Create(
                         tenants[0],
@@ -237,10 +198,7 @@ public static class CatalogSeedEntities
                         string.Empty),
                     Author.Create(
                         tenants[0],
-                        PersonFormalName.Create(
-                            ["Martin", "Kleppmann"],
-                            string.Empty,
-                            string.Empty),
+                        PersonFormalName.Create(["Martin", "Kleppmann"], string.Empty, string.Empty),
                         string.Empty) // 36
                 }.ForEach(
                     e => e.Id = AuthorId.Create(
@@ -273,13 +231,8 @@ public static class CatalogSeedEntities
                         tenants[0],
                         $"Packt Publishing{GetSuffix(ticks)}",
                         "Packt Publishing is a publisher of technology books, eBooks and video courses for IT developers, administrators, and users."),
-                    Publisher.Create(
-                        tenants[0],
-                        $"Marschall & Brainerd{GetSuffix(ticks)}",
-                        string.Empty)
-                }.ForEach(
-                    e => e.Id =
-                        PublisherId.Create($"{GuidGenerator.Create($"Publisher_{e.Name}")}"))
+                    Publisher.Create(tenants[0], $"Marschall & Brainerd{GetSuffix(ticks)}", string.Empty)
+                }.ForEach(e => e.Id = PublisherId.Create($"{GuidGenerator.Create($"Publisher_{e.Name}")}"))
             ];
         }
     }
@@ -292,30 +245,12 @@ public static class CatalogSeedEntities
             [
                 .. new[]
                 {
-                    Tag.Create(
-                        tenants[0],
-                        $"SoftwareArchitecture{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"DomainDrivenDesign{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"Microservices{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"CleanArchitecture{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"DesignPatterns{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"CloudArchitecture{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"SoftwareArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"DomainDrivenDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"Microservices{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"CleanArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"DesignPatterns{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"CloudArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
                     Tag.Create(
                         tenants[0],
                         $"EnterpriseArchitecture{GetSuffix(ticks)}",
@@ -324,18 +259,9 @@ public static class CatalogSeedEntities
                         tenants[0],
                         $"ArchitecturalPatterns{GetSuffix(ticks)}",
                         $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"SystemDesign{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"SoftwareDesign{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"Author{GetSuffix(ticks)}",
-                        $"CatalogAuthor{GetSuffix(ticks)}")
+                    Tag.Create(tenants[0], $"SystemDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"SoftwareDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"Author{GetSuffix(ticks)}", $"CatalogAuthor{GetSuffix(ticks)}")
                 }.ForEach(e => e.Id = TagId.Create($"{GuidGenerator.Create($"Tag_{e.Name}_{e.Category}")}"))
             ];
         }
@@ -349,15 +275,8 @@ public static class CatalogSeedEntities
             [
                 .. new[]
                 {
-                    Category.Create(
-                            tenants[0],
-                            $"Software-Architecture{GetSuffix(ticks)}",
-                            "Software Architecture")
-                        .AddChild(
-                            Category.Create(
-                                tenants[0],
-                                $"Design-Patterns{GetSuffix(ticks)}",
-                                "Design Patterns"))
+                    Category.Create(tenants[0], $"Software-Architecture{GetSuffix(ticks)}", "Software Architecture")
+                        .AddChild(Category.Create(tenants[0], $"Design-Patterns{GetSuffix(ticks)}", "Design Patterns"))
                         .AddChild(
                             Category.Create(
                                     tenants[0],
@@ -387,54 +306,26 @@ public static class CatalogSeedEntities
                             "Enterprise Architecture",
                             1)
                         .AddChild(
-                            Category.Create(
-                                tenants[0],
-                                $"Cloud-Architecture{GetSuffix(ticks)}",
-                                "Cloud Architecture"))
+                            Category.Create(tenants[0], $"Cloud-Architecture{GetSuffix(ticks)}", "Cloud Architecture"))
                         .AddChild(
                             Category.Create(
                                 tenants[0],
                                 $"Integration-Patterns{GetSuffix(ticks)}",
                                 "Integration Patterns",
                                 1)),
-                    Category.Create(
-                            tenants[0],
-                            $"Software-Design{GetSuffix(ticks)}",
-                            "Software Design",
-                            2)
+                    Category.Create(tenants[0], $"Software-Design{GetSuffix(ticks)}", "Software Design", 2)
                         .AddChild(
-                            Category.Create(
-                                tenants[0],
-                                $"Clean-Architecture{GetSuffix(ticks)}",
-                                "Clean Architecture"))
+                            Category.Create(tenants[0], $"Clean-Architecture{GetSuffix(ticks)}", "Clean Architecture"))
                         .AddChild(
-                            Category.Create(
-                                tenants[0],
-                                $"SOLID-Principles{GetSuffix(ticks)}",
-                                "SOLID Principles",
-                                1)),
+                            Category.Create(tenants[0], $"SOLID-Principles{GetSuffix(ticks)}", "SOLID Principles", 1)),
                     Category.Create(
                             tenants[0],
                             $"Architectural-Practices{GetSuffix(ticks)}",
                             "Architectural Practices",
                             3)
-                        .AddChild(
-                            Category.Create(
-                                tenants[0],
-                                $"Scalability{GetSuffix(ticks)}",
-                                "Scalability"))
-                        .AddChild(
-                            Category.Create(
-                                tenants[0],
-                                $"Security{GetSuffix(ticks)}",
-                                "Security",
-                                1))
-                        .AddChild(
-                            Category.Create(
-                                tenants[0],
-                                $"Performance{GetSuffix(ticks)}",
-                                "Performance",
-                                2))
+                        .AddChild(Category.Create(tenants[0], $"Scalability{GetSuffix(ticks)}", "Scalability"))
+                        .AddChild(Category.Create(tenants[0], $"Security{GetSuffix(ticks)}", "Security", 1))
+                        .AddChild(Category.Create(tenants[0], $"Performance{GetSuffix(ticks)}", "Performance", 2))
                 }.ForEach(e => e.Id = CategoryId.Create($"{GuidGenerator.Create($"Category_{e.Title}")}"))
             ];
         }
@@ -467,9 +358,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[1])
                         .AddTag(tags[0])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[0]
-                                .Children.ToArray()[2])
+                        .AddCategory(categories[0].Children.ToArray()[2])
                         .AddRating(Rating.Excellent())
                         .AddRating(Rating.VeryGood())
                         .AddRating(Rating.VeryGood())
@@ -489,9 +378,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[3])
                         .AddTag(tags[0])
                         .AddCategory(categories[2])
-                        .AddCategory(
-                            categories[2]
-                                .Children.ToArray()[0])
+                        .AddCategory(categories[2].Children.ToArray()[0])
                         .AddRating(Rating.Poor())
                         .AddRating(Rating.Good())
                         .AddRating(Rating.VeryGood())
@@ -511,9 +398,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[4])
                         .AddTag(tags[6])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[0]
-                                .Children.ToArray()[0])
+                        .AddCategory(categories[0].Children.ToArray()[0])
                         .AddRating(Rating.VeryGood())
                         .AddRating(Rating.Poor())
                         .AddRating(Rating.Poor())
@@ -533,9 +418,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[6])
                         .AddTag(tags[7])
                         .AddCategory(categories[1])
-                        .AddCategory(
-                            categories[1]
-                                .Children.ToArray()[1])
+                        .AddCategory(categories[1].Children.ToArray()[1])
                         .AddRating(Rating.VeryGood())
                         .AddRating(Rating.Poor())
                         .AddRating(Rating.Poor())
@@ -555,10 +438,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[2])
                         .AddTag(tags[0])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[0]
-                                .Children.ToArray()[1]
-                                .Children.ToArray()[0])
+                        .AddCategory(categories[0].Children.ToArray()[1].Children.ToArray()[0])
                         .AddRating(Rating.VeryGood())
                         .AddRating(Rating.Poor())
                         .AddRating(Rating.Poor())
@@ -578,9 +458,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[1])
                         .AddTag(tags[0])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[0]
-                                .Children.ToArray()[2])
+                        .AddCategory(categories[0].Children.ToArray()[2])
                         .AddRating(Rating.VeryGood())
                         .AddRating(Rating.Poor())
                         .AddRating(Rating.Poor())
@@ -620,9 +498,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[4])
                         .AddTag(tags[9])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[0]
-                                .Children.ToArray()[0])
+                        .AddCategory(categories[0].Children.ToArray()[0])
                         .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Introduction")
                         .AddChapter("Chapter 2: A Case Study: Designing a Document Editor")
@@ -640,10 +516,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[2])
                         .AddTag(tags[7])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[0]
-                                .Children.ToArray()[1]
-                                .Children.ToArray()[0])
+                        .AddCategory(categories[0].Children.ToArray()[1].Children.ToArray()[0])
                         .AddRating(Rating.VeryGood())
                         .AddRating(Rating.Poor())
                         .AddChapter("Chapter 1: Escaping Monolithic Hell")
@@ -736,9 +609,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[8])
                         .AddTag(tags[0])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[3]
-                                .Children.ToArray()[2])
+                        .AddCategory(categories[3].Children.ToArray()[2])
                         .AddChapter("Chapter 1: Reliable, Scalable, and Maintainable Applications")
                         .AddChapter("Chapter 2: Data Models and Query Languages")
                         .AddChapter("Chapter 3: Storage and Retrieval"),
@@ -755,9 +626,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[5])
                         .AddTag(tags[7])
                         .AddCategory(categories[1])
-                        .AddCategory(
-                            categories[1]
-                                .Children.ToArray()[0])
+                        .AddCategory(categories[1].Children.ToArray()[0])
                         .AddChapter("Chapter 1: You Keep Using That Word")
                         .AddChapter("Chapter 2: Running Cloud-Native Applications in Production")
                         .AddChapter("Chapter 3: The Platform"),
@@ -791,9 +660,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[9])
                         .AddTag(tags[3])
                         .AddCategory(categories[2])
-                        .AddCategory(
-                            categories[2]
-                                .Children.ToArray()[1])
+                        .AddCategory(categories[2].Children.ToArray()[1])
                         .AddChapter("Chapter 1: Clean Code")
                         .AddChapter("Chapter 2: Meaningful Names")
                         .AddChapter("Chapter 3: Functions"),
@@ -811,9 +678,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[0])
                         .AddTag(tags[8])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[3]
-                                .Children.ToArray()[0])
+                        .AddCategory(categories[3].Children.ToArray()[0])
                         .AddChapter("Chapter 1: Scaling Concepts")
                         .AddChapter("Chapter 2: Principles of Scalability")
                         .AddChapter("Chapter 3: Processes for Scalable Architectures"),
@@ -924,9 +789,7 @@ public static class CatalogSeedEntities
                         .AddTag(tags[1])
                         .AddTag(tags[0])
                         .AddCategory(categories[0])
-                        .AddCategory(
-                            categories[0]
-                                .Children.ToArray()[2])
+                        .AddCategory(categories[0].Children.ToArray()[2])
                         .AddChapter("Chapter 1: DDD for Me")
                         .AddChapter("Chapter 2: Strategic Design with Bounded Contexts and the Ubiquitous Language")
                         .AddChapter("Chapter 3: Strategic Design with Subdomains"),

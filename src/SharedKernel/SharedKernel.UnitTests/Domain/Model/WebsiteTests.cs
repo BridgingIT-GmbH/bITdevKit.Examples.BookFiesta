@@ -44,8 +44,7 @@ public class WebsiteTests
         var invalidWebsite = this.faker.Lorem.Sentence();
 
         // Act & Assert
-        Should.Throw<DomainRuleException>(() => Website.Create(invalidWebsite))
-            .Message.ShouldBe("Invalid website");
+        Should.Throw<DomainRuleException>(() => Website.Create(invalidWebsite)).Message.ShouldBe("Invalid website");
     }
 
     [Fact]

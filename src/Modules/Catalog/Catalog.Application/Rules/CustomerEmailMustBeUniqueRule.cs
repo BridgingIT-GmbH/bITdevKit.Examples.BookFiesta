@@ -5,9 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class CustomerEmailMustBeUniqueRule(
-    IGenericRepository<Customer> repository,
-    Customer customer) : DomainRuleBase
+public class CustomerEmailMustBeUniqueRule(IGenericRepository<Customer> repository, Customer customer) : DomainRuleBase
 {
     public override string Message
         => "Customer email should be unique";
@@ -22,9 +20,7 @@ public class CustomerEmailMustBeUniqueRule(
 
 public static class CustomerRules
 {
-    public static IDomainRule EmailMustBeUnique(
-        IGenericRepository<Customer> repository,
-        Customer customer)
+    public static IDomainRule EmailMustBeUnique(IGenericRepository<Customer> repository, Customer customer)
     {
         return new CustomerEmailMustBeUniqueRule(repository, customer);
     }

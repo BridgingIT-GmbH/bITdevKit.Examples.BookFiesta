@@ -10,8 +10,7 @@ using Domain;
 using Microsoft.EntityFrameworkCore;
 
 public class CatalogDbContext(DbContextOptions<CatalogDbContext> options)
-    : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext,
-        IOutboxMessageContext
+    : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext, IOutboxMessageContext
 {
     public DbSet<Book> Books { get; set; }
 
