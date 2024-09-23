@@ -5,7 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
 public class OrganizationSignalRHub : Hub

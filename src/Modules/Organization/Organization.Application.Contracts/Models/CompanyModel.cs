@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
+using SharedKernel.Application;
 
 public class CompanyModel
 {

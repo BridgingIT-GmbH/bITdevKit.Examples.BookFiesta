@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using FluentValidation;
-
 public class OrganizationModuleConfiguration
 {
     public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }

@@ -6,7 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
 /// <summary>
-/// Represents the client organization or individual using the shop platform.
+///     Represents the client organization or individual using the shop platform.
 /// </summary>
 [DebuggerDisplay("Id={Id}, Name={Name}")]
 public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
@@ -33,12 +33,13 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public EmailAddress ContactEmail { get; private set; }
 
-    public IEnumerable<TenantSubscription> Subscriptions => this.subscriptions.OrderBy(e => e.Schedule);
+    public IEnumerable<TenantSubscription> Subscriptions
+        => this.subscriptions.OrderBy(e => e.Schedule);
 
     public TenantBranding Branding { get; private set; }
 
     /// <summary>
-    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    ///     Gets or sets the concurrency token to handle optimistic concurrency.
     /// </summary>
     public Guid Version { get; set; }
 
@@ -183,7 +184,10 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public TenantSubscription AddSubscription()
     {
-        var subscription = TenantSubscription.Create(this, TenantSubscriptionPlanType.Free, DateSchedule.Create(DateOnly.FromDateTime(DateTime.Now)));
+        var subscription = TenantSubscription.Create(
+            this,
+            TenantSubscriptionPlanType.Free,
+            DateSchedule.Create(DateOnly.FromDateTime(DateTime.Now)));
 
         this.subscriptions.Add(subscription);
 

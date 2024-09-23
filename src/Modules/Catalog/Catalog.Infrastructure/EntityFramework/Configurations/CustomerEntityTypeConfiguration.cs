@@ -5,12 +5,12 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
+using DevKit.Infrastructure.EntityFramework;
 using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SharedKernel.Domain;
 
 public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Customer>
 {
@@ -46,7 +46,8 @@ public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
         //    .HasForeignKey(nameof(TenantId))
         //    .IsRequired();
 
-        builder.OwnsOne(e => e.PersonName,
+        builder.OwnsOne(
+            e => e.PersonName,
             b =>
             {
                 b.Property(e => e.Title)
@@ -55,11 +56,13 @@ public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
                     .HasMaxLength(64);
                 b.Property(e => e.Parts)
                     .HasColumnName("PersonNameParts")
-                    .IsRequired(true)
+                    .IsRequired()
                     .HasMaxLength(1024)
-                    .HasConversion(parts => string.Join("|", parts),
+                    .HasConversion(
+                        parts => string.Join("|", parts),
                         value => value.Split("|", StringSplitOptions.RemoveEmptyEntries),
-                        new ValueComparer<IEnumerable<string>>((c1, c2) => c1.SequenceEqual(c2),
+                        new ValueComparer<IEnumerable<string>>(
+                            (c1, c2) => c1.SequenceEqual(c2),
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                             c => c.AsEnumerable()));
                 b.Property(e => e.Suffix)
@@ -68,11 +71,12 @@ public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
                     .HasMaxLength(64);
                 b.Property(e => e.Full)
                     .HasColumnName("PersonNameFull")
-                    .IsRequired(true)
+                    .IsRequired()
                     .HasMaxLength(2048);
             });
 
-        builder.OwnsOne(e => e.Address,
+        builder.OwnsOne(
+            e => e.Address,
             b =>
             {
                 b.Property(e => e.Name)
@@ -105,7 +109,8 @@ public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
                     .IsRequired();
             });
 
-        builder.OwnsOne(e => e.Email,
+        builder.OwnsOne(
+            e => e.Email,
             b =>
             {
                 b.Property(e => e.Value)

@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using SharedKernel.Domain;
 
 [UnitTest("SharedKernel:Domain")]
 public class AverageRatingTests

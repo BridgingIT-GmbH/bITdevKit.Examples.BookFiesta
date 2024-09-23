@@ -5,24 +5,29 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 
-using Common;
-using BridgingIT.DevKit.Domain.Repositories;
 using Application;
+using Common;
+using DevKit.Domain.Repositories;
 using Domain;
 using Infrastructure;
-using Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Web;
 
 public class OrganizationModule : WebModuleBase
 {
-    public override IServiceCollection Register(IServiceCollection services, IConfiguration configuration = null, IWebHostEnvironment environment = null)
+    public override IServiceCollection Register(
+        IServiceCollection services,
+        IConfiguration configuration = null,
+        IWebHostEnvironment environment = null)
     {
-        var moduleConfiguration = this.Configure<OrganizationModuleConfiguration, OrganizationModuleConfiguration.Validator>(services, configuration);
+        var moduleConfiguration =
+            this.Configure<OrganizationModuleConfiguration,
+                OrganizationModuleConfiguration.Validator>(services, configuration);
 
         //services.AddScoped<IOrganizationQueryService, OrganizationQueryService>();
 
@@ -33,10 +38,14 @@ public class OrganizationModule : WebModuleBase
         services.AddScoped<IOrganizationModuleClient, OrganizationModuleClient>();
 
         services.AddStartupTasks()
-            .WithTask<OrganizationDomainSeederTask>(o => o.Enabled(environment?.IsDevelopment() == true)
-                .StartupDelay(moduleConfiguration.SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)
+            .WithTask<OrganizationDomainSeederTask>(
+                o => o.Enabled(environment?.IsDevelopment() == true)
+                    .StartupDelay(
+                        moduleConfiguration
+                            .SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)
 
-        services.AddSqlServerDbContext<OrganizationDbContext>(o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
+        services.AddSqlServerDbContext<OrganizationDbContext>(
+                o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
                     .UseLogger(true, environment?.IsDevelopment() == true),
                 o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
                     .CommandTimeout(30))
@@ -44,12 +53,14 @@ public class OrganizationModule : WebModuleBase
             //.WithDatabaseCreatorService(o => o
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup())
-            .WithDatabaseMigratorService(o => o.Enabled(environment?.IsDevelopment() == true)
-                .DeleteOnStartup(false))
-            .WithOutboxDomainEventService(o => o.ProcessingInterval("00:00:30")
-                .StartupDelay("00:00:15")
-                .PurgeOnStartup()
-                .ProcessingModeImmediate());
+            .WithDatabaseMigratorService(
+                o => o.Enabled(environment?.IsDevelopment() == true)
+                    .DeleteOnStartup(false))
+            .WithOutboxDomainEventService(
+                o => o.ProcessingInterval("00:00:30")
+                    .StartupDelay("00:00:15")
+                    .PurgeOnStartup()
+                    .ProcessingModeImmediate());
 
         services.AddEntityFrameworkRepository<Company, OrganizationDbContext>()
             .WithTransactions<NullRepositoryTransaction<Company>>()
@@ -76,7 +87,10 @@ public class OrganizationModule : WebModuleBase
         return services;
     }
 
-    public override IEndpointRouteBuilder Map(IEndpointRouteBuilder app, IConfiguration configuration = null, IWebHostEnvironment environment = null)
+    public override IEndpointRouteBuilder Map(
+        IEndpointRouteBuilder app,
+        IConfiguration configuration = null,
+        IWebHostEnvironment environment = null)
     {
         new OrganizationCompanyEndpoints().Map(app);
         new OrganizationTenantEndpoints().Map(app);

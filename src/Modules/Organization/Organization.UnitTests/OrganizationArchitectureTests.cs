@@ -6,19 +6,21 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.UnitTests;
 
 using System.Reflection;
-using BridgingIT.DevKit.Application.Commands;
-using BridgingIT.DevKit.Application.Queries;
-using BridgingIT.DevKit.Domain.Model;
+using DevKit.Application.Commands;
+using DevKit.Application.Queries;
+using DevKit.Domain.Model;
 using Dumpify;
 using NetArchTest.Rules;
-using Shouldly;
 
 #pragma warning disable CS9113 // Parameter is unread.
 //[Module("Organization")]
 [Category("SystemTest")]
 [SystemTest("Organization:Architecture")]
 //[UnitTest("Architecture")]
-public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixture fixture) : IClassFixture<TypesFixture>
+public class OrganizationArchitectureTests(
+    ITestOutputHelper output,
+    TypesFixture fixture)
+    : IClassFixture<TypesFixture>
 #pragma warning restore CS9113 // Parameter is unread.
 {
     // [Fact]
@@ -50,7 +52,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .ResideInNamespaceContaining("BridgingIT.DevKit.Examples.BookFiesta.Application")
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Application command should reside in Application.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Application command should reside in Application.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -66,7 +69,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .ResideInNamespaceContaining("BridgingIT.DevKit.Examples.BookFiesta.Application")
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Application query should reside in Application.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Application query should reside in Application.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -80,7 +84,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HaveDependencyOnAny("BridgingIT.DevKit.Examples.BookFiesta.Infrastructure")
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -94,7 +99,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HaveDependencyOnAny("BridgingIT.DevKit.Examples.BookFiesta.Presentation")
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -108,7 +114,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HaveDependencyOnAny("BridgingIT.DevKit.Examples.BookFiesta.Application")
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -122,7 +129,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HaveDependencyOnAny("BridgingIT.DevKit.Examples.BookFiesta.Infrastructure")
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -136,7 +144,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HaveDependencyOnAny("BridgingIT.DevKit.Examples.BookFiesta.Presentation")
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -150,7 +159,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HaveDependencyOnAny("BridgingIT.DevKit.Examples.BookFiesta.Presentation")
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain layer has not allowed dependencies.\n" + result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -164,7 +174,9 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HavePublicConstructor()
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain entity should not have a public constructor.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain entity should not have a public constructor.\n" +
+            result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -178,7 +190,9 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HaveParameterlessConstructor()
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain entity should have a parameterless constructor.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain entity should have a parameterless constructor.\n" +
+            result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -192,7 +206,9 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HavePublicConstructor()
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain valueobjects should not have a public constructor.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain valueobjects should not have a public constructor.\n" +
+            result.FailingTypes.DumpText());
     }
 
     [Fact]
@@ -206,7 +222,9 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
             .HaveParameterlessConstructor()
             .GetResult();
 
-        result.IsSuccessful.ShouldBeTrue("Domain valueobject should have a parameterless constructor.\n" + result.FailingTypes.DumpText());
+        result.IsSuccessful.ShouldBeTrue(
+            "Domain valueobject should have a parameterless constructor.\n" +
+            result.FailingTypes.DumpText());
     }
 
     //public void Test2()
@@ -222,6 +240,8 @@ public class OrganizationArchitectureTests(ITestOutputHelper output, TypesFixtur
 
 public class TypesFixture
 {
-    public Types Types { get; } = Types.FromPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly()
-        .Location));
+    public Types Types { get; } = Types.FromPath(
+        Path.GetDirectoryName(
+            Assembly.GetExecutingAssembly()
+                .Location));
 }

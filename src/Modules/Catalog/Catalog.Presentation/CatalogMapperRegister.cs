@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation;
 
-using Application;
-using Domain;
 using Mapster;
 
 public class CatalogMapperRegister : IRegister

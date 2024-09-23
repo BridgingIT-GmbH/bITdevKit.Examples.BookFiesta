@@ -5,19 +5,19 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Common;
-using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Domain.Specifications;
 using Application;
+using Common;
+using DevKit.Domain.Repositories;
+using DevKit.Domain.Specifications;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
-public class CatalogQueryService(IGenericRepository<Book> bookRepository, CatalogDbContext dbContext) : ICatalogQueryService
+public class CatalogQueryService(
+    IGenericRepository<Book> bookRepository,
+    CatalogDbContext dbContext) : ICatalogQueryService
 {
     /// <summary>
-    /// Retrieves a collection of related books based on the provided book.
+    ///     Retrieves a collection of related books based on the provided book.
     /// </summary>
     /// <param name="book">The book to find related books for.</param>
     /// <param name="limit">The maximum number of related books to retrieve (default is 5).</param>

@@ -5,13 +5,14 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
+using DevKit.Infrastructure.EntityFramework;
 using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SharedKernel.Domain;
 
-public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Book>, IEntityTypeConfiguration<BookKeyword>
+public class BookEntityTypeConfiguration
+    : TenantAwareEntityTypeConfiguration<Book>, IEntityTypeConfiguration<BookKeyword>
 {
     public override void Configure(EntityTypeBuilder<Book> builder)
     {
@@ -79,7 +80,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
         builder.Property(e => e.PublishedDate)
             .IsRequired(false);
 
-        builder.OwnsOne(e => e.Isbn,
+        builder.OwnsOne(
+            e => e.Isbn,
             b =>
             {
                 b.Property(e => e.Value)
@@ -95,7 +97,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
                     .IsUnique();
             });
 
-        builder.OwnsOne(e => e.AverageRating,
+        builder.OwnsOne(
+            e => e.AverageRating,
             b =>
             {
                 b.Property(e => e.Value)
@@ -112,7 +115,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
         builder.Navigation(e => e.AverageRating)
             .IsRequired();
 
-        builder.OwnsOne(e => e.Price,
+        builder.OwnsOne(
+            e => e.Price,
             b =>
             {
                 b.Property(e => e.Amount)
@@ -121,7 +125,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
                     .IsRequired()
                     .HasColumnType("decimal(5,2)");
 
-                b.OwnsOne(e => e.Currency,
+                b.OwnsOne(
+                    e => e.Currency,
                     b =>
                     {
                         b.Property(e => e.Code)
@@ -132,7 +137,9 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
                     });
             });
 
-        builder.HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
+        builder
+            .HasMany(
+                e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
             .WithMany()
             .UsingEntity(b => b.ToTable("BookTags"));
 
@@ -150,7 +157,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
 
     private static void ConfigureBookAuthors(EntityTypeBuilder<Book> builder)
     {
-        builder.OwnsMany(e => e.Authors,
+        builder.OwnsMany(
+            e => e.Authors,
             b =>
             {
                 b.ToTable("BookAuthors")
@@ -182,7 +190,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
         // https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#many-to-many-with-join-table-foreign-key-names
         builder.HasMany(e => e.Categories)
             .WithMany(e => e.Books)
-            .UsingEntity("BookCategories",
+            .UsingEntity(
+                "BookCategories",
                 l => l.HasOne(typeof(Category))
                     .WithMany()
                     .HasForeignKey(nameof(CategoryId)),
@@ -193,7 +202,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
 
     private static void ConfigureBookChapters(EntityTypeBuilder<Book> builder)
     {
-        builder.OwnsMany(e => e.Chapters,
+        builder.OwnsMany(
+            e => e.Chapters,
             b =>
             {
                 b.ToTable("BookChapters");
@@ -215,7 +225,8 @@ public class BookEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Bo
 
     private static void ConfigureBookPublisher(EntityTypeBuilder<Book> builder)
     {
-        builder.OwnsOne(e => e.Publisher,
+        builder.OwnsOne(
+            e => e.Publisher,
             b =>
             {
                 b.Property(r => r.PublisherId)

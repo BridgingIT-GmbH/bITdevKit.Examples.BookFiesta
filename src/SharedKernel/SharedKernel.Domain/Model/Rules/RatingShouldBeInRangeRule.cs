@@ -5,13 +5,13 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using BridgingIT.DevKit.Domain;
-
-public class RatingShouldBeInRangeRule(int value) : DomainRuleBase
+public class RatingShouldBeInRangeRule(
+    int value) : DomainRuleBase
 {
     private readonly double? value = value;
 
-    public override string Message => "Rating should be between 1 and 5";
+    public override string Message
+        => "Rating should be between 1 and 5";
 
     public override Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
@@ -19,7 +19,7 @@ public class RatingShouldBeInRangeRule(int value) : DomainRuleBase
     }
 }
 
-public static partial class RatingRules
+public static class RatingRules
 {
     public static IDomainRule ShouldBeInRange(int value)
     {

@@ -5,17 +5,22 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.IntegrationTests.Presentation;
 
+using System.Net.Mime;
 using System.Text.Json;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using Modules.Catalog.Application;
+using Modules.Catalog.Domain;
+using SharedKernel.Application;
+using SharedKernel.Domain;
 
 [IntegrationTest("Catalog:Presentation")]
-public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApplicationFactoryFixture<Program> fixture)
-    : IClassFixture<CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
+public class CatalogCustomerEndpointTests(
+    ITestOutputHelper output,
+    CustomWebApplicationFactoryFixture<Program> fixture)
+    : IClassFixture<
+        CustomWebApplicationFactoryFixture<Program>> // https://xunit.net/docs/shared-context#class-fixture
 {
-    private readonly CustomWebApplicationFactoryFixture<Program> fixture = fixture.WithOutput(output);
+    private readonly CustomWebApplicationFactoryFixture<Program> fixture =
+        fixture.WithOutput(output);
 
     [Theory]
     [InlineData("api/tenants/[TENANTID]/catalog/customers")]
@@ -53,7 +58,10 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        TenantId[] tenantIds =
+        [
+            TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")
+        ];
 
         // Act
         var response = await this.fixture.CreateClient()
@@ -99,12 +107,21 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        TenantId[] tenantIds =
+        [
+            TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")
+        ];
         var customer = CatalogSeedEntities.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
-            PersonName = new PersonFormalNameModel { Parts = customer.PersonName.Parts.ToArray(), Title = customer.PersonName.Title, Suffix = customer.PersonName.Suffix },
+            PersonName =
+                new PersonFormalNameModel
+                {
+                    Parts = customer.PersonName.Parts.ToArray(),
+                    Title = customer.PersonName.Title,
+                    Suffix = customer.PersonName.Suffix
+                },
             Email = customer.Email,
             Address = new AddressModel
             {
@@ -116,7 +133,10 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
                 Country = customer.Address.Country
             }
         };
-        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(
+            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()),
+            Encoding.UTF8,
+            MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
@@ -132,7 +152,8 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         var responseModel = await response.Content.ReadAsAsync<CustomerModel>();
         responseModel.ShouldNotBeNull();
         responseModel.Should()
-            .BeEquivalentTo(model,
+            .BeEquivalentTo(
+                model,
                 options => options.Excluding(m => m.Id)
                     .Excluding(m => m.PersonName));
         //responseModel.PersonName.Should().Be(model.PersonName);
@@ -145,12 +166,21 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
     {
         // Arrange
         this.fixture.Output.WriteLine($"Start Endpoint test for route: {route}");
-        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        TenantId[] tenantIds =
+        [
+            TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")
+        ];
         var customer = CatalogSeedEntities.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
-            PersonName = new PersonFormalNameModel { Parts = customer.PersonName.Parts.ToArray(), Title = customer.PersonName.Title, Suffix = customer.PersonName.Suffix },
+            PersonName =
+                new PersonFormalNameModel
+                {
+                    Parts = customer.PersonName.Parts.ToArray(),
+                    Title = customer.PersonName.Title,
+                    Suffix = customer.PersonName.Suffix
+                },
             Email = string.Empty,
             Address = new AddressModel
             {
@@ -162,7 +192,10 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
                 Country = customer.Address.Country
             }
         };
-        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(
+            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()),
+            Encoding.UTF8,
+            MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
@@ -186,7 +219,10 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
         var model = await this.PostCustomerCreate(route);
         model.PersonName.Parts[0] += "changedA";
         model.PersonName.Parts[1] += "changedB";
-        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(
+            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()),
+            Encoding.UTF8,
+            MediaTypeNames.Application.Json);
 
         // Act
         var response = await this.fixture.CreateClient()
@@ -235,12 +271,21 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
 
     private async Task<CustomerModel> PostCustomerCreate(string route)
     {
-        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        TenantId[] tenantIds =
+        [
+            TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")
+        ];
         var customer = CatalogSeedEntities.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
-            PersonName = new PersonFormalNameModel { Parts = customer.PersonName.Parts.ToArray(), Title = customer.PersonName.Title, Suffix = customer.PersonName.Suffix },
+            PersonName =
+                new PersonFormalNameModel
+                {
+                    Parts = customer.PersonName.Parts.ToArray(),
+                    Title = customer.PersonName.Title,
+                    Suffix = customer.PersonName.Suffix
+                },
             Email = customer.Email,
             Address = new AddressModel
             {
@@ -252,7 +297,10 @@ public class CatalogCustomerEndpointTests(ITestOutputHelper output, CustomWebApp
                 Country = customer.Address.Country
             }
         };
-        var content = new StringContent(JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+        var content = new StringContent(
+            JsonSerializer.Serialize(model, DefaultSystemTextJsonSerializerOptions.Create()),
+            Encoding.UTF8,
+            MediaTypeNames.Application.Json);
         var response = await this.fixture.CreateClient()
             .PostAsync(route.Replace("[TENANTID]", model.TenantId), content)
             .AnyContext();

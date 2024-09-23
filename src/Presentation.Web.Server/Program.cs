@@ -3,7 +3,8 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using System.Reflection;
+using System.Text.Json.Serialization;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
@@ -80,24 +81,31 @@ builder.Services.AddQueries()
     .WithBehavior(typeof(TimeoutQueryBehavior<,>))
     .WithBehavior(typeof(TenantAwareQueryBehavior<,>));
 
-builder.Services.AddJobScheduling(o => o.StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]), builder.Configuration)
+builder.Services.AddJobScheduling(
+        o => o.StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]),
+        builder.Configuration)
     //.WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)
     .WithBehavior<ModuleScopeJobSchedulingBehavior>()
     //.WithBehavior<ChaosExceptionJobSchedulingBehavior>()
     .WithBehavior<RetryJobSchedulingBehavior>()
     .WithBehavior<TimeoutJobSchedulingBehavior>();
 
-builder.Services.AddStartupTasks(o => o.Enabled()
-        .StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
-    .WithTask<EchoStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment())
-        .StartupDelay("00:00:03"))
-    .WithTask<JobSchedulingSqlServerSeederStartupTask>() // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
+builder.Services.AddStartupTasks(
+        o => o.Enabled()
+            .StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
+    .WithTask<EchoStartupTask>(
+        o => o.Enabled(builder.Environment.IsDevelopment())
+            .StartupDelay("00:00:03"))
+    .WithTask<
+        JobSchedulingSqlServerSeederStartupTask>() // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
     .WithBehavior<ModuleScopeStartupTaskBehavior>()
     //.WithBehavior<ChaosExceptionStartupTaskBehavior>()
     .WithBehavior<RetryStartupTaskBehavior>()
     .WithBehavior<TimeoutStartupTaskBehavior>();
 
-builder.Services.AddMessaging(builder.Configuration, o => o.StartupDelay(builder.Configuration["Messaging:StartupDelay"]))
+builder.Services.AddMessaging(
+        builder.Configuration,
+        o => o.StartupDelay(builder.Configuration["Messaging:StartupDelay"]))
     .WithBehavior<ModuleScopeMessagePublisherBehavior>()
     .WithBehavior<ModuleScopeMessageHandlerBehavior>()
     .WithBehavior<MetricsMessagePublisherBehavior>()
@@ -105,16 +113,18 @@ builder.Services.AddMessaging(builder.Configuration, o => o.StartupDelay(builder
     //.WithBehavior<ChaosExceptionMessageHandlerBehavior>()
     .WithBehavior<RetryMessageHandlerBehavior>()
     .WithBehavior<TimeoutMessageHandlerBehavior>()
-    .WithOutbox<CatalogDbContext>(o => o // registers the outbox publisher behavior and worker service at once
-        .ProcessingInterval("00:00:30")
-        .ProcessingModeImmediate() // forwards the outbox message, through a queue, to the outbox worker
-        .StartupDelay("00:00:15")
-        .PurgeOnStartup())
+    .WithOutbox<CatalogDbContext>(
+        o => o // registers the outbox publisher behavior and worker service at once
+            .ProcessingInterval("00:00:30")
+            .ProcessingModeImmediate() // forwards the outbox message, through a queue, to the outbox worker
+            .StartupDelay("00:00:15")
+            .PurgeOnStartup())
     .WithInProcessBroker(); //.WithRabbitMQBroker();
 
 ConfigureHealth(builder.Services);
 
-builder.Services.AddMetrics(); // TOOL: dotnet-counters monitor -n BridgingIT.DevKit.Examples.DinnerFiesta.Presentation.Web.Server --counters bridgingit_devkit
+builder.Services
+    .AddMetrics(); // TOOL: dotnet-counters monitor -n BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server --counters bridgingit_devkit
 builder.Services.Configure<ApiBehaviorOptions>(ConfiguraApiBehavior);
 builder.Services.AddSingleton<IConfigurationRoot>(builder.Configuration);
 builder.Services.AddScoped<ICurrentUserAccessor, FakeCurrentUserAccessor>();
@@ -142,14 +152,16 @@ builder.Services.AddOpenApiDocument(ConfigureOpenApiDocument);
 
 if (!builder.Environment.IsDevelopment())
 {
-    builder.Services.AddApplicationInsightsTelemetry(); // https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core
+    builder.Services
+        .AddApplicationInsightsTelemetry(); // https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core
 }
 
-builder.Logging.AddOpenTelemetry(logging =>
-{
-    logging.IncludeFormattedMessage = true;
-    logging.IncludeScopes = true;
-});
+builder.Logging.AddOpenTelemetry(
+    logging =>
+    {
+        logging.IncludeFormattedMessage = true;
+        logging.IncludeScopes = true;
+    });
 builder.Services.AddOpenTelemetry()
     .WithMetrics(ConfigureMetrics)
     .WithTracing(ConfigureTracing);
@@ -221,7 +233,7 @@ void ConfigureJsonOptions(JsonOptions options)
     options.JsonSerializerOptions.WriteIndented = true;
     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-    options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 }
 
 void ConfigureHealth(IServiceCollection services)
@@ -231,7 +243,10 @@ void ConfigureHealth(IServiceCollection services)
         .FirstOrDefault(x => x["Name"] == "Seq")?["Args:serverUrl"];
 
     services.AddHealthChecks()
-        .AddCheck("self", () => HealthCheckResult.Healthy(), new[] { "self" })
+        .AddCheck(
+            "self",
+            () => HealthCheckResult.Healthy(),
+            ["self"])
         .AddSeqPublisher(s => s.Endpoint = seqServerUrl);
     //.AddCheck<RandomHealthCheck>("random")
     //.AddApplicationInsightsPublisher()
@@ -241,8 +256,10 @@ void ConfigureHealth(IServiceCollection services)
     //    options.Delay = TimeSpan.FromSeconds(5);
     //});
 
-    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-    services.AddHealthChecksUI() // https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/README.md
+    ServicePointManager.ServerCertificateValidationCallback +=
+        (sender, cert, chain, sslPolicyErrors) => true;
+    services
+        .AddHealthChecksUI() // https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/README.md
         .AddInMemoryStorage();
     //.AddSqliteStorage($"Data Source=data_health.db");
 }
@@ -250,12 +267,19 @@ void ConfigureHealth(IServiceCollection services)
 void ConfigureMetrics(MeterProviderBuilder provider)
 {
     provider.AddRuntimeInstrumentation()
-        .AddMeter("Microsoft.AspNetCore.Hosting", "Microsoft.AspNetCore.Server.Kestrel", "System.Net.Http", "BridgingIT.DevKit");
+        .AddMeter(
+            "Microsoft.AspNetCore.Hosting",
+            "Microsoft.AspNetCore.Server.Kestrel",
+            "System.Net.Http",
+            "BridgingIT.DevKit");
 
     if (builder.Configuration["Metrics:Prometheus:Enabled"]
         .To<bool>())
     {
-        Log.Logger.Information("{LogKey} prometheus exporter enabled (endpoint={MetricsEndpoint})", "MET", "/metrics");
+        Log.Logger.Information(
+            "{LogKey} prometheus exporter enabled (endpoint={MetricsEndpoint})",
+            "MET",
+            "/metrics");
         provider.AddPrometheusExporter();
     }
 }
@@ -264,7 +288,7 @@ void ConfigureTracing(TracerProviderBuilder provider)
 {
     // TODO: multiple per module tracer needed? https://github.com/open-telemetry/opentelemetry-dotnet/issues/2040
     // https://opentelemetry.io/docs/instrumentation/net/getting-started/
-    var serviceName = System.Reflection.Assembly.GetExecutingAssembly()
+    var serviceName = Assembly.GetExecutingAssembly()
         .GetName()
         .Name; //TODO: use ModuleExtensions.ServiceName
 
@@ -280,54 +304,70 @@ void ConfigureTracing(TracerProviderBuilder provider)
     provider
         //.AddSource(ModuleExtensions.Modules.Select(m => m.Name).Insert(serviceName).ToArray()) // TODO: provide a nice (module) extension for this -> .AddModuleSources() // NOT NEEDED, * will add all activitysources
         .AddSource("*")
-        .SetErrorStatusOnException(true)
-        .SetResourceBuilder(ResourceBuilder.CreateDefault()
-            .AddService(serviceName)
-            .AddTelemetrySdk()
-            .AddAttributes(new Dictionary<string, object>
+        .SetErrorStatusOnException()
+        .SetResourceBuilder(
+            ResourceBuilder.CreateDefault()
+                .AddService(serviceName)
+                .AddTelemetrySdk()
+                .AddAttributes(
+                    new Dictionary<string, object>
+                    {
+                        ["host.name"] = Environment.MachineName,
+                        ["os.description"] = RuntimeInformation.OSDescription,
+                        ["deployment.environment"] =
+                            builder.Environment.EnvironmentName.ToLowerInvariant()
+                    }))
+        .SetErrorStatusOnException()
+        .AddAspNetCoreInstrumentation(
+            opts =>
             {
-                ["host.name"] = Environment.MachineName,
-                ["os.description"] = RuntimeInformation.OSDescription,
-                ["deployment.environment"] = builder.Environment.EnvironmentName.ToLowerInvariant()
-            }))
-        .SetErrorStatusOnException(true)
-        .AddAspNetCoreInstrumentation(opts =>
-        {
-            opts.RecordException = true;
-            opts.Filter = context => !context.Request.Path.ToString()
-                .EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns);
-        })
-        .AddHttpClientInstrumentation(opts =>
-        {
-            opts.RecordException = true;
-            opts.FilterHttpRequestMessage = req => !req.RequestUri.PathAndQuery.EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns.Insert("*api/events/raw"));
-        })
-        .AddSqlClientInstrumentation(opts =>
-        {
-            opts.Filter = cmd => // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/main/src/OpenTelemetry.Instrumentation.SqlClient/README.md#filter
+                opts.RecordException = true;
+                opts.Filter = context => !context.Request.Path.ToString()
+                    .EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns);
+            })
+        .AddHttpClientInstrumentation(
+            opts =>
             {
-                if (cmd is SqlCommand command)
+                opts.RecordException = true;
+                opts.FilterHttpRequestMessage = req
+                    => !req.RequestUri.PathAndQuery.EqualsPatternAny(
+                        new RequestLoggingOptions().PathBlackListPatterns
+                            .Insert("*api/events/raw"));
+            })
+        .AddSqlClientInstrumentation(
+            opts =>
+            {
+                opts.Filter = cmd
+                    => // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/main/src/OpenTelemetry.Instrumentation.SqlClient/README.md#filter
                 {
-                    return !command.CommandText.Contains("QRTZ_") && !command.CommandText.Contains("__MigrationsHistory") && !command.CommandText.Equals("SELECT 1;");
-                }
+                    if (cmd is SqlCommand command)
+                    {
+                        return !command.CommandText.Contains("QRTZ_") &&
+                            !command.CommandText.Contains("__MigrationsHistory") &&
+                            !command.CommandText.Equals("SELECT 1;");
+                    }
 
-                return false;
-            };
-            opts.RecordException = true;
-            opts.EnableConnectionLevelAttributes = true;
-            opts.SetDbStatementForText = true;
-        });
+                    return false;
+                };
+                opts.RecordException = true;
+                opts.EnableConnectionLevelAttributes = true;
+                opts.SetDbStatementForText = true;
+            });
 
     if (builder.Configuration["Tracing:Jaeger:Enabled"]
         .To<bool>())
     {
-        Log.Logger.Information("{LogKey} jaeger exporter enabled (host={JaegerHost})", "TRC", builder.Configuration["Tracing:Jaeger:AgentHost"]);
-        provider.AddJaegerExporter(opts =>
-        {
-            opts.AgentHost = builder.Configuration["Tracing:Jaeger:AgentHost"];
-            opts.AgentPort = Convert.ToInt32(builder.Configuration["Tracing:Jaeger:AgentPort"]);
-            opts.ExportProcessorType = ExportProcessorType.Simple;
-        });
+        Log.Logger.Information(
+            "{LogKey} jaeger exporter enabled (host={JaegerHost})",
+            "TRC",
+            builder.Configuration["Tracing:Jaeger:AgentHost"]);
+        provider.AddJaegerExporter(
+            opts =>
+            {
+                opts.AgentHost = builder.Configuration["Tracing:Jaeger:AgentHost"];
+                opts.AgentPort = Convert.ToInt32(builder.Configuration["Tracing:Jaeger:AgentPort"]);
+                opts.ExportProcessorType = ExportProcessorType.Simple;
+            });
     }
 
     if (builder.Configuration["Tracing:Console:Enabled"]
@@ -341,15 +381,17 @@ void ConfigureTracing(TracerProviderBuilder provider)
         .To<bool>())
     {
         Log.Logger.Information("{LogKey} azuremonitor exporter enabled", "TRC");
-        provider.AddAzureMonitorTraceExporter(o =>
-        {
-            o.ConnectionString = builder.Configuration["Tracing:AzureMonitor:ConnectionString"]
-                    .EmptyToNull() ??
-                Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-        });
+        provider.AddAzureMonitorTraceExporter(
+            o =>
+            {
+                o.ConnectionString = builder.Configuration["Tracing:AzureMonitor:ConnectionString"]
+                        .EmptyToNull() ??
+                    Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+            });
     }
 
-    var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+    var useOtlpExporter =
+        !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
     if (useOtlpExporter)
     {
@@ -363,7 +405,8 @@ void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings setting
     settings.DocumentName = "v1";
     settings.Version = "v1";
     settings.Title = "Backend API";
-    settings.AddSecurity("bearer",
+    settings.AddSecurity(
+        "bearer",
         [],
         new OpenApiSecurityScheme
         {
@@ -374,8 +417,10 @@ void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings setting
             {
                 Implicit = new OpenApiOAuthFlow
                 {
-                    AuthorizationUrl = $"{builder.Configuration["Oidc:Authority"]}/protocol/openid-connect/auth",
-                    TokenUrl = $"{builder.Configuration["Oidc:Authority"]}/protocol/openid-connect/token",
+                    AuthorizationUrl =
+                        $"{builder.Configuration["Oidc:Authority"]}/protocol/openid-connect/auth",
+                    TokenUrl =
+                        $"{builder.Configuration["Oidc:Authority"]}/protocol/openid-connect/token",
                     Scopes = new Dictionary<string, string>
                     {
                         //{"openid", "openid"},

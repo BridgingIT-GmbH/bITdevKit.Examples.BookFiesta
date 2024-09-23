@@ -5,39 +5,53 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation;
 
-using BridgingIT.DevKit.Application;
-using BridgingIT.DevKit.Application.JobScheduling;
-using Common;
-using BridgingIT.DevKit.Domain.Repositories;
 using Application;
+using Common;
+using DevKit.Application;
+using DevKit.Application.JobScheduling;
+using DevKit.Domain.Repositories;
 using Domain;
 using Infrastructure;
-using Web;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SharedKernel.Domain;
+using Web;
 
 public class CatalogModule : WebModuleBase
 {
-    public override IServiceCollection Register(IServiceCollection services, IConfiguration configuration = null, IWebHostEnvironment environment = null)
+    public override IServiceCollection Register(
+        IServiceCollection services,
+        IConfiguration configuration = null,
+        IWebHostEnvironment environment = null)
     {
-        var moduleConfiguration = this.Configure<CatalogModuleConfiguration, CatalogModuleConfiguration.Validator>(services, configuration);
+        var moduleConfiguration =
+            this.Configure<CatalogModuleConfiguration, CatalogModuleConfiguration.Validator>(services, configuration);
 
         services.AddScoped<ICatalogQueryService, CatalogQueryService>();
 
+        // services // INFO incase the Organization module is a seperate webservice use refit ->
+        //     .AddRefitClient<IOrganizationModuleClient>()
+        //     .ConfigureHttpClient(c =>
+        //     {
+        //         c.BaseAddress = new Uri(configuration["Modules:OrganizationModule:ServiceUrl"]);
+        //     });
+
         services.AddJobScheduling()
-            .WithJob<EchoJob>(CronExpressions.Every5Minutes); // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
+            .WithJob<EchoJob>(CronExpressions.Every5Minutes);
+        // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
         //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
         services.AddStartupTasks()
-            .WithTask<CatalogDomainSeederTask>(o => o.Enabled(environment?.IsDevelopment() == true)
-                .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
+            .WithTask<CatalogDomainSeederTask>(
+                o => o.Enabled(environment?.IsDevelopment() == true)
+                    .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
 
-        services.AddSqlServerDbContext<CatalogDbContext>(o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
+        services.AddSqlServerDbContext<CatalogDbContext>(
+                o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
                     .UseLogger(true, environment?.IsDevelopment() == true),
                 o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
                     .CommandTimeout(30))
@@ -46,13 +60,17 @@ public class CatalogModule : WebModuleBase
             //    .StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup(false))
-            .WithDatabaseMigratorService(o => o.StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
-                .Enabled(environment?.IsDevelopment() == true)
-                .DeleteOnStartup(false))
-            .WithOutboxDomainEventService(o => o.ProcessingInterval("00:00:30")
-                .StartupDelay("00:00:15")
-                .PurgeOnStartup()
-                .ProcessingModeImmediate());
+            .WithDatabaseMigratorService(
+                o => o
+                    .StartupDelay(
+                        "00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
+                    .Enabled(environment?.IsDevelopment() == true)
+                    .DeleteOnStartup(false))
+            .WithOutboxDomainEventService(
+                o => o.ProcessingInterval("00:00:30")
+                    .StartupDelay("00:00:15")
+                    .PurgeOnStartup()
+                    .ProcessingModeImmediate());
 
         services.AddEntityFrameworkRepository<Customer, CatalogDbContext>()
             .WithTransactions<NullRepositoryTransaction<Customer>>()
@@ -112,7 +130,10 @@ public class CatalogModule : WebModuleBase
         return services;
     }
 
-    public override IEndpointRouteBuilder Map(IEndpointRouteBuilder app, IConfiguration configuration = null, IWebHostEnvironment environment = null)
+    public override IEndpointRouteBuilder Map(
+        IEndpointRouteBuilder app,
+        IConfiguration configuration = null,
+        IWebHostEnvironment environment = null)
     {
         new CatalogCustomerEndpoints().Map(app);
         new CatalogBookEndpoints().Map(app);

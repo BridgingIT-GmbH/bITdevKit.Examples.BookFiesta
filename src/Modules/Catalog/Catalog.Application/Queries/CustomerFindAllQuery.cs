@@ -5,13 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using Common;
-using DevKit.Application.Queries;
-using Domain;
-using FluentValidation;
-using SharedKernel.Application;
-
-public class CustomerFindAllQuery(string tenantId) : QueryRequestBase<Result<IEnumerable<Customer>>>, ITenantAware
+public class CustomerFindAllQuery(
+    string tenantId)
+    : QueryRequestBase<Result<IEnumerable<Customer>>>, ITenantAware
 {
     public string TenantId { get; } = tenantId;
 

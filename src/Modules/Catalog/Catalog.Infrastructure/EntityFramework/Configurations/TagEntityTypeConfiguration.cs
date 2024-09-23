@@ -7,7 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using SharedKernel.Domain;
 
 public class TagEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Tag>
 {

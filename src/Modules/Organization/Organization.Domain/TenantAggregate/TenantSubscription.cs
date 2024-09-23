@@ -6,7 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
 /// <summary>
-/// Represents the commercial agreements for the tenant.
+///     Represents the commercial agreements for the tenant.
 /// </summary>
 [DebuggerDisplay("Id={Id}, TenantId={Tenant?.Id}, Status={Status}")]
 [TypedEntityId<Guid>]
@@ -14,7 +14,10 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 {
     private TenantSubscription() { } // Private constructor required by EF Core
 
-    private TenantSubscription(Tenant tenant, TenantSubscriptionPlanType planType, DateSchedule schedule)
+    private TenantSubscription(
+        Tenant tenant,
+        TenantSubscriptionPlanType planType,
+        DateSchedule schedule)
     {
         this.Tenant = tenant;
         this.SetPlanType(planType);
@@ -22,7 +25,7 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
         this.SetSchedule(schedule);
     }
 
-    public Tenant Tenant { get; private set; }
+    public Tenant Tenant { get; }
 
     public TenantSubscriptionPlanType PlanType { get; private set; }
 
@@ -33,11 +36,14 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
     public TenantSubscriptionBillingCycle BillingCycle { get; private set; }
 
     /// <summary>
-    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    ///     Gets or sets the concurrency token to handle optimistic concurrency.
     /// </summary>
     public Guid Version { get; set; }
 
-    public static TenantSubscription Create(Tenant tenant, TenantSubscriptionPlanType planType, DateSchedule schedule)
+    public static TenantSubscription Create(
+        Tenant tenant,
+        TenantSubscriptionPlanType planType,
+        DateSchedule schedule)
     {
         var subscription = new TenantSubscription(tenant, planType, schedule);
 
@@ -48,7 +54,8 @@ public class TenantSubscription : Entity<TenantSubscriptionId>, IConcurrent
 
     public bool IsActive(DateOnly date)
     {
-        return Equals(this.Status, TenantSubscriptionStatus.Approved) && this.Schedule.IsActive(date);
+        return Equals(this.Status, TenantSubscriptionStatus.Approved) &&
+            this.Schedule.IsActive(date);
     }
 
     public TenantSubscription SetPlanType(TenantSubscriptionPlanType planType)

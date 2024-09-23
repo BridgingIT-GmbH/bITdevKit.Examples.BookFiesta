@@ -5,11 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation.Web;
 
-using System.Collections.Generic;
-using Common;
 using Application;
+using Common;
+using DevKit.Presentation.Web;
 using Domain;
-using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -40,17 +39,28 @@ public class CatalogPublisherEndpoints : EndpointsBase
             .Produces<ProblemDetails>(500);
     }
 
-    private static async Task<Results<Ok<PublisherModel>, NotFound, ProblemHttpResult>> GetPublisher([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId, [FromRoute] string id)
+    private static async Task<Results<Ok<PublisherModel>, NotFound, ProblemHttpResult>>
+        GetPublisher(
+            [FromServices] IMediator mediator,
+            [FromServices] IMapper mapper,
+            [FromRoute] string tenantId,
+            [FromRoute] string id)
     {
         var result = (await mediator.Send(new PublisherFindOneQuery(tenantId, id))).Result;
 
-        return result.Value == null ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok(mapper.Map<Publisher, PublisherModel>(result.Value)) : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.Value == null
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok(mapper.Map<Publisher, PublisherModel>(result.Value))
+                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>> GetPublisherBooks([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId, [FromRoute] string id)
+    private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>>
+        GetPublisherBooks(
+            [FromServices] IMediator mediator,
+            [FromServices] IMapper mapper,
+            [FromRoute] string tenantId,
+            [FromRoute] string id)
     {
         var result = (await mediator.Send(new BookFindAllForPublisherQuery(tenantId, id))).Result;
 
@@ -59,8 +69,11 @@ public class CatalogPublisherEndpoints : EndpointsBase
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<PublisherModel>>, ProblemHttpResult>> GetPublishers([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId)
+    private static async Task<Results<Ok<IEnumerable<PublisherModel>>, ProblemHttpResult>>
+        GetPublishers(
+            [FromServices] IMediator mediator,
+            [FromServices] IMapper mapper,
+            [FromRoute] string tenantId)
     {
         var result = (await mediator.Send(new PublisherFindAllQuery(tenantId))).Result;
 

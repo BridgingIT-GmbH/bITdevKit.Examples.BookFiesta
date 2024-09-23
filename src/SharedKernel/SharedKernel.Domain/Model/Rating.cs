@@ -5,9 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Model;
-
 [DebuggerDisplay("Value={Value}")]
 public class Rating : ValueObject
 {

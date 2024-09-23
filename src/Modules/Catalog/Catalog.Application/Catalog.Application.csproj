@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Application\SharedKernel.Application.csproj" />
+    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Application\SharedKernel.Application.csproj"/>
     <ProjectReference Include="..\..\Organization\Organization.Application.Contracts\Organization.Application.Contracts.csproj"/>
     <ProjectReference Include="..\Catalog.Application.Contracts\Catalog.Application.Contracts.csproj"/>
     <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj"/>

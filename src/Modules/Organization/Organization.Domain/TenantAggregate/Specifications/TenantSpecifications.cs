@@ -5,10 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-using BridgingIT.DevKit.Domain.Specifications;
 using System.Linq.Expressions;
+using DevKit.Domain.Specifications;
 
-public class TenantForNameSpecification(string name) : Specification<Tenant>
+public class TenantForNameSpecification(
+    string name) : Specification<Tenant>
 {
     public override Expression<Func<Tenant, bool>> ToExpression()
     {
@@ -16,7 +17,8 @@ public class TenantForNameSpecification(string name) : Specification<Tenant>
     }
 }
 
-public class TenantForCompanySpecification(CompanyId companyId) : Specification<Tenant>
+public class TenantForCompanySpecification(
+    CompanyId companyId) : Specification<Tenant>
 {
     public override Expression<Func<Tenant, bool>> ToExpression()
     {
@@ -24,14 +26,15 @@ public class TenantForCompanySpecification(CompanyId companyId) : Specification<
     }
 }
 
-public static partial class TenantSpecifications
+public static class TenantSpecifications
 {
     public static Specification<Tenant> ForName(string name)
     {
         return new TenantForNameSpecification(name);
     }
 
-    public static Specification<Tenant> ForName2(string name) // INFO: short version to define a specification
+    public static Specification<Tenant>
+        ForName2(string name) // INFO: short version to define a specification
     {
         return new Specification<Tenant>(e => e.Name == name);
     }
@@ -41,7 +44,8 @@ public static partial class TenantSpecifications
         return new TenantForCompanySpecification(companyId);
     }
 
-    public static Specification<Tenant> ForCompany2(CompanyId companyId) // INFO: short version to define a specification
+    public static Specification<Tenant>
+        ForCompany2(CompanyId companyId) // INFO: short version to define a specification
     {
         return new Specification<Tenant>(e => e.CompanyId == companyId);
     }

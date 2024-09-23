@@ -5,16 +5,14 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using Common;
-using DevKit.Application.Queries;
-using DevKit.Domain.Repositories;
-using Domain;
-using Microsoft.Extensions.Logging;
-
-public class CategoryFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Category> repository)
+public class CategoryFindAllQueryHandler(
+    ILoggerFactory loggerFactory,
+    IGenericRepository<Category> repository)
     : QueryHandlerBase<CategoryFindAllQuery, Result<IEnumerable<Category>>>(loggerFactory)
 {
-    public override async Task<QueryResponse<Result<IEnumerable<Category>>>> Process(CategoryFindAllQuery query, CancellationToken cancellationToken)
+    public override async Task<QueryResponse<Result<IEnumerable<Category>>>> Process(
+        CategoryFindAllQuery query,
+        CancellationToken cancellationToken)
     {
         var categories = await repository.FindAllResultAsync(cancellationToken: cancellationToken)
             .AnyContext();

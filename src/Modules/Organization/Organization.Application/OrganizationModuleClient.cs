@@ -5,17 +5,17 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using Common;
-using Domain;
 using EnsureThat;
 using MediatR;
 
-public class OrganizationModuleClient(IMediator mediator, IMapper mapper) : IOrganizationModuleClient
+public class OrganizationModuleClient(
+    IMediator mediator,
+    IMapper mapper)
+    : IOrganizationModuleClient
 {
-    public async Task<Result<TenantModel>> TenantFindOne(string tenantId)
+    public async Task<Result<TenantModel>> TenantFindOne(string id)
     {
-        var result = (await mediator.Send(
-            new TenantFindOneQuery(tenantId))).Result;
+        var result = (await mediator.Send(new TenantFindOneQuery(id))).Result;
 
         return result.For<Tenant, TenantModel>(mapper);
     }
@@ -36,8 +36,8 @@ public static class ResultExtensions
                 .WithErrors(source?.Errors);
         }
 
-        return Result<TResult>.Success(
-                source != null ? mapper.Map<TValue, TResult>(source.Value) : null)
+        return Result<TResult>
+            .Success(source != null ? mapper.Map<TValue, TResult>(source.Value) : null)
             .WithMessages(source?.Messages)
             .WithErrors(source?.Errors);
     }

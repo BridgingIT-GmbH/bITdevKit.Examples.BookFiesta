@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Domain;
 
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using Modules.Catalog.Domain;
 
 [UnitTest("Catalog:Domain")]
 public class BookIsbnTests
@@ -27,7 +27,11 @@ public class BookIsbnTests
     [InlineData("ISBN 978-3-16", false, null, null)] // Invalid ISBN
     [InlineData("Invalid ISBN", false, null, null)] // Non-numeric
     [InlineData(null, false, null, null)]
-    public void Create_WithIsbn_CreatesValidInstance(string isbnValue, bool expectedIsValid, string expectedIsbnValue, string expectedTypeValue)
+    public void Create_WithIsbn_CreatesValidInstance(
+        string isbnValue,
+        bool expectedIsValid,
+        string expectedIsbnValue,
+        string expectedTypeValue)
     {
         // Arrange
         if (expectedIsValid)

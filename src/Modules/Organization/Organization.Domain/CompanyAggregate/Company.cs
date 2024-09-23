@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-
 [DebuggerDisplay("Id={Id}, Name={Name}")]
 [TypedEntityId<Guid>]
 public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
@@ -15,7 +13,11 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     private Company() { } // Private constructor required by EF Core
 
-    private Company(string name, string registrationNumber, EmailAddress contactEmail, Address address = null)
+    private Company(
+        string name,
+        string registrationNumber,
+        EmailAddress contactEmail,
+        Address address = null)
     {
         this.SetName(name);
         this.SetRegistrationNumber(registrationNumber);
@@ -40,11 +42,15 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
     //public IReadOnlyCollection<TenantId> TenantIds => this.tenantIds.AsReadOnly(); // TODO
 
     /// <summary>
-    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    ///     Gets or sets the concurrency token to handle optimistic concurrency.
     /// </summary>
     public Guid Version { get; set; }
 
-    public static Company Create(string name, string registrationNumber, EmailAddress contactEmail, Address address = null)
+    public static Company Create(
+        string name,
+        string registrationNumber,
+        EmailAddress contactEmail,
+        Address address = null)
     {
         var company = new Company(name, registrationNumber, contactEmail, address);
 
@@ -87,7 +93,8 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     public Company SetRegistrationNumber(string registrationNumber)
     {
-        _ = registrationNumber ?? throw new DomainRuleException("Company RegistrationNumber cannot be empty.");
+        _ = registrationNumber ??
+            throw new DomainRuleException("Company RegistrationNumber cannot be empty.");
 
         if (registrationNumber != this.RegistrationNumber)
         {

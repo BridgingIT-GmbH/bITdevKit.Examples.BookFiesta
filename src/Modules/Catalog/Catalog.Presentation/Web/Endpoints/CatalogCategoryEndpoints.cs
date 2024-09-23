@@ -5,11 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation.Web;
 
-using System.Collections.Generic;
-using Common;
 using Application;
+using Common;
+using DevKit.Presentation.Web;
 using Domain;
-using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -40,17 +39,25 @@ public class CatalogCategoryEndpoints : EndpointsBase
             .Produces<ProblemDetails>(500);
     }
 
-    private static async Task<Results<Ok<CategoryModel>, NotFound, ProblemHttpResult>> GetCategory([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId, [FromRoute] string id)
+    private static async Task<Results<Ok<CategoryModel>, NotFound, ProblemHttpResult>> GetCategory(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id)
     {
         var result = (await mediator.Send(new CategoryFindOneQuery(tenantId, id))).Result;
 
         return result.Value == null ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok(mapper.Map<Category, CategoryModel>(result.Value)) : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            result.IsSuccess ? TypedResults.Ok(mapper.Map<Category, CategoryModel>(result.Value)) :
+            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>> GetCategoryBooks([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId, [FromRoute] string id)
+    private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>>
+        GetCategoryBooks(
+            [FromServices] IMediator mediator,
+            [FromServices] IMapper mapper,
+            [FromRoute] string tenantId,
+            [FromRoute] string id)
     {
         var result = (await mediator.Send(new BookFindAllForCategoryQuery(tenantId, id))).Result;
 
@@ -59,8 +66,11 @@ public class CatalogCategoryEndpoints : EndpointsBase
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<CategoryModel>>, ProblemHttpResult>> GetCategories([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId)
+    private static async Task<Results<Ok<IEnumerable<CategoryModel>>, ProblemHttpResult>>
+        GetCategories(
+            [FromServices] IMediator mediator,
+            [FromServices] IMapper mapper,
+            [FromRoute] string tenantId)
     {
         var result = (await mediator.Send(new CategoryFindAllQuery(tenantId))).Result;
 

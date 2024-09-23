@@ -76,13 +76,17 @@ public partial class BookIsbn : ValueObject
 
     public static partial class Regexes
     {
-        [GeneratedRegex(@"^(?:ISBN(?:-1[03])?:?\s*)?(?=[-0-9X ]{10,17}$)(?:97[89][ -]?)?\d{1,5}[ -]?\d{1,7}[ -]?\d{1,7}[ -]?[0-9X]$", RegexOptions.Compiled)]
+        [GeneratedRegex(
+            @"^(?:ISBN(?:-1[03])?:?\s*)?(?=[-0-9X ]{10,17}$)(?:97[89][ -]?)?\d{1,5}[ -]?\d{1,7}[ -]?\d{1,7}[ -]?[0-9X]$",
+            RegexOptions.Compiled)]
         public static partial Regex IsbnRegex();
 
         [GeneratedRegex(@"^\d{1,5}[\s-]?\d{1,7}[\s-]?\d{1,7}[\s-]?[0-9X]$", RegexOptions.Compiled)]
         public static partial Regex Isbn10Regex();
 
-        [GeneratedRegex(@"^(97[89])[\s-]?\d{1,5}[\s-]?\d{1,7}[\s-]?\d{1,7}[\s-]?\d$", RegexOptions.Compiled)]
+        [GeneratedRegex(
+            @"^(97[89])[\s-]?\d{1,5}[\s-]?\d{1,7}[\s-]?\d{1,7}[\s-]?\d$",
+            RegexOptions.Compiled)]
         public static partial Regex Isbn13Regex();
     }
 }

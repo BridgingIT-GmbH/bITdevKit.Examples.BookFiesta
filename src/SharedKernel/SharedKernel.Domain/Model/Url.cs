@@ -6,8 +6,6 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 using System.Text.RegularExpressions;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Value={Value}")]
 public partial class Url : ValueObject
@@ -25,7 +23,8 @@ public partial class Url : ValueObject
 
     public string Value { get; private set; }
 
-    public UrlType Type => DetermineType(this.Value);
+    public UrlType Type
+        => DetermineType(this.Value);
 
     public static implicit operator string(Url url)
     {
@@ -77,11 +76,15 @@ public partial class Url : ValueObject
 
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("Base URL is required for converting relative or local URLs to absolute.", nameof(value));
+            throw new ArgumentException(
+                "Base URL is required for converting relative or local URLs to absolute.",
+                nameof(value));
         }
 
         var normalizedBaseUrl = Normalize(value);
-        return this.IsRelative() ? $"{normalizedBaseUrl}{this.Value}" : $"{normalizedBaseUrl}/{this.Value}";
+        return this.IsRelative()
+            ? $"{normalizedBaseUrl}{this.Value}"
+            : $"{normalizedBaseUrl}/{this.Value}";
     }
 
     public override string ToString()
@@ -107,11 +110,13 @@ public partial class Url : ValueObject
         {
             return UrlType.Absolute;
         }
-        else if (RelativeUrlRegex.IsMatch(value))
+
+        if (RelativeUrlRegex.IsMatch(value))
         {
             return UrlType.Relative;
         }
-        else if (LocalUrlRegex.IsMatch(value))
+
+        if (LocalUrlRegex.IsMatch(value))
         {
             return UrlType.Local;
         }
@@ -135,7 +140,10 @@ public partial class Url : ValueObject
         };
     }
 
-    [GeneratedRegex(@"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+    [GeneratedRegex(
+        @"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$",
+        RegexOptions.IgnoreCase | RegexOptions.Compiled,
+        "en-US")]
     private static partial Regex AbsoluteRegex();
 
     [GeneratedRegex(@"^(\/|\.\.?\/)([\w\.-]+\/?)*$", RegexOptions.Compiled)]

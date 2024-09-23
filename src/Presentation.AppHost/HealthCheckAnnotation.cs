@@ -1,32 +1,34 @@
 ﻿namespace Aspire.Hosting;
 
-using System;
-using ApplicationModel;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 /// <summary>
-/// An annotation that associates a health check factory with a resource
+///     An annotation that associates a health check factory with a resource
 /// </summary>
 /// <param name="healthCheckFactory">A function that creates the health check</param>
-public class HealthCheckAnnotation(Func<IResource, CancellationToken, Task<IHealthCheck?>> healthCheckFactory) : IResourceAnnotation
+public class HealthCheckAnnotation(
+    Func<IResource, CancellationToken, Task<IHealthCheck?>> healthCheckFactory)
+    : IResourceAnnotation
 {
-    public Func<IResource, CancellationToken, Task<IHealthCheck?>> HealthCheckFactory { get; } = healthCheckFactory;
+    public Func<IResource, CancellationToken, Task<IHealthCheck?>> HealthCheckFactory { get; } =
+        healthCheckFactory;
 
     public static HealthCheckAnnotation Create(Func<string, IHealthCheck> connectionStringFactory)
     {
-        return new HealthCheckAnnotation(async (resource, token) =>
-        {
-            if (resource is not IResourceWithConnectionString c)
+        return new HealthCheckAnnotation(
+            async (resource, token) =>
             {
-                return null;
-            }
+                if (resource is not IResourceWithConnectionString c)
+                {
+                    return null;
+                }
 
-            if (await c.GetConnectionStringAsync(token) is not string cs)
-            {
-                return null;
-            }
+                if (await c.GetConnectionStringAsync(token) is not string cs)
+                {
+                    return null;
+                }
 
-            return connectionStringFactory(cs);
-        });
+                return connectionStringFactory(cs);
+            });
     }
 }

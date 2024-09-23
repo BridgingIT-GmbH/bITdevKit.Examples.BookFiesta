@@ -1,6 +1,5 @@
 ﻿@inherits LayoutComponentBase
 @* @inject IStringLocalizer<Global> localizer *@
-@using Microsoft.AspNetCore.SignalR.Client
 @*@implements IAsyncDisposable*@
 
 <MudThemeProvider/>
@@ -10,7 +9,7 @@
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(e => DrawerToggle())"/>
         <MudSpacer/>
         <MudTooltip Text="Open API documentation">
             <MudIconButton Icon="@Icons.Material.Filled.Api" Color="Color.Inherit" Href="swagger/index.html" Target="_blank"/>
@@ -50,8 +49,9 @@
     {
         hubConnection = new HubConnectionBuilder().WithUrl(navigationManager.ToAbsoluteUri("/signalrhub"))
             .Build();
-        hubConnection.On<string>("CheckHealth",
-            (notification) =>
+        hubConnection.On<string>(
+            "CheckHealth",
+            notification =>
             {
                 IsHealthy = !notification.Contains("Unhealthy");
                 StateHasChanged();

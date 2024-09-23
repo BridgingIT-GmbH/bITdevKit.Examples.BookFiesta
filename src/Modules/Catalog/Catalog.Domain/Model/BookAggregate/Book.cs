@@ -17,7 +17,15 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     private Book() { } // Private constructor required by EF Core
 
-    private Book(TenantId tenantId, string title, string edition, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly? publishedDate = null)
+    private Book(
+        TenantId tenantId,
+        string title,
+        string edition,
+        string description,
+        BookIsbn isbn,
+        Money price,
+        Publisher publisher,
+        DateOnly? publishedDate = null)
     {
         this.TenantId = tenantId;
         this.SetTitle(title);
@@ -30,7 +38,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         this.AverageRating = AverageRating.Create();
     }
 
-    public TenantId TenantId { get; private set; }
+    public TenantId TenantId { get; }
 
     public string Title { get; private set; }
 
@@ -46,28 +54,49 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public DateOnly? PublishedDate { get; private set; }
 
-    public AverageRating AverageRating { get; private set; }
+    public AverageRating AverageRating { get; }
 
-    public IEnumerable<BookKeyword> Keywords => this.keywords;
+    public IEnumerable<BookKeyword> Keywords
+        => this.keywords;
 
-    public IEnumerable<BookAuthor> Authors => this.authors;
+    public IEnumerable<BookAuthor> Authors
+        => this.authors;
 
-    public IEnumerable<Category> Categories => this.categories.OrderBy(e => e.Order);
+    public IEnumerable<Category> Categories
+        => this.categories.OrderBy(e => e.Order);
 
-    public IEnumerable<BookChapter> Chapters => this.chapters.OrderBy(e => e.Number);
+    public IEnumerable<BookChapter> Chapters
+        => this.chapters.OrderBy(e => e.Number);
 
-    public IEnumerable<Tag> Tags => this.tags.OrderBy(e => e.Name);
+    public IEnumerable<Tag> Tags
+        => this.tags.OrderBy(e => e.Name);
 
     /// <summary>
-    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    ///     Gets or sets the concurrency token to handle optimistic concurrency.
     /// </summary>
     public Guid Version { get; set; }
 
-    public static Book Create(TenantId tenantId, string title, string edition, string description, BookIsbn isbn, Money price, Publisher publisher, DateOnly? publishedDate = null)
+    public static Book Create(
+        TenantId tenantId,
+        string title,
+        string edition,
+        string description,
+        BookIsbn isbn,
+        Money price,
+        Publisher publisher,
+        DateOnly? publishedDate = null)
     {
         _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
 
-        var book = new Book(tenantId, title, edition, description, isbn, price, publisher, publishedDate);
+        var book = new Book(
+            tenantId,
+            title,
+            edition,
+            description,
+            isbn,
+            price,
+            publisher,
+            publishedDate);
 
         book.DomainEvents.Register(new BookCreatedDomainEvent(tenantId, book), true);
 
@@ -229,7 +258,8 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book AddChapter(string title, string content = null)
     {
-        return this.AddChapter(title,
+        return this.AddChapter(
+            title,
             this.chapters.LastOrDefault()
                 ?.Number +
             1 ??
@@ -372,7 +402,9 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
             // If the current chapter's number is already used or it's less than the expected number,
             // and the expected number hasn't been used, then set the chapter number to the expected number.
-            if ((usedNumbers.Contains(currentChapter.Number) || currentChapter.Number < expectedNumber) && !usedNumbers.Contains(expectedNumber))
+            if ((usedNumbers.Contains(currentChapter.Number) ||
+                currentChapter.Number < expectedNumber) &&
+                !usedNumbers.Contains(expectedNumber))
             {
                 currentChapter.SetNumber(expectedNumber);
                 usedNumbers.Add(expectedNumber);
@@ -402,26 +434,33 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     private List<string> ReindexKeywords()
     {
         var keywords = new HashSet<string>();
-        keywords.UnionWith(this.Title.SafeNull()
-            .ToLower()
-            .Split(' ')
-            .Where(word => word.Length > 3));
+        keywords.UnionWith(
+            this.Title.SafeNull()
+                .ToLower()
+                .Split(' ')
+                .Where(word => word.Length > 3));
         //keywords.UnionWith(this.Edition.SafeNull().ToLower().Split(' ').Where(word => word.Length > 3));
-        keywords.UnionWith(this.Description.SafeNull()
-            .ToLower()
-            .Split(' ')
-            .Where(word => word.Length > 3));
-        keywords.UnionWith(this.authors.SafeNull()
-            .SelectMany(a => a.Name.ToLower()
+        keywords.UnionWith(
+            this.Description.SafeNull()
+                .ToLower()
                 .Split(' ')
-                .Where(word => word.Length > 3)));
+                .Where(word => word.Length > 3));
+        keywords.UnionWith(
+            this.authors.SafeNull()
+                .SelectMany(
+                    a => a.Name.ToLower()
+                        .Split(' ')
+                        .Where(word => word.Length > 3)));
         //newKeywords.UnionWith(this.categories.SafeNull().SelectMany(c => c.Name.ToLower().Split(' ').Where(word => word.Length > 3)));
-        keywords.UnionWith(this.tags.SafeNull()
-            .Select(t => t.Name.ToLower()));
-        keywords.UnionWith(this.chapters.SafeNull()
-            .SelectMany(c => c.Title.ToLower()
-                .Split(' ')
-                .Where(word => word.Length > 3)));
+        keywords.UnionWith(
+            this.tags.SafeNull()
+                .Select(t => t.Name.ToLower()));
+        keywords.UnionWith(
+            this.chapters.SafeNull()
+                .SelectMany(
+                    c => c.Title.ToLower()
+                        .Split(' ')
+                        .Where(word => word.Length > 3)));
 
         UpdateKeywords(keywords);
 

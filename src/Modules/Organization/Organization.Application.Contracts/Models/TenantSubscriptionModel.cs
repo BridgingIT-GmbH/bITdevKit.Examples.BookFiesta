@@ -5,17 +5,17 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
+using SharedKernel.Application;
 
 public class TenantSubscriptionModel
 {
     public string Id { get; set; }
 
-    public int PlanType { get; private set; }
+    public int PlanType { get; }
 
-    public int Status { get; private set; }
+    public int Status { get; }
 
-    public DateScheduleModel Schedule { get; private set; }
+    public DateScheduleModel Schedule { get; }
 
-    public int BillingCycle { get; private set; }
+    public int BillingCycle { get; }
 }

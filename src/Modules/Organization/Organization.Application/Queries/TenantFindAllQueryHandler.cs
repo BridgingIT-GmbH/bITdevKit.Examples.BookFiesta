@@ -5,19 +5,16 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using BridgingIT.DevKit.Application.Queries;
-using Common;
-using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Domain.Specifications;
-using Domain;
-using Microsoft.Extensions.Logging;
+using DevKit.Domain.Specifications;
 
-public class TenantFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Tenant> repository)
+public class TenantFindAllQueryHandler(
+    ILoggerFactory loggerFactory,
+    IGenericRepository<Tenant> repository)
     : QueryHandlerBase<TenantFindAllQuery, Result<IEnumerable<Tenant>>>(loggerFactory)
 {
-    public override async Task<QueryResponse<Result<IEnumerable<Tenant>>>> Process(TenantFindAllQuery query, CancellationToken cancellationToken)
+    public override async Task<QueryResponse<Result<IEnumerable<Tenant>>>> Process(
+        TenantFindAllQuery query,
+        CancellationToken cancellationToken)
     {
         var specifications = new List<ISpecification<Tenant>>();
 
@@ -26,7 +23,11 @@ public class TenantFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRep
             specifications.Add(TenantSpecifications.ForCompany(CompanyId.Create(query.CompanyId)));
         }
 
-        return QueryResponse.For(await repository.FindAllResultAsync(specifications, new FindOptions<Tenant> { Order = new OrderOption<Tenant>(e => e.Name) }, cancellationToken)
-            .AnyContext());
+        return QueryResponse.For(
+            await repository.FindAllResultAsync(
+                    specifications,
+                    new FindOptions<Tenant> { Order = new OrderOption<Tenant>(e => e.Name) },
+                    cancellationToken)
+                .AnyContext());
     }
 }

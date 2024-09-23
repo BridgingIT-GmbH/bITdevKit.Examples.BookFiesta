@@ -5,11 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation.Web;
 
-using System.Collections.Generic;
-using Common;
 using Application;
+using Common;
+using DevKit.Presentation.Web;
 using Domain;
-using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -50,17 +49,24 @@ public class CatalogCustomerEndpoints : EndpointsBase
             .Produces<ProblemDetails>(500);
     }
 
-    private static async Task<Results<Ok<CustomerModel>, NotFound, ProblemHttpResult>> GetCustomer([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId, [FromRoute] string id)
+    private static async Task<Results<Ok<CustomerModel>, NotFound, ProblemHttpResult>> GetCustomer(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id)
     {
         var result = (await mediator.Send(new CustomerFindOneQuery(tenantId, id))).Result;
 
         return result.Value == null ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value)) : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            result.IsSuccess ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value)) :
+            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<CustomerModel>>, ProblemHttpResult>> GetCustomers([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId)
+    private static async Task<Results<Ok<IEnumerable<CustomerModel>>, ProblemHttpResult>>
+        GetCustomers(
+            [FromServices] IMediator mediator,
+            [FromServices] IMapper mapper,
+            [FromRoute] string tenantId)
     {
         var result = (await mediator.Send(new CustomerFindAllQuery(tenantId))).Result;
 
@@ -69,30 +75,45 @@ public class CatalogCustomerEndpoints : EndpointsBase
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Created<CustomerModel>, ProblemHttpResult>> CreateCustomer([FromServices] IMediator mediator, [FromServices] IMapper mapper,
-        [FromRoute] string tenantId, [FromBody] CustomerModel model)
+    private static async Task<Results<Created<CustomerModel>, ProblemHttpResult>> CreateCustomer(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromBody] CustomerModel model)
     {
         var result = (await mediator.Send(new CustomerCreateCommand(tenantId, model))).Result;
 
         return result.IsSuccess
-            ? TypedResults.Created($"api/tenants/{tenantId}/catalog/customers/{result.Value.Id}", mapper.Map<Customer, CustomerModel>(result.Value))
+            ? TypedResults.Created(
+                $"api/tenants/{tenantId}/catalog/customers/{result.Value.Id}",
+                mapper.Map<Customer, CustomerModel>(result.Value))
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<CustomerModel>, ProblemHttpResult>> UpdateCustomer([FromServices] IMediator mediator, [FromServices] IMapper mapper, [FromRoute] string tenantId,
-        [FromRoute] string id, [FromBody] CustomerModel model)
+    private static async Task<Results<Ok<CustomerModel>, ProblemHttpResult>> UpdateCustomer(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id,
+        [FromBody] CustomerModel model)
     {
         var result = (await mediator.Send(new CustomerUpdateCommand(tenantId, model))).Result;
 
-        return result.IsSuccess ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value)) : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.IsSuccess
+            ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> DeleteCustomer([FromServices] IMediator mediator, [FromServices] IMapper mapper, [FromRoute] string tenantId,
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> DeleteCustomer(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
         [FromRoute] string id)
     {
         var result = (await mediator.Send(new CustomerDeleteCommand(tenantId, id))).Result;
 
         return result.HasError<EntityNotFoundResultError>() ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok() : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            result.IsSuccess ? TypedResults.Ok() :
+            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 }

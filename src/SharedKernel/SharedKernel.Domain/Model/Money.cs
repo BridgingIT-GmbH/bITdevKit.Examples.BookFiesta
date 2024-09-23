@@ -5,11 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using BridgingIT.DevKit.Domain.Model;
 using EnsureThat;
 
 [DebuggerDisplay("Currency={Currency}, Amount={Amount}")]
@@ -119,10 +115,10 @@ public class Money : DecimalValueObject
     }
 
     /// <summary>
-    /// Returns a hash code for this instance.
+    ///     Returns a hash code for this instance.
     /// </summary>
     /// <returns>
-    /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+    ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode()
     {
@@ -154,7 +150,8 @@ public class Money : DecimalValueObject
 
         var culture = (from c in CultureInfo.GetCultures(CultureTypes.SpecificCultures)
             let r = this.CreateRegionInfo(c.Name)
-            where r != null && string.Equals(r.ISOCurrencySymbol, currencyCode, StringComparison.OrdinalIgnoreCase)
+            where r != null &&
+                string.Equals(r.ISOCurrencySymbol, currencyCode, StringComparison.OrdinalIgnoreCase)
             select c).FirstOrDefault();
 
         if (culture == null)

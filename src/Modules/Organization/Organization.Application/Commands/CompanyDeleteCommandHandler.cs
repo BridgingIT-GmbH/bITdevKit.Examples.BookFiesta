@@ -5,19 +5,19 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using BridgingIT.DevKit.Application.Commands;
-using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Repositories;
-using Domain;
-using Microsoft.Extensions.Logging;
-
-public class CompanyDeleteCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Company> companyRepository, IGenericRepository<Tenant> tenantRepository)
+public class CompanyDeleteCommandHandler(
+    ILoggerFactory loggerFactory,
+    IGenericRepository<Company> companyRepository,
+    IGenericRepository<Tenant> tenantRepository)
     : CommandHandlerBase<CompanyDeleteCommand, Result<Company>>(loggerFactory)
 {
-    public override async Task<CommandResponse<Result<Company>>> Process(CompanyDeleteCommand command, CancellationToken cancellationToken)
+    public override async Task<CommandResponse<Result<Company>>> Process(
+        CompanyDeleteCommand command,
+        CancellationToken cancellationToken)
     {
-        var companyResult = await companyRepository.FindOneResultAsync(CompanyId.Create(command.Id), cancellationToken: cancellationToken);
+        var companyResult = await companyRepository.FindOneResultAsync(
+            CompanyId.Create(command.Id),
+            cancellationToken: cancellationToken);
 
         if (companyResult.IsFailure)
         {
@@ -26,8 +26,7 @@ public class CompanyDeleteCommandHandler(ILoggerFactory loggerFactory, IGenericR
 
         DomainRules.Apply([CompanyRules.MustHaveNoTenants(tenantRepository, companyResult.Value)]);
 
-        await companyRepository.DeleteAsync(companyResult.Value, cancellationToken)
-            .AnyContext();
+        await companyRepository.DeleteAsync(companyResult.Value, cancellationToken).AnyContext();
 
         return CommandResponse.Success(companyResult.Value);
     }

@@ -5,11 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("StartDate={StartDate}, EndDate={EndDate}")]
 public class DateSchedule : ValueObject, IComparable<DateSchedule>
@@ -26,7 +22,8 @@ public class DateSchedule : ValueObject, IComparable<DateSchedule>
 
     public DateOnly? EndDate { get; private set; }
 
-    public bool IsOpenEnded => !this.EndDate.HasValue;
+    public bool IsOpenEnded
+        => !this.EndDate.HasValue;
 
     public static bool operator <(DateSchedule left, DateSchedule right)
     {
@@ -72,7 +69,8 @@ public class DateSchedule : ValueObject, IComparable<DateSchedule>
 
         if (this.IsOpenEnded || other.IsOpenEnded)
         {
-            return this.StartDate <= (other.EndDate ?? DateOnly.MaxValue) && other.StartDate <= (this.EndDate ?? DateOnly.MaxValue);
+            return this.StartDate <= (other.EndDate ?? DateOnly.MaxValue) &&
+                other.StartDate <= (this.EndDate ?? DateOnly.MaxValue);
         }
 
         return this.StartDate <= other.EndDate.Value && other.StartDate <= this.EndDate.Value;

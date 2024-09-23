@@ -5,13 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using BridgingIT.DevKit.Application.Commands;
-using Common;
-using Domain;
-using FluentValidation;
-using FluentValidation.Results;
-
-public class TenantCreateCommand(TenantModel model) : CommandRequestBase<Result<Tenant>>
+public class TenantCreateCommand(
+    TenantModel model) : CommandRequestBase<Result<Tenant>>
 {
     public TenantModel Model { get; } = model;
 

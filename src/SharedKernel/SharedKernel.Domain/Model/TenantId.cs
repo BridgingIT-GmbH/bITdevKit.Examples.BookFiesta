@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using BridgingIT.DevKit.Domain.Model;
-
 [TypedEntityId<Guid>]
 public partial class TenantId { }
 //public class TenantId : AggregateRootId<Guid> // cannot be source generated while AggregateRoot in different project

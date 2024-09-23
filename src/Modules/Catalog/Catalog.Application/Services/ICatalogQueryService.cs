@@ -5,9 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using Common;
-using Domain;
-
 public interface ICatalogQueryService
 {
     /// <summary>

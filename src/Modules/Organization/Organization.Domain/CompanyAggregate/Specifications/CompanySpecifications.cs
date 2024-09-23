@@ -5,10 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-using BridgingIT.DevKit.Domain.Specifications;
 using System.Linq.Expressions;
+using DevKit.Domain.Specifications;
 
-public class CompanyForNameSpecification(string name) : Specification<Company>
+public class CompanyForNameSpecification(
+    string name) : Specification<Company>
 {
     public override Expression<Func<Company, bool>> ToExpression()
     {
@@ -25,14 +26,15 @@ public class CompanyForNameSpecification(string name) : Specification<Company>
 //    }
 //}
 
-public static partial class CompanySpecifications
+public static class CompanySpecifications
 {
     public static Specification<Company> ForName(string name)
     {
         return new CompanyForNameSpecification(name);
     }
 
-    public static Specification<Company> ForName2(string name) // INFO: short version to define a specification
+    public static Specification<Company>
+        ForName2(string name) // INFO: short version to define a specification
     {
         return new Specification<Company>(e => e.Name == name);
     }

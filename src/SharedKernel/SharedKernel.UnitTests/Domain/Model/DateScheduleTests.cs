@@ -5,13 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 
-using System;
-using System.Collections.Generic;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using System.Reflection;
 using Bogus;
-using Shouldly;
-using Xunit;
+using DevKit.Domain;
+using SharedKernel.Domain;
 
 [UnitTest("SharedKernel:Domain")]
 public class DateScheduleTests
@@ -53,7 +50,9 @@ public class DateScheduleTests
         var startDate = this.faker.Date.PastDateOnly();
         var endDate = this.faker.Date.FutureDateOnly();
         var sut = DateSchedule.Create(startDate, endDate);
-        var testDate = this.faker.Date.Between(startDate.ToDateTime(TimeOnly.MinValue), endDate.ToDateTime(TimeOnly.MinValue));
+        var testDate = this.faker.Date.Between(
+            startDate.ToDateTime(TimeOnly.MinValue),
+            endDate.ToDateTime(TimeOnly.MinValue));
 
         // Act
         var result = sut.IsActive(DateOnly.FromDateTime(testDate));
@@ -171,7 +170,7 @@ public class DateScheduleTests
 
         // Act
         var result = sut.GetType()
-            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .GetMethod("GetAtomicValues", BindingFlags.NonPublic | BindingFlags.Instance)
             .Invoke(sut, null) as IEnumerable<object>;
 
         // Assert

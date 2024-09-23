@@ -5,21 +5,20 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using Common;
-using DevKit.Application.Commands;
-using DevKit.Domain;
-using DevKit.Domain.Repositories;
-using Domain;
-using Microsoft.Extensions.Logging;
-using SharedKernel.Domain;
-
-public class CustomerDeleteCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
+public class CustomerDeleteCommandHandler(
+    ILoggerFactory loggerFactory,
+    IGenericRepository<Customer> repository)
     : CommandHandlerBase<CustomerDeleteCommand, Result<Customer>>(loggerFactory)
 {
-    public override async Task<CommandResponse<Result<Customer>>> Process(CustomerDeleteCommand command, CancellationToken cancellationToken)
+    public override async Task<CommandResponse<Result<Customer>>> Process(
+        CustomerDeleteCommand command,
+        CancellationToken cancellationToken)
     {
-        var tenantId = TenantId.Create(command.TenantId); // TODO: use in findone query or check later > notfoundexception
-        var customerResult = await repository.FindOneResultAsync(CustomerId.Create(command.Id), cancellationToken: cancellationToken);
+        var tenantId =
+            TenantId.Create(command.TenantId); // TODO: use in findone query or check later > notfoundexception
+        var customerResult = await repository.FindOneResultAsync(
+            CustomerId.Create(command.Id),
+            cancellationToken: cancellationToken);
 
         if (customerResult.IsFailure)
         {

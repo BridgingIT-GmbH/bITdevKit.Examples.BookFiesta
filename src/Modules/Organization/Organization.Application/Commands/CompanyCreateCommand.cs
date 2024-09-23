@@ -5,13 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using BridgingIT.DevKit.Application.Commands;
-using Common;
-using Domain;
-using FluentValidation;
-using FluentValidation.Results;
-
-public class CompanyCreateCommand(CompanyModel model) : CommandRequestBase<Result<Company>>
+public class CompanyCreateCommand(
+    CompanyModel model) : CommandRequestBase<Result<Company>>
 {
     public CompanyModel Model { get; } = model;
 

@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using Common;
-
 public static class TenantIdFactory
 {
     public static TenantId CreateForName(string name)

@@ -5,11 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
+using DevKit.Infrastructure.EntityFramework;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
+using SharedKernel.Domain;
 
 public class CategoryEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Category>
 {
@@ -52,7 +52,7 @@ public class CategoryEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
             .IsRequired(false);
 
         builder.Property(e => e.Order)
-            .IsRequired(true)
+            .IsRequired()
             .HasDefaultValue(0);
 
         builder.HasMany(c => c.Children)

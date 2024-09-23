@@ -18,7 +18,7 @@ public class AuthorBook : ValueObject
         this.Title = title;
     }
 
-    public BookId BookId { get; private set; }
+    public BookId BookId { get; }
 
     public string Title { get; }
 

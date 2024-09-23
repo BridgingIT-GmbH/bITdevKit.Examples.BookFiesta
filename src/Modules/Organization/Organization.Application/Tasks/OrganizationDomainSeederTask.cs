@@ -5,13 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using System.Threading;
-using System.Threading.Tasks;
-using Common;
-using BridgingIT.DevKit.Domain.Repositories;
-using Domain;
-
-public class OrganizationDomainSeederTask(IGenericRepository<Company> companyRepository, IGenericRepository<Tenant> tenantRepository) : IStartupTask
+public class OrganizationDomainSeederTask(
+    IGenericRepository<Company> companyRepository,
+    IGenericRepository<Tenant> tenantRepository) : IStartupTask
 {
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
@@ -35,7 +31,9 @@ public class OrganizationDomainSeederTask(IGenericRepository<Company> companyRep
         return entities;
     }
 
-    private async Task<Tenant[]> SeedTenants(IGenericRepository<Tenant> repository, Company[] companies)
+    private async Task<Tenant[]> SeedTenants(
+        IGenericRepository<Tenant> repository,
+        Company[] companies)
     {
         var entities = OrganizationSeedEntities.Tenants.Create(companies);
 

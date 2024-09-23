@@ -5,6 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 
+using System.Reflection;
 using Bogus;
 using SharedKernel.Domain;
 
@@ -17,7 +18,11 @@ public class PersonFormalNameTests
     public void Create_ValidParts_ReturnsPersonFormalNameInstance()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
 
         // Act
         var sut = PersonFormalName.Create(parts);
@@ -31,7 +36,11 @@ public class PersonFormalNameTests
     public void Create_ValidPartsWithTitleAndSuffix_ReturnsPersonFormalNameInstance()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var title = "Dr.";
         var suffix = "Jr.";
 
@@ -71,7 +80,11 @@ public class PersonFormalNameTests
     public void Create_InvalidNamePart_ThrowsArgumentException()
     {
         // Arrange
-        var parts = new[] { "John", "Doe123" };
+        var parts = new[]
+        {
+            "John",
+            "Doe123"
+        };
 
         // Act & Assert
         Should.Throw<ArgumentException>(() => PersonFormalName.Create(parts))
@@ -82,7 +95,11 @@ public class PersonFormalNameTests
     public void Create_InvalidTitle_ThrowsArgumentException()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var invalidTitle = "Dr123";
 
         // Act & Assert
@@ -94,7 +111,11 @@ public class PersonFormalNameTests
     public void Create_InvalidSuffix_ThrowsArgumentException()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var invalidSuffix = "Jr123";
 
         // Act & Assert
@@ -106,7 +127,11 @@ public class PersonFormalNameTests
     public void ToString_ReturnsFullName()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var title = "Dr.";
         var suffix = "Jr.";
         var sut = PersonFormalName.Create(parts, title, suffix);
@@ -122,7 +147,11 @@ public class PersonFormalNameTests
     public void ToString_WithoutTitleAndSuffix_ReturnsFullName()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var sut = PersonFormalName.Create(parts);
 
         // Act
@@ -136,7 +165,11 @@ public class PersonFormalNameTests
     public void ImplicitConversion_PersonFormalNameToString_ReturnsFullName()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var title = "Dr.";
         var suffix = "Jr.";
         var sut = PersonFormalName.Create(parts, title, suffix);
@@ -152,26 +185,34 @@ public class PersonFormalNameTests
     public void GetAtomicValues_ReturnsAllParts()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var title = "Dr.";
         var suffix = "Jr.";
         var sut = PersonFormalName.Create(parts, title, suffix);
 
         // Act
         var atomicValues = sut.GetType()
-            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .GetMethod("GetAtomicValues", BindingFlags.NonPublic | BindingFlags.Instance)
             ?.Invoke(sut, null) as IEnumerable<object>;
 
         // Assert
         atomicValues.ShouldNotBeNull();
-        atomicValues.ShouldBe(new object[] { title, "John", "Doe", suffix });
+        atomicValues.ShouldBe([title, "John", "Doe", suffix]);
     }
 
     [Fact]
     public void Full_GetterReturnsFullName()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var title = "Dr.";
         var suffix = "Jr.";
         var sut = PersonFormalName.Create(parts, title, suffix);
@@ -187,7 +228,11 @@ public class PersonFormalNameTests
     public void Full_SetterDoesNotChangeValue()
     {
         // Arrange
-        var parts = new[] { "John", "Doe" };
+        var parts = new[]
+        {
+            "John",
+            "Doe"
+        };
         var sut = PersonFormalName.Create(parts);
         var originalFull = sut.Full;
 

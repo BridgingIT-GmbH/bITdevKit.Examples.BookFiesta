@@ -5,12 +5,12 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
+using DevKit.Infrastructure.EntityFramework;
 using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SharedKernel.Domain;
 
 public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Author>
 {
@@ -56,7 +56,8 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
             .IsRequired(false)
             .HasMaxLength(4096);
 
-        builder.OwnsOne(e => e.PersonName,
+        builder.OwnsOne(
+            e => e.PersonName,
             b =>
             {
                 b.Property(e => e.Title)
@@ -65,11 +66,13 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
                     .HasMaxLength(64);
                 b.Property(e => e.Parts)
                     .HasColumnName("PersonNameParts")
-                    .IsRequired(true)
+                    .IsRequired()
                     .HasMaxLength(1024)
-                    .HasConversion(parts => string.Join("|", parts),
+                    .HasConversion(
+                        parts => string.Join("|", parts),
                         value => value.Split("|", StringSplitOptions.RemoveEmptyEntries),
-                        new ValueComparer<IEnumerable<string>>((c1, c2) => c1.SequenceEqual(c2),
+                        new ValueComparer<IEnumerable<string>>(
+                            (c1, c2) => c1.SequenceEqual(c2),
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                             c => c.AsEnumerable()));
                 b.Property(e => e.Suffix)
@@ -78,11 +81,13 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
                     .HasMaxLength(64);
                 b.Property(e => e.Full)
                     .HasColumnName("PersonNameFull")
-                    .IsRequired(true)
+                    .IsRequired()
                     .HasMaxLength(2048);
             });
 
-        builder.HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
+        builder
+            .HasMany(
+                e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
             .WithMany()
             .UsingEntity(b => b.ToTable("AuthorTags"));
 
@@ -98,7 +103,8 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
 
     private static void ConfigureAuthorBooks(EntityTypeBuilder<Author> builder)
     {
-        builder.OwnsMany(e => e.Books,
+        builder.OwnsMany(
+            e => e.Books,
             b =>
             {
                 b.ToTable("AuthorBooks")

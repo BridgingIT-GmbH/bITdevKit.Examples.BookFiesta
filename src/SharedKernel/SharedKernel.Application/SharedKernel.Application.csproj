@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BridgingIT.DevKit.Application.Commands" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="BridgingIT.DevKit.Application.Commands"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Modules\Organization\Organization.Application.Contracts\Organization.Application.Contracts.csproj" />
+    <ProjectReference Include="..\..\Modules\Organization\Organization.Application.Contracts\Organization.Application.Contracts.csproj"/>
   </ItemGroup>
 
 </Project>

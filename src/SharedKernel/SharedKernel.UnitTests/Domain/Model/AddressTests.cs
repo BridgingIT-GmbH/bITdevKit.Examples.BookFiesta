@@ -5,6 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 
+using System.Reflection;
 using Bogus;
 using DevKit.Domain;
 using SharedKernel.Domain;
@@ -68,7 +69,8 @@ public class AddressTests
 
         // Act
         var atomicValues = sut.GetType()
-            .GetMethod("GetAtomicValues", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.Invoke(sut, null) as IEnumerable<object>;
+            .GetMethod("GetAtomicValues", BindingFlags.NonPublic | BindingFlags.Instance)!
+            .Invoke(sut, null) as IEnumerable<object>;
 
         // Assert
         atomicValues.ShouldNotBeNull();

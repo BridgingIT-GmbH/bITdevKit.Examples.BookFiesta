@@ -5,7 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-public class TenantSubscriptionRemovedDomainEvent(TenantSubscription subscription) : DomainEventBase
+public class TenantSubscriptionRemovedDomainEvent(
+    TenantSubscription subscription) : DomainEventBase
 {
     public TenantId TenantId { get; } = subscription.Tenant.Id;
 

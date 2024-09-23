@@ -2808,7 +2808,8 @@
           "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.31, )",
-          "Ensure.That": "[10.1.0, )"
+          "Ensure.That": "[10.1.0, )",
+          "Refit.HttpClientFactory": "[7.2.1, )"
         }
       },
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application": {
@@ -2830,7 +2831,8 @@
           "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
-          "Ensure.That": "[10.1.0, )"
+          "Ensure.That": "[10.1.0, )",
+          "Refit": "[7.2.1, )"
         }
       },
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": {
@@ -2865,7 +2867,8 @@
           "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.31, )",
           "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.31, )",
-          "Ensure.That": "[10.1.0, )"
+          "Ensure.That": "[10.1.0, )",
+          "Refit.HttpClientFactory": "[7.2.1, )"
         }
       },
       "BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client": {
@@ -3432,6 +3435,22 @@
         "contentHash": "ddD1CPjWcDMbKdAhzuna3Ng23Sdv1YtuHbFMdAAFw0eBEj9jnadYkDWiKGo/c7BMnbI/ruuyd370sKVgdMCkDA==",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "2.1.1"
+        }
+      },
+      "Refit": {
+        "type": "CentralTransitive",
+        "requested": "[7.2.1, )",
+        "resolved": "7.2.1",
+        "contentHash": "FJjmroOw6QG0yoHgcyKPTnYercE3TJrgXdeF4jGUqMH9OwhNFxWOuGlTu6IZfwekHFM3VMY1f5oVI8jQW3QcGg=="
+      },
+      "Refit.HttpClientFactory": {
+        "type": "CentralTransitive",
+        "requested": "[7.2.1, )",
+        "resolved": "7.2.1",
+        "contentHash": "3zixQFJY1ap8mWSaDzaNwMOt+13DLXo0+mJa/EEpI5dcNrpeiLw5AvPZvriBk7JTBiA1HhTcZQb7x5icQselpA==",
+        "dependencies": {
+          "Microsoft.Extensions.Http": "8.0.0",
+          "Refit": "7.2.1"
         }
       },
       "System.ComponentModel.Annotations": {

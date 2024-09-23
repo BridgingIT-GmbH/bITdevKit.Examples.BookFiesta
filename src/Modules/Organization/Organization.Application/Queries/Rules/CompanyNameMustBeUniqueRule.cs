@@ -5,40 +5,50 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using System.Threading.Tasks;
-using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Repositories;
-using Domain;
-
-public class CompanyNameMustBeUniqueRule(IGenericRepository<Company> repository, Company company) : DomainRuleBase
+public class CompanyNameMustBeUniqueRule(
+    IGenericRepository<Company> repository,
+    Company company)
+    : DomainRuleBase
 {
-    public override string Message => "Company name must be unique";
+    public override string Message
+        => "Company name must be unique";
 
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
-        return !(await repository.FindAllAsync(CompanySpecifications.ForName(company.Name), cancellationToken: cancellationToken)).SafeAny(c => c.Id != company.Id);
+        return !(await repository.FindAllAsync(
+            CompanySpecifications.ForName(company.Name),
+            cancellationToken: cancellationToken)).SafeAny(c => c.Id != company.Id);
     }
 }
 
-public class CompanyMustHaveNoTenantsRule(IGenericRepository<Tenant> repository, Company company) : DomainRuleBase
+public class CompanyMustHaveNoTenantsRule(
+    IGenericRepository<Tenant> repository,
+    Company company)
+    : DomainRuleBase
 {
-    public override string Message => "Company must have no tenants assigned";
+    public override string Message
+        => "Company must have no tenants assigned";
 
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
-        return !(await repository.FindAllAsync(TenantSpecifications.ForCompany(company.Id), cancellationToken: cancellationToken)).SafeAny();
+        return !(await repository.FindAllAsync(
+            TenantSpecifications.ForCompany(company.Id),
+            cancellationToken: cancellationToken)).SafeAny();
     }
 }
 
-public static partial class CompanyRules
+public static class CompanyRules
 {
-    public static IDomainRule NameMustBeUnique(IGenericRepository<Company> repository, Company company)
+    public static IDomainRule NameMustBeUnique(
+        IGenericRepository<Company> repository,
+        Company company)
     {
         return new CompanyNameMustBeUniqueRule(repository, company);
     }
 
-    public static IDomainRule MustHaveNoTenants(IGenericRepository<Tenant> repository, Company company)
+    public static IDomainRule MustHaveNoTenants(
+        IGenericRepository<Tenant> repository,
+        Company company)
     {
         return new CompanyMustHaveNoTenantsRule(repository, company);
     }

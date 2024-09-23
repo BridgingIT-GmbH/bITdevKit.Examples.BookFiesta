@@ -6,13 +6,9 @@
 namespace Microsoft.Extensions.Hosting;
 
 using AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using AspNetCore.Diagnostics.HealthChecks;
 using DependencyInjection;
 using Diagnostics.HealthChecks;
-using Logging;
-using OpenTelemetry;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
 
 // Adds common .NET Aspire services: service discovery, resilience, health checks, and OpenTelemetry.
 // This project should be referenced by each service project in your solution.
@@ -27,11 +23,12 @@ public static class Extensions
 
         builder.Services.AddServiceDiscovery();
 
-        builder.Services.ConfigureHttpClientDefaults(http =>
-        {
-            http.AddStandardResilienceHandler();
-            http.AddServiceDiscovery();
-        });
+        builder.Services.ConfigureHttpClientDefaults(
+            http =>
+            {
+                http.AddStandardResilienceHandler();
+                http.AddServiceDiscovery();
+            });
 
         return builder;
     }
@@ -83,7 +80,9 @@ public static class Extensions
             app.MapHealthChecks("/health");
 
             // Only health checks tagged with the "live" tag must pass for app to be considered alive
-            app.MapHealthChecks("/alive", new HealthCheckOptions { Predicate = r => r.Tags.Contains("live") });
+            app.MapHealthChecks(
+                "/alive",
+                new HealthCheckOptions { Predicate = r => r.Tags.Contains("live") });
         }
 
         return app;

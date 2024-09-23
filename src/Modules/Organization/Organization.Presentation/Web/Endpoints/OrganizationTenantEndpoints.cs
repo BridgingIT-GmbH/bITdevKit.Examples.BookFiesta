@@ -1,10 +1,9 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation.Web;
 
-using System.Collections.Generic;
-using Common;
 using Application;
+using Common;
+using DevKit.Presentation.Web;
 using Domain;
-using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -13,12 +12,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 /// <summary>
-/// Specifies the external API for this module that will be exposed for the outside boundary
+///     Specifies the external API for this module that will be exposed for the outside boundary
 /// </summary>
 public class OrganizationTenantEndpoints : EndpointsBase
 {
     /// <summary>
-    /// Maps the endpoints for the Organization Tenant to the specified route builder.
+    ///     Maps the endpoints for the Organization Tenant to the specified route builder.
     /// </summary>
     /// <param name="app">The IEndpointRouteBuilder instance used to define routes.</param>
     public override void Map(IEndpointRouteBuilder app)
@@ -44,33 +43,39 @@ public class OrganizationTenantEndpoints : EndpointsBase
         // TODO: update/delete tenant
     }
 
-    private static async Task<Results<Ok<TenantModel>, NotFound, ProblemHttpResult>> TenantFindOne([FromServices] IMediator mediator, [FromServices] IMapper mapper, [FromRoute] string id)
+    private static async Task<Results<Ok<TenantModel>, NotFound, ProblemHttpResult>> TenantFindOne(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string id)
     {
-        var result = (await mediator.Send(
-            new TenantFindOneQuery(id))).Result;
+        var result = (await mediator.Send(new TenantFindOneQuery(id))).Result;
 
         return result.Value == null ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok(mapper.Map<Tenant, TenantModel>(result.Value)) : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            result.IsSuccess ? TypedResults.Ok(mapper.Map<Tenant, TenantModel>(result.Value)) :
+            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<IEnumerable<TenantModel>>, ProblemHttpResult>> TenantFindAll([FromServices] IMediator mediator, [FromServices] IMapper mapper)
+    private static async Task<Results<Ok<IEnumerable<TenantModel>>, ProblemHttpResult>>
+        TenantFindAll([FromServices] IMediator mediator, [FromServices] IMapper mapper)
     {
-        var result = (await mediator.Send(
-            new TenantFindAllQuery())).Result;
+        var result = (await mediator.Send(new TenantFindAllQuery())).Result;
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantModel>>(result.Value))
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Created<TenantModel>, ProblemHttpResult>> TenantCreate([FromServices] IMediator mediator, [FromServices] IMapper mapper,
+    private static async Task<Results<Created<TenantModel>, ProblemHttpResult>> TenantCreate(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
         [FromBody] TenantModel model)
     {
-        var result = (await mediator.Send(
-            new TenantCreateCommand(model))).Result;
+        var result = (await mediator.Send(new TenantCreateCommand(model))).Result;
 
         return result.IsSuccess
-            ? TypedResults.Created($"api/tenants/{result.Value.Id}", mapper.Map<Tenant, TenantModel>(result.Value))
+            ? TypedResults.Created(
+                $"api/tenants/{result.Value.Id}",
+                mapper.Map<Tenant, TenantModel>(result.Value))
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 }

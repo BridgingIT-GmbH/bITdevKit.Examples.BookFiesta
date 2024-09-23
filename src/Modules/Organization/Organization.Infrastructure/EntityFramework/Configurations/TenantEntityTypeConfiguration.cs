@@ -5,14 +5,14 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 
-using BridgingIT.DevKit.Domain.Model;
+using DevKit.Infrastructure.EntityFramework;
 using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SharedKernel.Domain;
 
-public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, IEntityTypeConfiguration<TenantBranding>
+public class TenantEntityTypeConfiguration
+    : IEntityTypeConfiguration<Tenant>, IEntityTypeConfiguration<TenantBranding>
 {
     public void Configure(EntityTypeBuilder<Tenant> builder)
     {
@@ -45,18 +45,21 @@ public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, I
         builder.Property(e => e.Description)
             .IsRequired(false);
 
-        builder.OwnsOne(e => e.ContactEmail,
+        builder.OwnsOne(
+            e => e.ContactEmail,
             b =>
             {
                 b.Property(e => e.Value)
                     .HasColumnName(nameof(Tenant.ContactEmail))
-                    .IsRequired(true)
+                    .IsRequired()
                     .HasMaxLength(256);
             });
         builder.Navigation(e => e.ContactEmail)
             .IsRequired();
 
-        builder.HasOne<Company>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
+        builder
+            .HasOne<
+                Company>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
             .WithMany()
             .HasForeignKey(e => e.CompanyId)
             .IsRequired();
@@ -67,7 +70,8 @@ public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, I
 
     private static void ConfigureTenantSubscriptions(EntityTypeBuilder<Tenant> builder)
     {
-        builder.OwnsMany(e => e.Subscriptions,
+        builder.OwnsMany(
+            e => e.Subscriptions,
             b =>
             {
                 b.ToTable("TenantSubscriptions")
@@ -104,7 +108,8 @@ public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, I
                         new EnumerationConverter<TenantSubscriptionBillingCycle>())
                     .IsRequired();
 
-                b.OwnsOne(e => e.Schedule,
+                b.OwnsOne(
+                    e => e.Schedule,
                     b =>
                     {
                         b.Property(e => e.StartDate)
@@ -137,7 +142,8 @@ public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, I
             .HasForeignKey<TenantBranding>(e => e.TenantId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.OwnsOne(e => e.PrimaryColor,
+        builder.OwnsOne(
+            e => e.PrimaryColor,
             b =>
             {
                 b.Property(e => e.Value)
@@ -148,7 +154,8 @@ public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, I
         builder.Navigation(e => e.PrimaryColor)
             .IsRequired();
 
-        builder.OwnsOne(e => e.SecondaryColor,
+        builder.OwnsOne(
+            e => e.SecondaryColor,
             b =>
             {
                 b.Property(e => e.Value)
@@ -159,7 +166,8 @@ public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, I
         builder.Navigation(e => e.SecondaryColor)
             .IsRequired();
 
-        builder.OwnsOne(e => e.LogoUrl,
+        builder.OwnsOne(
+            e => e.LogoUrl,
             b =>
             {
                 b.Property(e => e.Value)
@@ -170,7 +178,8 @@ public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, I
         builder.Navigation(e => e.LogoUrl)
             .IsRequired();
 
-        builder.OwnsOne(e => e.FaviconUrl,
+        builder.OwnsOne(
+            e => e.FaviconUrl,
             b =>
             {
                 b.Property(e => e.Value)

@@ -5,18 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using System.Collections.Generic;
-using BridgingIT.DevKit.Application.Queries;
-using Common;
-using Domain;
-using FluentValidation;
-
 public class TenantFindAllQuery : QueryRequestBase<Result<IEnumerable<Tenant>>>
 {
     public string CompanyId { get; set; }
 
-    public class Validator : AbstractValidator<TenantFindAllQuery>
-    {
-        public Validator() { }
-    }
+    public class Validator : AbstractValidator<TenantFindAllQuery> { }
 }

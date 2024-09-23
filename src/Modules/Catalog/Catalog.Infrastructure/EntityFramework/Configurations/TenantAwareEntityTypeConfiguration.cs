@@ -5,12 +5,13 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
-using BridgingIT.DevKit.Domain.Model;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using DevKit.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SharedKernel.Domain;
 
-public abstract class TenantAwareEntityTypeConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
+public abstract class TenantAwareEntityTypeConfiguration<TEntity>
+    : IEntityTypeConfiguration<TEntity>
     where TEntity : class, IEntity
 {
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)

@@ -25,7 +25,7 @@ public class Tag : Entity<TagId>, IConcurrent
     public string Category { get; private set; }
 
     /// <summary>
-    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    ///     Gets or sets the concurrency token to handle optimistic concurrency.
     /// </summary>
     public Guid Version { get; set; }
 

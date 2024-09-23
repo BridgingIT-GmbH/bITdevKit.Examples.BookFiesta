@@ -5,13 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 
-using System;
-using Xunit;
-using Shouldly;
-using NSubstitute;
 using Bogus;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using BridgingIT.DevKit.Domain;
+using DevKit.Domain;
+using SharedKernel.Domain;
 
 [UnitTest("SharedKernel:Domain")]
 public class UrlTests
@@ -140,6 +136,7 @@ public class UrlTests
 
         // Act & Assert
         Should.Throw<ArgumentException>(() => sut.ToAbsolute(string.Empty))
-            .Message.ShouldBe("Base URL is required for converting relative or local URLs to absolute. (Parameter 'value')");
+            .Message.ShouldBe(
+                "Base URL is required for converting relative or local URLs to absolute. (Parameter 'value')");
     }
 }

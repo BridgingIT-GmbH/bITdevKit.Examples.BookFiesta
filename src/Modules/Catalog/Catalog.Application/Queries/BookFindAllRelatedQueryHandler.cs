@@ -5,17 +5,15 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using Common;
-using DevKit.Application.Queries;
-using DevKit.Domain;
-using DevKit.Domain.Repositories;
-using Domain;
-using Microsoft.Extensions.Logging;
-
-public class BookFindAllRelatedQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Book> repository, ICatalogQueryService recommendationService)
+public class BookFindAllRelatedQueryHandler(
+    ILoggerFactory loggerFactory,
+    IGenericRepository<Book> repository,
+    ICatalogQueryService recommendationService)
     : QueryHandlerBase<BookFindAllRelatedQuery, Result<IEnumerable<Book>>>(loggerFactory)
 {
-    public override async Task<QueryResponse<Result<IEnumerable<Book>>>> Process(BookFindAllRelatedQuery query, CancellationToken cancellationToken)
+    public override async Task<QueryResponse<Result<IEnumerable<Book>>>> Process(
+        BookFindAllRelatedQuery query,
+        CancellationToken cancellationToken)
     {
         var bookId = BookId.Create(query.BookId);
         var result = await repository.FindOneResultAsync(bookId, cancellationToken: cancellationToken)

@@ -5,12 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Model;
-
 [DebuggerDisplay("Code={Code}")]
 public class Currency : ValueObject
 {
@@ -140,228 +134,337 @@ public class Currency : ValueObject
         this.Code = code;
     }
 
-    public static Currency AlbaniaLek => Create("ALL");
+    public static Currency AlbaniaLek
+        => Create("ALL");
 
-    public static Currency AfghanistanAfghani => Create("AFN");
+    public static Currency AfghanistanAfghani
+        => Create("AFN");
 
-    public static Currency ArgentinaPeso => Create("ARS");
+    public static Currency ArgentinaPeso
+        => Create("ARS");
 
-    public static Currency ArubaGuilder => Create("AWG");
+    public static Currency ArubaGuilder
+        => Create("AWG");
 
-    public static Currency AustraliaDollar => Create("AUD");
+    public static Currency AustraliaDollar
+        => Create("AUD");
 
-    public static Currency AzerbaijanManat => Create("AZN");
+    public static Currency AzerbaijanManat
+        => Create("AZN");
 
-    public static Currency BahamasDollar => Create("BSD");
+    public static Currency BahamasDollar
+        => Create("BSD");
 
-    public static Currency BarbadosDollar => Create("BBD");
+    public static Currency BarbadosDollar
+        => Create("BBD");
 
-    public static Currency BelarusRuble => Create("BYN");
+    public static Currency BelarusRuble
+        => Create("BYN");
 
-    public static Currency BelizeDollar => Create("BZD");
+    public static Currency BelizeDollar
+        => Create("BZD");
 
-    public static Currency BermudaDollar => Create("BMD");
+    public static Currency BermudaDollar
+        => Create("BMD");
 
-    public static Currency BoliviaBolíviano => Create("BOB");
+    public static Currency BoliviaBolíviano
+        => Create("BOB");
 
-    public static Currency BosniaandHerzegovinaMark => Create("BAM");
+    public static Currency BosniaandHerzegovinaMark
+        => Create("BAM");
 
-    public static Currency BotswanaPula => Create("BWP");
+    public static Currency BotswanaPula
+        => Create("BWP");
 
-    public static Currency BulgariaLev => Create("BGN");
+    public static Currency BulgariaLev
+        => Create("BGN");
 
-    public static Currency BrazilReal => Create("BRL");
+    public static Currency BrazilReal
+        => Create("BRL");
 
-    public static Currency BruneiDarussalamDollar => Create("BND");
+    public static Currency BruneiDarussalamDollar
+        => Create("BND");
 
-    public static Currency CambodiaRiel => Create("KHR");
+    public static Currency CambodiaRiel
+        => Create("KHR");
 
-    public static Currency CanadaDollar => Create("CAD");
+    public static Currency CanadaDollar
+        => Create("CAD");
 
-    public static Currency CaymanIslandsDollar => Create("KYD");
+    public static Currency CaymanIslandsDollar
+        => Create("KYD");
 
-    public static Currency ChilePeso => Create("CLP");
+    public static Currency ChilePeso
+        => Create("CLP");
 
-    public static Currency ChinaYuanRenminbi => Create("CNY");
+    public static Currency ChinaYuanRenminbi
+        => Create("CNY");
 
-    public static Currency ColombiaPeso => Create("COP");
+    public static Currency ColombiaPeso
+        => Create("COP");
 
-    public static Currency CostaRicaColon => Create("CRC");
+    public static Currency CostaRicaColon
+        => Create("CRC");
 
-    public static Currency CroatiaKuna => Create("HRK");
+    public static Currency CroatiaKuna
+        => Create("HRK");
 
-    public static Currency CubaPeso => Create("CUP");
+    public static Currency CubaPeso
+        => Create("CUP");
 
-    public static Currency CzechRepublicKoruna => Create("CZK");
+    public static Currency CzechRepublicKoruna
+        => Create("CZK");
 
-    public static Currency DenmarkKrone => Create("DKK");
+    public static Currency DenmarkKrone
+        => Create("DKK");
 
-    public static Currency DominicanRepublicPeso => Create("DOP");
+    public static Currency DominicanRepublicPeso
+        => Create("DOP");
 
-    public static Currency EastCaribbeanDollar => Create("XCD");
+    public static Currency EastCaribbeanDollar
+        => Create("XCD");
 
-    public static Currency EgyptPound => Create("EGP");
+    public static Currency EgyptPound
+        => Create("EGP");
 
-    public static Currency ElSalvadorColon => Create("SVC");
+    public static Currency ElSalvadorColon
+        => Create("SVC");
 
-    public static Currency Euro => Create("EUR");
+    public static Currency Euro
+        => Create("EUR");
 
-    public static Currency FalklandIslands => Create("FKP");
+    public static Currency FalklandIslands
+        => Create("FKP");
 
-    public static Currency FijiDollar => Create("FJD");
+    public static Currency FijiDollar
+        => Create("FJD");
 
-    public static Currency GhanaCedi => Create("GHS");
+    public static Currency GhanaCedi
+        => Create("GHS");
 
-    public static Currency GibraltarPound => Create("GIP");
+    public static Currency GibraltarPound
+        => Create("GIP");
 
-    public static Currency GuatemalaQuetzal => Create("GTQ");
+    public static Currency GuatemalaQuetzal
+        => Create("GTQ");
 
-    public static Currency GuernseyPound => Create("GGP");
+    public static Currency GuernseyPound
+        => Create("GGP");
 
-    public static Currency GuyanaDollar => Create("GYD");
+    public static Currency GuyanaDollar
+        => Create("GYD");
 
-    public static Currency HondurasLempira => Create("HNL");
+    public static Currency HondurasLempira
+        => Create("HNL");
 
-    public static Currency HongKongDollar => Create("HKD");
+    public static Currency HongKongDollar
+        => Create("HKD");
 
-    public static Currency HungaryForint => Create("HUF");
+    public static Currency HungaryForint
+        => Create("HUF");
 
-    public static Currency IcelandKrona => Create("ISK");
+    public static Currency IcelandKrona
+        => Create("ISK");
 
-    public static Currency IndiaRupee => Create("INR");
+    public static Currency IndiaRupee
+        => Create("INR");
 
-    public static Currency IndonesiaRupiah => Create("IDR");
+    public static Currency IndonesiaRupiah
+        => Create("IDR");
 
-    public static Currency IranRial => Create("IRR");
+    public static Currency IranRial
+        => Create("IRR");
 
-    public static Currency IsleofManPound => Create("IMP");
+    public static Currency IsleofManPound
+        => Create("IMP");
 
-    public static Currency IsraelShekel => Create("ILS");
+    public static Currency IsraelShekel
+        => Create("ILS");
 
-    public static Currency JamaicaDollar => Create("JMD");
+    public static Currency JamaicaDollar
+        => Create("JMD");
 
-    public static Currency JapanYen => Create("JPY");
+    public static Currency JapanYen
+        => Create("JPY");
 
-    public static Currency JerseyPound => Create("JEP");
+    public static Currency JerseyPound
+        => Create("JEP");
 
-    public static Currency KazakhstanTenge => Create("KZT");
+    public static Currency KazakhstanTenge
+        => Create("KZT");
 
-    public static Currency KoreaNorth => Create("KPW");
+    public static Currency KoreaNorth
+        => Create("KPW");
 
-    public static Currency KoreaSouth => Create("KRW");
+    public static Currency KoreaSouth
+        => Create("KRW");
 
-    public static Currency KyrgyzstanSom => Create("KGS");
+    public static Currency KyrgyzstanSom
+        => Create("KGS");
 
-    public static Currency LaosKip => Create("LAK");
+    public static Currency LaosKip
+        => Create("LAK");
 
-    public static Currency LebanonPound => Create("LBP");
+    public static Currency LebanonPound
+        => Create("LBP");
 
-    public static Currency LiberiaDollar => Create("LRD");
+    public static Currency LiberiaDollar
+        => Create("LRD");
 
-    public static Currency MacedoniaDenar => Create("MKD");
+    public static Currency MacedoniaDenar
+        => Create("MKD");
 
-    public static Currency MalaysiaRinggit => Create("MYR");
+    public static Currency MalaysiaRinggit
+        => Create("MYR");
 
-    public static Currency MauritiusRupee => Create("MUR");
+    public static Currency MauritiusRupee
+        => Create("MUR");
 
-    public static Currency MexicoPeso => Create("MXN");
+    public static Currency MexicoPeso
+        => Create("MXN");
 
-    public static Currency MongoliaTughrik => Create("MNT");
+    public static Currency MongoliaTughrik
+        => Create("MNT");
 
-    public static Currency MozambiqueMetical => Create("MZN");
+    public static Currency MozambiqueMetical
+        => Create("MZN");
 
-    public static Currency NamibiaDollar => Create("NAD");
+    public static Currency NamibiaDollar
+        => Create("NAD");
 
-    public static Currency NepalRupee => Create("NPR");
+    public static Currency NepalRupee
+        => Create("NPR");
 
-    public static Currency NetherlandsAntillesGuilder => Create("ANG");
+    public static Currency NetherlandsAntillesGuilder
+        => Create("ANG");
 
-    public static Currency NewZealandDollar => Create("NZD");
+    public static Currency NewZealandDollar
+        => Create("NZD");
 
-    public static Currency NicaraguaCordoba => Create("NIO");
+    public static Currency NicaraguaCordoba
+        => Create("NIO");
 
-    public static Currency NigeriaNaira => Create("NGN");
+    public static Currency NigeriaNaira
+        => Create("NGN");
 
-    public static Currency NorwayKrone => Create("NOK");
+    public static Currency NorwayKrone
+        => Create("NOK");
 
-    public static Currency OmanRial => Create("OMR");
+    public static Currency OmanRial
+        => Create("OMR");
 
-    public static Currency PakistanRupee => Create("PKR");
+    public static Currency PakistanRupee
+        => Create("PKR");
 
-    public static Currency PanamaBalboa => Create("PAB");
+    public static Currency PanamaBalboa
+        => Create("PAB");
 
-    public static Currency ParaguayGuarani => Create("PYG");
+    public static Currency ParaguayGuarani
+        => Create("PYG");
 
-    public static Currency PeruSol => Create("PEN");
+    public static Currency PeruSol
+        => Create("PEN");
 
-    public static Currency PhilippinesPeso => Create("PHP");
+    public static Currency PhilippinesPeso
+        => Create("PHP");
 
-    public static Currency PolandZloty => Create("PLN");
+    public static Currency PolandZloty
+        => Create("PLN");
 
-    public static Currency QatarRiyal => Create("QAR");
+    public static Currency QatarRiyal
+        => Create("QAR");
 
-    public static Currency RomaniaLeu => Create("RON");
+    public static Currency RomaniaLeu
+        => Create("RON");
 
-    public static Currency RussiaRuble => Create("RUB");
+    public static Currency RussiaRuble
+        => Create("RUB");
 
-    public static Currency SaintHelenaPound => Create("SHP");
+    public static Currency SaintHelenaPound
+        => Create("SHP");
 
-    public static Currency SaudiArabiaRiyal => Create("SAR");
+    public static Currency SaudiArabiaRiyal
+        => Create("SAR");
 
-    public static Currency SerbiaDinar => Create("RSD");
+    public static Currency SerbiaDinar
+        => Create("RSD");
 
-    public static Currency SeychellesRupee => Create("SCR");
+    public static Currency SeychellesRupee
+        => Create("SCR");
 
-    public static Currency SingaporeDollar => Create("SGD");
+    public static Currency SingaporeDollar
+        => Create("SGD");
 
-    public static Currency SolomonIslandsDollar => Create("SBD");
+    public static Currency SolomonIslandsDollar
+        => Create("SBD");
 
-    public static Currency SomaliaShilling => Create("SOS");
+    public static Currency SomaliaShilling
+        => Create("SOS");
 
-    public static Currency SouthAfricaRand => Create("ZAR");
+    public static Currency SouthAfricaRand
+        => Create("ZAR");
 
-    public static Currency SriLankaRupee => Create("LKR");
+    public static Currency SriLankaRupee
+        => Create("LKR");
 
-    public static Currency SwedenKrona => Create("SEK");
+    public static Currency SwedenKrona
+        => Create("SEK");
 
-    public static Currency SwitzerlandFranc => Create("CHF");
+    public static Currency SwitzerlandFranc
+        => Create("CHF");
 
-    public static Currency SurinameDollar => Create("SRD");
+    public static Currency SurinameDollar
+        => Create("SRD");
 
-    public static Currency SyriaPound => Create("SYP");
+    public static Currency SyriaPound
+        => Create("SYP");
 
-    public static Currency TaiwanNewDollar => Create("TWD");
+    public static Currency TaiwanNewDollar
+        => Create("TWD");
 
-    public static Currency ThailandBaht => Create("THB");
+    public static Currency ThailandBaht
+        => Create("THB");
 
-    public static Currency TrinidadandTobagoDollar => Create("TTD");
+    public static Currency TrinidadandTobagoDollar
+        => Create("TTD");
 
-    public static Currency TurkeyLira => Create("TRY");
+    public static Currency TurkeyLira
+        => Create("TRY");
 
-    public static Currency TuvaluDollar => Create("TVD");
+    public static Currency TuvaluDollar
+        => Create("TVD");
 
-    public static Currency UkraineHryvnia => Create("UAH");
+    public static Currency UkraineHryvnia
+        => Create("UAH");
 
-    public static Currency GBPound => Create("GBP");
+    public static Currency GBPound
+        => Create("GBP");
 
-    public static Currency USDollar => Create("USD");
+    public static Currency USDollar
+        => Create("USD");
 
-    public static Currency UruguayPeso => Create("UYU");
+    public static Currency UruguayPeso
+        => Create("UYU");
 
-    public static Currency UzbekistanSom => Create("UZS");
+    public static Currency UzbekistanSom
+        => Create("UZS");
 
-    public static Currency VenezuelaBolivar => Create("VEF");
+    public static Currency VenezuelaBolivar
+        => Create("VEF");
 
-    public static Currency VietNamDong => Create("VND");
+    public static Currency VietNamDong
+        => Create("VND");
 
-    public static Currency YemenRial => Create("YER");
+    public static Currency YemenRial
+        => Create("YER");
 
-    public static Currency ZimbabweDollar => Create("ZWD");
+    public static Currency ZimbabweDollar
+        => Create("ZWD");
 
     public string Code { get; private set; }
 
-    public string Symbol =>
-        Currencies.First(c => c.Key == this.Code)
+    public string Symbol
+        => Currencies.First(c => c.Key == this.Code)
             .Value;
 
     public static implicit operator string(Currency currency)

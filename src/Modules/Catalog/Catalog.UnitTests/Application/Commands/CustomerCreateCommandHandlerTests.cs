@@ -5,11 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Application;
 
-using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using DevKit.Domain.Repositories;
+using Modules.Catalog.Application;
+using Modules.Catalog.Domain;
+using SharedKernel.Application;
+using SharedKernel.Domain;
 
 [UnitTest("Catalog:Application")]
 public class CustomerCreateCommandHandlerTests
@@ -19,12 +19,21 @@ public class CustomerCreateCommandHandlerTests
     {
         // Arrange
         var repository = Substitute.For<IGenericRepository<Customer>>();
-        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        TenantId[] tenantIds =
+        [
+            TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")
+        ];
         var customer = CatalogSeedEntities.Customers.Create(tenantIds, DateTime.UtcNow.Ticks)[0];
         var model = new CustomerModel
         {
             TenantId = customer.TenantId,
-            PersonName = new PersonFormalNameModel { Parts = customer.PersonName.Parts.ToArray(), Title = customer.PersonName.Title, Suffix = customer.PersonName.Suffix },
+            PersonName =
+                new PersonFormalNameModel
+                {
+                    Parts = customer.PersonName.Parts.ToArray(),
+                    Title = customer.PersonName.Title,
+                    Suffix = customer.PersonName.Suffix
+                },
             Email = customer.Email,
             Address = new AddressModel
             {

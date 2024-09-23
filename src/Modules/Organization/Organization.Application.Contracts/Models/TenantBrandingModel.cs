@@ -9,15 +9,15 @@ public class TenantBrandingModel
 {
     public string Id { get; set; }
 
-    public string TenantId { get; private set; }
+    public string TenantId { get; }
 
-    public string PrimaryColor { get; private set; }
+    public string PrimaryColor { get; }
 
-    public string SecondaryColor { get; private set; }
+    public string SecondaryColor { get; }
 
-    public string LogoUrl { get; private set; }
+    public string LogoUrl { get; }
 
-    public string FaviconUrl { get; private set; }
+    public string FaviconUrl { get; }
 
-    public string CustomCss { get; private set; }
+    public string CustomCss { get; }
 }

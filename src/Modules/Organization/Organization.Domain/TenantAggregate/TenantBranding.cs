@@ -11,7 +11,11 @@ public class TenantBranding : Entity<TenantBrandingId>
 {
     private TenantBranding() { } // Private constructor required by EF Core
 
-    private TenantBranding(HexColor primaryColor = null, HexColor secondaryColor = null, Url logoUrl = null, Url faviconUrl = null)
+    private TenantBranding(
+        HexColor primaryColor = null,
+        HexColor secondaryColor = null,
+        Url logoUrl = null,
+        Url faviconUrl = null)
     {
         this.SetPrimaryColor(primaryColor);
         this.SetSecondaryColor(secondaryColor);
@@ -31,7 +35,11 @@ public class TenantBranding : Entity<TenantBrandingId>
 
     public string CustomCss { get; private set; }
 
-    public static TenantBranding Create(HexColor primaryColor = null, HexColor secondaryColor = null, Url logoUrl = null, Url faviconUrl = null)
+    public static TenantBranding Create(
+        HexColor primaryColor = null,
+        HexColor secondaryColor = null,
+        Url logoUrl = null,
+        Url faviconUrl = null)
     {
         return new TenantBranding(primaryColor, secondaryColor, logoUrl, faviconUrl);
     }

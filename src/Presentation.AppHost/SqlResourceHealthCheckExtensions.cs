@@ -1,45 +1,55 @@
 ﻿namespace Aspire.Hosting;
 
-using ApplicationModel;
 using HealthChecks.SqlServer;
 
 public static class SqlResourceHealthCheckExtensions
 {
     /// <summary>
-    /// Adds a health check to the SQL Server resource.
+    ///     Adds a health check to the SQL Server resource.
     /// </summary>
-    public static IResourceBuilder<SqlServerServerResource> WithHealthCheck(this IResourceBuilder<SqlServerServerResource> builder)
+    public static IResourceBuilder<SqlServerServerResource> WithHealthCheck(
+        this IResourceBuilder<SqlServerServerResource> builder)
     {
         return builder.WithSqlHealthCheck(cs => new SqlServerHealthCheckOptions { ConnectionString = cs });
     }
 
     /// <summary>
-    /// Adds a health check to the SQL Server database resource.
+    ///     Adds a health check to the SQL Server database resource.
     /// </summary>
-    public static IResourceBuilder<SqlServerDatabaseResource> WithHealthCheck(this IResourceBuilder<SqlServerDatabaseResource> builder)
+    public static IResourceBuilder<SqlServerDatabaseResource> WithHealthCheck(
+        this IResourceBuilder<SqlServerDatabaseResource> builder)
     {
         return builder.WithSqlHealthCheck(cs => new SqlServerHealthCheckOptions { ConnectionString = cs });
     }
 
     /// <summary>
-    /// Adds a health check to the SQL Server resource with a specific query.
+    ///     Adds a health check to the SQL Server resource with a specific query.
     /// </summary>
-    public static IResourceBuilder<SqlServerServerResource> WithHealthCheck(this IResourceBuilder<SqlServerServerResource> builder, string query)
+    public static IResourceBuilder<SqlServerServerResource> WithHealthCheck(
+        this IResourceBuilder<SqlServerServerResource> builder,
+        string query)
     {
-        return builder.WithSqlHealthCheck(cs => new SqlServerHealthCheckOptions { ConnectionString = cs, CommandText = query });
+        return builder.WithSqlHealthCheck(
+            cs => new SqlServerHealthCheckOptions { ConnectionString = cs, CommandText = query });
     }
 
     /// <summary>
-    /// Adds a health check to the SQL Server database resource  with a specific query.
+    ///     Adds a health check to the SQL Server database resource  with a specific query.
     /// </summary>
-    public static IResourceBuilder<SqlServerDatabaseResource> WithHealthCheck(this IResourceBuilder<SqlServerDatabaseResource> builder, string query)
+    public static IResourceBuilder<SqlServerDatabaseResource> WithHealthCheck(
+        this IResourceBuilder<SqlServerDatabaseResource> builder,
+        string query)
     {
-        return builder.WithSqlHealthCheck(cs => new SqlServerHealthCheckOptions { ConnectionString = cs, CommandText = query });
+        return builder.WithSqlHealthCheck(
+            cs => new SqlServerHealthCheckOptions { ConnectionString = cs, CommandText = query });
     }
 
-    private static IResourceBuilder<T> WithSqlHealthCheck<T>(this IResourceBuilder<T> builder, Func<string, SqlServerHealthCheckOptions> healthCheckOptionsFactory)
+    private static IResourceBuilder<T> WithSqlHealthCheck<T>(
+        this IResourceBuilder<T> builder,
+        Func<string, SqlServerHealthCheckOptions> healthCheckOptionsFactory)
         where T : IResource
     {
-        return builder.WithAnnotation(HealthCheckAnnotation.Create(cs => new SqlServerHealthCheck(healthCheckOptionsFactory(cs))));
+        return builder.WithAnnotation(
+            HealthCheckAnnotation.Create(cs => new SqlServerHealthCheck(healthCheckOptionsFactory(cs))));
     }
 }

@@ -5,11 +5,14 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
+using DevKit.Infrastructure.EntityFramework;
 using Domain;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
-public class CatalogDbContext(DbContextOptions<CatalogDbContext> options) : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext, IOutboxMessageContext
+public class CatalogDbContext(
+    DbContextOptions<CatalogDbContext> options)
+    : ModuleDbContextBase(options), IDocumentStoreContext, IOutboxDomainEventContext,
+        IOutboxMessageContext
 {
     public DbSet<Book> Books { get; set; }
 

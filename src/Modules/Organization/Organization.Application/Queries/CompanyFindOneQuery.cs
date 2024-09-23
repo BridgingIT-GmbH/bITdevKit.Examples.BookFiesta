@@ -5,13 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using BridgingIT.DevKit.Application.Queries;
-using Common;
-using Domain;
-using FluentValidation;
-using FluentValidation.Results;
-
-public class CompanyFindOneQuery(string companyId) : QueryRequestBase<Result<Company>>
+public class CompanyFindOneQuery(
+    string companyId) : QueryRequestBase<Result<Company>>
 {
     public string CompanyId { get; } = companyId;
 

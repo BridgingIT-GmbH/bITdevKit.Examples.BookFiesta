@@ -5,7 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-public class TenantReassignedCompanyDomainEvent(Tenant tenant) : DomainEventBase
+public class TenantReassignedCompanyDomainEvent(
+    Tenant tenant) : DomainEventBase
 {
     public TenantId TenantId { get; } = tenant.Id;
 

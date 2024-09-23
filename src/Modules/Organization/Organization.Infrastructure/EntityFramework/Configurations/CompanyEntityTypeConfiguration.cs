@@ -5,8 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 
+using DevKit.Infrastructure.EntityFramework;
 using Domain;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -34,7 +34,8 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<Company>
             .IsRequired()
             .HasMaxLength(512);
 
-        builder.OwnsOne(e => e.Address,
+        builder.OwnsOne(
+            e => e.Address,
             b =>
             {
                 b.Property(e => e.Name)
@@ -67,18 +68,20 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<Company>
             .IsRequired()
             .HasMaxLength(128);
 
-        builder.OwnsOne(e => e.ContactEmail,
+        builder.OwnsOne(
+            e => e.ContactEmail,
             b =>
             {
                 b.Property(e => e.Value)
                     .HasColumnName(nameof(Company.ContactEmail))
-                    .IsRequired(true)
+                    .IsRequired()
                     .HasMaxLength(256);
             });
         builder.Navigation(e => e.ContactEmail)
             .IsRequired();
 
-        builder.OwnsOne(e => e.ContactPhone,
+        builder.OwnsOne(
+            e => e.ContactPhone,
             b =>
             {
                 b.Property(e => e.CountryCode)
@@ -92,7 +95,8 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<Company>
         builder.Navigation(e => e.ContactPhone)
             .IsRequired();
 
-        builder.OwnsOne(e => e.Website,
+        builder.OwnsOne(
+            e => e.Website,
             b =>
             {
                 b.Property(e => e.Value)
@@ -103,7 +107,8 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<Company>
         builder.Navigation(e => e.Website)
             .IsRequired();
 
-        builder.OwnsOne(e => e.VatNumber,
+        builder.OwnsOne(
+            e => e.VatNumber,
             b =>
             {
                 b.Property(e => e.CountryCode)

@@ -1,11 +1,8 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 
-using System;
-using Xunit;
-using Shouldly;
 using Bogus;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using BridgingIT.DevKit.Domain;
+using DevKit.Domain;
+using SharedKernel.Domain;
 
 [UnitTest("SharedKernel:Domain")]
 public class WebsiteTests

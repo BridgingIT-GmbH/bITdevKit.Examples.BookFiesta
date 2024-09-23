@@ -6,13 +6,13 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 using System.Text.RegularExpressions;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Value={Value}")]
 public class HexColor : ValueObject
 {
-    private static readonly Regex HexColorRegex = new(@"^#(?:[0-9a-fA-F]{3}){1,2}$", RegexOptions.Compiled);
+    private static readonly Regex HexColorRegex = new(
+        @"^#(?:[0-9a-fA-F]{3}){1,2}$",
+        RegexOptions.Compiled);
 
     private HexColor() { } // Private constructor required by EF Core
 
@@ -62,7 +62,8 @@ public class HexColor : ValueObject
     public (byte R, byte G, byte B) ToRgb()
     {
         var hex = this.Value.TrimStart('#');
-        return (Convert.ToByte(hex.Substring(0, 2), 16), Convert.ToByte(hex.Substring(2, 2), 16), Convert.ToByte(hex.Substring(4, 2), 16));
+        return (Convert.ToByte(hex.Substring(0, 2), 16), Convert.ToByte(hex.Substring(2, 2), 16),
+            Convert.ToByte(hex.Substring(4, 2), 16));
     }
 
     protected override IEnumerable<object> GetAtomicValues()

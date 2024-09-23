@@ -5,22 +5,20 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using System.Threading;
-using System.Threading.Tasks;
-using BridgingIT.DevKit.Application.Commands;
-using Common;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Repositories;
-using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using Microsoft.Extensions.Logging;
-
-public class TenantCreateCommandHandler(ILoggerFactory loggerFactory, IMapper mapper, IGenericRepository<Tenant> tenantRepository, IGenericRepository<Company> companyRepository)
+public class TenantCreateCommandHandler(
+    ILoggerFactory loggerFactory,
+    IMapper mapper,
+    IGenericRepository<Tenant> tenantRepository,
+    IGenericRepository<Company> companyRepository)
     : CommandHandlerBase<TenantCreateCommand, Result<Tenant>>(loggerFactory)
 {
-    public override async Task<CommandResponse<Result<Tenant>>> Process(TenantCreateCommand command, CancellationToken cancellationToken)
+    public override async Task<CommandResponse<Result<Tenant>>> Process(
+        TenantCreateCommand command,
+        CancellationToken cancellationToken)
     {
-        var companyResult = await companyRepository.FindOneResultAsync(CompanyId.Create(command.Model.CompanyId), cancellationToken: cancellationToken);
+        var companyResult = await companyRepository.FindOneResultAsync(
+            CompanyId.Create(command.Model.CompanyId),
+            cancellationToken: cancellationToken);
 
         if (companyResult.IsFailure)
         {
@@ -32,8 +30,7 @@ public class TenantCreateCommandHandler(ILoggerFactory loggerFactory, IMapper ma
 
         await DomainRules.ApplyAsync([TenantRules.NameMustBeUnique(tenantRepository, tenant)], cancellationToken);
 
-        await tenantRepository.InsertAsync(tenant, cancellationToken)
-            .AnyContext();
+        await tenantRepository.InsertAsync(tenant, cancellationToken).AnyContext();
 
         return CommandResponse.Success(tenant);
     }

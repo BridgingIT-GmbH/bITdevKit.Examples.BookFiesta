@@ -20,18 +20,20 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
         this.SetBiography(biography);
     }
 
-    public TenantId TenantId { get; private set; }
+    public TenantId TenantId { get; }
 
     public PersonFormalName PersonName { get; private set; }
 
     public string Biography { get; private set; }
 
-    public IEnumerable<AuthorBook> Books => this.books;
+    public IEnumerable<AuthorBook> Books
+        => this.books;
 
-    public IEnumerable<Tag> Tags => this.tags.OrderBy(e => e.Name);
+    public IEnumerable<Tag> Tags
+        => this.tags.OrderBy(e => e.Name);
 
     /// <summary>
-    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    ///     Gets or sets the concurrency token to handle optimistic concurrency.
     /// </summary>
     public Guid Version { get; set; }
 

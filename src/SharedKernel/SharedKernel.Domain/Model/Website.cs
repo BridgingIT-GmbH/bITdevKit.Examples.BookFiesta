@@ -6,8 +6,6 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 using System.Text.RegularExpressions;
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Model;
 
 [DebuggerDisplay("Value={Value}")]
 public partial class Website : ValueObject
@@ -72,6 +70,9 @@ public partial class Website : ValueObject
         return "https://" + value;
     }
 
-    [GeneratedRegex(@"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$", RegexOptions.IgnoreCase, "en-US")]
+    [GeneratedRegex(
+        @"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$",
+        RegexOptions.IgnoreCase,
+        "en-US")]
     private static partial Regex IsValidRegex();
 }

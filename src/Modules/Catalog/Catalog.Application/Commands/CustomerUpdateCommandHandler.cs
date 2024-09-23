@@ -5,21 +5,20 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using Common;
-using DevKit.Application.Commands;
-using DevKit.Domain;
-using DevKit.Domain.Repositories;
-using Domain;
-using Microsoft.Extensions.Logging;
-using SharedKernel.Domain;
-
-public class CustomerUpdateCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
+public class CustomerUpdateCommandHandler(
+    ILoggerFactory loggerFactory,
+    IGenericRepository<Customer> repository)
     : CommandHandlerBase<CustomerUpdateCommand, Result<Customer>>(loggerFactory)
 {
-    public override async Task<CommandResponse<Result<Customer>>> Process(CustomerUpdateCommand command, CancellationToken cancellationToken)
+    public override async Task<CommandResponse<Result<Customer>>> Process(
+        CustomerUpdateCommand command,
+        CancellationToken cancellationToken)
     {
-        var tenantId = TenantId.Create(command.TenantId); // TODO: use in findone query or check later > notfoundexception
-        var customerResult = await repository.FindOneResultAsync(CustomerId.Create(command.Model.Id), cancellationToken: cancellationToken);
+        var tenantId =
+            TenantId.Create(command.TenantId); // TODO: use in findone query or check later > notfoundexception
+        var customerResult = await repository.FindOneResultAsync(
+            CustomerId.Create(command.Model.Id),
+            cancellationToken: cancellationToken);
 
         if (customerResult.IsFailure)
         {
@@ -28,7 +27,11 @@ public class CustomerUpdateCommandHandler(ILoggerFactory loggerFactory, IGeneric
 
         DomainRules.Apply([]);
 
-        customerResult.Value.SetName(PersonFormalName.Create(command.Model.PersonName.Parts, command.Model.PersonName.Title, command.Model.PersonName.Suffix));
+        customerResult.Value.SetName(
+            PersonFormalName.Create(
+                command.Model.PersonName.Parts,
+                command.Model.PersonName.Title,
+                command.Model.PersonName.Suffix));
         customerResult.Value.SetAddress(
             Address.Create(
                 command.Model.Address.Name,

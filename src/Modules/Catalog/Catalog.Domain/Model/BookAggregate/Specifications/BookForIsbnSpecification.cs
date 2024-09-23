@@ -1,9 +1,10 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
-using BridgingIT.DevKit.Domain.Specifications;
 using System.Linq.Expressions;
+using DevKit.Domain.Specifications;
 
-public class BookForIsbnSpecification(BookIsbn isbn) : Specification<Book>
+public class BookForIsbnSpecification(
+    BookIsbn isbn) : Specification<Book>
 {
     public override Expression<Func<Book, bool>> ToExpression()
     {
@@ -11,14 +12,15 @@ public class BookForIsbnSpecification(BookIsbn isbn) : Specification<Book>
     }
 }
 
-public static partial class BookSpecifications
+public static class BookSpecifications
 {
     public static Specification<Book> ForIsbn(BookIsbn isbn)
     {
         return new BookForIsbnSpecification(isbn);
     }
 
-    public static Specification<Book> ForIsbn2(BookIsbn isbn) // INFO: short version to define a specification
+    public static Specification<Book>
+        ForIsbn2(BookIsbn isbn) // INFO: short version to define a specification
     {
         return new Specification<Book>(e => e.Isbn.Value == isbn.Value);
     }

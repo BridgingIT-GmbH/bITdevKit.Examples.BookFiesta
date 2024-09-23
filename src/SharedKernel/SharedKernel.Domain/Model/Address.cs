@@ -5,14 +5,17 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using BridgingIT.DevKit.Domain;
-using BridgingIT.DevKit.Domain.Model;
-
 public class Address : ValueObject
 {
     private Address() { } // Private constructor required by EF Core
 
-    private Address(string name, string line1, string line2, string postalCode, string city, string country)
+    private Address(
+        string name,
+        string line1,
+        string line2,
+        string postalCode,
+        string city,
+        string country)
     {
         this.Name = name;
         this.Line1 = line1;
@@ -22,19 +25,25 @@ public class Address : ValueObject
         this.Country = country;
     }
 
-    public string Name { get; private set; }
+    public string Name { get; }
 
-    public string Line1 { get; private set; }
+    public string Line1 { get; }
 
-    public string Line2 { get; private set; }
+    public string Line2 { get; }
 
-    public string PostalCode { get; private set; }
+    public string PostalCode { get; }
 
-    public string City { get; private set; }
+    public string City { get; }
 
-    public string Country { get; private set; }
+    public string Country { get; }
 
-    public static Address Create(string name, string line1, string line2, string postalCode, string city, string country)
+    public static Address Create(
+        string name,
+        string line1,
+        string line2,
+        string postalCode,
+        string city,
+        string country)
     {
         var address = new Address(name, line1, line2, postalCode, city, country);
         if (!IsValid(address))

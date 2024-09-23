@@ -5,11 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
+using DevKit.Infrastructure.EntityFramework;
 using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SharedKernel.Domain;
 
 public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Publisher>
 {
@@ -49,7 +49,8 @@ public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfigurati
             .IsRequired()
             .HasMaxLength(512);
 
-        builder.OwnsOne(e => e.Address,
+        builder.OwnsOne(
+            e => e.Address,
             b =>
             {
                 b.Property(e => e.Name)
@@ -82,7 +83,8 @@ public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfigurati
                     .IsRequired();
             });
 
-        builder.OwnsOne(e => e.ContactEmail,
+        builder.OwnsOne(
+            e => e.ContactEmail,
             b =>
             {
                 b.Property(e => e.Value)
@@ -96,7 +98,8 @@ public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfigurati
         builder.Navigation(e => e.ContactEmail)
             .IsRequired();
 
-        builder.OwnsOne(e => e.Website,
+        builder.OwnsOne(
+            e => e.Website,
             b =>
             {
                 b.Property(e => e.Value)

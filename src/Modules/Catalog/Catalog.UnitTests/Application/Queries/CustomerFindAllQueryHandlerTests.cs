@@ -5,10 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Application;
 
-using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using DevKit.Domain.Repositories;
+using Modules.Catalog.Application;
+using Modules.Catalog.Domain;
+using SharedKernel.Domain;
 
 [UnitTest("Catalog:Application")]
 public class CustomerFindAllQueryHandlerTests
@@ -17,11 +17,20 @@ public class CustomerFindAllQueryHandlerTests
     public async Task Process_ValidQuery_ReturnsSuccessResultWithCustomers()
     {
         // Arrange
-        TenantId[] tenantIds = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
+        TenantId[] tenantIds =
+        [
+            TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")
+        ];
         var expectedCustomers = new List<Customer>
         {
-            Customer.Create(tenantIds[0], PersonFormalName.Create(["John", "Doe"]), EmailAddress.Create("john.doe@example.com")),
-            Customer.Create(tenantIds[0], PersonFormalName.Create(["Mary", "Jane"]), EmailAddress.Create("mary.jane@example.com"))
+            Customer.Create(
+                tenantIds[0],
+                PersonFormalName.Create(["John", "Doe"]),
+                EmailAddress.Create("john.doe@example.com")),
+            Customer.Create(
+                tenantIds[0],
+                PersonFormalName.Create(["Mary", "Jane"]),
+                EmailAddress.Create("mary.jane@example.com"))
         };
 
         var repository = Substitute.For<IGenericRepository<Customer>>();
@@ -31,7 +40,9 @@ public class CustomerFindAllQueryHandlerTests
         var sut = new CustomerFindAllQueryHandler(Substitute.For<ILoggerFactory>(), repository);
 
         // Act
-        var response = await sut.Process(new CustomerFindAllQuery(tenantIds[0]), CancellationToken.None);
+        var response = await sut.Process(
+            new CustomerFindAllQuery(tenantIds[0]),
+            CancellationToken.None);
 
         // Assert
         response?.Result.ShouldNotBeNull();

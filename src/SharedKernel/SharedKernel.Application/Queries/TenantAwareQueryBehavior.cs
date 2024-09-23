@@ -5,16 +5,13 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 
-using Common;
-using DevKit.Application.Queries;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Modules.Organization.Application;
 
 /// <summary>
-/// A behavior for handling tenant-aware queries in the application. This class is responsible for
-/// checking if a request implements the ITenantAware interface and ensuring the tenant exists and is active
-/// before allowing the request to proceed.
+///     A behavior for handling tenant-aware queries in the application. This class is responsible for
+///     checking if a request implements the ITenantAware interface and ensuring the tenant exists and is active
+///     before allowing the request to proceed.
 /// </summary>
 /// <typeparam name="TRequest">The type of request implementing IRequest.</typeparam>
 /// <typeparam name="TResponse">The type of response returned by the request.</typeparam>
@@ -36,8 +33,7 @@ public class TenantAwareQueryBehavior<TRequest, TResponse>(
     {
         if (request is not ITenantAware instance)
         {
-            return await next()
-                .AnyContext();
+            return await next().AnyContext();
         }
 
         if (!(await organizationModuleClient.TenantFindOne(instance.TenantId)).Value?.IsActive == false)
@@ -45,7 +41,6 @@ public class TenantAwareQueryBehavior<TRequest, TResponse>(
             throw new Exception("Tenant does not exists or inactive");
         }
 
-        return await next()
-            .AnyContext();
+        return await next().AnyContext();
     }
 }

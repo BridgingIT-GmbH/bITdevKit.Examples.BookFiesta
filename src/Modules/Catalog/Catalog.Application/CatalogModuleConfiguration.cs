@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using FluentValidation;
-
 public class CatalogModuleConfiguration
 {
     public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }

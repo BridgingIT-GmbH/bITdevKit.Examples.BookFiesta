@@ -5,18 +5,17 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using BridgingIT.DevKit.Application.Queries;
-using Common;
-using BridgingIT.DevKit.Domain.Repositories;
-using Domain;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
-using Microsoft.Extensions.Logging;
-
-public class TenantFindOneQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Tenant> repository) : QueryHandlerBase<TenantFindOneQuery, Result<Tenant>>(loggerFactory)
+public class TenantFindOneQueryHandler(
+    ILoggerFactory loggerFactory,
+    IGenericRepository<Tenant> repository)
+    : QueryHandlerBase<TenantFindOneQuery, Result<Tenant>>(loggerFactory)
 {
-    public override async Task<QueryResponse<Result<Tenant>>> Process(TenantFindOneQuery query, CancellationToken cancellationToken)
+    public override async Task<QueryResponse<Result<Tenant>>> Process(
+        TenantFindOneQuery query,
+        CancellationToken cancellationToken)
     {
-        return QueryResponse.For(await repository.FindOneResultAsync(TenantId.Create(query.TenantId), cancellationToken: cancellationToken)
-            .AnyContext());
+        return QueryResponse.For(
+            await repository.FindOneResultAsync(TenantId.Create(query.TenantId), cancellationToken: cancellationToken)
+                .AnyContext());
     }
 }

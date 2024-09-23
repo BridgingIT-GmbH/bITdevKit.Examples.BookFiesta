@@ -13,7 +13,13 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     private Publisher() { } // Private constructor required by EF Core
 
-    private Publisher(TenantId tenantId, string name, string description = null, EmailAddress contactEmail = null, Address address = null, Website website = null)
+    private Publisher(
+        TenantId tenantId,
+        string name,
+        string description = null,
+        EmailAddress contactEmail = null,
+        Address address = null,
+        Website website = null)
     {
         this.TenantId = tenantId;
         this.SetName(name);
@@ -36,13 +42,19 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
     public Website Website { get; private set; }
 
     /// <summary>
-    /// Gets or sets the concurrency token to handle optimistic concurrency.
+    ///     Gets or sets the concurrency token to handle optimistic concurrency.
     /// </summary>
     public Guid Version { get; set; }
 
     //public IEnumerable<PublisherBook> Books => this.books;
 
-    public static Publisher Create(TenantId tenantId, string name, string description = null, EmailAddress contactEmail = null, Address address = null, Website website = null)
+    public static Publisher Create(
+        TenantId tenantId,
+        string name,
+        string description = null,
+        EmailAddress contactEmail = null,
+        Address address = null,
+        Website website = null)
     {
         _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
 

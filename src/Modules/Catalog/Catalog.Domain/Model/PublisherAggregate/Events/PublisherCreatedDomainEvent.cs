@@ -5,7 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
-public class PublisherCreatedDomainEvent(Publisher publisher) : DomainEventBase
+public class PublisherCreatedDomainEvent(
+    Publisher publisher) : DomainEventBase
 {
     public PublisherId PublisherId { get; } = publisher.Id;
 }
