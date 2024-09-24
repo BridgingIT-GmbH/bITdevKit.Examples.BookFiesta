@@ -17,22 +17,3 @@ public class OrganizationModuleClient(IMediator mediator, IMapper mapper) : IOrg
         return result.For<Tenant, TenantModel>(mapper);
     }
 }
-
-// TODO: moved to bitdevbkit (common.mapping)
-public static class ResultExtensions
-{
-    public static Result<TResult> For<TValue, TResult>(this Result<TValue> source, IMapper mapper)
-        where TResult : class
-    {
-        EnsureArg.IsNotNull(mapper, nameof(mapper));
-
-        if (source?.IsFailure == true)
-        {
-            return Result<TResult>.Failure().WithMessages(source?.Messages).WithErrors(source?.Errors);
-        }
-
-        return Result<TResult>.Success(source != null ? mapper.Map<TValue, TResult>(source.Value) : null)
-            .WithMessages(source?.Messages)
-            .WithErrors(source?.Errors);
-    }
-}

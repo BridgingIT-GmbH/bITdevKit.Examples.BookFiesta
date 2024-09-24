@@ -75,7 +75,6 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
             if (this.Id?.IsEmpty == false)
             {
                 this.DomainEvents.Register(new TenantUpdatedDomainEvent(this), true);
-
                 this.DomainEvents.Register(new TenantReassignedCompanyDomainEvent(this), true);
             }
         }
@@ -239,15 +238,17 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
     public Tenant RemoveSubscription(TenantSubscriptionId id)
     {
         var subscription = this.subscriptions.Find(c => c.Id == id);
-        if (subscription != null)
+        if (subscription == null)
         {
-            this.subscriptions.Remove(subscription);
+            return this;
+        }
 
-            if (this.Id?.IsEmpty == false)
-            {
-                this.DomainEvents.Register(new TenantUpdatedDomainEvent(this), true)
-                    .Register(new TenantSubscriptionRemovedDomainEvent(subscription), true);
-            }
+        this.subscriptions.Remove(subscription);
+
+        if (this.Id?.IsEmpty == false)
+        {
+            this.DomainEvents.Register(new TenantUpdatedDomainEvent(this), true)
+                .Register(new TenantSubscriptionRemovedDomainEvent(subscription), true);
         }
 
         return this;

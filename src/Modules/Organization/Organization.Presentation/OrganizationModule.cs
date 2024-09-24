@@ -10,7 +10,9 @@ using Common;
 using DevKit.Domain.Repositories;
 using Domain;
 using Infrastructure;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -94,6 +96,13 @@ public class OrganizationModule : WebModuleBase
         IConfiguration configuration = null,
         IWebHostEnvironment environment = null)
     {
+        app.MapGet("/hello", async context =>
+        {
+            await context.Response.WriteAsync("Hello world");
+        });
+
+        // ODER endpoints (grouping)
+
         new OrganizationCompanyEndpoint().Map(app);
         new OrganizationTenantEndpoints().Map(app);
 

@@ -28,19 +28,24 @@ public class OrganizationTenantEndpoints : EndpointsBase
 
         group.MapGet("/{id}", TenantFindOne)
             .WithName("GetOrganizationTenant")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesValidationProblem()
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
 
         group.MapGet(string.Empty, TenantFindAll)
             .WithName("GetOrganizationTenants")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesValidationProblem()
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
 
         group.MapPost(string.Empty, TenantCreate)
             .WithName("CreateOrganizationTenant")
             .ProducesValidationProblem()
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
 
         // TODO: update/delete tenant
     }

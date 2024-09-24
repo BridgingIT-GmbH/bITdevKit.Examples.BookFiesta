@@ -28,35 +28,45 @@ public class OrganizationCompanyEndpoint : EndpointsBase
 
         group.MapGet("/{id}", CompanyFindOne)
             .WithName("GetOrganizationCompany")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesValidationProblem()
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
 
         group.MapGet("/", CompanyFindAll)
             .WithName("GetOrganizationCompanies")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesValidationProblem()
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
 
         group.MapGet("/{id}/tenants", CompanyFindAllTenants)
             .WithName("GetOrganizationCompanyTenants")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesValidationProblem()
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
 
         group.MapPost("/", CompanyCreate)
             .WithName("CreateOrganizationCompany")
             .ProducesValidationProblem()
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
 
         group.MapPut("/{id}", CompanyUpdate)
             .WithName("UpdateOrganizationCompany")
             .ProducesValidationProblem()
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
 
         group.MapDelete("/{id}", CompanyDelete)
             .WithName("DeleteCatalogCompany")
-            .Produces<ProblemDetails>(400)
-            .Produces<ProblemDetails>(500);
+            .ProducesValidationProblem()
+            .ProducesProblem(500);
+            //.Produces<ProblemDetails>(400)
+            //.Produces<ProblemDetails>(500);
     }
 
     private static async Task<Results<Ok<CompanyModel>, NotFound, ProblemHttpResult>> CompanyFindOne(
