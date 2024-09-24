@@ -30,7 +30,9 @@ public class OrganizationModule : WebModuleBase
         IWebHostEnvironment environment = null)
     {
         var moduleConfiguration =
-            this.Configure<OrganizationModuleConfiguration, OrganizationModuleConfiguration.Validator>(services, configuration);
+            this.Configure<OrganizationModuleConfiguration, OrganizationModuleConfiguration.Validator>(
+                services,
+                configuration);
 
         //services.AddScoped<IOrganizationQueryService, OrganizationQueryService>();
 

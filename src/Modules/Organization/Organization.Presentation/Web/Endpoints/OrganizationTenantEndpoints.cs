@@ -22,7 +22,9 @@ public class OrganizationTenantEndpoints : EndpointsBase
     /// <param name="app">The IEndpointRouteBuilder instance used to define routes.</param>
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/organization/tenants").WithTags("Organization");
+        var group = app
+            .MapGroup("api/organization/tenants")
+            .WithTags("Organization");
 
         group.MapGet("/{id}", TenantFindOne)
             .WithName("GetOrganizationTenant")
@@ -36,6 +38,7 @@ public class OrganizationTenantEndpoints : EndpointsBase
 
         group.MapPost(string.Empty, TenantCreate)
             .WithName("CreateOrganizationTenant")
+            .ProducesValidationProblem()
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 

@@ -20,7 +20,9 @@ public class CatalogCustomerEndpoints : EndpointsBase
 {
     public override void Map(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/tenants/{tenantId}/catalog/customers").WithTags("Catalog");
+        var group = app
+            .MapGroup("api/tenants/{tenantId}/catalog/customers")
+            .WithTags("Catalog");
 
         group.MapGet("/{id}", GetCustomer)
             .WithName("GetCatalogCustomer")
@@ -34,11 +36,13 @@ public class CatalogCustomerEndpoints : EndpointsBase
 
         group.MapPost(string.Empty, CreateCustomer)
             .WithName("CreateCatalogCustomer")
+            .ProducesValidationProblem()
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
         group.MapPut("/{id}", UpdateCustomer)
             .WithName("UpdateCatalogCustomer")
+            .ProducesValidationProblem()
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
