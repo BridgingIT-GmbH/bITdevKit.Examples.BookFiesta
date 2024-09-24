@@ -18,6 +18,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Web;
 
+/// <summary>
+/// Represents the module for managing the organization within the BookFiesta application.
+/// Inherits from WebModuleBase to provide web-specific module behavior.
+/// </summary>
 public class OrganizationModule : WebModuleBase
 {
     public override IServiceCollection Register(
@@ -26,9 +30,7 @@ public class OrganizationModule : WebModuleBase
         IWebHostEnvironment environment = null)
     {
         var moduleConfiguration =
-            this.Configure<OrganizationModuleConfiguration, OrganizationModuleConfiguration.Validator>(
-                services,
-                configuration);
+            this.Configure<OrganizationModuleConfiguration, OrganizationModuleConfiguration.Validator>(services, configuration);
 
         //services.AddScoped<IOrganizationQueryService, OrganizationQueryService>();
 

@@ -6,6 +6,7 @@
     <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).IntegrationTests</AssemblyName>
     <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).IntegrationTests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
+    <IsPublishable>false</IsPublishable>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -22,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Testing" />
     <PackageReference Include="BridgingIT.DevKit.Common.Utilities.Xunit"/>
     <PackageReference Include="Dumpify"/>
     <PackageReference Include="FluentAssertions.Web"/>
@@ -43,10 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj"/>
+    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj" IsAspireProjectResource="false" />
+    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" IsAspireProjectResource="false"/>
+    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" IsAspireProjectResource="false"/>
+    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj" IsAspireProjectResource="false"/>
   </ItemGroup>
 
 </Project>

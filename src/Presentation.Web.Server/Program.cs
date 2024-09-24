@@ -40,7 +40,6 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
-
 #pragma warning restore SA1200 // Using directives should be placed correctly
 
 // ===============================================================================================
@@ -139,6 +138,7 @@ builder.Services.AddSignalR();
 
 builder.Services.AddEndpoints<SystemEndpoints>(builder.Environment.IsDevelopment());
 builder.Services.AddEndpoints<JobSchedulingEndpoints>(builder.Environment.IsDevelopment());
+//builder.Services.AddEndpoints();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(ConfigureOpenApiDocument);
@@ -201,7 +201,7 @@ if (builder.Configuration["Metrics:Prometheus:Enabled"].To<bool>())
 
 app.MapModules();
 app.MapControllers();
-app.MapEndpoints();
+app.MapEndpoints(); // adds the endpoints to the application
 app.MapHealthChecks();
 
 app.MapRazorComponents<App>()
@@ -402,11 +402,11 @@ void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings setting
     settings.OperationProcessors.Add(new AuthorizationOperationProcessor("bearer"));
 }
 
-//public partial class Program
-//{
+public partial class Program
+{
     // this partial class is needed to set the accessibilty for the Program class to public
     // needed for testing with a test fixture https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-7.0#basic-tests-with-the-default-webapplicationfactory
-//}
+}
 
 //#pragma warning disable SA1402 // File may only contain a single type
 //public class Service1 : IHostedService

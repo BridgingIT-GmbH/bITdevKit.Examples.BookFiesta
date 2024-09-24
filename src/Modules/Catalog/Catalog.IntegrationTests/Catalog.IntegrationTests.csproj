@@ -7,6 +7,7 @@
     <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).IntegrationTests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
+    <IsPublishable>false</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Testing" />
     <PackageReference Include="BridgingIT.DevKit.Common.Utilities.Xunit"/>
     <PackageReference Include="Dumpify"/>
     <PackageReference Include="FluentAssertions.Web"/>
@@ -29,6 +31,8 @@
     <PackageReference Include="NetArchTest.eNhancedEdition"/>
     <PackageReference Include="NSubstitute"/>
     <PackageReference Include="Shouldly"/>
+    <PackageReference Include="Testcontainers"/>
+    <PackageReference Include="Testcontainers.MsSql"/>
     <PackageReference Include="xunit"/>
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -41,10 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj"/>
+    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj" IsAspireProjectResource="false" />
+    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" IsAspireProjectResource="false"/>
+    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" IsAspireProjectResource="false"/>
+    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj" IsAspireProjectResource="false"/>
   </ItemGroup>
 
 </Project>
