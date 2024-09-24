@@ -3,13 +3,12 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-using System.Reflection;
-using System.Text.Json.Serialization;
-using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using BridgingIT.DevKit.Application.Commands;
 using BridgingIT.DevKit.Application.JobScheduling;
@@ -23,6 +22,7 @@ using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Pages;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server.Components;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using BridgingIT.DevKit.Presentation;
 using BridgingIT.DevKit.Presentation.Web;
@@ -402,11 +402,11 @@ void ConfigureOpenApiDocument(AspNetCoreOpenApiDocumentGeneratorSettings setting
     settings.OperationProcessors.Add(new AuthorizationOperationProcessor("bearer"));
 }
 
-public partial class Program
-{
+//public partial class Program
+//{
     // this partial class is needed to set the accessibilty for the Program class to public
     // needed for testing with a test fixture https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-7.0#basic-tests-with-the-default-webapplicationfactory
-}
+//}
 
 //#pragma warning disable SA1402 // File may only contain a single type
 //public class Service1 : IHostedService

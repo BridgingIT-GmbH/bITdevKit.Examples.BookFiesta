@@ -59,11 +59,8 @@ public class CatalogModule : WebModuleBase
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup(false))
             .WithDatabaseMigratorService(
-                o => o
-                    .StartupDelay(
-                        "00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
-                    .Enabled(environment?.IsDevelopment() == true)
-                    .DeleteOnStartup(false))
+                // organization schema has to be created first to accomodate for the tenant FKs
+                o => o.StartupDelay("00:00:05").Enabled(environment?.IsDevelopment() == true).DeleteOnStartup(false))
             .WithOutboxDomainEventService(
                 o => o.ProcessingInterval("00:00:30")
                     .StartupDelay("00:00:15")

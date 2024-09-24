@@ -296,6 +296,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Edition = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Isbn = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
                     IsbnType = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
