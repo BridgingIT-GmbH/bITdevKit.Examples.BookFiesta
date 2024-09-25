@@ -47,30 +47,35 @@ public class TenantBranding : Entity<TenantBrandingId>
     public TenantBranding SetPrimaryColor(HexColor color)
     {
         this.PrimaryColor = color;
+
         return this;
     }
 
     public TenantBranding SetSecondaryColor(HexColor color)
     {
         this.SecondaryColor = color;
+
         return this;
     }
 
     public TenantBranding SetLogoUrl(Url url)
     {
         this.LogoUrl = url;
+
         return this;
     }
 
     public TenantBranding SetFaviconUrl(Url url)
     {
         this.FaviconUrl = url;
+
         return this;
     }
 
     public TenantBranding SetCustomCss(string customCss)
     {
         this.CustomCss = customCss; // TODO: check if valid css (xss)
+
         return this;
     }
 

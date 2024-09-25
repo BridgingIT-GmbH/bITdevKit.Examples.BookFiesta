@@ -5,10 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Application;
 
-using DevKit.Domain.Repositories;
-using Modules.Catalog.Application;
-using Modules.Catalog.Domain;
-using SharedKernel.Domain;
+using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [UnitTest("Catalog:Application")]
 public class CustomerFindAllQueryHandlerTests

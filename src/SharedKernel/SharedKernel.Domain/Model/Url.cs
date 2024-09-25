@@ -82,6 +82,7 @@ public partial class Url : ValueObject
         }
 
         var normalizedBaseUrl = Normalize(value);
+
         return this.IsRelative() ? $"{normalizedBaseUrl}{this.Value}" : $"{normalizedBaseUrl}/{this.Value}";
     }
 

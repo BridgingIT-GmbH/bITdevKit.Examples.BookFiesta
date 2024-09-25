@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Domain;
 
-using Modules.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
 [UnitTest("Catalog:Domain")]
 public class BookIsbnTests

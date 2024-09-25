@@ -6,10 +6,10 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.IntegrationTests.Infrastructure;
 
 using System.Linq.Dynamic.Core;
-using DevKit.Infrastructure.EntityFramework.Repositories;
-using Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
+using BridgingIT.DevKit.Infrastructure.EntityFramework.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Organization.Infrastructure;
 
 [IntegrationTest("Infrastructure")]
 [Collection(nameof(TestEnvironmentCollection))] // https://xunit.net/docs/shared-context#collection-fixture

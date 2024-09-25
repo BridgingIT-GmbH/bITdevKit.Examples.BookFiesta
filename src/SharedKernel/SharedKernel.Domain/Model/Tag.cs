@@ -50,12 +50,14 @@ public class Tag : Entity<TagId>, IConcurrent
         }
 
         this.Name = value;
+
         return this;
     }
 
     public Tag SetCategory(string value)
     {
         this.Category = value;
+
         return this;
     }
 }

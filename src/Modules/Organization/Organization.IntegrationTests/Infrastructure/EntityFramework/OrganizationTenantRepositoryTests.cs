@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.IntegrationTests.Infrastructure;
 
-using Organization.Infrastructure;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 
 [IntegrationTest("Infrastructure")]
 [Collection(nameof(TestEnvironmentCollection))] // https://xunit.net/docs/shared-context#collection-fixture

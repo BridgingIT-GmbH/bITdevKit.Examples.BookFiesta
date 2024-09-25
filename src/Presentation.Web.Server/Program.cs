@@ -40,6 +40,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+
 #pragma warning restore SA1200 // Using directives should be placed correctly
 
 // ===============================================================================================

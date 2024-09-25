@@ -5,11 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 
-using DevKit.Infrastructure.EntityFramework;
-using Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SharedKernel.Domain;
 
 public class TenantEntityTypeConfiguration : IEntityTypeConfiguration<Tenant>, IEntityTypeConfiguration<TenantBranding>
 {

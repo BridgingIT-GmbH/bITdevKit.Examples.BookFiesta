@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.Testing" />
+    <PackageReference Include="Aspire.Hosting.Testing"/>
     <PackageReference Include="BridgingIT.DevKit.Common.Utilities.Xunit"/>
     <PackageReference Include="Dumpify"/>
     <PackageReference Include="FluentAssertions.Web"/>
@@ -45,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj" IsAspireProjectResource="false" />
+    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj" IsAspireProjectResource="false"/>
     <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" IsAspireProjectResource="false"/>
     <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" IsAspireProjectResource="false"/>
     <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj" IsAspireProjectResource="false"/>

@@ -1,9 +1,9 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation.Web;
 
-using Application;
-using Common;
-using DevKit.Presentation.Web;
-using Domain;
+using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -30,43 +30,43 @@ public class OrganizationCompanyEndpoint : EndpointsBase
             .WithName("GetOrganizationCompany")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
 
         group.MapGet("/", CompanyFindAll)
             .WithName("GetOrganizationCompanies")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
 
         group.MapGet("/{id}/tenants", CompanyFindAllTenants)
             .WithName("GetOrganizationCompanyTenants")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
 
         group.MapPost("/", CompanyCreate)
             .WithName("CreateOrganizationCompany")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
 
         group.MapPut("/{id}", CompanyUpdate)
             .WithName("UpdateOrganizationCompany")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
 
         group.MapDelete("/{id}", CompanyDelete)
             .WithName("DeleteCatalogCompany")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
     }
 
     private static async Task<Results<Ok<CompanyModel>, NotFound, ProblemHttpResult>> CompanyFindOne(

@@ -5,8 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 using MediatR;
-using Modules.Organization.Application;
 
 /// <summary>
 ///     A behavior for handling tenant-aware commands in the application. This class is responsible for

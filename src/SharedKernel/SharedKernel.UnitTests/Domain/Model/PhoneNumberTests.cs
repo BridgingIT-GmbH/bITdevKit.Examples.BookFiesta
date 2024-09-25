@@ -1,7 +1,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.UnitTests.Domain;
 
 using System.Reflection;
-using SharedKernel.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [UnitTest("SharedKernel:Domain")]
 public class PhoneNumberTests

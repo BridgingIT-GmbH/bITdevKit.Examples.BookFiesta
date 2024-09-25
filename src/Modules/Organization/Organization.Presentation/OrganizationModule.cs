@@ -5,11 +5,12 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 
-using Application;
-using Common;
-using DevKit.Domain.Repositories;
-using Domain;
-using Infrastructure;
+using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,11 +19,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Web;
 
 /// <summary>
-/// Represents the module for managing the organization within the BookFiesta application.
-/// Inherits from WebModuleBase to provide web-specific module behavior.
+///     Represents the module for managing the organization within the BookFiesta application.
+///     Inherits from WebModuleBase to provide web-specific module behavior.
 /// </summary>
 public class OrganizationModule : WebModuleBase
 {
@@ -96,10 +96,12 @@ public class OrganizationModule : WebModuleBase
         IConfiguration configuration = null,
         IWebHostEnvironment environment = null)
     {
-        app.MapGet("/hello", async context =>
-        {
-            await context.Response.WriteAsync("Hello world");
-        });
+        app.MapGet(
+            "/hello",
+            async context =>
+            {
+                await context.Response.WriteAsync("Hello world");
+            });
 
         // ODER endpoints (grouping)
 

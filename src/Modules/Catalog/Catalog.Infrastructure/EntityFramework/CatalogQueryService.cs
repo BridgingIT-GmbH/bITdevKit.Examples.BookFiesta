@@ -5,11 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
-using Application;
-using Common;
-using DevKit.Domain.Repositories;
-using DevKit.Domain.Specifications;
-using Domain;
+using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using Microsoft.EntityFrameworkCore;
 
 public class CatalogQueryService(IGenericRepository<Book> bookRepository, CatalogDbContext dbContext)

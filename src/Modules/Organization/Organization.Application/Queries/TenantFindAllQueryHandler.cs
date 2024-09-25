@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Domain.Specifications;
 
 public class TenantFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Tenant> repository)
     : QueryHandlerBase<TenantFindAllQuery, Result<IEnumerable<Tenant>>>(loggerFactory)

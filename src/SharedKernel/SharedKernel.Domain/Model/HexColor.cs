@@ -60,6 +60,7 @@ public class HexColor : ValueObject
     public (byte R, byte G, byte B) ToRgb()
     {
         var hex = this.Value.TrimStart('#');
+
         return (Convert.ToByte(hex.Substring(0, 2), 16), Convert.ToByte(hex.Substring(2, 2), 16),
             Convert.ToByte(hex.Substring(4, 2), 16));
     }

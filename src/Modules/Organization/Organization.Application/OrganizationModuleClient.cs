@@ -5,7 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using EnsureThat;
 using MediatR;
 
 public class OrganizationModuleClient(IMediator mediator, IMapper mapper) : IOrganizationModuleClient

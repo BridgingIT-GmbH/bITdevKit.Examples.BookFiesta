@@ -79,6 +79,7 @@ public class DateSchedule : ValueObject, IComparable<DateSchedule>
     public override string ToString()
     {
         const string dateFormat = "dd-MM-yyyy";
+
         return this.EndDate.HasValue
             ? $"{this.StartDate.ToString(dateFormat, CultureInfo.InvariantCulture)} to {this.EndDate.Value.ToString(dateFormat, CultureInfo.InvariantCulture)}"
             : $"{this.StartDate.ToString(dateFormat, CultureInfo.InvariantCulture)} (Open-ended)";

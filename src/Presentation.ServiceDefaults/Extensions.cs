@@ -5,10 +5,10 @@
 
 namespace Microsoft.Extensions.Hosting;
 
-using AspNetCore.Builder;
-using AspNetCore.Diagnostics.HealthChecks;
-using DependencyInjection;
-using Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 // Adds common .NET Aspire services: service discovery, resilience, health checks, and OpenTelemetry.
 // This project should be referenced by each service project in your solution.

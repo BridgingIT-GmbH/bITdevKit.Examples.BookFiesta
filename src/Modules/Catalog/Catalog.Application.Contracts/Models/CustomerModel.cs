@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using SharedKernel.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 
 public class CustomerModel
 {

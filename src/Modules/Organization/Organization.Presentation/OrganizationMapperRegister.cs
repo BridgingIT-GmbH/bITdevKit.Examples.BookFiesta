@@ -5,12 +5,12 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 
-using Application;
-using DevKit.Domain.Model;
-using Domain;
+using BridgingIT.DevKit.Domain.Model;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Mapster;
-using SharedKernel.Application;
-using SharedKernel.Domain;
 
 public class OrganizationMapperRegister : IRegister
 {
@@ -166,6 +166,7 @@ public class OrganizationMapperRegister : IRegister
         if (source == null)
         {
             destination.SetBranding(null);
+
             return;
         }
 

@@ -1,7 +1,7 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
 using System.Linq.Expressions;
-using DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Domain.Specifications;
 
 public class BookForIsbnSpecification(BookIsbn isbn) : Specification<Book>
 {

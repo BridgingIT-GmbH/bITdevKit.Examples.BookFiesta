@@ -6,9 +6,9 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests;
 
 using System.Reflection;
-using DevKit.Application.Commands;
-using DevKit.Application.Queries;
-using DevKit.Domain.Model;
+using BridgingIT.DevKit.Application.Commands;
+using BridgingIT.DevKit.Application.Queries;
+using BridgingIT.DevKit.Domain.Model;
 using Dumpify;
 using NetArchTest.Rules;
 

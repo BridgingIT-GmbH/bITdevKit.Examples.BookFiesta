@@ -6,7 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
 using System.Linq.Expressions;
-using DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Domain.Specifications;
 
 public class CompanyForNameSpecification(string name) : Specification<Company>
 {

@@ -5,10 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.IntegrationTests.Infrastructure;
 
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Networks;
 using Microsoft.EntityFrameworkCore;
-using Organization.Infrastructure;
 using Testcontainers.MsSql;
 
 public class TestEnvironmentFixture : IAsyncLifetime
@@ -56,6 +56,7 @@ public class TestEnvironmentFixture : IAsyncLifetime
         get
         {
             this.serviceProvider ??= this.Services.BuildServiceProvider();
+
             return this.serviceProvider;
         }
     }
@@ -69,6 +70,7 @@ public class TestEnvironmentFixture : IAsyncLifetime
     public TestEnvironmentFixture WithOutput(ITestOutputHelper output)
     {
         this.Output = output;
+
         return this;
     }
 

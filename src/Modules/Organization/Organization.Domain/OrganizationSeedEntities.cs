@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-using Common;
+using BridgingIT.DevKit.Common;
 
 public static class OrganizationSeedEntities
 {

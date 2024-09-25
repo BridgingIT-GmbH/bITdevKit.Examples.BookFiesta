@@ -5,21 +5,21 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation;
 
-using Application;
-using Common;
-using DevKit.Application;
-using DevKit.Application.JobScheduling;
-using DevKit.Domain.Repositories;
-using Domain;
-using Infrastructure;
+using BridgingIT.DevKit.Application;
+using BridgingIT.DevKit.Application.JobScheduling;
+using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation.Web;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SharedKernel.Domain;
-using Web;
 
 public class CatalogModule : WebModuleBase
 {

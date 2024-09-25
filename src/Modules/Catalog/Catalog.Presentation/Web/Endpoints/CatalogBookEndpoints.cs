@@ -5,10 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation.Web;
 
-using Application;
-using Common;
-using DevKit.Presentation.Web;
-using Domain;
+using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

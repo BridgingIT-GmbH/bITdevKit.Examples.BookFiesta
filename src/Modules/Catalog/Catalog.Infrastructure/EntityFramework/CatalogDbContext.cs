@@ -5,8 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 
-using DevKit.Infrastructure.EntityFramework;
-using Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 public class CatalogDbContext(DbContextOptions<CatalogDbContext> options)

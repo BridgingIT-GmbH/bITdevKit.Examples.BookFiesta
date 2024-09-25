@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using Common;
+using BridgingIT.DevKit.Common;
 
 /// <summary>
 ///     Specifies the public API for this module that will be exposed to other modules

@@ -1,9 +1,9 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation.Web;
 
-using Application;
-using Common;
-using DevKit.Presentation.Web;
-using Domain;
+using BridgingIT.DevKit.Common;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using BridgingIT.DevKit.Presentation.Web;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -30,22 +30,22 @@ public class OrganizationTenantEndpoints : EndpointsBase
             .WithName("GetOrganizationTenant")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
 
         group.MapGet(string.Empty, TenantFindAll)
             .WithName("GetOrganizationTenants")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
 
         group.MapPost(string.Empty, TenantCreate)
             .WithName("CreateOrganizationTenant")
             .ProducesValidationProblem()
             .ProducesProblem(500);
-            //.Produces<ProblemDetails>(400)
-            //.Produces<ProblemDetails>(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
 
         // TODO: update/delete tenant
     }

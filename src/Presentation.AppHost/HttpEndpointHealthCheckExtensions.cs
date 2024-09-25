@@ -50,6 +50,7 @@ public static class HttpEndpointHealthCheckExtensions
                     configure?.Invoke(options);
 
                     var client = new HttpClient();
+
                     return Task.FromResult<IHealthCheck?>(new UriHealthCheck(options, () => client));
                 }));
     }

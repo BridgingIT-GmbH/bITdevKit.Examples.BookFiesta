@@ -34,6 +34,7 @@ public class BookChapter : Entity<BookChapterId>
         _ = title ?? throw new DomainRuleException("BookChapter Title cannot be empty.");
 
         this.Title = title;
+
         return this;
     }
 
@@ -41,6 +42,7 @@ public class BookChapter : Entity<BookChapterId>
     {
         // Validate number
         this.Number = number;
+
         return this;
     }
 
@@ -48,6 +50,7 @@ public class BookChapter : Entity<BookChapterId>
     {
         // Validate content
         this.Content = content;
+
         return this;
     }
 }

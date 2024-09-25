@@ -7,10 +7,10 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Integration
 
 using System.Net.Mime;
 using System.Text.Json;
-using Application;
-using Domain;
-using SharedKernel.Application;
-using SharedKernel.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [IntegrationTest("Organization:Presentation")]
 public class OrganizationCompanyEndpointTests(

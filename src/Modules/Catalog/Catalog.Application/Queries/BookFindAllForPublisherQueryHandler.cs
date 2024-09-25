@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Domain.Specifications;
 
 public class BookFindAllForPublisherQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Book> repository)
     : QueryHandlerBase<BookFindAllForPublisherQuery, Result<IEnumerable<Book>>>(loggerFactory)
