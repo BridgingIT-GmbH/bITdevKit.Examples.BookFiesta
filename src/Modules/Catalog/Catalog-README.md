@@ -115,28 +115,28 @@ Relationships:
 ### Supporting Entities and Value Objects
 
 1. Category:
-    - Represents book categories.
-    - Has a hierarchical structure (parent-child relationships).
-    - Has a many-to-many relationship with Books.
+  - Represents book categories.
+  - Has a hierarchical structure (parent-child relationships).
+  - Has a many-to-many relationship with Books.
 
 2. Tag:
-    - A value object used by both Book and Author for categorization.
+  - A value object used by both Book and Author for categorization.
 
 ### Key Relationships
 
 1. Book-Author:
-    - Many-to-many relationship.
-    - Managed through typed IDs (BookId in Author, AuthorId in Book).
-    - Allows for books with multiple authors and authors with multiple books.
+  - Many-to-many relationship.
+  - Managed through typed IDs (BookId in Author, AuthorId in Book).
+  - Allows for books with multiple authors and authors with multiple books.
 
 2. Book-Category:
-    - Many-to-many relationship.
-    - Allows for flexible categorization of books.
+  - Many-to-many relationship.
+  - Allows for flexible categorization of books.
 
 3. Category Hierarchy:
-    - Self-referential relationship in Category.
-    - Enables the creation of a category tree structure.
+  - Self-referential relationship in Category.
+  - Enables the creation of a category tree structure.
 
 4. Tagging:
-    - Both Books and Authors can be tagged.
-    - Provides a flexible way to add metadata and improve searchability.
+  - Both Books and Authors can be tagged.
+  - Provides a flexible way to add metadata and improve searchability.
