@@ -96,34 +96,40 @@ Relationships:
 ### Supporting Entities and Value Objects
 
 1. TenantSubscription (Entity):
-  - Represents a subscription plan for a tenant.
-  - Contains information about the plan type, status, schedule, and billing cycle.
+
+- Represents a subscription plan for a tenant.
+- Contains information about the plan type, status, schedule, and billing cycle.
 
 2. TenantBranding (Entity):
-  - Represents the branding information for a tenant.
-  - Contains colors, logo URLs, and custom CSS.
+
+- Represents the branding information for a tenant.
+- Contains colors, logo URLs, and custom CSS.
 
 3. Value Objects:
-  - TenantSubscriptionPlanType: Enumeration of subscription plan types (Free, Basic, Premium).
-  - TenantSubscriptionStatus: Enumeration of subscription statuses (Pending, Approved, Cancelled,
-    Ended).
-  - TenantSubscriptionBillingCycle: Enumeration of billing cycles (Never, Monthly, Yearly).
-  - EmailAddress, PhoneNumber, Url, VatNumber: Represent specific data types with their own
-    validation rules.
+
+- TenantSubscriptionPlanType: Enumeration of subscription plan types (Free, Basic, Premium).
+- TenantSubscriptionStatus: Enumeration of subscription statuses (Pending, Approved, Cancelled,
+  Ended).
+- TenantSubscriptionBillingCycle: Enumeration of billing cycles (Never, Monthly, Yearly).
+- EmailAddress, PhoneNumber, Url, VatNumber: Represent specific data types with their own
+  validation rules.
 
 ### Key Relationships
 
 1. Tenant-Company:
-  - Many-to-one relationship.
-  - A Tenant belongs to one Company, but a Company can have multiple Tenants.
+
+- Many-to-one relationship.
+- A Tenant belongs to one Company, but a Company can have multiple Tenants.
 
 2. Tenant-TenantSubscription:
-  - One-to-many relationship within the Tenant aggregate.
-  - A Tenant can have multiple TenantSubscriptions.
+
+- One-to-many relationship within the Tenant aggregate.
+- A Tenant can have multiple TenantSubscriptions.
 
 3. Tenant-TenantBranding:
-  - One-to-one relationship within the Tenant aggregate.
-  - Each Tenant has its own TenantBranding.
+
+- One-to-one relationship within the Tenant aggregate.
+- Each Tenant has its own TenantBranding.
 
 This domain model provides a flexible structure for managing organizations, tenants, and their
 associated data in the system. It allows for complex operations while maintaining clear boundaries
