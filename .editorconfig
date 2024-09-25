@@ -170,7 +170,7 @@ dotnet_diagnostic.sa1408.severity = none
 # ReSharper properties
 resharper_apply_on_completion = true
 resharper_autodetect_indent_settings = true
-resharper_blank_lines_before_multiline_statements = 1
+resharper_blank_lines_before_multiline_statements = 0
 resharper_keep_user_linebreaks = true
 resharper_keep_existing_arrangement = true
 resharper_keep_existing_linebreaks = true
