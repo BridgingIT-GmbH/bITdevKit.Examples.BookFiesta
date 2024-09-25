@@ -227,6 +227,7 @@ dotnet_naming_symbols.private_static_readonly_symbols.required_modifiers = stati
 resharper_apply_on_completion = true
 resharper_autodetect_indent_settings = true
 resharper_blank_lines_before_multiline_statements = 0
+resharper_blank_lines_before_control_transfer_statements = 1
 resharper_keep_user_linebreaks = true
 resharper_keep_existing_arrangement = true
 resharper_keep_existing_linebreaks = true
