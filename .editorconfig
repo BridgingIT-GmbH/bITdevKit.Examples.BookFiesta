@@ -4,16 +4,11 @@
 root = true
 
 # Default settings:
-# A newline ending every file
-# Use 4 spaces as indentation
 [*]
-insert_final_newline = true
+insert_final_newline = false
 indent_style = space
-indent_size = 4
-trim_trailing_whitespace = true
-
-[project.json]
 indent_size = 2
+trim_trailing_whitespace = true
 
 # Generated code
 [*{_AssemblyInfo.cs,.notsupported.cs}]
@@ -25,11 +20,15 @@ generated_code = true
 # C# files
 [*.cs]
 
+insert_final_newline = false
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
 #### Core EditorConfig Options ####
 
 # New line preferences
 end_of_line = crlf
-insert_final_newline = false
 
 #### .NET Coding Conventions ####
 
@@ -217,8 +216,6 @@ dotnet_naming_symbols.private_static_fields_symbols.required_modifiers = static
 dotnet_naming_symbols.private_static_readonly_symbols.applicable_accessibilities = private
 dotnet_naming_symbols.private_static_readonly_symbols.applicable_kinds = field
 dotnet_naming_symbols.private_static_readonly_symbols.required_modifiers = static, readonly
-
-[*]
 
 # ReSharper properties
 resharper_apply_on_completion = true
