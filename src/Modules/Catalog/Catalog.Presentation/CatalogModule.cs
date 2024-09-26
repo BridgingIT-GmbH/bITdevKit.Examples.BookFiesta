@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 public class CatalogModule : WebModuleBase
 {
@@ -31,6 +32,7 @@ public class CatalogModule : WebModuleBase
         var moduleConfiguration =
             this.Configure<CatalogModuleConfiguration, CatalogModuleConfiguration.Validator>(services, configuration);
 
+        Log.Information("+++++ SQL: " + moduleConfiguration.ConnectionStrings.First().Value);
         services.AddScoped<ICatalogQueryService, CatalogQueryService>();
 
         // services // INFO incase the Organization module is a seperate webservice use refit ->
@@ -40,32 +42,36 @@ public class CatalogModule : WebModuleBase
         //         c.BaseAddress = new Uri(configuration["Modules:OrganizationModule:ServiceUrl"]);
         //     });
 
-        services.AddJobScheduling().WithJob<EchoJob>(CronExpressions.Every5Minutes);
+        services.AddJobScheduling()
+            .WithJob<EchoJob>(CronExpressions.Every5Minutes);
         // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
         //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
-        services.AddStartupTasks()
-            .WithTask<CatalogDomainSeederTask>(
-                o => o.Enabled(environment?.IsDevelopment() == true)
-                    .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
+        // services.AddStartupTasks()
+        //     .WithTask<CatalogDomainSeederTask>(o => o
+        //         .Enabled(environment?.IsDevelopment() == true)
+        //         .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
 
-        services.AddSqlServerDbContext<CatalogDbContext>(
-                o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
+        services.AddSqlServerDbContext<CatalogDbContext>(o => o
+                    .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
                     .UseLogger(true, environment?.IsDevelopment() == true),
-                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery).CommandTimeout(30))
-            .WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
+                o => o
+                    .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+                    .CommandTimeout(30))
+            //.WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
             //.WithDatabaseCreatorService(o => o
-            //    .StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
+            //    .StartupDelay("00:00:05")
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup(false))
-            .WithDatabaseMigratorService(
-                // organization schema has to be created first to accomodate for the tenant FKs
-                o => o.StartupDelay("00:00:05").Enabled(environment?.IsDevelopment() == true).DeleteOnStartup(false))
-            .WithOutboxDomainEventService(
-                o => o.ProcessingInterval("00:00:30")
-                    .StartupDelay("00:00:15")
-                    .PurgeOnStartup()
-                    .ProcessingModeImmediate());
+            .WithDatabaseMigratorService(o => o
+                .StartupDelay("00:00:10")
+                .Enabled(environment?.IsDevelopment() == true)
+                .DeleteOnStartup(false))
+            .WithOutboxDomainEventService(o => o
+                .ProcessingInterval("00:00:30")
+                .StartupDelay("00:00:30")
+                .PurgeOnStartup()
+                .ProcessingModeImmediate());
 
         services.AddEntityFrameworkRepository<Customer, CatalogDbContext>()
             .WithTransactions<NullRepositoryTransaction<Customer>>()

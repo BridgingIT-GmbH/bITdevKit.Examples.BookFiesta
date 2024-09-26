@@ -5,10 +5,14 @@
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var sql = builder.AddSqlServer("sql", port: 14329)
+//var sqlPassword = builder.AddParameter("sql-password", secret: true);
+var sql = builder.AddSqlServer(
+        "sql")
+        //port: 14329)
+        // password: sqlPassword)
     .WithImageTag("latest")
-    // .WithDataVolume() // requires persistent password https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/persist-data-volumes
-    .WithHealthCheck()
+    //.WithDataVolume() // requires persistent password https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/persist-data-volumes
+    //.WithHealthCheck()
     .AddDatabase("sqldata");
 
 builder.AddProject<Projects.Presentation_Web_Server>("presentation-web-server")

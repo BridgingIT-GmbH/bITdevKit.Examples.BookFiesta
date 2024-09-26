@@ -3,6 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
 using System.Reflection;
@@ -80,26 +81,30 @@ builder.Services.AddQueries()
     .WithBehavior(typeof(TimeoutQueryBehavior<,>))
     .WithBehavior(typeof(TenantAwareQueryBehavior<,>));
 
-builder.Services.AddJobScheduling(
-        o => o.StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]),
-        builder.Configuration)
-    //.WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)
-    .WithBehavior<ModuleScopeJobSchedulingBehavior>()
-    //.WithBehavior<ChaosExceptionJobSchedulingBehavior>()
-    .WithBehavior<RetryJobSchedulingBehavior>()
-    .WithBehavior<TimeoutJobSchedulingBehavior>();
+// builder.Services.AddJobScheduling(o => o
+//             .StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]),
+//         builder.Configuration)
+//     //.WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)
+//     .WithBehavior<ModuleScopeJobSchedulingBehavior>()
+//     //.WithBehavior<ChaosExceptionJobSchedulingBehavior>()
+//     .WithBehavior<RetryJobSchedulingBehavior>()
+//     .WithBehavior<TimeoutJobSchedulingBehavior>();
 
-builder.Services.AddStartupTasks(o => o.Enabled().StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
-    .WithTask<EchoStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:03"))
-    .WithTask<
-        JobSchedulingSqlServerSeederStartupTask>() // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
-    .WithBehavior<ModuleScopeStartupTaskBehavior>()
-    //.WithBehavior<ChaosExceptionStartupTaskBehavior>()
-    .WithBehavior<RetryStartupTaskBehavior>()
-    .WithBehavior<TimeoutStartupTaskBehavior>();
+// builder.Services.AddStartupTasks(o => o
+//         .Enabled()
+//         .StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
+//     .WithTask<EchoStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:03"))
+//     .WithTask<JobSchedulingSqlServerSeederStartupTask>() // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
+//     .WithBehavior<ModuleScopeStartupTaskBehavior>()
+//     //.WithBehavior<ChaosExceptionStartupTaskBehavior>()
+//     .WithBehavior<RetryStartupTaskBehavior>()
+//     .WithBehavior<TimeoutStartupTaskBehavior>();
 
 builder.Services
-    .AddMessaging(builder.Configuration, o => o.StartupDelay(builder.Configuration["Messaging:StartupDelay"]))
+    .AddMessaging(
+        builder.Configuration,
+        o => o
+            .StartupDelay(builder.Configuration["Messaging:StartupDelay"]))
     .WithBehavior<ModuleScopeMessagePublisherBehavior>()
     .WithBehavior<ModuleScopeMessageHandlerBehavior>()
     .WithBehavior<MetricsMessagePublisherBehavior>()
@@ -107,12 +112,11 @@ builder.Services
     //.WithBehavior<ChaosExceptionMessageHandlerBehavior>()
     .WithBehavior<RetryMessageHandlerBehavior>()
     .WithBehavior<TimeoutMessageHandlerBehavior>()
-    .WithOutbox<CatalogDbContext>(
-        o => o // registers the outbox publisher behavior and worker service at once
-            .ProcessingInterval("00:00:30")
-            .ProcessingModeImmediate() // forwards the outbox message, through a queue, to the outbox worker
-            .StartupDelay("00:00:15")
-            .PurgeOnStartup())
+    .WithOutbox<OrganizationDbContext>(o => o // registers the outbox publisher behavior and worker service at once
+        .ProcessingInterval("00:00:30")
+        .StartupDelay("00:00:30")
+        .ProcessingModeImmediate() // forwards the outbox message, through a queue, to the outbox worker
+        .PurgeOnStartup())
     .WithInProcessBroker(); //.WithRabbitMQBroker();
 
 ConfigureHealth(builder.Services);
@@ -122,7 +126,8 @@ builder.Services
 builder.Services.Configure<ApiBehaviorOptions>(ConfiguraApiBehavior);
 builder.Services.AddSingleton<IConfigurationRoot>(builder.Configuration);
 builder.Services.AddScoped<ICurrentUserAccessor, FakeCurrentUserAccessor>();
-builder.Services.AddProblemDetails(o => Configure.ProblemDetails(o, true));
+builder.Services.AddProblemDetails(o =>
+    Configure.ProblemDetails(o, true));
 //builder.Services.AddProblemDetails(Configure.ProblemDetails); // TODO: replace this with the new .NET8 error handling with IExceptionHandler https://www.milanjovanovic.tech/blog/global-error-handling-in-aspnetcore-8 and AddProblemDetails https://youtu.be/4NfflZilTvk?t=596
 //builder.Services.AddExceptionHandler();
 //builder.Services.AddProblemDetails();

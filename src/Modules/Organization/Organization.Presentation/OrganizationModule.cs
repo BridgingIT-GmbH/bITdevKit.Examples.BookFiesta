@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 /// <summary>
 ///     Represents the module for managing the organization within the BookFiesta application.
@@ -32,10 +33,9 @@ public class OrganizationModule : WebModuleBase
         IWebHostEnvironment environment = null)
     {
         var moduleConfiguration =
-            this.Configure<OrganizationModuleConfiguration, OrganizationModuleConfiguration.Validator>(
-                services,
-                configuration);
+            this.Configure<OrganizationModuleConfiguration, OrganizationModuleConfiguration.Validator>(services, configuration);
 
+        Log.Information("+++++ SQL: " + moduleConfiguration.ConnectionStrings.First().Value);
         //services.AddScoped<IOrganizationQueryService, OrganizationQueryService>();
 
         //services.AddJobScheduling()
@@ -45,26 +45,29 @@ public class OrganizationModule : WebModuleBase
         services.AddScoped<IOrganizationModuleClient, OrganizationModuleClient>();
 
         services.AddStartupTasks()
-            .WithTask<OrganizationDomainSeederTask>(
-                o => o.Enabled(environment?.IsDevelopment() == true)
-                    .StartupDelay(
-                        moduleConfiguration
-                            .SeederTaskStartupDelay)); // TODO: should run before any other seeder task because of tenant dependencies (ids)
+            .WithTask<OrganizationDomainSeederTask>(o => o
+                .Enabled(environment?.IsDevelopment() == true)
+                .StartupDelay(moduleConfiguration.SeederTaskStartupDelay)); // organization seed has to be done first to accomodate for the tenant FKs
 
-        services.AddSqlServerDbContext<OrganizationDbContext>(
-                o => o.UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
+        services.AddSqlServerDbContext<OrganizationDbContext>(o => o
+                    .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
                     .UseLogger(true, environment?.IsDevelopment() == true),
-                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery).CommandTimeout(30))
-            .WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
+                o => o
+                    .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+                    .CommandTimeout(30))
+            //.WithHealthChecks(timeout: TimeSpan.Parse("00:00:30"))
             //.WithDatabaseCreatorService(o => o
             //    .Enabled(environment?.IsDevelopment() == true)
             //    .DeleteOnStartup())
-            .WithDatabaseMigratorService(o => o.Enabled(environment?.IsDevelopment() == true).DeleteOnStartup(false))
-            .WithOutboxDomainEventService(
-                o => o.ProcessingInterval("00:00:30")
-                    .StartupDelay("00:00:15")
-                    .PurgeOnStartup()
-                    .ProcessingModeImmediate());
+            .WithDatabaseMigratorService(o => o
+                .StartupDelay("00:00:05") // organization schema has to be created first to accomodate for the tenant FKs
+                .Enabled(environment?.IsDevelopment() == true)
+                .DeleteOnStartup(false))
+            .WithOutboxDomainEventService(o => o
+                .ProcessingInterval("00:00:30")
+                .StartupDelay("00:00:30")
+                .PurgeOnStartup()
+                .ProcessingModeImmediate());
 
         services.AddEntityFrameworkRepository<Company, OrganizationDbContext>()
             .WithTransactions<NullRepositoryTransaction<Company>>()
