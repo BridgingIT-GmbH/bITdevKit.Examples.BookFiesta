@@ -23,7 +23,7 @@ public class CustomerDeleteCommandHandler(ILoggerFactory loggerFactory, IGeneric
             return CommandResponse.For(customerResult);
         }
 
-        DomainRules.Apply([]);
+        await DomainRules.ApplyAsync([], cancellationToken);
 
         await repository.DeleteAsync(customerResult.Value, cancellationToken).AnyContext();
 

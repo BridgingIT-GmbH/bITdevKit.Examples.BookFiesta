@@ -6,7 +6,8 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var sql = builder.AddSqlServer("sql", port: 14329)
-    .WithDataVolume()
+    .WithImageTag("latest")
+    // .WithDataVolume() // requires persistent password https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/persist-data-volumes
     .WithHealthCheck()
     .AddDatabase("sqldata");
 

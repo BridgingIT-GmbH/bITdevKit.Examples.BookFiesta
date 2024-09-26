@@ -9,23 +9,32 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-public class PresentationWebAspireFixture : WebApplicationFactory<Program>, IAsyncLifetime
+public class AspirePresentationWebFixture : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly IHost app;
     private string sqlServerConnectionString;
 
-    public PresentationWebAspireFixture()
+    public AspirePresentationWebFixture()
     {
-        var options = new DistributedApplicationOptions { AssemblyName = typeof(PresentationWebAspireFixture).Assembly.FullName, DisableDashboard = true };
+        var options = new DistributedApplicationOptions
+        {
+            AssemblyName = typeof(AspirePresentationWebFixture).Assembly.FullName,
+            DisableDashboard = true
+        };
+
         var appBuilder = DistributedApplication.CreateBuilder(options);
-        this.SqlServer = appBuilder.AddSqlServer("sql")
-            .WithDataVolume().WithImageTag("latest");
-        this.SqlServer.AddDatabase("sqldata");
+
+        // setup the aspire resources
+        this.Sql = appBuilder.AddSqlServer("sql", port: 14320)
+            .WithImageTag("latest")
+            //.WithDataVolume() // requires persistent password https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/persist-data-volumes
+            //.WithHealthCheck()
+            .AddDatabase("sqldata");
 
         this.app = appBuilder.Build();
     }
 
-    public IResourceBuilder<SqlServerServerResource> SqlServer { get; }
+    public IResourceBuilder<SqlServerDatabaseResource> Sql { get; }
 
     public new async Task DisposeAsync()
     {
@@ -46,7 +55,7 @@ public class PresentationWebAspireFixture : WebApplicationFactory<Program>, IAsy
     {
         await this.app.StartAsync();
 
-        this.sqlServerConnectionString = await this.SqlServer.Resource.GetConnectionStringAsync();
+        this.sqlServerConnectionString = await this.Sql.Resource.Parent.GetConnectionStringAsync() + ";Database=sqldata;";
     }
 
     protected override IHost CreateHost(IHostBuilder builder)

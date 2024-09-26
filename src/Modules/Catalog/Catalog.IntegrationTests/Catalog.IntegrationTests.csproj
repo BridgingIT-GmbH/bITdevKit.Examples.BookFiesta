@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
+    <IsAspireHost>true</IsAspireHost>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.Testing"/>
+    <PackageReference Include="Aspire.Hosting.AppHost"/>
+    <PackageReference Include="Aspire.Hosting.SqlServer"/>
     <PackageReference Include="BridgingIT.DevKit.Common.Utilities.Xunit"/>
     <PackageReference Include="Dumpify"/>
     <PackageReference Include="FluentAssertions.Web"/>

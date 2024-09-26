@@ -27,7 +27,10 @@ public class CustomerCreateCommandHandler(ILoggerFactory loggerFactory, IGeneric
                 command.Model.Address.City,
                 command.Model.Address.Country));
 
-        await DomainRules.ApplyAsync([CustomerRules.EmailMustBeUnique(repository, customer)], cancellationToken);
+        await DomainRules.ApplyAsync([
+                CustomerRules.EmailMustBeUnique(repository, customer)
+            ],
+            cancellationToken);
 
         await repository.InsertAsync(customer, cancellationToken).AnyContext();
 

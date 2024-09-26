@@ -23,7 +23,7 @@ public class CustomerUpdateCommandHandler(ILoggerFactory loggerFactory, IGeneric
             return CommandResponse.For(customerResult);
         }
 
-        DomainRules.Apply([]);
+        await DomainRules.ApplyAsync([], cancellationToken);
 
         customerResult.Value.SetName(
             PersonFormalName.Create(
