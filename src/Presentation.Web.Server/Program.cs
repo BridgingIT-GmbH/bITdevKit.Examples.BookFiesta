@@ -94,7 +94,8 @@ builder.Services.AddStartupTasks(o => o
         .Enabled()
         .StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
     .WithTask<EchoStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:03"))
-    .WithTask<JobSchedulingSqlServerSeederStartupTask>() // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
+    .WithTask<JobSchedulingSqlServerSeederStartupTask>(o => o // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
+        .Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:10"))
     //.WithTask(sp => new JobSchedulingSqlServerSeederStartupTask(sp.GetRequiredService<ILoggerFactory>(), builder.Configuration))
     .WithBehavior<ModuleScopeStartupTaskBehavior>()
     //.WithBehavior<ChaosExceptionStartupTaskBehavior>()
