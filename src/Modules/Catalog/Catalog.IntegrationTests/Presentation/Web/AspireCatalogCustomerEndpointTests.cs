@@ -13,7 +13,9 @@ using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
 [IntegrationTest("Catalog:Presentation")]
-public class AspireCatalogCustomerEndpointTests(ITestOutputHelper output, AspirePresentationWebFixture fixture)
+public class AspireCatalogCustomerEndpointTests(
+    ITestOutputHelper output,
+    AspirePresentationWebFixture fixture)
     : IClassFixture<AspirePresentationWebFixture> // https://xunit.net/docs/shared-context#class-fixture
 {
     [Theory]

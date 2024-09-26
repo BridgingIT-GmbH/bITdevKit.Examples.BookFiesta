@@ -35,15 +35,15 @@
       },
       "BridgingIT.DevKit.Application.JobScheduling": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "btWMq0Ex0ZMh3bdHvCqfrc186spcp0+4IiUTAEBA4ZmY/YVG5qPR3eVWFChstdU+NaWJtvrtet+tOAcYN7Birw==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "wFvyvh0epfYBMHrn0SjHlH6Fp/8hm92vegIhEZkj5mA5A4GubD1/UxtauTFbgk0wDfMIkFO7vryPdjHBNV4Ttw==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -73,16 +73,16 @@
       },
       "BridgingIT.DevKit.Application.Messaging": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "Xnp8kXPngcI4Uuft3wkED5cWYcna/e/fdEKmCGCn0tX2J1HEZ4tqTrz2QQGZuXKi+Verd/FC7vchrOBwrXPGug==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "YqmMSAbDrx9m7exjwhhPippkI5hg5fLLIat1m+LP6CKSRnuGiqBDEK+d/bEcbTVx+8U6+bW45NM1/+6v7LUfYg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -110,12 +110,12 @@
       },
       "BridgingIT.DevKit.Application.Utilities": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "bH366MqCSqCMPbQlKHQ/HT1Wj97ypj2eMekFdUKPey9cP/w1Hd00mG6xqv/pE+26uAk57YALExeBqf7/9lQ9eA==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "MtOjS/HhmNqhrrPws7PVy4eULycreujlyuOKpzA2v5dV/+o4cJNC/juJtWczLp5LlaTA9bgRD1XC8V5+Q4wNSQ==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -143,9 +143,9 @@
       },
       "BridgingIT.DevKit.Common.Extensions": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "H1N/rgm7Jo9kdKkw06XQv1dAvAY1RJZBCmABSG70rgsKIosfhyCqOSfd/GapsDgrPsWm++RyEql1PW0RCkw61g==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "qNct5/U1rMhyoCAwYXfNN2AZC8XQPK+pDHg7q3dTVLjXp4pRKuVkuIhH+ot+OpBdfYWFPD8efHmMRxhd1NUbfA==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
@@ -156,23 +156,23 @@
       },
       "BridgingIT.DevKit.Common.Extensions.Web": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "YO+8chjutbJREyklag9aK9OtB7BaQGt3WkPHtHrctColvqm3f52iVx3RI+Mh5zlrzQaWiNmBlII55c4R44qRCA==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "fvpXttPrtr8sfRwZdFrYAHR0s9EeP7THMxPJVwydE0s7YnpIT2mbucnNbGMHTh2BknjMdu3uofRgfcN6dtge7g==",
         "dependencies": {
           "Ensure.That": "10.1.0"
         }
       },
       "BridgingIT.DevKit.Infrastructure.Mapping": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "gvCWHmhXHldc2eBCsEkNgSXgGMmyU8LImLUv9eTaDtZOGncdqmKvNxgl6UUpXqR5oco5ku7q6PK0NuZV71S2Vw==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "Pq3xtnaBPSv8MSFxar+C76cp98P7Lbu4vNTnznUt8XjMrDJeZbVPHU8CmvrmvaN3aUl2VI17hW8em8fiXJJVDw==",
         "dependencies": {
           "AutoMapper": "13.0.1",
           "AutoMapper.Extensions.ExpressionMapping": "7.0.2",
-          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -198,13 +198,13 @@
       },
       "BridgingIT.DevKit.Presentation.Configuration": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "C7aYAE2RThnL84tP+y6lua+TvJ5sOwJGK0ZAThdJBzYtPZy2jLXPqWA3ddi8uhci/7NEbNVHB3No0XOBNIQ0NA==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "2DEPXb5hAbL7Jo946AgJ5V8/XZMRzSQHJJHz9fuQTEMSfGigtjB3CaKhEBHEweAdbQohtc1lSuFClirq6KKDQA==",
         "dependencies": {
           "Azure.Extensions.AspNetCore.Configuration.Secrets": "1.3.2",
           "Azure.Identity": "1.12.0",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -233,9 +233,9 @@
       },
       "BridgingIT.DevKit.Presentation.Serilog": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "gLccB3cOo93JNjAaY+9xawnWPT9pI30ttHjseeOP8ZqDgeCt/tV7qqb0Xmg35QrIpkuR3SAp+kLPWr1OtdPaAg==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "cxad2542ycsawiOU3ojqALSnKhDWKs2EG/pyve6WapT8iBfSHauxtSrC2gZZ2F6NfJIG0pwPCiXnNvZp+EsTxQ==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
@@ -251,7 +251,7 @@
           "Serilog.Settings.Configuration": "8.0.2",
           "Serilog.Sinks.Console": "6.0.0",
           "Serilog.Sinks.File": "6.0.0",
-          "Serilog.Sinks.OpenTelemetry": "4.1.0",
+          "Serilog.Sinks.OpenTelemetry": "4.1.1",
           "Serilog.Sinks.Trace": "4.0.0",
           "System.Diagnostics.DiagnosticSource": "8.0.1",
           "System.Text.Json": "8.0.4"
@@ -259,17 +259,17 @@
       },
       "BridgingIT.DevKit.Presentation.Web": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "z6fzqmFxKR9PKkPvtDWG5BIvqADYl8xw1Ij1b30f4yzYGZLHsCYikK0gZu6YaXNZh8vqfJBBev9dn/b2X6wwIg==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "TpPF9vIXgBNCcYE0i4KedGlrVDehQix06aS4+Y00akojQdMB2OC/nLUGmBAgYHJhgUqlBlWKAbfr7Nh9HTyBHA==",
         "dependencies": {
           "AutoMapper": "13.0.1",
-          "BridgingIT.DevKit.Application.Queries": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Presentation": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Application.Queries": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Presentation": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Hellang.Middleware.ProblemDetails": "6.5.1",
@@ -307,9 +307,9 @@
       },
       "BridgingIT.DevKit.Presentation.Web.HealthChecks": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "F4TaIFNtqJxAzLT5e//ztgn5g/tQAN7aYRPcw3on3pQfHWbAlE6QIJNwL25oBYagyWEhcc+O+QbisGqlX0KqTg==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "wjWGqWhhcYSCVPs1QAUfVgdksPO66mjSFDkmIdMe8zSX6fvIRmMVBNAAwW6JB+8yLkCk1nxfSdeRBOK63tbcBA==",
         "dependencies": {
           "AspNetCore.HealthChecks.UI": "8.0.2",
           "AspNetCore.HealthChecks.UI.Client": "8.0.1",
@@ -340,15 +340,15 @@
       },
       "BridgingIT.DevKit.Presentation.Web.JobScheduling": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "b4QnyGe8BgK/m6QL7ZVtT/6Aj1wv30qEm1cRaSSTzQkBJbYIozV/C1o8Hh6+ZKugYdZkSH9mAjAngHTetnaUHw==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "S/j3GsBTkbNjBmwHQ3BwWIbqad70ScTffHILA3W8oYEugQXQ+OJFJghGS5em7nuj+ZDuB3xQo9GmhxzC52Y8BQ==",
         "dependencies": {
           "AutoMapper": "13.0.1",
-          "BridgingIT.DevKit.Application.JobScheduling": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Extensions.Web": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Presentation.Web": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Application.JobScheduling": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Extensions.Web": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Presentation.Web": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Hellang.Middleware.ProblemDetails": "6.5.1",
@@ -730,12 +730,12 @@
       },
       "BridgingIT.DevKit.Application.Storage": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "x9s1xuDX4UNWEbY2wzRaNt1URDEIu6sqZgkSvrrYy+5BqZ7b1oc8WO4BQ+h2LIy8pqdlOh2fWAf8tpJZ6Dyb9g==",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "4hMAcaFG/kla8gxVskDFlHuXDwR9uMZxUa4bSh48pZ1n2uId9jCz8h/e2SVQIlVqVm9pEvfTf1STBzIUiijN6w==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -759,18 +759,18 @@
       },
       "BridgingIT.DevKit.Common.Abstractions": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "lNT8Tf6GtgC48mIAkC+wApu/8PEFCGWtzBl2ogyrQNVkLMbRXPqXcjraaGxSU3Y9F1nY2G6tZy8S4X3e6AWalQ==",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "+zMdElBWFTP+WMDVOoOGEUbhetMM/kB2E27auc1zuTd5Y5v73IJbJ9IgS/2fQHzadhNevwTjMNoqcknRJMW4oA==",
         "dependencies": {
           "Ensure.That": "10.1.0"
         }
       },
       "BridgingIT.DevKit.Common.Caching": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "RmJfQB0DLV1/eNqldXwqhZimEummfsu7ytmBmJw8kg+jVas4tPAn7mQ15rvwK+LN2p7tvxB9jwedLgHlQ6ng1w==",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "LL7h1ws1hk0KESjRBHxycuM2BmIlhpNBic8UycySdFMOQY1RIRQi9c0a+Xl1B7MrACt7aw11fZXZzZa3n4aOJQ==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -792,8 +792,8 @@
       },
       "BridgingIT.DevKit.Common.Options": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "d0IUifP7hDoimzBMRr2uO8X5Naxu1qAdUjw8r2b3ApTtv4dH8J1dxEzEKoeMdqPy4nCHDejY6BRb+eCNEHw/Pg==",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "A1jnp/tT0TqVPrYMSq6fWLn3ybVDf9BlEVy/25wzTDYwAC2dhlddj1hfTfzTBwVBqATEAuMUv3mZBv/6RMvaHw==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
@@ -802,8 +802,8 @@
       },
       "BridgingIT.DevKit.Common.Serialization": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "SOcrqv266dRY3I2oYdznlBV3EDqd+5ZciVpcJyUnSYNrRvkBSZbbmbn1j1aJL2crAlTBpiPv0swgULb7VSaLfw==",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "peTdQrv54SUa+7CF8nEvfJsqQrMKpRD9HUlJ4gQD/Y6eNr8i9u7XvcZjrsdOoC+uqDpeBNQM8J3UHTovfmLnTw==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "MessagePack": "2.5.172",
@@ -813,13 +813,13 @@
       },
       "BridgingIT.DevKit.Common.Utilities": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "1nFqmpLO8bSXx8m7E0qhduOb7kzc0zFGXAJxPqzixAxt9n5zlFXeaTeXxyUNYOmYoKk1eb95IgPtK2hOpw0pHw==",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "qblPBrMm9D8Q//6bLkR9euRHkfjvDhywe6lhyOCVFVwHApUlI0qqcd/K/WEzRQcRIPuHidwb/7H1cQFv78y4vw==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -838,11 +838,11 @@
       },
       "BridgingIT.DevKit.Domain.Outbox": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "I4G3udySLNhGELAH0kHmLXG2agBOD5f1Sm8Rt1rok8R6zj0KWzMcSyaXpobBQvIFS8r09Fb2LoVkxnSfW3Edow==",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "1pYOM4mRYoKEsfXxwVeL8vXtWlles43kDMEU1JieWp0vo4uj/XL8Z0IyVZ4wQJgtg+4NEdsUSwiWAyfxTdWM+w==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -866,10 +866,10 @@
       },
       "BridgingIT.DevKit.Presentation": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "YHMFGDoZrN41ijgdkNc8ehau2qRnTUQc+ryIxbjos8HSfPmExeNxMot3t2E6EE8/N35b9BDL1aR1UZLmvDqbhA==",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "naW0ze+VVyChIaNB7SvDaGA68vikqMIddtZxJVpMEsFWimfH/+SGttrtQBcIjKmU4ZG930ADRqKR/C24HlRyVg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0"
         }
       },
@@ -2264,8 +2264,8 @@
       },
       "Serilog.Sinks.OpenTelemetry": {
         "type": "Transitive",
-        "resolved": "4.1.0",
-        "contentHash": "zYKe2TIeWZE4sFUlbGAk94Ae46xgp20dsiw52m2KnRe34zBRQmb+GjYvcpciqMR3nskWebWODjJe2yRTDR3q8g==",
+        "resolved": "4.1.1",
+        "contentHash": "1WylKFYPSdWZoOAxCFeOWZ14eo4H4zm79m6UogAlIji4IJX9Da83jnsAi8VKrOTOVYxQ4g6+TQvp1zC3fPJDkA==",
         "dependencies": {
           "Google.Protobuf": "3.26.1",
           "Grpc.Net.Client": "2.62.0",
@@ -2758,11 +2758,11 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
@@ -2780,9 +2780,9 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
         }
@@ -2793,7 +2793,7 @@
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Infrastructure": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.35, )",
           "Ensure.That": "[10.1.0, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[8.0.8, )"
         }
@@ -2801,14 +2801,14 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.35, )",
           "Ensure.That": "[10.1.0, )",
           "Refit.HttpClientFactory": "[7.2.1, )"
         }
@@ -2816,11 +2816,11 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
@@ -2829,7 +2829,7 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )",
@@ -2839,9 +2839,9 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
         }
@@ -2852,7 +2852,7 @@
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Infrastructure": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.35, )",
           "Ensure.That": "[10.1.0, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[8.0.8, )"
         }
@@ -2860,14 +2860,14 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Presentation.Serilog": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Presentation.Web": "[3.0.3-preview.0.35, )",
           "Ensure.That": "[10.1.0, )",
           "Refit.HttpClientFactory": "[7.2.1, )"
         }
@@ -2875,8 +2875,8 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Extensions": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Presentation.Web.Client": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Common.Extensions": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Presentation.Web.Client": "[3.0.3-preview.0.35, )",
           "Ensure.That": "[10.1.0, )",
           "Humanizer.Core": "[2.14.1, )",
           "Microsoft.AspNetCore.Components.WebAssembly": "[8.0.8, )",
@@ -2892,7 +2892,7 @@
       "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.0.1, )"
@@ -2907,9 +2907,9 @@
       "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.32, )",
-          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Domain": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Domain.CodeGen": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Domain.Mediator": "[3.0.3-preview.0.35, )",
           "Ensure.That": "[10.1.0, )"
         }
       },
@@ -2917,7 +2917,7 @@
         "type": "Project",
         "dependencies": {
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.32, )",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "[3.0.3-preview.0.35, )",
           "Ensure.That": "[10.1.0, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[8.0.8, )"
         }
@@ -2959,15 +2959,15 @@
       },
       "BridgingIT.DevKit.Application.Commands": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "t9lxTz9+dfsFTQ7WzcC1leuOPTpN4PvaL9uybUxGJuOZCu5H0+EZIOhrtWuKOsL1sV1TCT4YdhbyX2RKbMuVBg==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "+9LoNae7eB4G98AWQoT6eQFQU0NALv17LDWCQXxHjXzVMy/gv6bZxzgtgAeSZ1pmnVo2BFd86EEHJFeXnRxIJg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Domain.Mediator": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Domain.Mediator": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -3000,16 +3000,16 @@
       },
       "BridgingIT.DevKit.Application.Queries": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "9ngPn4eK5c+kg1wCLl8sdGTw+rHkeZGgdHTQGQUPM6N8S43DTeyOcvzO42ckX2pIgP5NiFFH9a4htWJfJaVqfg==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "y0FrHy1ypWzj3DpYg+PeOcv9G5NPCCHPigOTaAv2CwoBTQnulR7HMuXa8kHPl3A+9HnucBpOnLd3h8xuxAo5qQ==",
         "dependencies": {
           "AutoMapper": "13.0.1",
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Caching": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Mapping": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Modules": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -3043,12 +3043,12 @@
       },
       "BridgingIT.DevKit.Common.Mapping": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "v2M4BaV4VuY8qKWsAbLxms6uqgOVWSt2jdqJ2SPxgcCAmvSVZywrD5VIeYk/gEB1aJG0fUh9v4+9NNWRWJWQbA==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "h8nctGznI0j0COA1r9Qem3zKuRnPPJKZRj8T2AAEENN7EbTfL18w/6RlzVMQQnrsZbc7jhIKU5jxBDU5biXVNw==",
         "dependencies": {
           "AutoMapper": "13.0.1",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -3070,12 +3070,12 @@
       },
       "BridgingIT.DevKit.Common.Modules": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "88U5KcekAVNIutkxJA0XLjv3yoO6aOkImWum2lh7iMDSG2h486Q1srXpwpoqMG//g6Ex5NL6tKuEe+gfxr3mwg==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "eZ8kWmFsVZ3awAugbsJZcfTV/2amgjVazqxwmWPntwCm+OOg5z4YDvlQ0L/b+lZAZ6NAZy98YWMkq/LEAztcOg==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -3103,14 +3103,14 @@
       },
       "BridgingIT.DevKit.Domain": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "uVQ0HsL+32Q6t8Pe8yKVTT8qiMJmXiMBzJfb/WJg/9aYjYcovazQGfgPJyZd8qXr9g2d74j/KRHooCGU90TmxQ==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "vwQhKvep9BdB6mDo3uw4duslFLHV+xF7ffnyoAgLJ5j5YtHmDRQcdHbK5X1W+jA/bY1Tl+qiounFgG/QO/iPMA==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -3133,9 +3133,9 @@
       },
       "BridgingIT.DevKit.Domain.CodeGen": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "9TbfVXrO/ofQBBDRkFqlM8pL6sAFSj52kKupXeTDKDmrrHpOumCk076ircRO3VMiIL5doQM5nb5yDaNUXGN4qA==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "ILleI0DPpa60GdCnhK95UGVEfXjCc0VWlAgNLhy2CKVc+URL8jv1Gc/GRfton/Swjn1BZSGkrffcTWQTpJ2VmA==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Humanizer.Core": "2.14.1",
@@ -3145,11 +3145,11 @@
       },
       "BridgingIT.DevKit.Domain.Mediator": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "IDm1DSG6xtcFuqmlICBU1ZuezbSwmRs8PQJ3xPykdcxUXzrjcVyuna+H1AjOCALHhaJXAEW8bJ/hjYNSIBlxUg==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "h7/WJ6JH46DGplK5ynhGZswkdxmEhHiEQQxTt+wgIxyIbuPHQQiSxAALovuN61K96N/WBII5mnDD/vStD7PGZg==",
         "dependencies": {
-          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Domain": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -3173,22 +3173,24 @@
       },
       "BridgingIT.DevKit.Infrastructure.EntityFramework": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "Xy9sVAmFODsdAvOtxYBiWFf5zRk9eYiCs1qLnhwYhCaDwjLliDLuZi3vFiyh6ldL2ZsMhYrkGz7c+iM+JCELuA==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "VVDon6zjwkAEQkuX1Prd7n+E8XPUuJAFOJJsSCzkUxy90USz+8ITLlF9bq/VeWhyPiCA2Te5qlZB2C84/FekiQ==",
         "dependencies": {
-          "BridgingIT.DevKit.Application.Messaging": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Application.Storage": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Domain.Mediator": "3.0.3-preview.0.32",
-          "BridgingIT.DevKit.Domain.Outbox": "3.0.3-preview.0.32",
+          "Azure.Identity": "1.12.0",
+          "BridgingIT.DevKit.Application.Messaging": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Application.Storage": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Domain.Mediator": "3.0.3-preview.0.35",
+          "BridgingIT.DevKit.Domain.Outbox": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
           "MediatR": "12.4.1",
           "MediatR.Contracts": "2.0.1",
           "MessagePack": "2.5.172",
+          "Microsoft.Data.SqlClient": "5.2.2",
           "Microsoft.EntityFrameworkCore": "8.0.8",
           "Microsoft.EntityFrameworkCore.InMemory": "8.0.8",
           "Microsoft.EntityFrameworkCore.Relational": "8.0.8",
@@ -3205,6 +3207,7 @@
           "Microsoft.Extensions.Options.ConfigurationExtensions": "8.0.0",
           "Microsoft.Extensions.Options.DataAnnotations": "8.0.0",
           "Microsoft.Extensions.Primitives": "8.0.0",
+          "Microsoft.IdentityModel.JsonWebTokens": "8.0.2",
           "NewId": "4.0.1",
           "Newtonsoft.Json": "13.0.3",
           "Polly": "8.4.1",
@@ -3212,6 +3215,7 @@
           "Scrutor": "4.2.2",
           "Serilog": "4.0.1",
           "System.Diagnostics.DiagnosticSource": "8.0.1",
+          "System.IdentityModel.Tokens.Jwt": "8.0.2",
           "System.Linq.Dynamic.Core": "1.4.5",
           "System.Text.Json": "8.0.4",
           "System.Threading.Tasks.Extensions": "4.5.4"
@@ -3219,13 +3223,13 @@
       },
       "BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "6f9RK6lo6RH4/Df4HZE/AzS4zyjKfS/i+YZw+coNCNXhyZ4A3vj4o5wJCdy28nHMbmWuclYqbTt6tshqm/ziaA==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "vqIwaYR+kqzR6bYx7+dl2ziWa6wskwqSdSAFJIejc/5dkHFqA5+wfyTJ4QN/J1do9NRiJQRffwm0UAOeGppu+Q==",
         "dependencies": {
           "AspNetCore.HealthChecks.SqlServer": "8.0.2",
           "Azure.Identity": "1.12.0",
-          "BridgingIT.DevKit.Infrastructure.EntityFramework": "3.0.3-preview.0.32",
+          "BridgingIT.DevKit.Infrastructure.EntityFramework": "3.0.3-preview.0.35",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -3268,9 +3272,9 @@
       },
       "BridgingIT.DevKit.Presentation.Web.Client": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.32, )",
-        "resolved": "3.0.3-preview.0.32",
-        "contentHash": "b/SiXOuSg4yyRLrvsZnwpZCmS8d8akgPBEeeEfKTaMp20EwXxkozu/XKxbYKiQ/Rct7jxAm9HpytVAWDgN8erA==",
+        "requested": "[3.0.3-preview.0.35, )",
+        "resolved": "3.0.3-preview.0.35",
+        "contentHash": "zYpHMwORCXwEuIbKghPeVaSvKWXVdIvB2jDJc06spHXH+EmYYlCJ7gNEhcOeBCodxzbDn9VRgUCaFz7XZBlFvw==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.AspNetCore.Components.Web": "8.0.8",

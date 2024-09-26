@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-public class AspirePresentationWebFixture : WebApplicationFactory<Program>, IAsyncLifetime
+public class AspirePresentationWebFixture
+    : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly IHost app;
     private string sqlServerConnectionString;

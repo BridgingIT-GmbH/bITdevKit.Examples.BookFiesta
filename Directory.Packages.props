@@ -14,28 +14,28 @@
     <PackageVersion Include="AspNetCore.HealthChecks.Uris" Version="8.0.1"/>
     <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.3.0"/>
     <PackageVersion Include="Bogus" Version="35.6.1"/>
-    <PackageVersion Include="BridgingIT.DevKit.Application.Commands" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Application.JobScheduling" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Application.Messaging" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Application.Queries" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Application.Utilities" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Common.Extensions" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Common.Extensions.Web" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Common.Mapping" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Common.Modules" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Common.Utilities.Xunit" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Domain" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Domain.CodeGen" Version="3.0.3-preview.0.32" OutputItemType="Analyzer"/>
-    <PackageVersion Include="BridgingIT.DevKit.Domain.Mediator" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Infrastructure.EntityFramework" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Infrastructure.Mapping" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Presentation.Configuration" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Presentation.Serilog" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Presentation.Web" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Presentation.Web.Client" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Presentation.Web.HealthChecks" Version="3.0.3-preview.0.32"/>
-    <PackageVersion Include="BridgingIT.DevKit.Presentation.Web.JobScheduling" Version="3.0.3-preview.0.32"/>
+    <PackageVersion Include="BridgingIT.DevKit.Application.Commands" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Application.JobScheduling" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Application.Messaging" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Application.Queries" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Application.Utilities" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Common.Extensions" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Common.Extensions.Web" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Common.Mapping" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Common.Modules" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Common.Utilities.Xunit" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Domain" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Domain.CodeGen" Version="3.0.3-preview.0.35" OutputItemType="Analyzer"/>
+    <PackageVersion Include="BridgingIT.DevKit.Domain.Mediator" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Infrastructure.EntityFramework" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Infrastructure.Mapping" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Presentation.Configuration" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Presentation.Serilog" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Presentation.Web" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Presentation.Web.Client" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Presentation.Web.HealthChecks" Version="3.0.3-preview.0.35"/>
+    <PackageVersion Include="BridgingIT.DevKit.Presentation.Web.JobScheduling" Version="3.0.3-preview.0.35"/>
     <PackageVersion Include="coverlet.collector" Version="6.0.2"/>
     <PackageVersion Include="Dumpify" Version="0.6.6"/>
     <PackageVersion Include="Ensure.That" Version="10.1.0"/>

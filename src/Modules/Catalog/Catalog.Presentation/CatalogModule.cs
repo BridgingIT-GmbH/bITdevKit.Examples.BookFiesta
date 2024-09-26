@@ -47,10 +47,10 @@ public class CatalogModule : WebModuleBase
         // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
         //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 
-        // services.AddStartupTasks()
-        //     .WithTask<CatalogDomainSeederTask>(o => o
-        //         .Enabled(environment?.IsDevelopment() == true)
-        //         .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
+        services.AddStartupTasks()
+            .WithTask<CatalogDomainSeederTask>(o => o
+                .Enabled(environment?.IsDevelopment() == true)
+                .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
 
         services.AddSqlServerDbContext<CatalogDbContext>(o => o
                     .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
