@@ -6,14 +6,25 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application.Messages;
 
 using BridgingIT.DevKit.Application.Messaging;
+using BridgingIT.DevKit.Domain.Specifications;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
-public class StockCreatedMessageHandler(ILoggerFactory loggerFactory)
+public class StockCreatedMessageHandler(ILoggerFactory loggerFactory, IGenericRepository<Book> repository)
     : MessageHandlerBase<StockCreatedMessage>(loggerFactory)
 {
-    public override Task Handle(StockCreatedMessage message, CancellationToken cancellationToken)
+    public override async Task Handle(StockCreatedMessage message, CancellationToken cancellationToken)
     {
-        // update book by sku > message.QuantityOnHand
-        throw new NotImplementedException();
+        var book = (await repository.FindAllResultAsync(
+            new Specification<Book>(e => e.TenantId == message.TenantId && e.Sku == message.Sku),
+            cancellationToken: cancellationToken)).Value.FirstOrDefault();
+
+        if (book == null)
+        {
+            // TODO: log book not found by sku
+            return;
+        }
+
+        book.SetStock(message.QuantityOnHand, message.QuantityReserved);
+        await repository.UpdateAsync(book, cancellationToken);
     }
 }

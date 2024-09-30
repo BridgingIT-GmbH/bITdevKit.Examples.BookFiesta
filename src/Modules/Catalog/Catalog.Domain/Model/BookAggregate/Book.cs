@@ -74,6 +74,10 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     public IEnumerable<Tag> Tags
         => this.tags.OrderBy(e => e.Name);
 
+    public int StockQuantityOnHand { get; private set; }
+
+    public int StockQuantityReserved { get; private set; }
+
     /// <summary>
     ///     Gets or sets the concurrency token to handle optimistic concurrency.
     /// </summary>
@@ -204,6 +208,21 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         }
 
         this.PublishedDate = publishedDate;
+
+        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+
+        return this;
+    }
+
+    public Book SetStock(int quantityOnHand, int quantityReserved)
+    {
+        if (this.StockQuantityOnHand == quantityOnHand && this.StockQuantityReserved == quantityReserved)
+        {
+            return this;
+        }
+
+        this.StockQuantityOnHand = quantityOnHand;
+        this.StockQuantityReserved = quantityReserved;
 
         this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
 
