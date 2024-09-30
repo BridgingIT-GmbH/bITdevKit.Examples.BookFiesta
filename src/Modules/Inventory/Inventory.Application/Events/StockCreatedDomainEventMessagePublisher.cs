@@ -1,4 +1,4 @@
-﻿// MIT-License
+// MIT-License
 // Copyright BridgingIT GmbH - All Rights Reserved
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
@@ -7,18 +7,18 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application.Ev
 
 using BridgingIT.DevKit.Application.Messaging;
 
-public class StockUpdatedDomainEventHandler(ILoggerFactory loggerFactory, IMessageBroker messageBroker)
-    : DomainEventHandlerBase<StockUpdatedDomainEvent>(loggerFactory)
+public class StockCreatedDomainEventMessagePublisher(ILoggerFactory loggerFactory, IMessageBroker messageBroker)
+    : DomainEventHandlerBase<StockCreatedDomainEvent>(loggerFactory)
 {
-    public override bool CanHandle(StockUpdatedDomainEvent notification)
+    public override bool CanHandle(StockCreatedDomainEvent notification)
     {
         return true;
     }
 
-    public override async Task Process(StockUpdatedDomainEvent @event, CancellationToken cancellationToken)
+    public override async Task Process(StockCreatedDomainEvent @event, CancellationToken cancellationToken)
     {
         await messageBroker.Publish(
-            new StockUpdatedMessage
+            new StockCreatedMessage
             {
                 TenantId = @event.TenantId,
                 StockId = @event.StockId,
