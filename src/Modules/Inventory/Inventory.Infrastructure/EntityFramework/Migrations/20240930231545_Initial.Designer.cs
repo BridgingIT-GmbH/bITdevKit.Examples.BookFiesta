@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20240930231212_Initial")]
+    [Migration("20240930231545_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -552,7 +552,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                                 .HasColumnType("int");
 
                             b1.Property<string>("Reason")
-                                .IsRequired()
                                 .HasMaxLength(1024)
                                 .HasColumnType("nvarchar(1024)");
 

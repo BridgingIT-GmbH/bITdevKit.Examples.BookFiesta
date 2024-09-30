@@ -115,7 +115,7 @@ public class StockEntityTypeConfiguration
                     .IsRequired();
 
                 b.Property(e => e.Reason)
-                    .IsRequired()
+                    .IsRequired(false)
                     .HasMaxLength(1024);
 
                 b.Property(e => e.Timestamp)

@@ -1,4 +1,4 @@
-﻿// MIT-License
+// MIT-License
 // Copyright BridgingIT GmbH - All Rights Reserved
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
@@ -7,7 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
 using BridgingIT.DevKit.Application.Messaging;
 
-public class StockCreatedMessage : MessageBase
+public class StockUpdatedMessage : MessageBase
 {
     public string TenantId { get; set; }
 

@@ -9,5 +9,6 @@ public class StockReservedReleasedDomainEvent(TenantId tenantId, Stock stock, in
 {
     public TenantId TenantId { get; } = tenantId;
     public StockId StockId { get; } = stock.Id;
+    public ProductSku Sku { get; } = stock.Sku;
     public int QuantityReleased { get; } = quantityReleased;
 }

@@ -9,6 +9,7 @@ public class StockUnitCostChangedDomainEvent(TenantId tenantId, Stock stock, Mon
 {
     public TenantId TenantId { get; } = tenantId;
     public StockId StockId { get; } = stock.Id;
+    public ProductSku Sku { get; } = stock.Sku;
     public Money OldUnitCost { get; } = oldUnitCost;
     public Money NewUnitCost { get; } = newUnitCost;
 }

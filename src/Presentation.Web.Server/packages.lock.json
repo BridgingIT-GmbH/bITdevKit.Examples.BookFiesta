@@ -2765,6 +2765,7 @@
           "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
@@ -2818,6 +2819,7 @@
         "dependencies": {
           "BridgingIT.DevKit.Application.Commands": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.35, )",
+          "BridgingIT.DevKit.Application.Messaging": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.35, )",
@@ -2831,7 +2833,9 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application.Contracts": {
         "type": "Project",
         "dependencies": {
+          "BridgingIT.DevKit.Application.Messaging": "[3.0.3-preview.0.35, )",
           "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application.Contracts": "[1.0.0, )",
+          "BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
         }
       },

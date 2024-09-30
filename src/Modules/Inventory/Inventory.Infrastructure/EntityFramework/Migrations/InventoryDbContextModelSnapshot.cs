@@ -549,7 +549,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                                 .HasColumnType("int");
 
                             b1.Property<string>("Reason")
-                                .IsRequired()
                                 .HasMaxLength(1024)
                                 .HasColumnType("nvarchar(1024)");
 

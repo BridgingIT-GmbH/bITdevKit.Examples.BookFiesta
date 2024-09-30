@@ -142,7 +142,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                     StockId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    Reason = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
                     Timestamp = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>

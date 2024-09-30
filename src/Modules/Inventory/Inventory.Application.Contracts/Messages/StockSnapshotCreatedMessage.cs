@@ -5,4 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
-public class StockSnapshotCreatedMessage { }
+public class StockSnapshotCreatedMessage
+{
+    public StockSnapshotModel Model { get; set; }
+}

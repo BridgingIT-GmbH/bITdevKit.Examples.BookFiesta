@@ -10,6 +10,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Application.Contracts\SharedKernel.Application.Contracts.csproj"/>
+    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Domain\SharedKernel.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BridgingIT.DevKit.Application.Messaging" />
   </ItemGroup>
 
 </Project>
