@@ -41,19 +41,3 @@ public class StockMovement : Entity<StockMovementId>
         return new StockMovement(stockId, quantity, type, reason, timestamp ?? DateTimeOffset.UtcNow);
     }
 }
-
-[DebuggerDisplay("Id={Id}, Value={Value}")]
-public class StockMovementType(int id, string value, string code)
-    : Enumeration(id, value)
-{
-    public static StockMovementType Addition = new(0, nameof(Addition), "ADD");
-
-    public static StockMovementType Removal = new(1, nameof(Removal), "REM");
-
-    public string Code { get; } = code;
-
-    public static IEnumerable<StockMovementType> GetAll()
-    {
-        return GetAll<StockMovementType>();
-    }
-}

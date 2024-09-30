@@ -20,7 +20,7 @@ public class StockSnapshot : AuditableAggregateRoot<StockSnapshotId>, IConcurren
         int quantityOnHand,
         int quantityReserved,
         Money unitCost,
-        Location location,
+        StorageLocation location,
         DateTimeOffset timestamp)
     {
         this.TenantId = tenantId;
@@ -45,7 +45,7 @@ public class StockSnapshot : AuditableAggregateRoot<StockSnapshotId>, IConcurren
 
     public Money UnitCost { get; private set; }
 
-    public Location Location { get; private set; }
+    public StorageLocation Location { get; private set; }
 
     public DateTimeOffset Timestamp { get; private set; }
 
@@ -58,7 +58,7 @@ public class StockSnapshot : AuditableAggregateRoot<StockSnapshotId>, IConcurren
         int quantityOnHand,
         int quantityReserved,
         Money unitCost,
-        Location location,
+        StorageLocation location,
         DateTimeOffset? timestamp = null)
     {
         _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");

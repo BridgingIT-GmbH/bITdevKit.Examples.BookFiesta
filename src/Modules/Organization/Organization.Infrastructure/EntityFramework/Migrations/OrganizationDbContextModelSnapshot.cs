@@ -603,7 +603,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastruct
                             b1.WithOwner("Tenant")
                                 .HasForeignKey("TenantId");
 
-                            b1.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Schedule", "Schedule", b2 =>
+                            b1.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.DateSchedule", "Schedule", b2 =>
                                 {
                                     b2.Property<Guid>("TenantSubscriptionId")
                                         .HasColumnType("uniqueidentifier");

@@ -22,7 +22,7 @@ public class StockCreateCommandHandler(ILoggerFactory loggerFactory, IGenericRep
             command.Model.ReorderThreshold,
             command.Model.ReorderQuantity,
             Money.Create(command.Model.UnitCost),
-            Location.Create("A", "1", "1"));
+            StorageLocation.Create("A", "1", "1"));
 
         await DomainRules.ApplyAsync(
             [

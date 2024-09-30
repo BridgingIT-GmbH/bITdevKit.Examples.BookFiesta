@@ -34,7 +34,7 @@ public static class InventorySeedEntities
                         20,
                         50,
                         Money.Create(30.00m),
-                        Location.Create("A", "1", "1")),
+                        StorageLocation.Create("A", "1", "1")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("0134494166"),
@@ -42,7 +42,7 @@ public static class InventorySeedEntities
                         15,
                         40,
                         Money.Create(25.00m),
-                        Location.Create("A", "1", "2")),
+                        StorageLocation.Create("A", "1", "2")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("0321127426"),
@@ -50,7 +50,7 @@ public static class InventorySeedEntities
                         10,
                         30,
                         Money.Create(35.00m),
-                        Location.Create("A", "2", "1")),
+                        StorageLocation.Create("A", "2", "1")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("0321200686"),
@@ -58,7 +58,7 @@ public static class InventorySeedEntities
                         25,
                         60,
                         Money.Create(40.00m),
-                        Location.Create("A", "2", "2")),
+                        StorageLocation.Create("A", "2", "2")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("1491950357"),
@@ -66,7 +66,7 @@ public static class InventorySeedEntities
                         20,
                         50,
                         Money.Create(28.00m),
-                        Location.Create("B", "1", "1")),
+                        StorageLocation.Create("B", "1", "1")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("0321834577"),
@@ -74,7 +74,7 @@ public static class InventorySeedEntities
                         15,
                         40,
                         Money.Create(32.00m),
-                        Location.Create("B", "1", "2")),
+                        StorageLocation.Create("B", "1", "2")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("0321815736"),
@@ -82,7 +82,7 @@ public static class InventorySeedEntities
                         20,
                         50,
                         Money.Create(38.00m),
-                        Location.Create("B", "2", "1")),
+                        StorageLocation.Create("B", "2", "1")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("0201633610"),
@@ -90,7 +90,7 @@ public static class InventorySeedEntities
                         15,
                         40,
                         Money.Create(33.00m),
-                        Location.Create("B", "2", "2")),
+                        StorageLocation.Create("B", "2", "2")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("1617294549"),
@@ -98,7 +98,7 @@ public static class InventorySeedEntities
                         25,
                         60,
                         Money.Create(29.00m),
-                        Location.Create("C", "1", "1")),
+                        StorageLocation.Create("C", "1", "1")),
                     Stock.Create(
                         tenants[0],
                         ProductSku.Create("0201895513"),
@@ -106,7 +106,7 @@ public static class InventorySeedEntities
                         10,
                         30,
                         Money.Create(42.00m),
-                        Location.Create("C", "1", "2"))
+                        StorageLocation.Create("C", "1", "2"))
                 }.Select(stock =>
                 {
                     stock.Id = StockId.Create($"{GuidGenerator.Create($"Stock_{stock.Sku}{GetSuffix(ticks)}")}");
@@ -159,7 +159,7 @@ public static class InventorySeedEntities
                         stock.QuantityOnHand,
                         stock.QuantityReserved,
                         stock.UnitCost,
-                        stock.StorageLocation,
+                        stock.Location,
                         DateTimeOffset.Parse("2024-01-01T00:00:00Z"));
 
                     snapshot.Id = StockSnapshotId.Create(

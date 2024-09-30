@@ -73,6 +73,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                     LocationAisle = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
                     LocationShelf = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
                     LocationBin = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
+                    LocationFull = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     LastRestockedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuditState_CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -172,6 +173,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                     LocationAisle = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LocationShelf = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LocationBin = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Location_Full = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Timestamp = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuditState_CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -264,6 +266,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                 schema: "inventory",
                 table: "StockMovements",
                 column: "StockId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stocks_LocationFull",
+                schema: "inventory",
+                table: "Stocks",
+                column: "LocationFull");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stocks_TenantId",

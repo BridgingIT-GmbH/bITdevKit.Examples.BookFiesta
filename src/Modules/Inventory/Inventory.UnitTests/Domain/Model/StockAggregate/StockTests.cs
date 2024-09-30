@@ -40,7 +40,7 @@ public class StockTests
         sut.ReorderThreshold.ShouldBe(reorderThreshold);
         sut.ReorderQuantity.ShouldBe(reorderQuantity);
         sut.UnitCost.ShouldBe(unitCost);
-        sut.StorageLocation.ShouldBe(storageLocation);
+        sut.Location.ShouldBe(storageLocation);
         sut.DomainEvents.GetAll().ShouldContain(e => e is StockCreatedDomainEvent);
     }
 
@@ -282,7 +282,7 @@ public class StockTests
         sut.MoveToLocation(newLocation);
 
         // Assert
-        sut.StorageLocation.ShouldBe(newLocation);
+        sut.Location.ShouldBe(newLocation);
         sut.DomainEvents.GetAll().ShouldContain(e => e is StockLocationChangedDomainEvent);
     }
 
@@ -381,7 +381,7 @@ public class StockTests
         return stock;
     }
 
-    private Location CreateLocation() => Location.Create(
+    private StorageLocation CreateLocation() => StorageLocation.Create(
         this.faker.Random.String2(1),
         this.faker.Random.Number(1, 9).ToString(),
         this.faker.Random.Number(1, 9).ToString());

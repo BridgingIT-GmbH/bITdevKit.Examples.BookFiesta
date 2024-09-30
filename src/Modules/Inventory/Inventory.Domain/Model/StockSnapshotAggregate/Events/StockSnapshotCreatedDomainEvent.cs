@@ -14,6 +14,6 @@ public class StockSnapshotCreatedDomainEvent(StockSnapshot snapshot) : DomainEve
     public int QuantityOnHand { get; } = snapshot.QuantityOnHand;
     public int QuantityReserved { get; } = snapshot.QuantityReserved;
     public Money UnitCost { get; } = snapshot.UnitCost;
-    public Location Location { get; } = snapshot.Location;
+    public StorageLocation Location { get; } = snapshot.Location;
     public DateTimeOffset SnapshotTimestamp { get; } = snapshot.Timestamp;
 }

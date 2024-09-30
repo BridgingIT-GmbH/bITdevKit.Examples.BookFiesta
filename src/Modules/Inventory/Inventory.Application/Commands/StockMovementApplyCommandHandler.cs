@@ -1,0 +1,46 @@
+// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
+
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using Money = BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Money;
+
+public class StockMovementApplyCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Stock> repository)
+    : CommandHandlerBase<StockMovementApplyCommand, Result<Stock>>(loggerFactory)
+{
+    public override async Task<CommandResponse<Result<Stock>>> Process(
+        StockMovementApplyCommand applyCommand,
+        CancellationToken cancellationToken)
+    {
+        var stockResult = await repository.FindOneResultAsync(
+            StockId.Create(applyCommand.StockId),
+            cancellationToken: cancellationToken);
+
+        if (stockResult.IsFailure)
+        {
+            return CommandResponse.For(stockResult);
+        }
+
+        if (applyCommand.Model.Type == StockMovementType.Addition.Id)
+        {
+            stockResult.Value.AddStock(applyCommand.Model.Quantity);
+        }
+        else if (applyCommand.Model.Type == StockMovementType.Removal.Id)
+        {
+            stockResult.Value.RemoveStock(applyCommand.Model.Quantity);
+        }
+        else
+        {
+            throw new DomainRuleException("Stock movement type not supported");
+        }
+
+        await DomainRules.ApplyAsync([], cancellationToken);
+
+        await repository.UpdateAsync(stockResult.Value, cancellationToken).AnyContext();
+
+        return CommandResponse.Success(stockResult.Value);
+    }
+}

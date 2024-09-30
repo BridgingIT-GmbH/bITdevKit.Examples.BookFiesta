@@ -39,6 +39,12 @@ public class InventoryStockEndpoints : EndpointsBase
             .ProducesValidationProblem()
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
+
+        group.MapPost("/{id}/adjust", ApplyStockMovement)
+            .WithName("ApplyInventoryStockMovement")
+            .ProducesValidationProblem()
+            .Produces<ProblemDetails>(400)
+            .Produces<ProblemDetails>(500);
     }
 
     private static async Task<Results<Ok<StockModel>, NotFound, ProblemHttpResult>> GetStock(
@@ -73,6 +79,22 @@ public class InventoryStockEndpoints : EndpointsBase
         [FromBody] StockModel model)
     {
         var result = (await mediator.Send(new StockCreateCommand(tenantId, model))).Result;
+
+        return result.IsSuccess
+            ? TypedResults.Created(
+                $"api/tenants/{tenantId}/inventory/stocks/{result.Value.Id}",
+                mapper.Map<Stock, StockModel>(result.Value))
+            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+    }
+
+    private static async Task<Results<Created<StockModel>, ProblemHttpResult>> ApplyStockMovement(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id,
+        [FromBody] StockMovementModel model)
+    {
+        var result = (await mediator.Send(new StockMovementApplyCommand(tenantId, id, model))).Result;
 
         return result.IsSuccess
             ? TypedResults.Created(

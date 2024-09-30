@@ -23,8 +23,8 @@ public class StockFindAllQueryHandlerTests
         ];
         var expectedStocks = new List<Stock>
         {
-            Stock.Create(tenantIds[0], ProductSku.Create("111"), 100, 0, 0, Money.Create(10m), Location.Create("A", "1", "1") ),
-            Stock.Create(tenantIds[0], ProductSku.Create("222"), 100, 0, 0, Money.Create(10m), Location.Create("A", "1", "1") )
+            Stock.Create(tenantIds[0], ProductSku.Create("111"), 100, 0, 0, Money.Create(10m), StorageLocation.Create("A", "1", "1") ),
+            Stock.Create(tenantIds[0], ProductSku.Create("222"), 100, 0, 0, Money.Create(10m), StorageLocation.Create("A", "1", "1") )
         };
 
         var repository = Substitute.For<IGenericRepository<Stock>>();

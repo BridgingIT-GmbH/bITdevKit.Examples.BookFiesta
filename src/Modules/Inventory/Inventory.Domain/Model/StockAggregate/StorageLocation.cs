@@ -5,11 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain;
 
-public class Location : ValueObject
+public class StorageLocation : ValueObject
 {
-    private Location() { } // Private constructor required by EF Core
+    private StorageLocation() { } // Private constructor required by EF Core
 
-    private Location(string aisle, string shelf, string bin)
+    private StorageLocation(string aisle, string shelf, string bin)
     {
         this.Aisle = aisle;
         this.Shelf = shelf;
@@ -22,9 +22,16 @@ public class Location : ValueObject
 
     public string Bin { get; }
 
-    public static implicit operator string(Location location) => location.ToString();
+    public string Full
+    {
+        get => this.ToString();
+        set // needs to be private
+            => _ = value;
+    }
 
-    public static implicit operator Location(string value)
+    public static implicit operator string(StorageLocation location) => location.ToString();
+
+    public static implicit operator StorageLocation(string value)
     {
         var parts = value.Split('|');
         if (parts.Length != 3)
@@ -35,7 +42,7 @@ public class Location : ValueObject
         return Create(parts[0], parts[1], parts[2]);
     }
 
-    public static Location Create(string aisle, string shelf, string bin)
+    public static StorageLocation Create(string aisle, string shelf, string bin)
     {
         if (string.IsNullOrWhiteSpace(aisle))
         {
@@ -52,7 +59,7 @@ public class Location : ValueObject
             throw new DomainRuleException("Bin cannot be empty.");
         }
 
-        return new Location(aisle, shelf, bin);
+        return new StorageLocation(aisle, shelf, bin);
     }
 
     public override string ToString()

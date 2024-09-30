@@ -29,7 +29,7 @@ public class InventoryMapperRegister : IRegister
                     src.ReorderThreshold,
                     src.ReorderQuantity,
                     Money.Create(src.UnitCost),
-                    src.StorageLocation))
+                    src.Location))
             .AfterMapping(
                 (src, dest) =>
                 {

@@ -323,7 +323,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                                 .HasForeignKey("StockId");
                         });
 
-                    b.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain.Location", "StorageLocation", b1 =>
+                    b.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain.StorageLocation", "Location", b1 =>
                         {
                             b1.Property<Guid>("StockId")
                                 .HasColumnType("uniqueidentifier");
@@ -340,6 +340,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                                 .HasColumnType("nvarchar(32)")
                                 .HasColumnName("LocationBin");
 
+                            b1.Property<string>("Full")
+                                .IsRequired()
+                                .HasMaxLength(128)
+                                .HasColumnType("nvarchar(128)")
+                                .HasColumnName("LocationFull");
+
                             b1.Property<string>("Shelf")
                                 .IsRequired()
                                 .HasMaxLength(32)
@@ -347,6 +353,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                                 .HasColumnName("LocationShelf");
 
                             b1.HasKey("StockId");
+
+                            b1.HasIndex("Full");
 
                             b1.ToTable("Stocks", "inventory");
 
@@ -565,9 +573,9 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
 
                     b.Navigation("AuditState");
 
-                    b.Navigation("Movements");
+                    b.Navigation("Location");
 
-                    b.Navigation("StorageLocation");
+                    b.Navigation("Movements");
 
                     b.Navigation("UnitCost");
                 });
@@ -661,7 +669,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                                 .HasForeignKey("StockSnapshotId");
                         });
 
-                    b.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain.Location", "Location", b1 =>
+                    b.OwnsOne("BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain.StorageLocation", "Location", b1 =>
                         {
                             b1.Property<Guid>("StockSnapshotId")
                                 .HasColumnType("uniqueidentifier");
@@ -677,6 +685,9 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)")
                                 .HasColumnName("LocationBin");
+
+                            b1.Property<string>("Full")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Shelf")
                                 .IsRequired()

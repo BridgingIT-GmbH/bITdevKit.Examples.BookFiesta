@@ -19,7 +19,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         int reorderThreshold,
         int reorderQuantity,
         Money unitCost,
-        Location storageLocation)
+        StorageLocation location)
     {
         this.TenantId = tenantId;
         this.Sku = sku;
@@ -28,7 +28,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         this.ReorderThreshold = reorderThreshold;
         this.ReorderQuantity = reorderQuantity;
         this.UnitCost = unitCost;
-        this.StorageLocation = storageLocation;
+        this.Location = location;
         this.LastRestockedAt = DateTime.UtcNow;
     }
 
@@ -46,7 +46,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
 
     public Money UnitCost { get; private set; }
 
-    public Location StorageLocation { get; private set; }
+    public StorageLocation Location { get; private set; }
 
     public DateTimeOffset? LastRestockedAt { get; private set; }
 
@@ -63,7 +63,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         int reorderThreshold,
         int reorderQuantity,
         Money unitCost,
-        Location storageLocation)
+        StorageLocation storageLocation)
     {
         _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
         _ = sku ?? throw new DomainRuleException("ProductSku cannot be empty.");
@@ -130,7 +130,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         return this;
     }
 
-    public Stock AddStock(int quantity)
+    public Stock AddStock(int quantity, string reason = null)
     {
         if (quantity <= 0)
         {
@@ -140,15 +140,15 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         this.QuantityOnHand += quantity;
         this.LastRestockedAt = DateTime.UtcNow;
 
-        var movement = StockMovement.Create(this.Id, quantity, StockMovementType.Addition, "Stock addition");
-        this.movements.Add(movement);
+        this.movements.Add(
+            StockMovement.Create(this.Id, quantity, StockMovementType.Addition, reason ?? "Stock addition"));
 
         this.DomainEvents.Register(new StockUpdatedDomainEvent(this.TenantId, this));
 
         return this;
     }
 
-    public Stock RemoveStock(int quantity)
+    public Stock RemoveStock(int quantity, string reason = null)
     {
         if (quantity <= 0)
         {
@@ -162,8 +162,8 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
 
         this.QuantityOnHand -= quantity;
 
-        var movement = StockMovement.Create(this.Id, -quantity, StockMovementType.Removal, "Stock removal");
-        this.movements.Add(movement);
+        this.movements.Add(
+            StockMovement.Create(this.Id, -quantity, StockMovementType.Removal, reason ?? "Stock removal"));
 
         this.DomainEvents.Register(new StockUpdatedDomainEvent(this.TenantId, this));
 
@@ -228,16 +228,16 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         return this;
     }
 
-    public Stock MoveToLocation(Location newLocation)
+    public Stock MoveToLocation(StorageLocation newLocation)
     {
         _ = newLocation ?? throw new DomainRuleException("New location cannot be empty.");
 
-        if (this.StorageLocation == newLocation)
+        if (this.Location == newLocation)
         {
             return this;
         }
 
-        this.StorageLocation = newLocation;
+        this.Location = newLocation;
 
         this.DomainEvents.Register(new StockLocationChangedDomainEvent(this.TenantId, this, newLocation));
 

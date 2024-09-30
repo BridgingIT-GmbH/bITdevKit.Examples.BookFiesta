@@ -36,7 +36,7 @@ public class StockSnapshotCreateCommandHandler(
             stockResult.Value.QuantityOnHand,
             stockResult.Value.QuantityReserved,
             stockResult.Value.UnitCost,
-            stockResult.Value.StorageLocation,
+            stockResult.Value.Location,
             DateTimeOffset.UtcNow);
 
         await stockSnapshotRepository.InsertAsync(stockSnapshot, cancellationToken).AnyContext();

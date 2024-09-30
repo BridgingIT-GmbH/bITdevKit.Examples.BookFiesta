@@ -23,13 +23,24 @@ public class StockModel
 
     public decimal UnitCost { get; set; }
 
-    public string StorageLocation { get; set; }
+    public string Location { get; set; }
 
     public DateTimeOffset? LastRestockedAt { get; set; }
 
     public StockMovementModel[] Movements { get; set; }
 
     public StockAdjustmentModel[] Adjustments { get; set; }
+}
+
+public class StockMovementModel
+{
+    public int Quantity { get; private set; }
+
+    public int Type { get; private set; }
+
+    public string Reason { get; private set; }
+
+    public DateTimeOffset Timestamp { get; private set; }
 }
 
 public class StockAdjustmentModel
@@ -41,17 +52,6 @@ public class StockAdjustmentModel
     public decimal OldUnitCost { get; private set; }
 
     public decimal NewUnitCost { get; private set; }
-
-    public string Reason { get; private set; }
-
-    public DateTimeOffset Timestamp { get; private set; }
-}
-
-public class StockMovementModel
-{
-    public int Quantity { get; private set; }
-
-    public int Type { get; private set; }
 
     public string Reason { get; private set; }
 

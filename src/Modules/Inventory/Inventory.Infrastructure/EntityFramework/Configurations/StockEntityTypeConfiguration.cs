@@ -75,11 +75,13 @@ public class StockEntityTypeConfiguration
                     });
             });
 
-        builder.OwnsOne(e => e.StorageLocation, locationBuilder =>
+        builder.OwnsOne(e => e.Location, b =>
         {
-            locationBuilder.Property(l => l.Aisle).HasColumnName("LocationAisle").IsRequired().HasMaxLength(32);
-            locationBuilder.Property(l => l.Shelf).HasColumnName("LocationShelf").IsRequired().HasMaxLength(32);
-            locationBuilder.Property(l => l.Bin).HasColumnName("LocationBin").IsRequired().HasMaxLength(32);
+            b.Property(l => l.Aisle).HasColumnName("LocationAisle").IsRequired().HasMaxLength(32);
+            b.Property(l => l.Shelf).HasColumnName("LocationShelf").IsRequired().HasMaxLength(32);
+            b.Property(l => l.Bin).HasColumnName("LocationBin").IsRequired().HasMaxLength(32);
+            b.Property(e => e.Full).HasColumnName("LocationFull").IsRequired().HasMaxLength(128);
+            b.HasIndex(e => e.Full);
         });
 
         builder.Property(e => e.LastRestockedAt).IsRequired(false);

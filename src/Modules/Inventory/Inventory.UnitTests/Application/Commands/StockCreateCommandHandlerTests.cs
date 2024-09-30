@@ -31,7 +31,7 @@ public class StockCreateCommandHandlerTests
             QuantityReserved = stock.QuantityReserved,
             ReorderThreshold = stock.ReorderThreshold,
             ReorderQuantity = stock.ReorderThreshold,
-            StorageLocation = stock.StorageLocation,
+            Location = stock.Location,
             UnitCost = stock.UnitCost,
             LastRestockedAt = stock.LastRestockedAt
         };
