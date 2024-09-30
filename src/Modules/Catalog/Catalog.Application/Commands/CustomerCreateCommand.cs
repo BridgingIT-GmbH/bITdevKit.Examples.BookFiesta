@@ -5,8 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class CustomerCreateCommand(string tenantId, CustomerModel model) : CommandRequestBase<Result<Customer>>,
-    ITenantAware
+public class CustomerCreateCommand(string tenantId, CustomerModel model)
+    : CommandRequestBase<Result<Customer>>, ITenantAware
 {
     public string TenantId { get; } = tenantId;
 

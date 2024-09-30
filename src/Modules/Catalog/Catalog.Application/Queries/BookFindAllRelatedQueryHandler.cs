@@ -8,7 +8,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 public class BookFindAllRelatedQueryHandler(
     ILoggerFactory loggerFactory,
     IGenericRepository<Book> repository,
-    ICatalogQueryService recommendationService)
+    ICatalogQueryService queryService)
     : QueryHandlerBase<BookFindAllRelatedQuery, Result<IEnumerable<Book>>>(loggerFactory)
 {
     public override async Task<QueryResponse<Result<IEnumerable<Book>>>> Process(
@@ -20,7 +20,7 @@ public class BookFindAllRelatedQueryHandler(
             throw new EntityNotFoundException();
 
         return result.IsSuccess
-            ? QueryResponse.For(await recommendationService.BookFindAllRelatedAsync(result.Value))
+            ? QueryResponse.For(await queryService.BookFindAllRelatedAsync(result.Value))
             : QueryResponse.For<IEnumerable<Book>>(result);
     }
 }

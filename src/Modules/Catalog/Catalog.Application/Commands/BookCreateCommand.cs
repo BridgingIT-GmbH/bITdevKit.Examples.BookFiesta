@@ -34,6 +34,7 @@ public class BookCreateCommand(string tenantId, BookModel model) : CommandReques
                 this.RuleFor(m => m).NotNull().NotEmpty().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Id).MustBeDefaultOrEmptyGuid().WithMessage("Must be empty.");
                 this.RuleFor(m => m.Title).NotNull().NotEmpty().WithMessage("Must not be empty.");
+                this.RuleFor(m => m.Sku).NotNull().NotEmpty().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Isbn).NotNull().NotEmpty().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Publisher).NotNull().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Publisher.Id).MustNotBeDefaultOrEmptyGuid().WithMessage("Must not be empty.");

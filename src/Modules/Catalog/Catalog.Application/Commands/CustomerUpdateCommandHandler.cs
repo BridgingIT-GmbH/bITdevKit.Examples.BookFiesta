@@ -12,8 +12,6 @@ public class CustomerUpdateCommandHandler(ILoggerFactory loggerFactory, IGeneric
         CustomerUpdateCommand command,
         CancellationToken cancellationToken)
     {
-        var tenantId =
-            TenantId.Create(command.TenantId); // TODO: use in findone query or check later > notfoundexception
         var customerResult = await repository.FindOneResultAsync(
             CustomerId.Create(command.Model.Id),
             cancellationToken: cancellationToken);

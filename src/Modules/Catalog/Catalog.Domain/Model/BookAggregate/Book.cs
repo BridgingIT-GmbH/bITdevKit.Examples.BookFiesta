@@ -22,6 +22,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         string title,
         string edition,
         string description,
+        ProductSku sku,
         BookIsbn isbn,
         Money price,
         Publisher publisher,
@@ -45,6 +46,8 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     public string Edition { get; private set; }
 
     public string Description { get; private set; }
+
+    public ProductSku Sku { get; private set; }
 
     public BookIsbn Isbn { get; private set; }
 
@@ -81,6 +84,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         string title,
         string edition,
         string description,
+        ProductSku sku,
         BookIsbn isbn,
         Money price,
         Publisher publisher,
@@ -88,7 +92,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
 
-        var book = new Book(tenantId, title, edition, description, isbn, price, publisher, publishedDate);
+        var book = new Book(tenantId, title, edition, description, sku, isbn, price, publisher, publishedDate);
 
         book.DomainEvents.Register(new BookCreatedDomainEvent(tenantId, book), true);
 

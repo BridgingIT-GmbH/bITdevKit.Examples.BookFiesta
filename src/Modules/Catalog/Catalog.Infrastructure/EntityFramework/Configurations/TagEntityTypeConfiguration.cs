@@ -22,7 +22,8 @@ public class TagEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Tag
         //builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
-        builder.Property(e => e.TenantId).HasConversion(id => id.Value, value => TenantId.Create(value)).IsRequired();
+        builder.Property(e => e.TenantId)
+            .HasConversion(id => id.Value, value => TenantId.Create(value)).IsRequired();
         //builder.HasIndex(e => e.TenantId);
         //builder.HasOne("organization.Tenants")
         //    .WithMany()
@@ -33,8 +34,9 @@ public class TagEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<Tag
 
         builder.Property(e => e.Category).IsRequired(false).HasMaxLength(128);
 
+        builder.HasIndex(nameof(Tag.TenantId));
         builder.HasIndex(nameof(Tag.Name));
         builder.HasIndex(nameof(Tag.Category));
-        builder.HasIndex(nameof(Tag.Name), nameof(Tag.Category)).IsUnique();
+        builder.HasIndex(nameof(Tag.TenantId), nameof(Tag.Name), nameof(Tag.Category)).IsUnique();
     }
 }

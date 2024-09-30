@@ -58,6 +58,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Modules\Catalog\Catalog.Presentation\Catalog.Presentation.csproj"/>
+    <ProjectReference Include="..\Modules\Inventory\Inventory.Presentation\Inventory.Presentation.csproj" />
     <ProjectReference Include="..\Modules\Organization\Organization.Presentation\Organization.Presentation.csproj"/>
     <ProjectReference Include="..\Presentation.ServiceDefaults\Presentation.ServiceDefaults.csproj"/>
     <ProjectReference Include="..\Presentation.Web.Client\Presentation.Web.Client.csproj"/>

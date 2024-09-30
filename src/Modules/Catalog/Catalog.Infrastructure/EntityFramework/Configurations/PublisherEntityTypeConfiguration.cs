@@ -59,18 +59,11 @@ public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfigurati
                 b.Property(e => e.Country).HasColumnName("AddressCountry").HasMaxLength(128).IsRequired();
             });
 
-        builder.OwnsOne(
-            e => e.ContactEmail,
-            b =>
-            {
-                b.Property(e => e.Value)
-                    .HasColumnName(nameof(Publisher.ContactEmail))
-                    .IsRequired(false)
-                    .HasMaxLength(256);
-
-                b.HasIndex(nameof(Customer.Email.Value)).IsUnique();
-            });
-        builder.Navigation(e => e.ContactEmail).IsRequired();
+        builder.Property(e => e.ContactEmail)
+            .HasConversion(email => email.Value, value => EmailAddress.Create(value))
+            .IsRequired()
+            .HasMaxLength(256);
+        builder.HasIndex(nameof(Publisher.TenantId), nameof(Publisher.ContactEmail)).IsUnique();
 
         builder.OwnsOne(
             e => e.Website,

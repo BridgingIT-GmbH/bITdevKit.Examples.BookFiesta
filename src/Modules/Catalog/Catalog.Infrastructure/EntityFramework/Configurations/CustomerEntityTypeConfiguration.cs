@@ -45,7 +45,8 @@ public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
             e => e.PersonName,
             b =>
             {
-                b.Property(e => e.Title).HasColumnName("PersonNameTitle").IsRequired(false).HasMaxLength(64);
+                b.Property(e => e.Title)
+                    .HasColumnName("PersonNameTitle").IsRequired(false).HasMaxLength(64);
                 b.Property(e => e.Parts)
                     .HasColumnName("PersonNameParts")
                     .IsRequired()
@@ -78,15 +79,11 @@ public class CustomerEntityTypeConfiguration : TenantAwareEntityTypeConfiguratio
                 b.Property(e => e.Country).HasColumnName("AddressCountry").HasMaxLength(128).IsRequired();
             });
 
-        builder.OwnsOne(
-            e => e.Email,
-            b =>
-            {
-                b.Property(e => e.Value).HasColumnName(nameof(Customer.Email)).IsRequired(false).HasMaxLength(256);
-
-                b.HasIndex(nameof(Customer.Email.Value)).IsUnique();
-            });
-        builder.Navigation(e => e.Email).IsRequired();
+        builder.Property(e => e.Email)
+            .HasConversion(email => email.Value, value => EmailAddress.Create(value))
+            .IsRequired()
+            .HasMaxLength(256);
+        builder.HasIndex(nameof(Customer.TenantId), nameof(Customer.Email)).IsUnique();
 
         builder.OwnsOneAuditState(); // TODO: use ToJson variant
         //builder.OwnsOne(e => e.AuditState, b => b.ToJson());

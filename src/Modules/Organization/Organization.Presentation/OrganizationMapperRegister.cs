@@ -124,12 +124,9 @@ public class OrganizationMapperRegister : IRegister
 
     private static Address MapAddress(AddressModel source)
     {
-        if (source == null)
-        {
-            return null;
-        }
-
-        return Address.Create(source.Name, source.Line1, source.Line2, source.PostalCode, source.City, source.Country);
+        return source == null
+            ? null
+            : Address.Create(source.Name, source.Line1, source.Line2, source.PostalCode, source.City, source.Country);
     }
 
     private static void MapSubscriptions(TenantSubscriptionModel[] sources, Tenant destination)

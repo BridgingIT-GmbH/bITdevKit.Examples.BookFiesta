@@ -1,0 +1,21 @@
+﻿// MIT-License
+// Copyright BridgingIT GmbH - All Rights Reserved
+// Use of this source code is governed by an MIT-style license that can be
+// found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
+
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
+
+public class StockFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Stock> repository)
+    : QueryHandlerBase<StockFindAllQuery, Result<IEnumerable<Stock>>>(loggerFactory)
+{
+    public override async Task<QueryResponse<Result<IEnumerable<Stock>>>> Process(
+        StockFindAllQuery query,
+        CancellationToken cancellationToken)
+    {
+        return QueryResponse.For(
+            await repository.FindAllResultAsync(
+                    new FindOptions<Stock> { Order = new OrderOption<Stock>(e => e.Sku) },
+                    cancellationToken)
+                .AnyContext());
+    }
+}

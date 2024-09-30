@@ -42,12 +42,14 @@ public class BookEntityTypeConfiguration
 
         builder.Property(e => e.Version).IsConcurrencyToken();
 
-        builder.Property(e => e.Id).ValueGeneratedOnAdd().HasConversion(id => id.Value, value => BookId.Create(value));
+        builder.Property(e => e.Id).ValueGeneratedOnAdd()
+            .HasConversion(id => id.Value, value => BookId.Create(value));
 
         //builder.HasOne<Tenant>() // one-to-many with no navigations https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many#one-to-many-with-no-navigations
         //    .WithMany()
         //    .HasForeignKey(e => e.TenantId).IsRequired();
-        builder.Property(e => e.TenantId).HasConversion(id => id.Value, value => TenantId.Create(value)).IsRequired();
+        builder.Property(e => e.TenantId)
+            .HasConversion(id => id.Value, value => TenantId.Create(value)).IsRequired();
 
         //builder.HasIndex(e => e.TenantId);
         //builder.HasOne("organization.Tenants")
@@ -63,15 +65,27 @@ public class BookEntityTypeConfiguration
 
         builder.Property(e => e.PublishedDate).IsRequired(false);
 
-        builder.OwnsOne(
-            e => e.Isbn,
-            b =>
-            {
-                b.Property(e => e.Value).HasColumnName("Isbn").IsRequired().HasMaxLength(32);
-                b.Property(e => e.Type).HasColumnName("IsbnType").IsRequired(false).HasMaxLength(32);
+        builder.Property(e => e.Sku)
+            .HasConversion(sku => sku.Value, value => ProductSku.Create(value))
+            .IsRequired()
+            .HasMaxLength(12);
+        builder.HasIndex(nameof(Book.TenantId), nameof(Book.Sku)).IsUnique();
 
-                b.HasIndex(nameof(BookIsbn.Value)).IsUnique();
-            });
+        builder.Property(e => e.Isbn)
+            .HasConversion(isbn => isbn.Value, value => BookIsbn.Create(value))
+            .IsRequired()
+            .HasMaxLength(32);
+        builder.HasIndex(nameof(Book.TenantId), nameof(Book.Isbn)).IsUnique();
+
+        // builder.OwnsOne(
+        //     e => e.Isbn,
+        //     b =>
+        //     {
+        //         b.Property(e => e.Value).HasColumnName("Isbn").IsRequired().HasMaxLength(32);
+        //         b.Property(e => e.Type).HasColumnName("IsbnType").IsRequired(false).HasMaxLength(32);
+        //         b.HasIndex(nameof(Book.TenantId), nameof(BookIsbn.Value)).IsUnique();
+        //     });
+        // builder.Navigation(e => e.Isbn).IsRequired();
 
         builder.OwnsOne(
             e => e.AverageRating,
@@ -79,7 +93,7 @@ public class BookEntityTypeConfiguration
             {
                 b.Property(e => e.Value)
                     .HasColumnName("AverageRating")
-                    //.HasDefaultValue(0m)
+                    // .HasDefaultValue(0m)
                     .IsRequired(false)
                     .HasColumnType("decimal(5,2)");
 
@@ -110,12 +124,14 @@ public class BookEntityTypeConfiguration
             });
 
         builder
-            .HasMany(
-                e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
+            .HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
             .WithMany()
             .UsingEntity(b => b.ToTable("BookTags"));
 
-        builder.HasMany(b => b.Keywords).WithOne().HasForeignKey(ki => ki.BookId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasMany(b => b.Keywords)
+            .WithOne()
+            .HasForeignKey(ki => ki.BookId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.OwnsOneAuditState(); // TODO: use ToJson variant
         //builder.OwnsOne(e => e.AuditState, b => b.ToJson());

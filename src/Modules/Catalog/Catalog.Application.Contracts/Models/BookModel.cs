@@ -15,6 +15,8 @@ public class BookModel
 
     public string Description { get; set; }
 
+    public string Sku { get; set; }
+
     public string Isbn { get; set; }
 
     public decimal Price { get; set; }

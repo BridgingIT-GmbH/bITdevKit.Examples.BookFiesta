@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ModuleName>Inventory</ModuleName>
+    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).Application.Contracts</AssemblyName>
+    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).Application</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.Application.Contracts\SharedKernel.Application.Contracts.csproj"/>
+  </ItemGroup>
+
+</Project>

@@ -3,6 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
@@ -12,12 +13,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using BridgingIT.DevKit.Application.Commands;
-using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Application.Messaging;
 using BridgingIT.DevKit.Application.Queries;
 using BridgingIT.DevKit.Application.Utilities;
 using BridgingIT.DevKit.Common;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Pages;
@@ -56,6 +55,7 @@ builder.Host.ConfigureLogging(builder.Configuration);
 // Configure the modules
 builder.Services.AddModules(builder.Configuration, builder.Environment)
     .WithModule<OrganizationModule>()
+    .WithModule<InventoryModule>()
     .WithModule<CatalogModule>()
     .WithModuleContextAccessors()
     .WithRequestModuleContextAccessors()
@@ -95,7 +95,7 @@ builder.Services.AddStartupTasks(o => o
         .StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
     .WithTask<EchoStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:03"))
     .WithTask<JobSchedulingSqlServerSeederStartupTask>(o => o // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
-        .Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:10"))
+        .Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:00"))
     //.WithTask(sp => new JobSchedulingSqlServerSeederStartupTask(sp.GetRequiredService<ILoggerFactory>(), builder.Configuration))
     .WithBehavior<ModuleScopeStartupTaskBehavior>()
     //.WithBehavior<ChaosExceptionStartupTaskBehavior>()
@@ -103,9 +103,7 @@ builder.Services.AddStartupTasks(o => o
     .WithBehavior<TimeoutStartupTaskBehavior>();
 
 builder.Services
-    .AddMessaging(
-        builder.Configuration,
-        o => o
+    .AddMessaging(builder.Configuration, o => o
             .StartupDelay(builder.Configuration["Messaging:StartupDelay"]))
     .WithBehavior<ModuleScopeMessagePublisherBehavior>()
     .WithBehavior<ModuleScopeMessageHandlerBehavior>()

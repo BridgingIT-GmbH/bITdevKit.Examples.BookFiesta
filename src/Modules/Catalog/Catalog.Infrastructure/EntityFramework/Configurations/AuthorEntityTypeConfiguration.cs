@@ -52,7 +52,10 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
             e => e.PersonName,
             b =>
             {
-                b.Property(e => e.Title).HasColumnName("PersonNameTitle").IsRequired(false).HasMaxLength(64);
+                b.Property(e => e.Title)
+                    .HasColumnName("PersonNameTitle")
+                    .IsRequired(false)
+                    .HasMaxLength(64);
                 b.Property(e => e.Parts)
                     .HasColumnName("PersonNameParts")
                     .IsRequired()
@@ -66,11 +69,11 @@ public class AuthorEntityTypeConfiguration : TenantAwareEntityTypeConfiguration<
                             c => c.AsEnumerable()));
                 b.Property(e => e.Suffix).HasColumnName("PersonNameSuffix").IsRequired(false).HasMaxLength(64);
                 b.Property(e => e.Full).HasColumnName("PersonNameFull").IsRequired().HasMaxLength(2048);
+                b.HasIndex(e => e.Full);
             });
 
         builder
-            .HasMany(
-                e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
+            .HasMany(e => e.Tags) // unidirectional many-to-many relationship https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many#unidirectional-many-to-many
             .WithMany()
             .UsingEntity(b => b.ToTable("AuthorTags"));
 
