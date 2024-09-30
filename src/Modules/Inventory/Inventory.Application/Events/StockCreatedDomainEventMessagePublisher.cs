@@ -10,7 +10,7 @@ using BridgingIT.DevKit.Application.Messaging;
 public class StockCreatedDomainEventMessagePublisher(ILoggerFactory loggerFactory, IMessageBroker messageBroker)
     : DomainEventHandlerBase<StockCreatedDomainEvent>(loggerFactory)
 {
-    public override bool CanHandle(StockCreatedDomainEvent notification)
+    public override bool CanHandle(StockCreatedDomainEvent @event)
     {
         return true;
     }
