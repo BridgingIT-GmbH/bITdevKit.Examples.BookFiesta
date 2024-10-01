@@ -7,7 +7,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application
 
 using MediatR;
 
-public class OrganizationModuleClient(IMediator mediator, IMapper mapper) : IOrganizationModuleClient
+public class OrganizationModuleClient(IMediator mediator, IMapper mapper)
+    : IOrganizationModuleClient
 {
     public async Task<Result<TenantModel>> TenantFindOne(string id)
     {
