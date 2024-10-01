@@ -21,6 +21,6 @@ public interface IInventoryModuleClient
     ///     A task representing the asynchronous operation. The task's result contains a <see cref="Result{T}" /> with the
     ///     stock details when successful; otherwise, an error result.
     /// </returns>
-    // INFO incase the Organization module is a seperate webservice use refit -> [Get("api/organization/tenants/{id}")]
+    // INFO incase the Inventory module is a seperate webservice use refit -> [Get("api/tenants/{tenantId}/inventory/stocks/{id}")]
     public Task<Result<StockModel>> StockFindOne(string tenantId, string id);
 }
