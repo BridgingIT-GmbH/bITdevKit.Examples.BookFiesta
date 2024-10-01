@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
+using BridgingIT.DevKit.Domain.Specifications;
+
 public class StockFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Stock> repository)
     : QueryHandlerBase<StockFindAllQuery, Result<IEnumerable<Stock>>>(loggerFactory)
 {
@@ -14,6 +16,7 @@ public class StockFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepo
     {
         return QueryResponse.For(
             await repository.FindAllResultAsync(
+                    [new Specification<Stock>(e => e.TenantId == query.TenantId)],
                     new FindOptions<Stock> { Order = new OrderOption<Stock>(e => e.Sku) },
                     cancellationToken)
                 .AnyContext());

@@ -28,7 +28,7 @@ public class StockSnapshotFindAllQueryHandler(
 
         return QueryResponse.For(
             await stocksnapshotRepository.FindAllResultAsync(
-                    new[] { new Specification<StockSnapshot>(e => e.TenantId == query.TenantId && e.StockId == query.StockId) },
+                    [new Specification<StockSnapshot>(e => e.TenantId == query.TenantId && e.StockId == query.StockId)],
                     new FindOptions<StockSnapshot> { Order = new OrderOption<StockSnapshot>(e => e.Timestamp) },
                     cancellationToken)
                 .AnyContext());

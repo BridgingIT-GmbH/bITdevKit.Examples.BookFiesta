@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
+using BridgingIT.DevKit.Domain.Specifications;
+
 public class CustomerFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Customer> repository)
     : QueryHandlerBase<CustomerFindAllQuery, Result<IEnumerable<Customer>>>(loggerFactory)
 {
@@ -13,6 +15,9 @@ public class CustomerFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericR
         CancellationToken cancellationToken)
     {
         return QueryResponse.For(
-            await repository.FindAllResultAsync(cancellationToken: cancellationToken).AnyContext());
+            await repository.FindAllResultAsync(
+                [new Specification<Customer>(e => e.TenantId == query.TenantId)],
+                new FindOptions<Customer> { Order = new OrderOption<Customer>(e => e.Email.Value) },
+                cancellationToken: cancellationToken).AnyContext());
     }
 }

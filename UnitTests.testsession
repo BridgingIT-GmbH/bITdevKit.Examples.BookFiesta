@@ -1,0 +1,26 @@
+<SessionState ContinuousTestingMode="0" IsActive="True" IsLocked="True" Name="UnitTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session">
+  <Or>
+    <And>
+      <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta" Presentation="&lt;src&gt;\&lt;Modules&gt;" />
+      <Or>
+        <And>
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Catalog&gt;\&lt;tests&gt;" />
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta\src\Modules\Catalog\Catalog.UnitTests" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Catalog&gt;\&lt;tests&gt;\&lt;Catalog.UnitTests&gt;" />
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Catalog&gt;" />
+        </And>
+        <And>
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Inventory&gt;\&lt;tests&gt;" />
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta\src\Modules\Inventory\Inventory.UnitTests" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Inventory&gt;\&lt;tests&gt;\&lt;Inventory.UnitTests&gt;" />
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Inventory&gt;" />
+        </And>
+        <And>
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Organization&gt;\&lt;tests&gt;" />
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta\src\Modules\Organization\Organization.UnitTests" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Organization&gt;\&lt;tests&gt;\&lt;Organization.UnitTests&gt;" />
+          <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta" Presentation="&lt;src&gt;\&lt;Modules&gt;\&lt;Organization&gt;" />
+        </And>
+      </Or>
+      <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta" Presentation="&lt;src&gt;" />
+    </And>
+    <Project Location="F:\projects\bit\bITdevKit.Examples.BookFiesta\src\SharedKernel\SharedKernel.UnitTests" Presentation="&lt;src&gt;\&lt;SharedKernel&gt;\&lt;tests&gt;\&lt;SharedKernel.UnitTests&gt;" />
+  </Or>
+</SessionState>

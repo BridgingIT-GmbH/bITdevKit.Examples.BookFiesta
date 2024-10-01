@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Catalog.UnitTests.Application;
 
 using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Domain.Specifications;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
@@ -34,7 +35,11 @@ public class CustomerFindAllQueryHandlerTests
         };
 
         var repository = Substitute.For<IGenericRepository<Customer>>();
-        repository.FindAllAsync(cancellationToken: CancellationToken.None).Returns(expectedCustomers.AsEnumerable());
+        repository.FindAllAsync(
+                Arg.Any<IEnumerable<ISpecification<Customer>>>(),
+                Arg.Any<FindOptions<Customer>>(),
+                cancellationToken: CancellationToken.None)
+            .Returns(expectedCustomers.AsEnumerable());
 
         var query = new CustomerFindAllQuery(tenantIds[0]);
         var sut = new CustomerFindAllQueryHandler(Substitute.For<ILoggerFactory>(), repository);
@@ -43,8 +48,12 @@ public class CustomerFindAllQueryHandlerTests
         var response = await sut.Process(query, CancellationToken.None);
 
         // Assert
-        response?.Result.ShouldNotBeNull();
+        response?.Result.ShouldNotBeNull().ShouldBeSuccess();
+        response?.Result.Value.ShouldNotBeNull();
         response?.Result.Value.Count().ShouldBe(expectedCustomers.Count);
-        await repository.Received(1).FindAllAsync(cancellationToken: CancellationToken.None);
+        await repository.Received(1).FindAllAsync(
+            Arg.Any<IEnumerable<ISpecification<Customer>>>(),
+            Arg.Any<FindOptions<Customer>>(),
+            cancellationToken: CancellationToken.None);
     }
 }

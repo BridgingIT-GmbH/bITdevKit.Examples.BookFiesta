@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
-namespace BridgingIT.DevKit.Examples.BookFiesta.Inventory.UnitTests.Application;
+namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.UnitTests.Application;
 
 using BridgingIT.DevKit.Domain.Repositories;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;

@@ -53,8 +53,4 @@
     <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj" IsAspireProjectResource="false"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Presentation\Web\" />
-  </ItemGroup>
-
 </Project>
