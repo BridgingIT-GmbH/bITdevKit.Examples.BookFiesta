@@ -23,6 +23,7 @@ public class StockCreateCommandHandler(ILoggerFactory loggerFactory, IGenericRep
             command.Model.ReorderQuantity,
             Money.Create(command.Model.UnitCost),
             StorageLocation.Create("A", "1", "1"));
+        // -> register StockCreatedDomainEvent -> Handler -> publish StockCreatedMessage
 
         await DomainRules.ApplyAsync(
             [
@@ -30,7 +31,7 @@ public class StockCreateCommandHandler(ILoggerFactory loggerFactory, IGenericRep
             ],
             cancellationToken);
 
-        await repository.InsertAsync(stock, cancellationToken).AnyContext();
+        await repository.InsertAsync(stock, cancellationToken).AnyContext(); // -> dispatch DomainEvents
 
         return CommandResponse.Success(stock);
     }

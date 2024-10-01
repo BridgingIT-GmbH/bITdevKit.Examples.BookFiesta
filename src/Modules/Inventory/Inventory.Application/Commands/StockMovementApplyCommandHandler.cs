@@ -27,10 +27,12 @@ public class StockMovementApplyCommandHandler(ILoggerFactory loggerFactory, IGen
         if (applyCommand.Model.Type == StockMovementType.Addition.Id)
         {
             stockResult.Value.AddStock(applyCommand.Model.Quantity);
+            // -> register StockUpdatedDomainEvent -> Handler -> publish StockUpdatedMessage
         }
         else if (applyCommand.Model.Type == StockMovementType.Removal.Id)
         {
             stockResult.Value.RemoveStock(applyCommand.Model.Quantity);
+            // -> register StockUpdatedDomainEvent -> Handler -> publish StockUpdatedMessage
         }
         else
         {
@@ -39,7 +41,7 @@ public class StockMovementApplyCommandHandler(ILoggerFactory loggerFactory, IGen
 
         await DomainRules.ApplyAsync([], cancellationToken);
 
-        await repository.UpdateAsync(stockResult.Value, cancellationToken).AnyContext();
+        await repository.UpdateAsync(stockResult.Value, cancellationToken).AnyContext(); // -> dispatch DomainEvents
 
         return CommandResponse.Success(stockResult.Value);
     }
