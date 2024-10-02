@@ -61,7 +61,7 @@ public class PublisherEntityTypeConfiguration : TenantAwareEntityTypeConfigurati
 
         builder.Property(e => e.ContactEmail)
             .HasConversion(email => email.Value, value => EmailAddress.Create(value))
-            .IsRequired()
+            .IsRequired(false)
             .HasMaxLength(256);
         builder.HasIndex(nameof(Publisher.TenantId), nameof(Publisher.ContactEmail)).IsUnique();
 

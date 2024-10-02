@@ -32,7 +32,7 @@ public class StockMovement : Entity<StockMovementId>
 
     public static StockMovement Create(StockId stockId, int quantity, StockMovementType type, string reason, DateTimeOffset? timestamp = null)
     {
-        _ = stockId ?? throw new DomainRuleException("StockId cannot be empty.");
+        _ = stockId ?? throw new ArgumentException("StockId cannot be empty.");
         if (string.IsNullOrWhiteSpace(reason))
         {
             throw new DomainRuleException("Reason for movement cannot be empty.");

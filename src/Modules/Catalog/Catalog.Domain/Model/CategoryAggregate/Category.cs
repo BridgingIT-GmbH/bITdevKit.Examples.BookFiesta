@@ -51,7 +51,7 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
         int order = 0,
         Category parent = null)
     {
-        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+        _ = tenantId ?? throw new ArgumentException("TenantId cannot be empty.");
 
         var category = new Category(tenantId, title, description, order, parent);
 
@@ -63,7 +63,7 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public Category SetTitle(string title)
     {
-        _ = title ?? throw new DomainRuleException("Category Title cannot be empty.");
+        _ = title ?? throw new ArgumentException("Category Title cannot be empty.");
 
         if (this.Title == title)
         {
@@ -101,7 +101,7 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public Category AddBook(Book book)
     {
-        _ = book ?? throw new DomainRuleException("Category Book cannot be empty.");
+        _ = book ?? throw new ArgumentException("Category Book cannot be empty.");
 
         if (this.books.Contains(book))
         {
@@ -115,7 +115,7 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public Category RemoveBook(Book book)
     {
-        _ = book ?? throw new DomainRuleException("Category Book cannot be empty.");
+        _ = book ?? throw new ArgumentException("Category Book cannot be empty.");
 
         this.books.Remove(book);
 
@@ -124,7 +124,7 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public Category AddChild(Category category)
     {
-        _ = category ?? throw new DomainRuleException("Category cannot be empty.");
+        _ = category ?? throw new ArgumentException("Category cannot be empty.");
 
         if (this.children.Contains(category))
         {
@@ -139,7 +139,7 @@ public class Category : AuditableEntity<CategoryId>, IConcurrent // TODO: make t
 
     public Category RemoveChild(Category category)
     {
-        _ = category ?? throw new DomainRuleException("Category cannot be empty.");
+        _ = category ?? throw new ArgumentException("Category cannot be empty.");
 
         if (!this.children.Contains(category))
         {

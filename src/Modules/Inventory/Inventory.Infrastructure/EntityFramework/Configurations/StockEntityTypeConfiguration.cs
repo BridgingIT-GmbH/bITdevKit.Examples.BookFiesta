@@ -27,8 +27,8 @@ public class StockEntityTypeConfiguration
     {
         builder.ToTable("Stocks").HasKey(e => e.Id).IsClustered(false);
 
-        builder.Navigation(e => e.Adjustments).AutoInclude();
         builder.Navigation(e => e.Movements).AutoInclude();
+        builder.Navigation(e => e.Adjustments).AutoInclude();
 
         builder.Property(e => e.Version).IsConcurrencyToken();
 
@@ -101,7 +101,8 @@ public class StockEntityTypeConfiguration
             {
                 b.ToTable("StockMovements");
                 b.WithOwner().HasForeignKey("StockId");
-                b.HasKey("Id", "StockId");
+                // b.HasKey("Id", "StockId");
+                b.HasKey("Id");
 
                 b.Property(e => e.Id)
                     .ValueGeneratedOnAdd()
@@ -131,7 +132,8 @@ public class StockEntityTypeConfiguration
             {
                 b.ToTable("StockAdjustments");
                 b.WithOwner().HasForeignKey("StockId");
-                b.HasKey("Id", "StockId");
+                //b.HasKey("Id", "StockId");
+                b.HasKey("Id");
 
                 b.Property(e => e.Id)
                     .ValueGeneratedOnAdd()

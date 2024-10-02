@@ -40,7 +40,7 @@ public class TagTests
         var category = this.faker.Lorem.Word();
 
         // Act & Assert
-        Should.Throw<DomainRuleException>(() => Tag.Create(null, name, category));
+        Should.Throw<ArgumentException>(() => Tag.Create(null, name, category));
     }
 
     [Fact]

@@ -5,9 +5,9 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain;
 
-public class StockLocationChangedDomainEvent(TenantId tenantId, Stock stock, StorageLocation newLocation) : DomainEventBase
+public class StockLocationChangedDomainEvent(Stock stock, StorageLocation newLocation) : DomainEventBase
 {
-    public TenantId TenantId { get; } = tenantId;
+    public TenantId TenantId { get; } = stock.TenantId;
     public StockId StockId { get; } = stock.Id;
     public ProductSku Sku { get; } = stock.Sku;
     public StorageLocation NewLocation { get; } = newLocation;

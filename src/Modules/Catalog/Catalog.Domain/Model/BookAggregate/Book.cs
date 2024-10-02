@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
-[DebuggerDisplay("Id={Id}, Title={Title}")]
+[DebuggerDisplay("Id={Id}, Isbn={Isbn}, Sku={Sku}, Title={Title}")]
 [TypedEntityId<Guid>]
 public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 {
@@ -32,6 +32,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         this.SetTitle(title);
         this.SetEdition(edition);
         this.SetDescription(description);
+        this.SetSku(sku);
         this.SetIsbn(isbn);
         this.SetPrice(price);
         this.SetPublisher(publisher);
@@ -94,7 +95,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         Publisher publisher,
         DateOnly? publishedDate = null)
     {
-        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+        _ = tenantId ?? throw new ArgumentException("TenantId cannot be empty.");
 
         var book = new Book(tenantId, title, edition, description, sku, isbn, price, publisher, publishedDate);
 
@@ -105,7 +106,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book SetTitle(string title)
     {
-        _ = title ?? throw new DomainRuleException("Book Title cannot be empty.");
+        _ = title ?? throw new ArgumentException("Book Title cannot be empty.");
 
         if (this.Title == title)
         {
@@ -150,9 +151,25 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         return this;
     }
 
+    public Book SetSku(ProductSku sku)
+    {
+        _ = sku ?? throw new ArgumentException("Book Sku cannot be empty.");
+
+        if (this.Sku == sku)
+        {
+            return this;
+        }
+
+        this.Sku = sku;
+
+        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+
+        return this;
+    }
+
     public Book SetIsbn(BookIsbn isbn)
     {
-        _ = isbn ?? throw new DomainRuleException("Book Isbn cannot be empty.");
+        _ = isbn ?? throw new ArgumentException("Book Isbn cannot be empty.");
 
         if (this.Isbn == isbn)
         {
@@ -168,7 +185,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book SetPrice(Money price)
     {
-        _ = price ?? throw new DomainRuleException("Book Price cannot be empty.");
+        _ = price ?? throw new ArgumentException("Book Price cannot be empty.");
 
         if (this.Price == price)
         {
@@ -185,7 +202,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book SetPublisher(Publisher publisher)
     {
-        _ = publisher ?? throw new DomainRuleException("Book Publisher cannot be empty.");
+        _ = publisher ?? throw new ArgumentException("Book Publisher cannot be empty.");
 
         var bookPublisher = BookPublisher.Create(publisher);
         if (this.Publisher == bookPublisher)
@@ -231,7 +248,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book AddRating(Rating rating)
     {
-        _ = rating ?? throw new DomainRuleException("Book Rating cannot be empty.");
+        _ = rating ?? throw new ArgumentException("Book Rating cannot be empty.");
 
         this.AverageRating.Add(rating);
 
@@ -240,7 +257,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
     public Book AssignAuthor(Author author, int position = 0)
     {
-        _ = author ?? throw new DomainRuleException("Book Author cannot be empty.");
+        _ = author ?? throw new ArgumentException("Book Author cannot be empty.");
 
         if (this.authors.Any(e => e.AuthorId == author.Id))
         {

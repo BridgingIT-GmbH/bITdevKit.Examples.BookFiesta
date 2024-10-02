@@ -8,7 +8,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
-    <IsAspireHost>true</IsAspireHost>
   </PropertyGroup>
 
   <ItemGroup>
@@ -47,10 +46,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj" IsAspireProjectResource="false"/>
-    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj" IsAspireProjectResource="false"/>
-    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj" IsAspireProjectResource="false"/>
-    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj" IsAspireProjectResource="false"/>
+    <ProjectReference Include="..\..\..\..\tests\Shared.IntegrationTests\Shared.IntegrationTests.csproj"/>
+    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj"/>
+    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj"/>
   </ItemGroup>
 
 </Project>

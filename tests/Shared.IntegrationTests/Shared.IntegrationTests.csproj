@@ -2,12 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ModuleName>Organization</ModuleName>
-    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).IntegrationTests</AssemblyName>
-    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Modules.$(ModuleName).IntegrationTests</RootNamespace>
+    <AssemblyName>BridgingIT.DevKit.Examples.BookFiesta.Shared.IntegrationTests</AssemblyName>
+    <RootNamespace>BridgingIT.DevKit.Examples.BookFiesta.Shared.IntegrationTests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <IsPublishable>false</IsPublishable>
     <IsPackable>false</IsPackable>
+    <IsPublishable>false</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.Testing"/>
+    <PackageReference Include="Aspire.Hosting.AppHost"/>
+    <PackageReference Include="Aspire.Hosting.SqlServer"/>
     <PackageReference Include="BridgingIT.DevKit.Common.Utilities.Xunit"/>
     <PackageReference Include="Dumpify"/>
     <PackageReference Include="FluentAssertions.Web"/>
@@ -45,11 +45,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\tests\Shared.IntegrationTests\Shared.IntegrationTests.csproj" />
-    <ProjectReference Include="..\..\..\Presentation.Web.Server\Presentation.Web.Server.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Application\$(ModuleName).Application.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Infrastructure\$(ModuleName).Infrastructure.csproj"/>
-    <ProjectReference Include="..\$(ModuleName).Presentation\$(ModuleName).Presentation.csproj"/>
+    <ProjectReference Include="..\..\src\Modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Inventory\Inventory.Infrastructure\Inventory.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Organization\Organization.Infrastructure\Organization.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

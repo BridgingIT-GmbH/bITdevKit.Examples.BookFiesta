@@ -24,7 +24,7 @@ public class AuthorBook : ValueObject
 
     public static AuthorBook Create(Book book)
     {
-        _ = book ?? throw new DomainRuleException("AuthorBook Book cannot be empty.");
+        _ = book ?? throw new ArgumentException("AuthorBook Book cannot be empty.");
 
         return new AuthorBook(book.Id, book.Title);
     }

@@ -185,7 +185,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                     AddressPostalCode = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
                     AddressCity = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     AddressCountry = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuditState_CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     AuditState_CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -232,7 +232,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                     AddressPostalCode = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
                     AddressCity = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     AddressCountry = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    ContactEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    ContactEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Website = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuditState_CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -307,6 +307,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                     PublishedDate = table.Column<DateOnly>(type: "date", nullable: true),
                     AverageRating = table.Column<decimal>(type: "decimal(5,2)", nullable: true),
                     AverageRatingAmount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    StockQuantityOnHand = table.Column<int>(type: "int", nullable: false),
+                    StockQuantityReserved = table.Column<int>(type: "int", nullable: false),
                     Version = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuditState_CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     AuditState_CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -730,7 +732,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                 schema: "catalog",
                 table: "Publishers",
                 columns: new[] { "TenantId", "ContactEmail" },
-                unique: true);
+                unique: true,
+                filter: "[ContactEmail] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tags_Category",

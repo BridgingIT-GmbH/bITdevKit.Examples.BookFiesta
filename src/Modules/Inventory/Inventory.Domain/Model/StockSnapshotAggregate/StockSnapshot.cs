@@ -61,11 +61,11 @@ public class StockSnapshot : AuditableAggregateRoot<StockSnapshotId>, IConcurren
         StorageLocation location,
         DateTimeOffset? timestamp = null)
     {
-        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
-        _ = stockId ?? throw new DomainRuleException("StockId cannot be empty.");
-        _ = sku ?? throw new DomainRuleException("ProductSku cannot be empty.");
-        _ = unitCost ?? throw new DomainRuleException("UnitCost cannot be empty.");
-        _ = location ?? throw new DomainRuleException("Location cannot be empty.");
+        _ = tenantId ?? throw new ArgumentException("TenantId cannot be empty.");
+        _ = stockId ?? throw new ArgumentException("StockId cannot be empty.");
+        _ = sku ?? throw new ArgumentException("ProductSku cannot be empty.");
+        _ = unitCost ?? throw new ArgumentException("UnitCost cannot be empty.");
+        _ = location ?? throw new ArgumentException("Location cannot be empty.");
 
         var snapshot = new StockSnapshot(tenantId, stockId, sku, quantityOnHand, quantityReserved, unitCost, location, timestamp ?? DateTimeOffset.UtcNow);
 

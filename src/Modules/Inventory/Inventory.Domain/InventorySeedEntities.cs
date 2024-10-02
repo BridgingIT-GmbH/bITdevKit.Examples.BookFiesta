@@ -17,6 +17,15 @@ public static class InventorySeedEntities
         return ticks > 0 ? new Random().NextInt64(10000000, 999999999999).ToString() : sku;
     }
 
+#pragma warning disable SA1202
+    public static (Stock[] Stocks, StockSnapshot[] StockSnapshots) Create(TenantId[] tenants, long ticks = 0)
+#pragma warning restore SA1202
+    {
+        return (
+            Stocks.Create(tenants, ticks),
+            StockSnapshots.Create(tenants, Stocks.Create(tenants, ticks), ticks));
+    }
+
     public static class Stocks
     {
         public static Stock[] Create(TenantId[] tenants, long ticks = 0)
@@ -133,9 +142,13 @@ public static class InventorySeedEntities
                             continue;
                         }
 
-                        var costChange = (decimal)((random.NextDouble() * 10) - 5); // Random change between -5 and 5
-                        var newUnitCost = Money.Create(Math.Max(0.01m, stock.UnitCost.Amount + costChange));
-                        stock.AdjustUnitCost(newUnitCost, $"Random unit cost adjustment {i + 1}");
+                        // BUG: AdjustUnitCost causes InvalidException when inserted (seed)
+                        // System.InvalidCastException
+                        //     Unable to cast object of type 'BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain.StockAdjustmentId' to type 'BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain.StockId'.
+                        // var costChange = (decimal)((random.NextDouble() * 10) - 5); // Random change between -5 and 5
+                        // var newUnitCost = Money.Create(Math.Max(0.01m, stock.UnitCost.Amount + costChange));
+                        // stock.AdjustUnitCost(newUnitCost, $"Random unitcost adjustment {i + 1}");
+                        // stock.AdjustUnitCost(Money.Zero(), $"Random unitcost adjustment {i + 1}");
                     }
 
                     return stock;

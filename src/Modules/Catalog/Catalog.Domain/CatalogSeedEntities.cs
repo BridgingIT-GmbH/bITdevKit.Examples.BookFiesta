@@ -22,6 +22,50 @@ public static class CatalogSeedEntities
         return ticks > 0 ? $"{new Random().NextInt64(10000000, 999999999999)}" : sku;
     }
 
+#pragma warning disable SA1202
+    public static (Tag[] Tags, Customer[] Customer, Author[] Authors, Publisher[] Publishers, Category[] Categories, Book[] Books) Create(TenantId[] tenants, long ticks = 0)
+#pragma warning restore SA1202
+    {
+        var tags = Tags.Create(tenants, ticks);
+        var customers = Customers.Create(tenants, ticks);
+        var authors = Authors.Create(tenants, tags, ticks);
+        var publishers = Publishers.Create(tenants, ticks);
+        var categories = Categories.Create(tenants, ticks);
+        var books = Books.Create(tenants, tags, categories, publishers, authors, ticks);
+
+        return (tags, customers, authors, publishers, categories, books);
+    }
+
+    public static class Tags
+    {
+        public static Tag[] Create(TenantId[] tenants, long ticks = 0)
+        {
+            return
+            [
+                .. new[]
+                {
+                    Tag.Create(tenants[0], $"SoftwareArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"DomainDrivenDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"Microservices{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"CleanArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"DesignPatterns{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"CloudArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(
+                        tenants[0],
+                        $"EnterpriseArchitecture{GetSuffix(ticks)}",
+                        $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(
+                        tenants[0],
+                        $"ArchitecturalPatterns{GetSuffix(ticks)}",
+                        $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"SystemDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"SoftwareDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
+                    Tag.Create(tenants[0], $"Author{GetSuffix(ticks)}", $"CatalogAuthor{GetSuffix(ticks)}")
+                }.ForEach(e => e.Id = TagId.Create($"{GuidGenerator.Create($"Tag_{e.Name}_{e.Category}")}"))
+            ];
+        }
+    }
+
     public static class Customers
     {
         public static Customer[] Create(TenantId[] tenants, long ticks = 0)
@@ -238,36 +282,6 @@ public static class CatalogSeedEntities
                         "Packt Publishing is a publisher of technology books, eBooks and video courses for IT developers, administrators, and users."),
                     Publisher.Create(tenants[0], $"Marschall & Brainerd{GetSuffix(ticks)}", string.Empty)
                 }.ForEach(e => e.Id = PublisherId.Create($"{GuidGenerator.Create($"Publisher_{e.Name}")}"))
-            ];
-        }
-    }
-
-    public static class Tags
-    {
-        public static Tag[] Create(TenantId[] tenants, long ticks = 0)
-        {
-            return
-            [
-                .. new[]
-                {
-                    Tag.Create(tenants[0], $"SoftwareArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(tenants[0], $"DomainDrivenDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(tenants[0], $"Microservices{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(tenants[0], $"CleanArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(tenants[0], $"DesignPatterns{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(tenants[0], $"CloudArchitecture{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"EnterpriseArchitecture{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(
-                        tenants[0],
-                        $"ArchitecturalPatterns{GetSuffix(ticks)}",
-                        $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(tenants[0], $"SystemDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(tenants[0], $"SoftwareDesign{GetSuffix(ticks)}", $"CatalogBook{GetSuffix(ticks)}"),
-                    Tag.Create(tenants[0], $"Author{GetSuffix(ticks)}", $"CatalogAuthor{GetSuffix(ticks)}")
-                }.ForEach(e => e.Id = TagId.Create($"{GuidGenerator.Create($"Tag_{e.Name}_{e.Category}")}"))
             ];
         }
     }

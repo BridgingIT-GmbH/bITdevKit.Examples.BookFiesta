@@ -39,7 +39,7 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
     public static Author Create(TenantId tenantId, PersonFormalName name, string biography = null)
     {
-        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+        _ = tenantId ?? throw new ArgumentException("TenantId cannot be empty.");
 
         var author = new Author(tenantId, name, biography);
 
@@ -50,7 +50,7 @@ public class Author : AuditableAggregateRoot<AuthorId>, IConcurrent
 
     public Author SetName(PersonFormalName name)
     {
-        _ = name ?? throw new DomainRuleException("Author Name cannot be empty.");
+        _ = name ?? throw new ArgumentException("Author Name cannot be empty.");
 
         if (this.PersonName == name)
         {

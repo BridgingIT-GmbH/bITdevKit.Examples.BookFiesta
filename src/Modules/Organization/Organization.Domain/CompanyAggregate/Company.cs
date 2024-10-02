@@ -57,7 +57,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     public Company SetName(string name)
     {
-        _ = name ?? throw new DomainRuleException("Company Name cannot be empty.");
+        _ = name ?? throw new ArgumentException("Company Name cannot be empty.");
 
         if (name != this.Name)
         {
@@ -89,7 +89,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     public Company SetRegistrationNumber(string registrationNumber)
     {
-        _ = registrationNumber ?? throw new DomainRuleException("Company RegistrationNumber cannot be empty.");
+        _ = registrationNumber ?? throw new ArgumentException("Company RegistrationNumber cannot be empty.");
 
         if (registrationNumber != this.RegistrationNumber)
         {
@@ -106,7 +106,7 @@ public class Company : AuditableAggregateRoot<CompanyId>, IConcurrent
 
     public Company SetContactEmail(EmailAddress emailAddress)
     {
-        _ = emailAddress ?? throw new DomainRuleException("Company EmailAddress cannot be empty.");
+        _ = emailAddress ?? throw new ArgumentException("Company EmailAddress cannot be empty.");
 
         if (emailAddress != this.ContactEmail)
         {

@@ -56,7 +56,7 @@ public class StockTests
         var storageLocation = this.CreateLocation();
 
         // Act & Assert
-        Should.Throw<DomainRuleException>(() =>
+        Should.Throw<ArgumentException>(() =>
                 Stock.Create(null, sku, quantityOnHand, reorderThreshold, reorderQuantity, unitCost, storageLocation))
             .Message.ShouldBe("TenantId cannot be empty.");
     }
@@ -293,7 +293,7 @@ public class StockTests
         var sut = this.CreateValidStock();
 
         // Act & Assert
-        Should.Throw<DomainRuleException>(() => sut.MoveToLocation(null))
+        Should.Throw<ArgumentException>(() => sut.MoveToLocation(null))
             .Message.ShouldBe("New location cannot be empty.");
     }
 

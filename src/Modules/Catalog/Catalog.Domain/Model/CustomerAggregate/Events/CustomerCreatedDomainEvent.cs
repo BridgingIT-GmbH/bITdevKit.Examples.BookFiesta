@@ -7,5 +7,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
 public class CustomerCreatedDomainEvent(Customer customer) : DomainEventBase
 {
+    public TenantId TenantId { get; } = customer.TenantId;
     public CustomerId CustomerId { get; } = customer.Id;
 }

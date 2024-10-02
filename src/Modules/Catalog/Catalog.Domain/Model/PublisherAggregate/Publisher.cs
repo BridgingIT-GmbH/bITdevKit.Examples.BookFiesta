@@ -56,7 +56,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
         Address address = null,
         Website website = null)
     {
-        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+        _ = tenantId ?? throw new ArgumentException("TenantId cannot be empty.");
 
         var publisher = new Publisher(tenantId, name, description, contactEmail, address, website);
 
@@ -67,7 +67,7 @@ public class Publisher : AuditableAggregateRoot<PublisherId>, IConcurrent
 
     public Publisher SetName(string name)
     {
-        _ = name ?? throw new DomainRuleException("Publisher Name cannot be empty.");
+        _ = name ?? throw new ArgumentException("Publisher Name cannot be empty.");
 
         // Validate name
         if (this.Name == name)

@@ -120,6 +120,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
+                    b.Property<int>("StockQuantityOnHand")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockQuantityReserved")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -222,8 +228,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
@@ -251,7 +257,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ContactEmail")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -277,7 +282,8 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                     b.HasIndex("TenantId");
 
                     b.HasIndex("TenantId", "ContactEmail")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ContactEmail] IS NOT NULL");
 
                     b.ToTable("Publishers", "catalog");
                 });

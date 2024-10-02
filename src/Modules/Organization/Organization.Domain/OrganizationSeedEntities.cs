@@ -14,6 +14,15 @@ public static class OrganizationSeedEntities
         return ticks > 0 ? $"-{ticks}" : string.Empty;
     }
 
+#pragma warning disable SA1202
+    public static (Company[] Companies, Tenant[] Tenants) Create(long ticks = 0)
+#pragma warning restore SA1202
+    {
+        return (
+            Companies.Create(ticks),
+            Tenants.Create(Companies.Create(ticks), ticks));
+    }
+
     public static class Companies
     {
         public static Company[] Create(long ticks = 0)

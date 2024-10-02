@@ -37,7 +37,7 @@ public class Tag : Entity<TagId>, IConcurrent
 
     public static Tag Create(TenantId tenantId, string name, string category)
     {
-        _ = tenantId ?? throw new DomainRuleException("TenantId cannot be empty.");
+        _ = tenantId ?? throw new ArgumentException("TenantId cannot be empty.");
 
         return new Tag(tenantId, name, category);
     }

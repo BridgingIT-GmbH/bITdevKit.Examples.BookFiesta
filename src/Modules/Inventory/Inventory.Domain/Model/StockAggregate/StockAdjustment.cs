@@ -16,7 +16,7 @@ public class StockAdjustment : Entity<StockAdjustmentId>
         this.StockId = stockId;
         this.QuantityChange = quantityChange;
         this.Reason = reason;
-        this.Timestamp = DateTime.UtcNow;
+        this.Timestamp = timestamp;
     }
 
     private StockAdjustment(StockId stockId, Money oldUnitCost, Money newUnitCost, string reason, DateTimeOffset timestamp)
@@ -25,7 +25,7 @@ public class StockAdjustment : Entity<StockAdjustmentId>
         this.OldUnitCost = oldUnitCost;
         this.NewUnitCost = newUnitCost;
         this.Reason = reason;
-        this.Timestamp = DateTime.UtcNow;
+        this.Timestamp = timestamp;
     }
 
     public StockId StockId { get; private set; }
@@ -42,7 +42,7 @@ public class StockAdjustment : Entity<StockAdjustmentId>
 
     public static StockAdjustment CreateQuantityAdjustment(StockId stockId, int quantityChange, string reason, DateTimeOffset? timestamp = null)
     {
-        _ = stockId ?? throw new DomainRuleException("StockId cannot be empty.");
+        _ = stockId ?? throw new ArgumentException("StockId cannot be empty.");
         if (string.IsNullOrWhiteSpace(reason))
         {
             throw new DomainRuleException("Reason for adjustment cannot be empty.");
@@ -53,9 +53,9 @@ public class StockAdjustment : Entity<StockAdjustmentId>
 
     public static StockAdjustment CreateUnitCostAdjustment(StockId stockId, Money oldUnitCost, Money newUnitCost, string reason, DateTimeOffset? timestamp = null)
     {
-        _ = stockId ?? throw new DomainRuleException("StockId cannot be empty.");
-        _ = oldUnitCost ?? throw new DomainRuleException("Old unit cost cannot be empty.");
-        _ = newUnitCost ?? throw new DomainRuleException("New unit cost cannot be empty.");
+        _ = stockId ?? throw new ArgumentException("StockId cannot be empty.");
+        _ = oldUnitCost ?? throw new ArgumentException("Old unit cost cannot be empty.");
+        _ = newUnitCost ?? throw new ArgumentException("New unit cost cannot be empty.");
         if (string.IsNullOrWhiteSpace(reason))
         {
             throw new DomainRuleException("Reason for adjustment cannot be empty.");

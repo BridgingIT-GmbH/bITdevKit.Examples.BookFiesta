@@ -45,7 +45,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public static Tenant Create(CompanyId companyId, string name, EmailAddress contactEmail)
     {
-        _ = companyId ?? throw new DomainRuleException("Tenant CompanyId cannot be empty.");
+        _ = companyId ?? throw new ArgumentException("Tenant CompanyId cannot be empty.");
 
         var tenant = new Tenant(companyId, name, contactEmail);
 
@@ -66,7 +66,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public Tenant SetCompany(CompanyId companyId)
     {
-        _ = companyId ?? throw new DomainRuleException("Tenant CompanyId cannot be empty.");
+        _ = companyId ?? throw new ArgumentException("Tenant CompanyId cannot be empty.");
 
         if (companyId != this.CompanyId)
         {
@@ -84,7 +84,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public Tenant SetName(string name)
     {
-        _ = name ?? throw new DomainRuleException("Tenant Name cannot be empty.");
+        _ = name ?? throw new ArgumentException("Tenant Name cannot be empty.");
 
         if (name != this.Name)
         {
@@ -146,7 +146,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public Tenant SetContactEmail(EmailAddress email)
     {
-        _ = email ?? throw new DomainRuleException("Tenant ContactEmail cannot be empty.");
+        _ = email ?? throw new ArgumentException("Tenant ContactEmail cannot be empty.");
 
         if (email != this.ContactEmail)
         {
@@ -163,7 +163,7 @@ public class Tenant : AuditableAggregateRoot<TenantId>, IConcurrent
 
     public Tenant SetBranding(TenantBranding branding)
     {
-        _ = branding ?? throw new DomainRuleException("Tenant Branding cannot be empty.");
+        _ = branding ?? throw new ArgumentException("Tenant Branding cannot be empty.");
 
         if (branding.TenantId != null && branding.TenantId != this.Id)
         {
