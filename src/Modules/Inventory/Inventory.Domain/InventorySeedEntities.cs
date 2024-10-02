@@ -118,7 +118,7 @@ public static class InventorySeedEntities
                         StorageLocation.Create("C", "1", "2"))
                 }.Select(stock =>
                 {
-                    stock.Id = StockId.Create($"{GuidGenerator.Create($"Stock_{stock.Sku}{GetSuffix(ticks)}")}");
+                    stock.Id = StockId.Create($"{GuidGenerator.Create($"Stock_{stock.Sku.Value}{GetSuffix(ticks)}")}");
 
                     // Add some random stock movements and adjustments
                     for (var i = 0; i < 5; i++)
@@ -176,7 +176,7 @@ public static class InventorySeedEntities
                         DateTimeOffset.Parse("2024-01-01T00:00:00Z"));
 
                     snapshot.Id = StockSnapshotId.Create(
-                        $"{GuidGenerator.Create($"StockSnapshot_{stock.Sku}_{snapshot.Timestamp.Ticks}{GetSuffix(ticks)}")}");
+                        $"{GuidGenerator.Create($"StockSnapshot_{stock.Sku.Value}_{snapshot.Timestamp.Ticks}{GetSuffix(ticks)}")}");
 
                     return snapshot;
                 })
