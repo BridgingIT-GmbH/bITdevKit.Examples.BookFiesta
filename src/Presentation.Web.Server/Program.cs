@@ -23,7 +23,6 @@ using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Pages;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server;
 using BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server.Components;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Application;
-using BridgingIT.DevKit.Infrastructure.EntityFramework;
 using BridgingIT.DevKit.Presentation;
 using BridgingIT.DevKit.Presentation.Web;
 using BridgingIT.DevKit.Presentation.Web.JobScheduling;

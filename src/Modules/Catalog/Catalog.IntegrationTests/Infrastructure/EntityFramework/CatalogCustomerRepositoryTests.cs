@@ -28,8 +28,7 @@ public class CatalogCustomerRepositoryTests
     public async Task FindOneTest()
     {
         // Arrange
-        TenantId[] tenants = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
-        var entities = CatalogSeedEntities.Create(tenants); // entities are already seeded in the db (fixture)
+        var entities = CatalogSeedEntities.Create(TenantHelper.Ids); // entities are already seeded in the db (fixture)
         var customer = entities.Customer[0];
         var sut = new EntityFrameworkGenericRepository<Customer>(r => r.DbContext(this.context));
 

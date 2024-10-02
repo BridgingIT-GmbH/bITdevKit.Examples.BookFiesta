@@ -5,13 +5,11 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.IntegrationTests.Infrastructure;
 
-using System.Linq.Dynamic.Core;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Infrastructure;
 using BridgingIT.DevKit.Examples.BookFiesta.Shared.IntegrationTests.Infrastructure;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using BridgingIT.DevKit.Infrastructure.EntityFramework.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 [IntegrationTest("Infrastructure")]
 [Collection(nameof(TestEnvironmentCollection))] // https://xunit.net/docs/shared-context#collection-fixture
@@ -30,8 +28,7 @@ public class InventoryStockRepositoryTests
     public async Task FindOneTest()
     {
         // Arrange
-        TenantId[] tenants = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];
-        var entities = InventorySeedEntities.Create(tenants); // entities are already seeded in the db (fixture)
+        var entities = InventorySeedEntities.Create(TenantHelper.Ids); // entities are already seeded in the db (fixture)
         var stock = entities.Stocks[0];
         var sut = new EntityFrameworkGenericRepository<Stock>(r => r.DbContext(this.context));
 

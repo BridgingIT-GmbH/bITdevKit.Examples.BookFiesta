@@ -5,9 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
-using Money = BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Money;
-
 public class StockMovementApplyCommandHandler(ILoggerFactory loggerFactory, IGenericRepository<Stock> repository)
     : CommandHandlerBase<StockMovementApplyCommand, Result<Stock>>(loggerFactory)
 {

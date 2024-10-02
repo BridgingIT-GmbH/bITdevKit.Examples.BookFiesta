@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application;
 
-using BridgingIT.DevKit.Domain.Specifications;
-
 public class CompanyFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Company> repository)
     : QueryHandlerBase<CompanyFindAllQuery, Result<IEnumerable<Company>>>(loggerFactory)
 {

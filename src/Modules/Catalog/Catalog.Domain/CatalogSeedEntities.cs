@@ -23,15 +23,15 @@ public static class CatalogSeedEntities
     }
 
 #pragma warning disable SA1202
-    public static (Tag[] Tags, Customer[] Customer, Author[] Authors, Publisher[] Publishers, Category[] Categories, Book[] Books) Create(TenantId[] tenants, long ticks = 0)
+    public static (Tag[] Tags, Customer[] Customer, Author[] Authors, Publisher[] Publishers, Category[] Categories, Book[] Books) Create(TenantId[] tenantIds, long ticks = 0)
 #pragma warning restore SA1202
     {
-        var tags = Tags.Create(tenants, ticks);
-        var customers = Customers.Create(tenants, ticks);
-        var authors = Authors.Create(tenants, tags, ticks);
-        var publishers = Publishers.Create(tenants, ticks);
-        var categories = Categories.Create(tenants, ticks);
-        var books = Books.Create(tenants, tags, categories, publishers, authors, ticks);
+        var tags = Tags.Create(tenantIds, ticks);
+        var customers = Customers.Create(tenantIds, ticks);
+        var authors = Authors.Create(tenantIds, tags, ticks);
+        var publishers = Publishers.Create(tenantIds, ticks);
+        var categories = Categories.Create(tenantIds, ticks);
+        var books = Books.Create(tenantIds, tags, categories, publishers, authors, ticks);
 
         return (tags, customers, authors, publishers, categories, books);
     }
