@@ -5,7 +5,10 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
+using Microsoft.Extensions.Logging.Abstractions;
+
 public class CatalogDomainSeederTask(
+    ILoggerFactory loggerFactory,
     IGenericRepository<Customer> customerRepository,
     IGenericRepository<Tag> tagRepository,
     IGenericRepository<Category> categoryRepository,
@@ -13,8 +16,14 @@ public class CatalogDomainSeederTask(
     IGenericRepository<Book> bookRepository,
     IGenericRepository<Author> authorRepository) : IStartupTask
 {
+    private readonly ILogger<CatalogDomainSeederTask> logger =
+        loggerFactory?.CreateLogger<CatalogDomainSeederTask>() ??
+        NullLoggerFactory.Instance.CreateLogger<CatalogDomainSeederTask>();
+
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
+        this.logger.LogInformation("{LogKey} seed catalog (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         TenantId[] tenantIds =
         [
             TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")
@@ -29,6 +38,8 @@ public class CatalogDomainSeederTask(
 
     private async Task<Customer[]> SeedCustomers(IGenericRepository<Customer> repository, TenantId[] tenantIds)
     {
+        this.logger.LogInformation("{LogKey} seed customers (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         var entities = CatalogSeedEntities.Customers.Create(tenantIds);
 
         foreach (var entity in entities)
@@ -45,6 +56,8 @@ public class CatalogDomainSeederTask(
 
     private async Task<Tag[]> SeedTags(IGenericRepository<Tag> repository, TenantId[] tenantIds)
     {
+        this.logger.LogInformation("{LogKey} seed tags (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         var entities = CatalogSeedEntities.Tags.Create(tenantIds);
 
         foreach (var entity in entities)
@@ -60,6 +73,8 @@ public class CatalogDomainSeederTask(
 
     private async Task<Category[]> SeedCategories(IGenericRepository<Category> repository, TenantId[] tenantIds)
     {
+        this.logger.LogInformation("{LogKey} seed categories (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         var entities = CatalogSeedEntities.Categories.Create(tenantIds);
 
         foreach (var entity in entities)
@@ -76,6 +91,8 @@ public class CatalogDomainSeederTask(
 
     private async Task<Publisher[]> SeedPublishers(IGenericRepository<Publisher> repository, TenantId[] tenantIds)
     {
+        this.logger.LogInformation("{LogKey} seed publishers (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         var entities = CatalogSeedEntities.Publishers.Create(tenantIds);
 
         foreach (var entity in entities)
@@ -98,6 +115,8 @@ public class CatalogDomainSeederTask(
         Publisher[] publishers,
         Author[] authors)
     {
+        this.logger.LogInformation("{LogKey} seed books (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         var entities = CatalogSeedEntities.Books.Create(tenantIds, tags, categories, publishers, authors);
 
         foreach (var entity in entities)
@@ -114,6 +133,8 @@ public class CatalogDomainSeederTask(
 
     private async Task<Author[]> SeedAuthors(IGenericRepository<Author> repository, TenantId[] tenantIds, Tag[] tags)
     {
+        this.logger.LogInformation("{LogKey} seed authors (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         var entities = CatalogSeedEntities.Authors.Create(tenantIds, tags);
 
         foreach (var entity in entities)

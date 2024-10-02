@@ -5,13 +5,22 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
+using Microsoft.Extensions.Logging.Abstractions;
+
 public class InventoryDomainSeederTask(
+    ILoggerFactory loggerFactory,
     IGenericRepository<Stock> stockRepository,
     IGenericRepository<StockSnapshot> stockSnapshotRepository)
         : IStartupTask
 {
+    private readonly ILogger<InventoryDomainSeederTask> logger =
+        loggerFactory?.CreateLogger<InventoryDomainSeederTask>() ??
+        NullLoggerFactory.Instance.CreateLogger<InventoryDomainSeederTask>();
+
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
+        this.logger.LogInformation("{LogKey} seed inventory (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         TenantId[] tenantIds =
         [
             TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")
@@ -22,6 +31,8 @@ public class InventoryDomainSeederTask(
 
     private async Task<Stock[]> SeedStocks(IGenericRepository<Stock> repository, TenantId[] tenantIds)
     {
+        this.logger.LogInformation("{LogKey} seed stocks (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         var entities = InventorySeedEntities.Stocks.Create(tenantIds);
 
         foreach (var entity in entities)
@@ -38,6 +49,8 @@ public class InventoryDomainSeederTask(
 
     private async Task<StockSnapshot[]> SeedStocksSnapshots(IGenericRepository<StockSnapshot> repository, Stock[] stocks, TenantId[] tenantIds)
     {
+        this.logger.LogInformation("{LogKey} seed stocksnapshots (task={StartupTaskType})", "IFR", this.GetType().PrettyName());
+
         var entities = InventorySeedEntities.StockSnapshots.Create(tenantIds, stocks);
 
         foreach (var entity in entities)
