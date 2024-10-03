@@ -84,6 +84,8 @@ classDiagram
 
 The Stock aggregate is the central entity in the inventory module.
 
+[Stock.cs](Inventory.Domain%2FModel%2FStockAggregate%2FStock.cs)
+
 Components:
 
 - Stock (Aggregate Root): Represents the current inventory state for a specific product.
@@ -101,6 +103,8 @@ Relationships:
 ### StockSnapshot Aggregate
 
 The StockSnapshot aggregate represents historical snapshots of stock levels.
+
+[StockSnapshot.cs](Inventory.Domain%2FModel%2FStockSnapshotAggregate%2FStockSnapshot.cs)
 
 Components:
 
@@ -183,3 +187,34 @@ Relationships:
 - Checking current stock levels
 - Reviewing stock movement history
 - Analyzing historical stock levels through snapshots
+
+## External API Endpoints
+
+The following table describes the public HTTP API for this module:
+
+- [InventoryStockEndpoints.cs](Inventory.Presentation%2FWeb%2FEndpoints%2FInventoryStockEndpoints.cs)
+- [InventoryStockSnapshotEndpoints.cs](Inventory.Presentation%2FWeb%2FEndpoints%2FInventoryStockSnapshotEndpoints.cs)
+
+| Endpoint                                                                 | HTTP Method | Description                                                   |
+|--------------------------------------------------------------------------|-------------|---------------------------------------------------------------|
+| `/api/tenants/{tenantId}/inventory/stocks/{id}`                          | GET         | Retrieves a specific stock by ID.                             |
+| `/api/tenants/{tenantId}/inventory/stocks`                               | GET         | Retrieves a list of all stocks.                               |
+| `/api/tenants/{tenantId}/inventory/stocks`                               | POST        | Creates a new stock.                                          |
+| `/api/tenants/{tenantId}/inventory/stocks/{id}/adjust`                   | POST        | Creates a new stock movement for a specific stock.            |
+| `/api/tenants/{tenantId}/inventory/stocks/{stockId}/stocksnapshots/{id}` | GET         | Retrieves a specific stock snapshot by ID.                    |
+| `/api/tenants/{tenantId}/inventory/stocks/{stockId}/stocksnapshots`      | GET         | Retrieves a list of all stock snapshots for a specific stock. |
+| `/api/tenants/{tenantId}/inventory/stocks/{stockId}/stocksnapshots`      | POST        | Creates a new stock snapshot for a specific stock.            |
+
+## Public API Client
+
+This module provides a public API client that other modules can use to communicate with it.
+The client exposes various methods to interact with the inventory module.
+
+- [IInventoryModuleClient.cs](Inventory.Application.Contracts%2FIInventoryModuleClient.cs)
+
+| Method                                                                                              | Description                                        |
+|-----------------------------------------------------------------------------------------------------|----------------------------------------------------|
+| `Task<Result<StockModel>> StockFindOne(string tenantId, string id)`                                 | Retrieves the details of a specific stock by ID.   |
+| `Task<Result<IEnumerable<StockModel>>> StockFindAll(string tenantId)`                               | Retrieves a list of all stocks for a tenant.       |
+| `Task<Result<StockModel>> StockCreate(string tenantId, StockModel model)`                           | Creates a new stock entry.                         |
+| `Task<Result<StockModel>> StockMovementApply(string tenantId, string id, StockMovementModel model)` | Creates a new stock movement for a specific stock. |

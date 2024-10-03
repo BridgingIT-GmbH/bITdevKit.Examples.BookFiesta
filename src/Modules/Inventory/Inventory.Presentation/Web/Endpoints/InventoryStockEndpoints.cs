@@ -40,8 +40,8 @@ public class InventoryStockEndpoints : EndpointsBase
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
 
-        group.MapPost("/{id}/adjust", ApplyStockMovement)
-            .WithName("ApplyInventoryStockMovement")
+        group.MapPost("/{id}/adjust", CreateStockMovement)
+            .WithName("CreateInventoryStockMovement")
             .ProducesValidationProblem()
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
@@ -90,7 +90,7 @@ public class InventoryStockEndpoints : EndpointsBase
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Created<StockModel>, ProblemHttpResult>> ApplyStockMovement(
+    private static async Task<Results<Created<StockModel>, ProblemHttpResult>> CreateStockMovement(
         [FromServices] IMediator mediator,
         [FromServices] IMapper mapper,
         [FromRoute] string tenantId,

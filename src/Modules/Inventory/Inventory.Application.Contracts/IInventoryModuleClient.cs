@@ -6,6 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
 using BridgingIT.DevKit.Common;
+// using Refit
 
 /// <summary>
 ///     Specifies the public API for this module that will be exposed to other modules
