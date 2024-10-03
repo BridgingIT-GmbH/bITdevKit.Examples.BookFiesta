@@ -258,3 +258,23 @@ var url = Url.Create("https://example.com");
 var vatNumber = VatNumber.Create("DE123456789");
 var website = Website.Create("www.example.com");
 ```
+
+### 14. ProductSku
+
+- Represents a product stock keeping unit (SKU)
+- Provides methods to create and validate SKU values
+
+```mermaid
+classDiagram
+  class ProductSku {
+    +string Value
+    +Create(value)
+    +Validate(sku)
+  }
+```
+
+Example usage:
+
+```csharp
+var sku = ProductSku.Create("12345678");
+```

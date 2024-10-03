@@ -34,7 +34,8 @@ public class InventoryModule : WebModuleBase
         Log.Information("+++++ SQL: " + moduleConfiguration.ConnectionStrings.First().Value);
         services.AddScoped<IInventoryQueryService, InventoryQueryService>();
 
-        // services // INFO incase the Inventory module is a seperate webservice use refit ->
+        services.AddScoped<IInventoryModuleClient, InventoryModuleClient>();
+        // services // INFO: incase the Inventory module is a seperate webservice use refit ->
         //     .AddRefitClient<IInventoryModuleClient>()
         //     .ConfigureHttpClient(c =>
         //     {

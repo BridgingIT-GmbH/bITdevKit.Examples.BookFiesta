@@ -48,7 +48,8 @@ public class InventoryStockSnapshotEndpoints : EndpointsBase
         [FromRoute] string stockId,
         [FromRoute] string id)
     {
-        var result = (await mediator.Send(new StockSnapshotFindOneQuery(tenantId, stockId, id))).Result;
+        var result = (await mediator.Send(
+            new StockSnapshotFindOneQuery(tenantId, stockId, id))).Result;
 
         return result.Value == null ? TypedResults.NotFound() :
             result.IsSuccess ? TypedResults.Ok(mapper.Map<StockSnapshot, StockSnapshotModel>(result.Value)) :
@@ -61,7 +62,8 @@ public class InventoryStockSnapshotEndpoints : EndpointsBase
         [FromRoute] string tenantId,
         [FromRoute] string stockId)
     {
-        var result = (await mediator.Send(new StockSnapshotFindAllQuery(tenantId, stockId))).Result;
+        var result = (await mediator.Send(
+            new StockSnapshotFindAllQuery(tenantId, stockId))).Result;
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<StockSnapshot>, IEnumerable<StockSnapshotModel>>(result.Value))
@@ -74,7 +76,8 @@ public class InventoryStockSnapshotEndpoints : EndpointsBase
         [FromRoute] string tenantId,
         [FromRoute] string stockId)
     {
-        var result = (await mediator.Send(new StockSnapshotCreateCommand(tenantId, stockId))).Result;
+        var result = (await mediator.Send(
+            new StockSnapshotCreateCommand(tenantId, stockId))).Result;
 
         return result.IsSuccess
             ? TypedResults.Created(

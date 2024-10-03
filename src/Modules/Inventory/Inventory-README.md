@@ -67,12 +67,6 @@ classDiagram
     +Create(stockId, quantityChange, reason)
   }
 
-  class ProductSku {
-    +string Value
-    +Create(value)
-    +Validate(sku)
-  }
-
   class Location {
     +string Aisle
     +string Shelf
@@ -81,11 +75,9 @@ classDiagram
     +ToString()
   }
 
-  Stock "1" *-- "1" ProductSku
   Stock "1" *-- "1" Location
   Stock "1" -- "0..*" StockMovement
   Stock "1" -- "0..*" StockAdjustment
-  StockSnapshot "1" *-- "1" ProductSku
 ```
 
 ### Stock Aggregate
@@ -95,7 +87,6 @@ The Stock aggregate is the central entity in the inventory module.
 Components:
 
 - Stock (Aggregate Root): Represents the current inventory state for a specific product.
-- ProductSku: A value object representing the Stock Keeping Unit of the product.
 - Location: A value object representing the storage location of the stock.
 - StockMovement: An entity representing individual stock movements.
 - StockAdjustment: An entity representing manual adjustments to stock levels.
@@ -114,7 +105,6 @@ The StockSnapshot aggregate represents historical snapshots of stock levels.
 Components:
 
 - StockSnapshot (Aggregate Root): Represents a point-in-time record of stock levels.
-- ProductSku: A value object representing the Stock Keeping Unit of the product.
 
 Relationships:
 
@@ -124,20 +114,15 @@ Relationships:
 
 ### Supporting Entities and Value Objects
 
-1. ProductSku (SharedKernel):
-
-- Represents the unique identifier for a product in the inventory system.
-- Shared between Stock and StockSnapshot aggregates.
-
-2. Location:
+1. Location:
 
 - Represents the physical storage location of stock within a warehouse or store.
 
-3. StockMovement:
+1. StockMovement:
 
 - Represents individual movements of stock (additions, removals, transfers).
 
-4. StockAdjustment:
+1. StockAdjustment:
 
 - Represents manual adjustments made to stock quantities.
 

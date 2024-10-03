@@ -43,6 +43,10 @@ The solution is divided into several layers:
 
 [see](./src/Modules/Catalog/Catalog-README.md)
 
+### Inventory Module
+
+[see](./src/Modules/Inventory/Inventory-README.md)
+
 ## Getting Started
 
 TODO
