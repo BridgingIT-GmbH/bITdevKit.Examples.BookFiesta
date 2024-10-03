@@ -8,14 +8,21 @@ cs![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.G
 
 ## Features
 
-- Application Commands/Queries
-- Domain Model, ValueObjects, Events, Rules, TypedIds, Repositories
-- Presentation Model
-- Unit & Integration Tests
+- Application Commands/Queries: encapsulate business logic and data access
+- Application Models and Contracts: specifies the public API can be exposed to clients
+- Application Module Clients: expose a public API for other modules to use
+- Application Query Services: provide complex queries not suitable for repositories
+- Domain Model, ValueObjects, Events, Rules, TypedIds, Repositories: the building blocks to
+  implement the domain model
+- Modules: encapsulates related functionality into separate modules
+- Messaging: provides asynchronous communication between modules based on messages
+- Presentation Endpoints: expose an external HTTP API for the application
+- Unit & Integration Tests: ensure the reliability of the application
 
 ## Frameworks
 
 - [.NET 8](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/overview)
+- [C#](https://learn.microsoft.com/en-us/dotnet/csharp/)
 - [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
 - [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet)
 - [Serilog](https://serilog.net/)
@@ -33,19 +40,37 @@ The solution is divided into several layers:
 - **Presentation**: Provides the user interface and API endpoints.
 - **SharedKernel**: Contains shared concepts, such as value objects, rules, and interfaces.
 
+### Architecture Decision Record (ADR)
+
+An [architecture decision record](https://github.com/joelparkerhenderson/architecture-decision-record?tab=readme-ov-file)
+(ADR) is a document that captures an important architectural
+decision made along with its context and consequences.
+
+These ADRs outline key architectural decisions for the application, focusing on a modular monolith
+structure with clear boundaries between modules, rich domain models, and a mix of synchronous and
+asynchronous communication between modules:
+
+- [adr-001-modular-monolith.md](docs%2Fadrs%2Fadr-001-modular-monolith.md)
+- [adr-002-http-api.md](docs%2Fadrs%2Fadr-002-http-api.md)
+- [adr-003-sync-module-clients.md](docs%2Fadrs%2Fadr-003-sync-module-clients.md)
+- [adr-004-async-messaging.md](docs%2Fadrs%2Fadr-004-async-messaging.md)
+- [adr-005-rich-domain-models.md](docs%2Fadrs%2Fadr-005-rich-domain-models.md)
+- [adr-006-database-choice.md](docs%2Fadrs%2Fadr-006-database-choice.md)
+- [adr-007-logging-monitoring.md](docs%2Fadrs%2Fadr-007-logging-monitoring.md)
+- [adr-008-modularization-strategy.md](docs%2Fadrs%2Fadr-008-modularization-strategy.md)
+
 ## Modules
 
 ```mermaid
 graph TD
-    SK[SharedKernel]
-    C[Catalog Module]
-    I[Inventory Module]
-    O[Organization Module]
-
-    C --> SK
-    I --> SK
-    O --> SK
-    C -- Public API --> I
+  SK[SharedKernel]
+  C[Catalog Module]
+  I[Inventory Module]
+  O[Organization Module]
+  C --> SK
+  I --> SK
+  O --> SK
+  C -- Public API --> I
 ```
 
 ### Organization Module
@@ -90,37 +115,37 @@ between them:
 
 ```mermaid
 graph TD
-    subgraph Presentation
-        CP[Module Definition]
-        REG[DI Registrations]
-        CA[Endpoint Routings]
-        MP[Object Mappings]
-        RP[Razor Pages/<br>Views/etc]
-    end
+  subgraph Presentation
+    CP[Module Definition]
+    REG[DI Registrations]
+    CA[Endpoint Routings]
+    MP[Object Mappings]
+    RP[Razor Pages/<br>Views/etc]
+  end
 
-    subgraph Application
-        SV[Services/<br>Jobs/ Tasks]
-        CQ[Commands/<br>Queries/ <br>Validators]
-        DRR[Rules/<br>Policies]
-        VM[ViewModels/<br>DTOs]
-        MA[Messages/<br>Adapter<br>Interfaces]
-    end
+  subgraph Application
+    SV[Services/<br>Jobs/ Tasks]
+    CQ[Commands/<br>Queries/ <br>Validators]
+    DRR[Rules/<br>Policies]
+    VM[ViewModels/<br>DTOs]
+    MA[Messages/<br>Adapter<br>Interfaces]
+  end
 
-    subgraph Domain
-        DMM[Domain Model]
-        EN[Entities/<br>Aggregates/<br>Value Objects]
-        RS[Repository<br>Interfaces/<br>Specifications]
-        DR[Domain Rules/<br>Domain Policies]
-    end
+  subgraph Domain
+    DMM[Domain Model]
+    EN[Entities/<br>Aggregates/<br>Value Objects]
+    RS[Repository<br>Interfaces/<br>Specifications]
+    DR[Domain Rules/<br>Domain Policies]
+  end
 
-    subgraph Infrastructure
-        DC[DbContext/<br>Migrations/<br>Data Entities]
-        DA[Domain +<br>Application<br>Interface<br>Implementations]
-    end
+  subgraph Infrastructure
+    DC[DbContext/<br>Migrations/<br>Data Entities]
+    DA[Domain +<br>Application<br>Interface<br>Implementations]
+  end
 
-    Presentation --> |references| Application
-    Application --> |references| Domain
-    Infrastructure --> |references| Domain
+  Presentation -->|references| Application
+  Application -->|references| Domain
+  Infrastructure -->|references| Domain
 ```
 
 Key Points:
@@ -137,31 +162,30 @@ maintaining the independence of core business logic.
 
 ```mermaid
 sequenceDiagram
-    participant C as Client
-    participant EA as External API
-    participant CM as Command
-    participant CV as CommandValidator
-    participant CH as CommandHandler
-    participant M as Mapper
-    participant R as Repository
-
-    C->>EA: Web Request
-    EA->>CM: Create Command (with Model)
-    CM->>CV: Validate
-    CV-->>CM: Validation Result
-    CM->>CH: Process
-    CH->>R: FindOneResultAsync(EntityId)
-    R-->>CH: Result<Domain Entity>
-    CH->>M: Map Model to existing Domain Entity
-    M-->>CH: Updated Domain Entity
-    CH->>CH: Apply Domain Rules
-    CH->>R: UpdateAsync(Domain Entity)
-    R-->>CH: Updated Domain Entity
-    CH-->>EA: Result<Domain Entity>
-    EA->>M: Map Domain Entity to Model
-    M-->>EA: Model
-    EA->>EA: Format Response
-    E-->>C: Web Response
+  participant C as Client
+  participant EA as External API
+  participant CM as Command
+  participant CV as CommandValidator
+  participant CH as CommandHandler
+  participant M as Mapper
+  participant R as Repository
+  C ->> EA: Web Request
+  EA ->> CM: Create Command (with Model)
+  CM ->> CV: Validate
+  CV -->> CM: Validation Result
+  CM ->> CH: Process
+  CH ->> R: FindOneResultAsync(EntityId)
+  R -->> CH: Result<Domain Entity>
+  CH ->> M: Map Model to existing Domain Entity
+  M -->> CH: Updated Domain Entity
+  CH ->> CH: Apply Domain Rules
+  CH ->> R: UpdateAsync(Domain Entity)
+  R -->> CH: Updated Domain Entity
+  CH -->> EA: Result<Domain Entity>
+  EA ->> M: Map Domain Entity to Model
+  M -->> EA: Model
+  EA ->> EA: Format Response
+  E -->> C: Web Response
 ```
 
 ### Solution Structure
