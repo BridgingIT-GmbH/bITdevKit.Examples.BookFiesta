@@ -35,6 +35,19 @@ The solution is divided into several layers:
 
 ## Modules
 
+```mermaid
+graph TD
+    SK[SharedKernel]
+    C[Catalog Module]
+    I[Inventory Module]
+    O[Organization Module]
+
+    C --> SK
+    I --> SK
+    O --> SK
+    C -- Public API --> I
+```
+
 ### Organization Module
 
 [see](./src/Modules/Organization/Organization-README.md)
@@ -120,20 +133,20 @@ Key Points:
 This layering structure enforces clean architecture principles, ensuring separation of concerns and
 maintaining the independence of core business logic.
 
-#### Request Procesing Flow
+#### Request Processing Flow
 
 ```mermaid
 sequenceDiagram
     participant C as Client
-    participant E as Endpoints
+    participant EA as External API
     participant CM as Command
     participant CV as CommandValidator
     participant CH as CommandHandler
     participant M as Mapper
     participant R as Repository
 
-    C->>E: Web Request
-    E->>CM: Create Command (with Model)
+    C->>EA: Web Request
+    EA->>CM: Create Command (with Model)
     CM->>CV: Validate
     CV-->>CM: Validation Result
     CM->>CH: Process
@@ -144,10 +157,10 @@ sequenceDiagram
     CH->>CH: Apply Domain Rules
     CH->>R: UpdateAsync(Domain Entity)
     R-->>CH: Updated Domain Entity
-    CH-->>E: Result<Domain Entity>
-    E->>M: Map Domain Entity to Model
-    M-->>E: Model
-    E->>E: Format Response
+    CH-->>EA: Result<Domain Entity>
+    EA->>M: Map Domain Entity to Model
+    M-->>EA: Model
+    EA->>EA: Format Response
     E-->>C: Web Response
 ```
 
