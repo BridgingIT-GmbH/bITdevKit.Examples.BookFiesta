@@ -42,9 +42,9 @@ The solution is divided into several layers:
 
 ### Architecture Decision Record (ADR)
 
-An [architecture decision record](https://github.com/joelparkerhenderson/architecture-decision-record?tab=readme-ov-file)
-(ADR) is a document that captures an important architectural
-decision made along with its context and consequences.
+An [Architecture Decision Record](https://github.com/joelparkerhenderson/architecture-decision-record?tab=readme-ov-file)
+(ADR) is a document that captures an important architectural decision made along with its context
+and consequences.
 
 These ADRs outline key architectural decisions for the application, focusing on a modular monolith
 structure with clear boundaries between modules, rich domain models, and a mix of synchronous and
