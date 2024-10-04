@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+`Accepted`
 
 ## Context
 
@@ -37,7 +37,7 @@ public class Book : AggregateRoot<BookId>
     {
         if (newPrice.Amount < 0)
             throw new InvalidOperationException("Price cannot be negative");
-        
+
         Price = newPrice;
         AddDomainEvent(new BookPriceUpdatedEvent(Id, newPrice));
     }
@@ -46,7 +46,7 @@ public class Book : AggregateRoot<BookId>
     {
         if (AuthorIds.Count >= 5)
             throw new InvalidOperationException("A book cannot have more than 5 authors");
-        
+
         AuthorIds.Add(authorId);
     }
 }
