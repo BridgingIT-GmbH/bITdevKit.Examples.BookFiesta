@@ -1,73 +1,22 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My Title",
-    "version": "1.0.0"
+    "title": "Backend API - Catalog - Inventory",
+    "version": "v1"
   },
   "paths": {
-    "/api/organization/companies/{id}": {
+    "/api/tenants/{tenantId}/inventory/stocks/{id}": {
       "get": {
         "tags": [
-          "Organization"
+          "Inventory"
         ],
-        "operationId": "GetOrganizationCompany",
+        "operationId": "GetInventoryStock",
         "produces": [
-          "application/json",
-          "application/problem+json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "x-nullable": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/CompanyModel"
-            }
-          },
-          "404": {
-            "description": ""
-          },
-          "400": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
-            }
-          },
-          "500": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Organization"
-        ],
-        "operationId": "UpdateOrganizationCompany",
-        "consumes": [
           "application/json"
         ],
-        "produces": [
-          "application/json",
-          "application/problem+json"
-        ],
         "parameters": [
           {
-            "name": "id",
+            "name": "tenantId",
             "in": "path",
             "required": true,
             "schema": {
@@ -75,52 +24,6 @@
               "x-nullable": true
             }
           },
-          {
-            "name": "model",
-            "in": "body",
-            "schema": {
-              "x-nullable": true,
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/CompanyModel"
-                }
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/CompanyModel"
-            }
-          },
-          "400": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
-            }
-          },
-          "500": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Organization"
-        ],
-        "operationId": "DeleteCatalogCompany",
-        "produces": [
-          "application/problem+json"
-        ],
-        "parameters": [
           {
             "name": "id",
             "in": "path",
@@ -133,7 +36,11 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/StockModel"
+            }
           },
           "404": {
             "description": ""
@@ -142,7 +49,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "500": {
@@ -155,15 +62,25 @@
         }
       }
     },
-    "/api/organization/companies": {
+    "/api/tenants/{tenantId}/inventory/stocks": {
       "get": {
         "tags": [
-          "Organization"
+          "Inventory"
         ],
-        "operationId": "GetOrganizationCompanies",
+        "operationId": "GetInventoryStocks",
         "produces": [
-          "application/json",
-          "application/problem+json"
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -172,7 +89,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/CompanyModel"
+                "$ref": "#/definitions/StockModel"
               }
             }
           },
@@ -180,7 +97,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "500": {
@@ -194,17 +111,25 @@
       },
       "post": {
         "tags": [
-          "Organization"
+          "Inventory"
         ],
-        "operationId": "CreateOrganizationCompany",
+        "operationId": "CreateInventoryStock",
         "consumes": [
           "application/json"
         ],
         "produces": [
-          "application/json",
-          "application/problem+json"
+          "application/json"
         ],
         "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
           {
             "name": "model",
             "in": "body",
@@ -212,7 +137,7 @@
               "x-nullable": true,
               "oneOf": [
                 {
-                  "$ref": "#/definitions/CompanyModel"
+                  "$ref": "#/definitions/StockModel"
                 }
               ]
             }
@@ -223,14 +148,14 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/CompanyModel"
+              "$ref": "#/definitions/StockModel"
             }
           },
           "400": {
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "500": {
@@ -243,17 +168,103 @@
         }
       }
     },
-    "/api/organization/companies/{id}/tenants": {
-      "get": {
+    "/api/tenants/{tenantId}/inventory/stocks/{id}/adjust": {
+      "post": {
         "tags": [
-          "Organization"
+          "Inventory"
         ],
-        "operationId": "GetOrganizationCompanyTenants",
+        "operationId": "CreateInventoryStockMovement",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
-          "application/json",
-          "application/problem+json"
+          "application/json"
         ],
         "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "schema": {
+              "x-nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/StockMovementModel"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/StockModel"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/api/tenants/{tenantId}/inventory/stocks/{stockId}/stocksnapshots/{id}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "operationId": "GetInventoryStockSnapshot",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "stockId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -269,10 +280,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/TenantModel"
-              }
+              "$ref": "#/definitions/StockSnapshotModel"
             }
           },
           "404": {
@@ -282,7 +290,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "500": {
@@ -295,19 +303,27 @@
         }
       }
     },
-    "/api/organization/tenants/{id}": {
+    "/api/tenants/{tenantId}/inventory/stocks/{stockId}/stocksnapshots": {
       "get": {
         "tags": [
-          "Organization"
+          "Inventory"
         ],
-        "operationId": "GetOrganizationTenant",
+        "operationId": "GetInventoryStockSnapshots",
         "produces": [
-          "application/json",
-          "application/problem+json"
+          "application/json"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "stockId",
             "in": "path",
             "required": true,
             "schema": {
@@ -321,47 +337,9 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/TenantModel"
-            }
-          },
-          "404": {
-            "description": ""
-          },
-          "400": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
-            }
-          },
-          "500": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      }
-    },
-    "/api/organization/tenants": {
-      "get": {
-        "tags": [
-          "Organization"
-        ],
-        "operationId": "GetOrganizationTenants",
-        "produces": [
-          "application/json",
-          "application/problem+json"
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TenantModel"
+                "$ref": "#/definitions/StockSnapshotModel"
               }
             }
           },
@@ -369,7 +347,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "500": {
@@ -383,27 +361,29 @@
       },
       "post": {
         "tags": [
-          "Organization"
+          "Inventory"
         ],
-        "operationId": "CreateOrganizationTenant",
-        "consumes": [
-          "application/json"
-        ],
+        "operationId": "CreateInventoryStockSnapshot",
         "produces": [
-          "application/json",
-          "application/problem+json"
+          "application/json"
         ],
         "parameters": [
           {
-            "name": "model",
-            "in": "body",
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
             "schema": {
-              "x-nullable": true,
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/TenantModel"
-                }
-              ]
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "stockId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
             }
           }
         ],
@@ -412,14 +392,14 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/TenantModel"
+              "$ref": "#/definitions/StockSnapshotModel"
             }
           },
           "400": {
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/HttpValidationProblemDetails"
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "500": {

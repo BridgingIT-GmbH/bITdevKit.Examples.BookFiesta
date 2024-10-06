@@ -5,6 +5,7 @@
 
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
+using NSwag.Generation;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
 using System.Reflection;
@@ -148,6 +149,7 @@ builder.Services.AddEndpoints<JobSchedulingEndpoints>(builder.Environment.IsDeve
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(ConfigureOpenApiDocument);
+builder.Services.Configure<AspNetCoreOpenApiDocumentGeneratorSettings>(ConfigureOpenApiDocument);
 
 if (!builder.Environment.IsDevelopment())
 {

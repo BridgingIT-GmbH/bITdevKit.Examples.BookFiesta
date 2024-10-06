@@ -14,43 +14,39 @@ using NSwag.Generation.AspNetCore;
 using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BridgingIT.DevKit.Common;
 
-public class SwaggerGeneratorStartupTask : IStartupTask
+public class SwaggerGeneratorStartupTask(
+    ILogger<SwaggerGeneratorStartupTask> logger,
+    IServiceProvider serviceProvider,
+    IWebHostEnvironment environment,
+    IOptions<SwaggerGeneratorOptions> options,
+    IOptions<AspNetCoreOpenApiDocumentGeneratorSettings> openApiSettings)
+    : IStartupTask
 {
-    private readonly ILogger<SwaggerGeneratorStartupTask> logger;
-    private readonly IServiceProvider serviceProvider;
-    private readonly IWebHostEnvironment environment;
-    private readonly SwaggerGeneratorOptions options;
-    private readonly AspNetCoreOpenApiDocumentGeneratorSettings openApiSettings;
-
-    public SwaggerGeneratorStartupTask(
-        ILogger<SwaggerGeneratorStartupTask> logger,
-        IServiceProvider serviceProvider,
-        IWebHostEnvironment environment,
-        IOptions<SwaggerGeneratorOptions> options,
-        IOptions<AspNetCoreOpenApiDocumentGeneratorSettings> openApiSettings)
-    {
-        this.logger = logger;
-        this.serviceProvider = serviceProvider;
-        this.environment = environment;
-        this.options = options?.Value ?? new SwaggerGeneratorOptions();
-        this.openApiSettings = openApiSettings?.Value ?? new AspNetCoreOpenApiDocumentGeneratorSettings();
-    }
+    private readonly SwaggerGeneratorOptions options = options?.Value ?? new SwaggerGeneratorOptions();
+    private readonly AspNetCoreOpenApiDocumentGeneratorSettings openApiSettings = openApiSettings?.Value ?? new AspNetCoreOpenApiDocumentGeneratorSettings();
 
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        this.logger.LogInformation("Starting Swagger documentation generation");
+        logger.LogInformation("Starting Swagger documentation generation");
 
         var generator = new AspNetCoreOpenApiDocumentGenerator(this.openApiSettings);
-        var fullSwaggerPath = Path.Combine(this.environment.ContentRootPath, this.options.SwaggerDirectory);
-        var document = await generator.GenerateAsync(this.serviceProvider);
+        var fullSwaggerPath = Path.Combine(environment.ContentRootPath, this.options.SwaggerDirectory);
+        var document = await generator.GenerateAsync(serviceProvider);
 
-        foreach (var baseRoute in this.options.BaseRoutes)
+        var tags = this.DiscoverTags(document);
+
+        // Generate full Swagger document
+        await this.GenerateSwaggerFile(document, "all", fullSwaggerPath, cancellationToken);
+
+        // Generate Swagger documents for each tag
+        foreach (var tag in tags)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -62,38 +58,61 @@ public class SwaggerGeneratorStartupTask : IStartupTask
                 Info = document.Info,
             };
 
-            // Filter paths based on the base route
+            filteredDocument.Info.Title = $"{document.Info.Title} - {tag}";
+
             foreach (var path in document.Paths)
             {
-                if (path.Key.StartsWith(baseRoute, StringComparison.OrdinalIgnoreCase))
+                if (path.Value.Values.Any(operation => operation.Tags.Contains(tag)))
                 {
                     filteredDocument.Paths[path.Key] = path.Value;
                 }
             }
 
-            // Copy all definitions (unfiltered)
-            foreach(var definition in document.Definitions)
+            foreach (var definition in document.Definitions)
             {
                 filteredDocument.Definitions[definition.Key] = definition.Value;
             }
 
-            var json = filteredDocument.ToJson();
-            var fileName = $"swagger_{SanitizeRouteForFileName(baseRoute)}.json";
-            var filePath = Path.Combine(fullSwaggerPath, fileName);
+            await this.GenerateSwaggerFile(filteredDocument, tag, fullSwaggerPath, cancellationToken);
+        }
+    }
 
-            if (await this.HasChangesAsync(json, filePath, cancellationToken))
-            {
-                Directory.CreateDirectory(fullSwaggerPath);
-                var tempFilePath = Path.GetTempFileName();
-                await File.WriteAllTextAsync(tempFilePath, json, cancellationToken);
-                File.Move(tempFilePath, filePath, true);
+    private HashSet<string> DiscoverTags(OpenApiDocument document)
+    {
+        var tags = new HashSet<string>();
 
-                this.logger.LogInformation("New Swagger documentation generated and saved for route: {BaseApiRoute}", baseRoute);
-            }
-            else
+        foreach (var path in document.Paths.Values)
+        {
+            foreach (var operation in path.Values)
             {
-                this.logger.LogInformation("No changes detected in Swagger documentation for route: {BaseApiRoute}", baseRoute);
+                foreach (var tag in operation.Tags)
+                {
+                    tags.Add(tag);
+                }
             }
+        }
+
+        return tags;
+    }
+
+    private async Task GenerateSwaggerFile(OpenApiDocument document, string tag, string fullSwaggerPath, CancellationToken cancellationToken)
+    {
+        var json = document.ToJson();
+        var fileName = tag == "all" ? "swagger.json" : $"swagger_{this.SanitizeForFileName(tag)}.json";
+        var filePath = Path.Combine(fullSwaggerPath, fileName);
+
+        if (await this.HasChangesAsync(json, filePath, cancellationToken))
+        {
+            Directory.CreateDirectory(fullSwaggerPath);
+            var tempFilePath = Path.GetTempFileName();
+            await File.WriteAllTextAsync(tempFilePath, json, cancellationToken);
+            File.Move(tempFilePath, filePath, true);
+
+            logger.LogInformation("New Swagger documentation generated and saved: {FilePath}", filePath);
+        }
+        else
+        {
+            logger.LogInformation("No changes detected in Swagger documentation for tag: {FilePath}", filePath);
         }
     }
 
@@ -106,31 +125,16 @@ public class SwaggerGeneratorStartupTask : IStartupTask
 
         var existingContent = await File.ReadAllTextAsync(filePath, cancellationToken);
 
-        return !string.Equals(ComputeHash(existingContent), ComputeHash(newContent));
+        return !string.Equals(HashHelper.Compute(existingContent), HashHelper.Compute(newContent));
     }
 
-#pragma warning disable SA1204
-    private static string ComputeHash(string content)
-#pragma warning restore SA1204
+    private string SanitizeForFileName(string tag)
     {
-        using var sha256 = SHA256.Create();
-        var contentBytes = Encoding.UTF8.GetBytes(content);
-        var hashBytes = sha256.ComputeHash(contentBytes);
-
-        return Convert.ToBase64String(hashBytes);
-    }
-
-    private static string SanitizeRouteForFileName(string route)
-    {
-        return string.Join("_", route.Split(Path.GetInvalidFileNameChars()));
+        return string.Join("_", tag.Split(Path.GetInvalidFileNameChars())).Replace("__", "_").ToLower();
     }
 }
 
 public class SwaggerGeneratorOptions
 {
-    public string[] BaseRoutes { get; set; } //= new[] { "/api/organization", "/api/tenants/{tenantId}/catalog", "/api/_system" };
-
-    public string[] Tags { get; set; } = new[] { "Catalog", "Organization", "_system" };
-
     public string SwaggerDirectory { get; set; } = "wwwroot/swagger";
 }
