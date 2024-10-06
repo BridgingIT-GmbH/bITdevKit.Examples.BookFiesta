@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Backend API - Catalog - Inventory - Organization - _system - _system/jobs",
+    "title": "Backend API - _system/jobs",
     "version": "v1"
   },
   "paths": {

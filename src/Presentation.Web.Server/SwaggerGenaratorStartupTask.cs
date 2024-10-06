@@ -6,7 +6,6 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Server;
 
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSwag;
@@ -15,8 +14,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BridgingIT.DevKit.Common;
@@ -44,6 +41,7 @@ public class SwaggerGeneratorStartupTask(
 
         // Generate full Swagger document
         await this.GenerateSwaggerFile(document, "all", fullSwaggerPath, cancellationToken);
+        var documentTitle = document.Info.Title;
 
         // Generate Swagger documents for each tag
         foreach (var tag in tags)
@@ -58,7 +56,7 @@ public class SwaggerGeneratorStartupTask(
                 Info = document.Info,
             };
 
-            filteredDocument.Info.Title = $"{document.Info.Title} - {tag}";
+            filteredDocument.Info.Title = $"{documentTitle} - {tag}";
 
             foreach (var path in document.Paths)
             {
@@ -97,22 +95,29 @@ public class SwaggerGeneratorStartupTask(
 
     private async Task GenerateSwaggerFile(OpenApiDocument document, string tag, string fullSwaggerPath, CancellationToken cancellationToken)
     {
-        var json = document.ToJson();
-        var fileName = tag == "all" ? "swagger.json" : $"swagger_{this.SanitizeForFileName(tag)}.json";
-        var filePath = Path.Combine(fullSwaggerPath, fileName);
-
-        if (await this.HasChangesAsync(json, filePath, cancellationToken))
+        try
         {
-            Directory.CreateDirectory(fullSwaggerPath);
-            var tempFilePath = Path.GetTempFileName();
-            await File.WriteAllTextAsync(tempFilePath, json, cancellationToken);
-            File.Move(tempFilePath, filePath, true);
+            var json = document.ToJson();
+            var fileName = tag == "all" ? "swagger.json" : $"swagger_{this.SanitizeForFileName(tag)}.json";
+            var filePath = Path.Combine(fullSwaggerPath, fileName);
 
-            logger.LogInformation("New Swagger documentation generated and saved: {FilePath}", filePath);
+            if (await this.HasChangesAsync(json, filePath, cancellationToken))
+            {
+                Directory.CreateDirectory(fullSwaggerPath);
+                var tempFilePath = Path.GetTempFileName();
+                await File.WriteAllTextAsync(tempFilePath, json, cancellationToken);
+                File.Move(tempFilePath, filePath, true);
+
+                logger.LogInformation("{LogKey} swagger generation finished (file={FilePath})", "INF", filePath);
+            }
+            else
+            {
+                logger.LogDebug("{LogKey} swagger generation skipped, no changes (file={FilePath})", "INF", filePath);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            logger.LogInformation("No changes detected in Swagger documentation for tag: {FilePath}", filePath);
+            logger.LogError(ex, "{LogKey} swagger generation failed", "INF");
         }
     }
 
@@ -130,7 +135,7 @@ public class SwaggerGeneratorStartupTask(
 
     private string SanitizeForFileName(string tag)
     {
-        return string.Join("_", tag.Split(Path.GetInvalidFileNameChars())).Replace("__", "_").ToLower();
+        return string.Join("_", tag.Split(Path.GetInvalidFileNameChars())).TrimStart('_').ToLower();
     }
 }
 
