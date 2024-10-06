@@ -22,6 +22,7 @@ public class CatalogCategoryEndpoints : EndpointsBase
     {
         var group = app
             .MapGroup("api/tenants/{tenantId}/catalog/categories")
+            .WithGroupName("Catalog/Categories")
             .WithTags("Catalog");
 
         group.MapGet("/{id}", GetCategory)
