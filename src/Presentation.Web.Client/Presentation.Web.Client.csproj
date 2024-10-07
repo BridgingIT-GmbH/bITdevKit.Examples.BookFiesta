@@ -18,6 +18,12 @@
     <ApiClientOutputDirectory>./Clients</ApiClientOutputDirectory>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ApiSpec Include="Catalog" />
+    <ApiSpec Include="Inventory" />
+    <ApiSpec Include="Organization" />
+  </ItemGroup>
+
   <Target Name="GenerateApiClients" BeforeTargets="CoreCompile">
     <!-- Loop through each ApiSpec and dynamically build paths and names -->
     <Exec Command="$(NSwagExe) openapi2csclient /input:$(ApiSpecLocation)\swagger_%(ApiSpec.Identity).json /classname:%(ApiSpec.Identity)$(ApiClientClassName) /namespace:$(ApiClientNamespace).%(ApiSpec.Identity) /output:$(ApiClientOutputDirectory)/%(ApiSpec.Identity)$(ApiClientClassName).cs /GenerateClientInterfaces:true /ResponseClass:ApiResponse /ExceptionClass:ApiException /GenerateResponseClasses:true /WrapResponses:true /OperationGenerationMode:SingleClientFromOperationId /ClassStyle:Poco /JsonLibrary:SystemTextJson /ArrayType:System.Collections.Generic.IEnumerable /UseBaseUrl:True /ClientBaseClass:BridgingIT.DevKit.Presentation.Web.Client.ApiClientBase"
