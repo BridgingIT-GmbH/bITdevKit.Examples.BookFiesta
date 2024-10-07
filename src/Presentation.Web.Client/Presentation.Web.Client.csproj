@@ -19,10 +19,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ApiSpec Include="Catalog" />
-    <ApiSpec Include="Inventory" />
-    <ApiSpec Include="Organization" />
-    <ApiSpec Include="System" />
+    <ApiSpec Include="Catalog" Visible="false"/>
+    <ApiSpec Include="Inventory" Visible="false"/>
+    <ApiSpec Include="Organization" Visible="false"/>
+    <ApiSpec Include="System" Visible="false"/>
   </ItemGroup>
 
   <Target Name="GenerateApiClients" BeforeTargets="CoreCompile">
