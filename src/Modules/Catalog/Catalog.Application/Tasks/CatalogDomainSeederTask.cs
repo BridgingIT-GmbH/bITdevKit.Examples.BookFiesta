@@ -48,6 +48,10 @@ public class CatalogDomainSeederTask(
             {
                 await repository.InsertAsync(entity);
             }
+            else
+            {
+                return entities;
+            }
         }
 
         return entities;
@@ -65,6 +69,10 @@ public class CatalogDomainSeederTask(
             {
                 entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
                 await repository.InsertAsync(entity);
+            }
+            else
+            {
+                return entities;
             }
         }
 
@@ -84,6 +92,10 @@ public class CatalogDomainSeederTask(
                 entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
                 await repository.InsertAsync(entity);
             }
+            else
+            {
+                return entities;
+            }
         }
 
         return entities;
@@ -102,6 +114,10 @@ public class CatalogDomainSeederTask(
                 entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
                 await repository.InsertAsync(entity);
             }
+            else
+            {
+                return entities;
+            }
         }
 
         return entities;
@@ -119,6 +135,10 @@ public class CatalogDomainSeederTask(
             {
                 entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
                 await repository.InsertAsync(entity);
+            }
+            else
+            {
+                return entities;
             }
         }
 
@@ -143,6 +163,10 @@ public class CatalogDomainSeederTask(
             {
                 entity.AuditState.SetCreated("seed", nameof(CatalogDomainSeederTask));
                 await repository.InsertAsync(entity);
+            }
+            else
+            {
+                return entities;
             }
         }
 

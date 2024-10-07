@@ -42,6 +42,10 @@ public class InventoryDomainSeederTask(
                 entity.AuditState.SetCreated("seed", nameof(InventoryDomainSeederTask));
                 await repository.InsertAsync(entity);
             }
+            else
+            {
+                return entities;
+            }
         }
 
         return entities;
@@ -59,6 +63,10 @@ public class InventoryDomainSeederTask(
             {
                 entity.AuditState.SetCreated("seed", nameof(InventoryDomainSeederTask));
                 await repository.InsertAsync(entity);
+            }
+            else
+            {
+                return entities;
             }
         }
 

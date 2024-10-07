@@ -34,9 +34,12 @@ public class OrganizationDomainSeederTask(
         {
             if (!await repository.ExistsAsync(entity.Id))
             {
-                entity.AuditState.SetCreated();
                 entity.AuditState.SetCreated("seed", nameof(OrganizationDomainSeederTask));
                 await repository.InsertAsync(entity);
+            }
+            else
+            {
+                return entities;
             }
         }
 
@@ -55,6 +58,10 @@ public class OrganizationDomainSeederTask(
             {
                 entity.AuditState.SetCreated("seed", nameof(OrganizationDomainSeederTask));
                 await repository.InsertAsync(entity);
+            }
+            else
+            {
+                return entities;
             }
         }
 

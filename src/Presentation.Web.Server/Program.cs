@@ -6,6 +6,7 @@
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
+using OpenTelemetry.Exporter;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
 using System.Reflection;
@@ -93,8 +94,10 @@ builder.Services.AddQueries()
 builder.Services.AddStartupTasks(o => o
         .Enabled()
         .StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
-    .WithTask<EchoStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:03"))
-    //.WithTask<SwaggerGeneratorStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()))
+    .WithTask<EchoStartupTask>(o => o
+        .Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:03"))
+    .WithTask<SwaggerGeneratorStartupTask>(o => o
+        .Enabled(builder.Environment.IsDevelopment()))
     .WithTask<JobSchedulingSqlServerSeederStartupTask>(o => o // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
         .Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:05"))
     //.WithTask(sp => new JobSchedulingSqlServerSeederStartupTask(sp.GetRequiredService<ILoggerFactory>(), builder.Configuration))
@@ -104,7 +107,8 @@ builder.Services.AddStartupTasks(o => o
     .WithBehavior<TimeoutStartupTaskBehavior>();
 
 builder.Services
-    .AddMessaging(builder.Configuration, o => o
+    .AddMessaging(builder.Configuration,
+        o => o
             .StartupDelay(builder.Configuration["Messaging:StartupDelay"]))
     .WithBehavior<ModuleScopeMessagePublisherBehavior>()
     .WithBehavior<ModuleScopeMessageHandlerBehavior>()
@@ -163,7 +167,9 @@ builder.Logging.AddOpenTelemetry(
         logging.IncludeFormattedMessage = true;
         logging.IncludeScopes = true;
     });
-builder.Services.AddOpenTelemetry().WithMetrics(ConfigureMetrics).WithTracing(ConfigureTracing);
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(ConfigureMetrics)
+    .WithTracing(ConfigureTracing);
 
 // ===============================================================================================
 // Configure the HTTP request pipeline
@@ -339,19 +345,26 @@ void ConfigureTracing(TracerProviderBuilder provider)
                 opts.SetDbStatementForText = true;
             });
 
+    if (builder.Configuration["Tracing:Otlp:Enabled"].To<bool>())
+    {
+        Log.Logger.Information("{LogKey} otlp exporter enabled (endpoint={Endpoint})", "TRC", builder.Configuration["Tracing:Otlp:Endpoint"]);
+        provider.AddOtlpExporter(opt =>
+        {
+            opt.Endpoint = new Uri(builder.Configuration["Tracing:Otlp:Endpoint"]);
+            opt.Protocol = OtlpExportProtocol.HttpProtobuf;
+            opt.Headers = builder.Configuration["Tracing:Otlp:Headers"];
+        });
+    }
+
     if (builder.Configuration["Tracing:Jaeger:Enabled"].To<bool>())
     {
-        Log.Logger.Information(
-            "{LogKey} jaeger exporter enabled (host={JaegerHost})",
-            "TRC",
-            builder.Configuration["Tracing:Jaeger:AgentHost"]);
-        provider.AddJaegerExporter(
-            opts =>
-            {
-                opts.AgentHost = builder.Configuration["Tracing:Jaeger:AgentHost"];
-                opts.AgentPort = Convert.ToInt32(builder.Configuration["Tracing:Jaeger:AgentPort"]);
-                opts.ExportProcessorType = ExportProcessorType.Simple;
-            });
+        Log.Logger.Information("{LogKey} jaeger exporter enabled (host={JaegerHost})", "TRC", builder.Configuration["Tracing:Jaeger:AgentHost"]);
+        provider.AddJaegerExporter(opt =>
+        {
+            opt.AgentHost = builder.Configuration["Tracing:Jaeger:AgentHost"];
+            opt.AgentPort = Convert.ToInt32(builder.Configuration["Tracing:Jaeger:AgentPort"]);
+            opt.ExportProcessorType = ExportProcessorType.Simple;
+        });
     }
 
     if (builder.Configuration["Tracing:Console:Enabled"].To<bool>())
