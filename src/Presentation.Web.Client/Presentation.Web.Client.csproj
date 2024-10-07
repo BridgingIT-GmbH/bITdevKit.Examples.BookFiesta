@@ -22,6 +22,7 @@
     <ApiSpec Include="Catalog" />
     <ApiSpec Include="Inventory" />
     <ApiSpec Include="Organization" />
+    <ApiSpec Include="System" />
   </ItemGroup>
 
   <Target Name="GenerateApiClients" BeforeTargets="CoreCompile">
