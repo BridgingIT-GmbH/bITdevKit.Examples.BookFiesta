@@ -11,22 +11,37 @@
 
   <!-- API Client generation (openapi2csclient) -->
   <PropertyGroup>
-    <ApiSpecGenerate>true</ApiSpecGenerate> <!--$(BuildingInsideVisualStudio)-->
-    <ApiSpecLocation>..\Presentation.Web.Server\wwwroot\swagger.json</ApiSpecLocation>
+    <ApiSpecGenerate>true</ApiSpecGenerate>
+    <ApiSpecLocation>..\Presentation.Web.Server\wwwroot</ApiSpecLocation>
     <ApiClientClassName>ApiClient</ApiClientClassName>
     <ApiClientNamespace>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client</ApiClientNamespace>
-    <ApiClientOutputDirectory>./</ApiClientOutputDirectory>
+    <ApiClientOutputDirectory>./Clients</ApiClientOutputDirectory>
   </PropertyGroup>
-  <ItemGroup Condition="Exists('$(ApiSpecLocation)') And '$(ApiSpecGenerate)' == 'true'">
-    <OpenApiReference Include="$(ApiSpecLocation)" CodeGenerator="NSwagCSharp" ClassName="$(ApiClientClassName)" OutputPath="$(ApiClientClassName).g.cs" Namespace="$(ApiClientNamespace)">
-      <Options>/GenerateClientInterfaces:true /ResponseClass:ApiResponse /ExceptionClass:ApiException /GenerateResponseClasses:true /WrapResponses:true /OperationGenerationMode:SingleClientFromOperationId /ClassStyle:Poco /JsonLibrary:SystemTextJson /ArrayType:System.Collections.Generic.IEnumerable /UseBaseUrl:True /ClientBaseClass:BridgingIT.DevKit.Presentation.Web.Client.ApiClientBase</Options>
-    </OpenApiReference>
+  
+  <ItemGroup>
+    <ApiSpec Include="Catalog" />
+    <ApiSpec Include="Inventory" />
+    <ApiSpec Include="Organization" />
   </ItemGroup>
-  <!--<Target Name="GenerateApiClient" BeforeTargets="CoreCompile" Inputs="$(ApiSpecLocation)" Outputs="$(ApiClientClassName).cs" Condition="Exists('$(ApiSpecLocation)') And '$(ApiSpecGenerate)' == 'true'">
-    <Exec Command="$(NSwagExe) openapi2csclient /input:$(ApiSpecLocation) /classname:ApiClient /namespace:$(RootNamespace) /output:$(ApiClientClassName).cs /GenerateClientInterfaces:true /ResponseClass:ApiResponse /ExceptionClass:ApiException /GenerateResponseClasses:true /WrapResponses:true /OperationGenerationMode:SingleClientFromOperationId /ClassStyle:Poco /JsonLibrary:SystemTextJson /ArrayType:System.Collections.Generic.IEnumerable /UseBaseUrl:True /ClientBaseClass:BridgingIT.DevKit.Presentation.Web.Client.ApiClientBase" ConsoleToMSBuild="true" ContinueOnError="WarnAndContinue">
+
+  <Target Name="GenerateApiClients" BeforeTargets="CoreCompile">
+    <!-- Loop through each ApiSpec and dynamically build paths and names -->
+    <Exec Command="$(NSwagExe) openapi2csclient /input:$(ApiSpecLocation)\swagger_%(ApiSpec.Identity).json /classname:%(ApiSpec.Identity)$(ApiClientClassName) /namespace:$(ApiClientNamespace).%(ApiSpec.Identity) /output:$(ApiClientOutputDirectory)/%(ApiSpec.Identity)$(ApiClientClassName).cs /GenerateClientInterfaces:true /ResponseClass:ApiResponse /ExceptionClass:ApiException /GenerateResponseClasses:true /WrapResponses:true /OperationGenerationMode:SingleClientFromOperationId /ClassStyle:Poco /JsonLibrary:SystemTextJson /ArrayType:System.Collections.Generic.IEnumerable /UseBaseUrl:True /ClientBaseClass:BridgingIT.DevKit.Presentation.Web.Client.ApiClientBase"
+          Condition="Exists('..\Presentation.Web.Server\wwwroot\swagger_%(ApiSpec.Identity).json') And '$(ApiSpecGenerate)' == 'true'"
+          ContinueOnError="WarnAndContinue">
+      <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
+    </Exec>
+  </Target>
+  <!--<Target Name="GenerateApiClient" BeforeTargets="CoreCompile" Inputs="$(ApiSpecLocation)" Outputs="./Clients/$(ApiClientClassName).cs" Condition="Exists('$(ApiSpecLocation)') And '$(ApiSpecGenerate)' == 'true'">
+    <Exec Command="$(NSwagExe) openapi2csclient /input:$(ApiSpecLocation) /classname:ApiClient /namespace:$(RootNamespace) /output:./Clients/$(ApiClientClassName).cs /GenerateClientInterfaces:true /ResponseClass:ApiResponse /ExceptionClass:ApiException /GenerateResponseClasses:true /WrapResponses:true /OperationGenerationMode:SingleClientFromOperationId /ClassStyle:Poco /JsonLibrary:SystemTextJson /ArrayType:System.Collections.Generic.IEnumerable /UseBaseUrl:True /ClientBaseClass:BridgingIT.DevKit.Presentation.Web.Client.ApiClientBase" ConsoleToMSBuild="true" ContinueOnError="WarnAndContinue">
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
     </Exec>
   </Target>-->
+<!--  <ItemGroup Condition="Exists('$(ApiSpecLocation)') And '$(ApiSpecGenerate)' == 'true'">-->
+<!--    <OpenApiReference Include="$(ApiSpecLocation)" CodeGenerator="NSwagCSharp" ClassName="$(ApiClientClassName)" OutputPath="$(ApiClientClassName).g.cs" Namespace="$(ApiClientNamespace)">-->
+<!--      <Options>/GenerateClientInterfaces:true /ResponseClass:ApiResponse /ExceptionClass:ApiException /GenerateResponseClasses:true /WrapResponses:true /OperationGenerationMode:SingleClientFromOperationId /ClassStyle:Poco /JsonLibrary:SystemTextJson /ArrayType:System.Collections.Generic.IEnumerable /UseBaseUrl:True /ClientBaseClass:BridgingIT.DevKit.Presentation.Web.Client.ApiClientBase</Options>-->
+<!--    </OpenApiReference>-->
+<!--  </ItemGroup>-->
 
   <ItemGroup>
     <PackageReference Include="BridgingIT.DevKit.Common.Extensions"/>
@@ -63,6 +78,10 @@
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Clients\" />
   </ItemGroup>
 
 </Project>

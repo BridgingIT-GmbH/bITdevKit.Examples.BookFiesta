@@ -4,6 +4,7 @@
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="Nuke.Common" Version="8.1.1" />
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="8.2.0"/>
     <PackageVersion Include="Aspire.Hosting.SqlServer" Version="8.2.0"/>
     <PackageVersion Include="Aspire.Hosting.Testing" Version="8.2.0"/>

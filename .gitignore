@@ -419,3 +419,4 @@ FodyWeavers.xsd
 
 # Custom
 /src/**/*.db
+/CodeDump.txt

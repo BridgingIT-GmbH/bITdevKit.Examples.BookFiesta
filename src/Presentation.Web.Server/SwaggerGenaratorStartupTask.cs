@@ -141,5 +141,5 @@ public class SwaggerGeneratorStartupTask(
 
 public class SwaggerGeneratorOptions
 {
-    public string SwaggerDirectory { get; set; } = "wwwroot/swagger";
+    public string SwaggerDirectory { get; set; } = "wwwroot";
 }
