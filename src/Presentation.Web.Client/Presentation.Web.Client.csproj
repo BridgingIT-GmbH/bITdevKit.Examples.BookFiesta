@@ -17,12 +17,6 @@
     <ApiClientNamespace>BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client</ApiClientNamespace>
     <ApiClientOutputDirectory>./Clients</ApiClientOutputDirectory>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <ApiSpec Include="Catalog" />
-    <ApiSpec Include="Inventory" />
-    <ApiSpec Include="Organization" />
-  </ItemGroup>
 
   <Target Name="GenerateApiClients" BeforeTargets="CoreCompile">
     <!-- Loop through each ApiSpec and dynamically build paths and names -->
@@ -78,10 +72,6 @@
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Clients\" />
   </ItemGroup>
 
 </Project>

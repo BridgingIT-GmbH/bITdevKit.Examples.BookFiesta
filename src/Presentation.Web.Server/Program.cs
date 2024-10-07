@@ -5,6 +5,7 @@
 
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
+using BridgingIT.DevKit.Infrastructure.EntityFramework;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
 using System.Reflection;
@@ -93,9 +94,9 @@ builder.Services.AddStartupTasks(o => o
         .Enabled()
         .StartupDelay(builder.Configuration["StartupTasks:StartupDelay"]))
     .WithTask<EchoStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:03"))
-    .WithTask<SwaggerGeneratorStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()))
-    // .WithTask<JobSchedulingSqlServerSeederStartupTask>(o => o // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
-    //     .Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:05:00"))
+    //.WithTask<SwaggerGeneratorStartupTask>(o => o.Enabled(builder.Environment.IsDevelopment()))
+    .WithTask<JobSchedulingSqlServerSeederStartupTask>(o => o // uses quartz configuration from appsettings JobScheduling:Quartz:quartz...
+        .Enabled(builder.Environment.IsDevelopment()).StartupDelay("00:00:05"))
     //.WithTask(sp => new JobSchedulingSqlServerSeederStartupTask(sp.GetRequiredService<ILoggerFactory>(), builder.Configuration))
     .WithBehavior<ModuleScopeStartupTaskBehavior>()
     //.WithBehavior<ChaosExceptionStartupTaskBehavior>()
