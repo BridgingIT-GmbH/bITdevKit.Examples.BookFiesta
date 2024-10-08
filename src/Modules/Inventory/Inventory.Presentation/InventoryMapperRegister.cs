@@ -19,6 +19,12 @@ public class InventoryMapperRegister : IRegister
 
     private static void RegisterStock(TypeAdapterConfig config)
     {
+        config.ForType<Stock, StockModel>()
+            .IgnoreNullValues(true)
+            .Map(d => d.Sku, s => s.Sku.Value)
+            .Ignore(dest => dest.Adjustments)
+            .Ignore(dest => dest.Movements); // TODO: does not work at the moment;
+
         config.ForType<StockModel, Stock>()
             .IgnoreNullValues(true)
             .ConstructUsing(

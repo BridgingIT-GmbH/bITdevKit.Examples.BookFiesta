@@ -124,6 +124,9 @@
               }
             }
           },
+          "404": {
+            "description": ""
+          },
           "400": {
             "description": "",
             "content": {
@@ -297,6 +300,192 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CustomerModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenants/{tenantId}/catalog/authors/{id}": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "GetCatalogAuthor",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenants/{tenantId}/catalog/authors": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "GetCatalogAuthors",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuthorModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "CreateCatalogAuthor",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "model",
+          "content": {
+            "application/json": {
+              "schema": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/AuthorModel"
+                  }
+                ]
+              }
+            }
+          },
+          "x-position": 2
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorModel"
                 }
               }
             }
@@ -1072,7 +1261,7 @@
         }
       }
     },
-    "/api/tenants/{tenantId}/inventory/stocks/{id}/adjust": {
+    "/api/tenants/{tenantId}/inventory/stocks/{id}/movements": {
       "post": {
         "tags": [
           "Inventory"
@@ -1126,6 +1315,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": ""
           },
           "400": {
             "description": "",
@@ -1447,6 +1639,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": ""
           },
           "400": {
             "description": "",
@@ -2162,6 +2357,78 @@
           }
         }
       },
+      "AuthorModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Id": {
+            "type": "string",
+            "nullable": true
+          },
+          "TenantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "PersonName": {
+            "type": "string",
+            "nullable": true
+          },
+          "Biography": {
+            "type": "string",
+            "nullable": true
+          },
+          "Books": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AuthorBookModel"
+            }
+          },
+          "Tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/TagModel"
+            }
+          },
+          "Version": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AuthorBookModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Id": {
+            "type": "string",
+            "nullable": true
+          },
+          "Title": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TagModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Id": {
+            "type": "string",
+            "nullable": true
+          },
+          "TenantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "Name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
       "BookModel": {
         "type": "object",
         "additionalProperties": false,
@@ -2175,6 +2442,10 @@
             "nullable": true
           },
           "Title": {
+            "type": "string",
+            "nullable": true
+          },
+          "Edition": {
             "type": "string",
             "nullable": true
           },
@@ -2310,24 +2581,6 @@
             "format": "int32"
           },
           "Content": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "TagModel": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "Id": {
-            "type": "string",
-            "nullable": true
-          },
-          "TenantId": {
-            "type": "string",
-            "nullable": true
-          },
-          "Name": {
             "type": "string",
             "nullable": true
           }

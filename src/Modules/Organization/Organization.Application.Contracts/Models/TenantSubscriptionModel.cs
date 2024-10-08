@@ -11,11 +11,11 @@ public class TenantSubscriptionModel
 {
     public string Id { get; set; }
 
-    public int PlanType { get; }
+    public int PlanType { get; set; }
 
-    public int Status { get; }
+    public int Status { get; set; }
 
-    public DateScheduleModel Schedule { get; }
+    public DateScheduleModel Schedule { get; set; }
 
-    public int BillingCycle { get; }
+    public int BillingCycle { get; set; }
 }

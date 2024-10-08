@@ -472,12 +472,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Inventor
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/tenants/{tenantId}/inventory/stocks/{id}/adjust"
+                    // Operation Path: "api/tenants/{tenantId}/inventory/stocks/{id}/movements"
                     urlBuilder_.Append("api/tenants/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(tenantId, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/inventory/stocks/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/adjust");
+                    urlBuilder_.Append("/movements");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1083,6 +1083,60 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Inventor
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AuthorModel
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("Id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("TenantId")]
+        public string TenantId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("PersonName")]
+        public string PersonName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("Biography")]
+        public string Biography { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("Books")]
+        public System.Collections.Generic.IEnumerable<AuthorBookModel> Books { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("Tags")]
+        public System.Collections.Generic.IEnumerable<TagModel> Tags { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("Version")]
+        public string Version { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AuthorBookModel
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("Id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("Title")]
+        public string Title { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TagModel
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("Id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("TenantId")]
+        public string TenantId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("Name")]
+        public string Name { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class BookModel
     {
 
@@ -1094,6 +1148,9 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Inventor
 
         [System.Text.Json.Serialization.JsonPropertyName("Title")]
         public string Title { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("Edition")]
+        public string Edition { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("Description")]
         public string Description { get; set; }
@@ -1188,21 +1245,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Inventor
 
         [System.Text.Json.Serialization.JsonPropertyName("Content")]
         public string Content { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TagModel
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("Id")]
-        public string Id { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("TenantId")]
-        public string TenantId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("Name")]
-        public string Name { get; set; }
 
     }
 

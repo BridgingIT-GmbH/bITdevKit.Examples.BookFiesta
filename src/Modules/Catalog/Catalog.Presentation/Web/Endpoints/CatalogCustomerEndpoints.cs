@@ -61,9 +61,11 @@ public class CatalogCustomerEndpoints : EndpointsBase
     {
         var result = (await mediator.Send(new CustomerFindOneQuery(tenantId, id))).Result;
 
-        return result.Value == null ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value)) :
-            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value))
+                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<CustomerModel>>, ProblemHttpResult>> GetCustomers(
@@ -93,7 +95,7 @@ public class CatalogCustomerEndpoints : EndpointsBase
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<CustomerModel>, ProblemHttpResult>> UpdateCustomer(
+    private static async Task<Results<Ok<CustomerModel>, NotFound, ProblemHttpResult>> UpdateCustomer(
         [FromServices] IMediator mediator,
         [FromServices] IMapper mapper,
         [FromRoute] string tenantId,
@@ -102,9 +104,11 @@ public class CatalogCustomerEndpoints : EndpointsBase
     {
         var result = (await mediator.Send(new CustomerUpdateCommand(tenantId, model))).Result;
 
-        return result.IsSuccess
-            ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value))
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok, NotFound, ProblemHttpResult>> DeleteCustomer(
@@ -115,8 +119,10 @@ public class CatalogCustomerEndpoints : EndpointsBase
     {
         var result = (await mediator.Send(new CustomerDeleteCommand(tenantId, id))).Result;
 
-        return result.HasError<EntityNotFoundResultError>() ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok() :
-            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok()
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

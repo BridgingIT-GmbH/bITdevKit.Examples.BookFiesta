@@ -50,9 +50,11 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
 
     public DateTimeOffset? LastRestockedAt { get; private set; }
 
-    public IEnumerable<StockMovement> Movements => this.movements;
+    public IEnumerable<StockMovement> Movements =>
+        this.movements.OrderBy(m => m.Timestamp);
 
-    public IEnumerable<StockAdjustment> Adjustments => this.adjustments;
+    public IEnumerable<StockAdjustment> Adjustments =>
+        this.adjustments.OrderBy(m => m.Timestamp);
 
     public Guid Version { get; set; }
 

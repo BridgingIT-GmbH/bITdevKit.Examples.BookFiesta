@@ -49,9 +49,11 @@ public class CatalogCategoryEndpoints : EndpointsBase
     {
         var result = (await mediator.Send(new CategoryFindOneQuery(tenantId, id))).Result;
 
-        return result.Value == null ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok(mapper.Map<Category, CategoryModel>(result.Value)) :
-            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok(mapper.Map<Category, CategoryModel>(result.Value))
+                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>> GetCategoryBooks(

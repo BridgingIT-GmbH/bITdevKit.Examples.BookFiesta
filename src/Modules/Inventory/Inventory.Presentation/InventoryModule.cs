@@ -66,12 +66,12 @@ public class InventoryModule : WebModuleBase
             .WithDatabaseMigratorService(o => o
                 .StartupDelay("00:00:10")
                 .Enabled(environment?.IsDevelopment() == true)
-                .DeleteOnStartup(false))
-            .WithOutboxDomainEventService(o => o
-                .ProcessingInterval("00:00:30")
-                .StartupDelay("00:00:30")
-                .PurgeOnStartup()
-                .ProcessingModeImmediate());
+                .DeleteOnStartup(false));
+            // .WithOutboxDomainEventService(o => o
+            //     .ProcessingInterval("00:00:30")
+            //     .StartupDelay("00:00:30")
+            //     .PurgeOnStartup()
+            //     .ProcessingModeImmediate());
 
         services.AddEntityFrameworkRepository<Stock, InventoryDbContext>()
             .WithTransactions<NullRepositoryTransaction<Stock>>()

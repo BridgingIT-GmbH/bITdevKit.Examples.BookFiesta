@@ -52,7 +52,13 @@ public class OrganizationMapperRegister : IRegister
 
     private static void RegisterTenant(TypeAdapterConfig config)
     {
-        config.ForType<Tenant, TenantModel>().IgnoreNullValues(true).Map(dest => dest.IsActive, src => src.IsActive());
+        config.ForType<Tenant, TenantModel>()
+            .IgnoreNullValues(true)
+            .Ignore(dest => dest.Subscriptions) // TODO: does not work at the moment
+            .Map(dest => dest.IsActive, src => src.IsActive());
+
+        config.ForType<TenantBrandingModel, TenantBrandingModel>()
+            .IgnoreNullValues(true);
 
         config.ForType<TenantModel, Tenant>()
             .IgnoreNullValues(true)

@@ -112,6 +112,9 @@
               "$ref": "#/definitions/CustomerModel"
             }
           },
+          "404": {
+            "description": ""
+          },
           "400": {
             "x-nullable": false,
             "description": "",
@@ -267,6 +270,169 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/CustomerModel"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/api/tenants/{tenantId}/catalog/authors/{id}": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "GetCatalogAuthor",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AuthorModel"
+            }
+          },
+          "404": {
+            "description": ""
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/api/tenants/{tenantId}/catalog/authors": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "GetCatalogAuthors",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AuthorModel"
+              }
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "CreateCatalogAuthor",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "schema": {
+              "x-nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/AuthorModel"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AuthorModel"
             }
           },
           "400": {
@@ -897,6 +1063,75 @@
         }
       }
     },
+    "AuthorModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "TenantId": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "PersonName": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Biography": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Books": {
+          "type": "array",
+          "x-nullable": true,
+          "items": {
+            "$ref": "#/definitions/AuthorBookModel"
+          }
+        },
+        "Tags": {
+          "type": "array",
+          "x-nullable": true,
+          "items": {
+            "$ref": "#/definitions/TagModel"
+          }
+        },
+        "Version": {
+          "type": "string",
+          "x-nullable": true
+        }
+      }
+    },
+    "AuthorBookModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Title": {
+          "type": "string",
+          "x-nullable": true
+        }
+      }
+    },
+    "TagModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "TenantId": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Name": {
+          "type": "string",
+          "x-nullable": true
+        }
+      }
+    },
     "BookModel": {
       "type": "object",
       "properties": {
@@ -909,6 +1144,10 @@
           "x-nullable": true
         },
         "Title": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Edition": {
           "type": "string",
           "x-nullable": true
         },
@@ -1040,23 +1279,6 @@
           "format": "int32"
         },
         "Content": {
-          "type": "string",
-          "x-nullable": true
-        }
-      }
-    },
-    "TagModel": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "TenantId": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "Name": {
           "type": "string",
           "x-nullable": true
         }

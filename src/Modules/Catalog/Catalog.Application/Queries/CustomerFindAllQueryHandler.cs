@@ -14,10 +14,12 @@ public class CustomerFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericR
         CustomerFindAllQuery query,
         CancellationToken cancellationToken)
     {
+        var tenantId = TenantId.Create(query.TenantId);
+
         return QueryResponse.For(
             await repository.FindAllResultAsync(
-                [new Specification<Customer>(e => e.TenantId == query.TenantId)],
-                new FindOptions<Customer> { Order = new OrderOption<Customer>(e => e.Email.Value) },
+                // [new Specification<Customer>(e => e.TenantId == tenantId)],
+                // new FindOptions<Customer> { Order = new OrderOption<Customer>(e => e.Email.Value) },
                 cancellationToken: cancellationToken).AnyContext());
     }
 }

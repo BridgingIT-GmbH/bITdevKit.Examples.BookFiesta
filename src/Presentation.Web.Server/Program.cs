@@ -117,11 +117,11 @@ builder.Services
     //.WithBehavior<ChaosExceptionMessageHandlerBehavior>()
     .WithBehavior<RetryMessageHandlerBehavior>()
     .WithBehavior<TimeoutMessageHandlerBehavior>()
-    .WithOutbox<OrganizationDbContext>(o => o // registers the outbox publisher behavior and worker service at once
-        .ProcessingInterval("00:00:30")
-        .StartupDelay("00:00:30")
-        .ProcessingModeImmediate() // forwards the outbox message, through a queue, to the outbox worker
-        .PurgeOnStartup())
+    // .WithOutbox<OrganizationDbContext>(o => o // registers the outbox publisher behavior and worker service at once
+    //     .ProcessingInterval("00:00:30")
+    //     .StartupDelay("00:00:30")
+    //     .ProcessingModeImmediate() // forwards the outbox message, through a queue, to the outbox worker
+    //     .PurgeOnStartup())
     .WithInProcessBroker(); //.WithRabbitMQBroker();
 
 ConfigureHealth(builder.Services);

@@ -5,15 +5,33 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation;
 
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using Mapster;
 
 public class CatalogMapperRegister : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        //config.ForType<Customer, CustomerModel>()
-        //    .Map(d => d.Email, s => s.Email.Value);
+        // Author aggregate mappings
+        config.ForType<Author, AuthorModel>();
 
+        config.ForType<AuthorBook, AuthorBookModel>()
+            .Map(d => d.Id, s => s.BookId.Value);
+
+        // Book aggregate mappings
+        config.ForType<Book, BookModel>()
+            .Map(d => d.Sku, s => s.Sku.Value)
+            .Map(d => d.Keywords, s => s.Keywords.Select(e => e.Text).ToList())
+            .Map(d => d.Isbn, s => s.Isbn.Value);
+
+        config.ForType<BookAuthor, BookAuthorModel>()
+            .Map(d => d.Id, s => s.AuthorId.Value);
+
+        config.ForType<BookPublisher, BookPublisherModel>()
+            .Map(d => d.Id, s => s.PublisherId.Value);
+
+        // Customer aggregate mappings
         //config.ForType<Category, CategoryModel>()
         //    .Map(d => d.ParentId, s => s.Parent.Id.Value.ToString(), e => e.Parent != null);
 

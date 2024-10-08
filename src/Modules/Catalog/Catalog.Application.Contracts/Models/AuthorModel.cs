@@ -15,7 +15,16 @@ public class AuthorModel
 
     public string Biography { get; set; }
 
+    public IEnumerable<AuthorBookModel> Books { get; set; }
+
     public TagModel[] Tags { get; set; }
 
     public string Version { get; set; }
+}
+
+public class AuthorBookModel
+{
+    public string Id { get; set; }
+
+    public string Title { get; set; }
 }

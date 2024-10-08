@@ -96,6 +96,9 @@
               "$ref": "#/definitions/CompanyModel"
             }
           },
+          "404": {
+            "description": ""
+          },
           "400": {
             "x-nullable": false,
             "description": "",
@@ -550,6 +553,75 @@
         }
       }
     },
+    "AuthorModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "TenantId": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "PersonName": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Biography": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Books": {
+          "type": "array",
+          "x-nullable": true,
+          "items": {
+            "$ref": "#/definitions/AuthorBookModel"
+          }
+        },
+        "Tags": {
+          "type": "array",
+          "x-nullable": true,
+          "items": {
+            "$ref": "#/definitions/TagModel"
+          }
+        },
+        "Version": {
+          "type": "string",
+          "x-nullable": true
+        }
+      }
+    },
+    "AuthorBookModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Title": {
+          "type": "string",
+          "x-nullable": true
+        }
+      }
+    },
+    "TagModel": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "TenantId": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Name": {
+          "type": "string",
+          "x-nullable": true
+        }
+      }
+    },
     "BookModel": {
       "type": "object",
       "properties": {
@@ -562,6 +634,10 @@
           "x-nullable": true
         },
         "Title": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "Edition": {
           "type": "string",
           "x-nullable": true
         },
@@ -693,23 +769,6 @@
           "format": "int32"
         },
         "Content": {
-          "type": "string",
-          "x-nullable": true
-        }
-      }
-    },
-    "TagModel": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "TenantId": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "Name": {
           "type": "string",
           "x-nullable": true
         }

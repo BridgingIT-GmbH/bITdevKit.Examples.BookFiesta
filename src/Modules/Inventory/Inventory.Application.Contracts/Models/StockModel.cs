@@ -34,26 +34,26 @@ public class StockModel
 
 public class StockMovementModel
 {
-    public int Quantity { get; private set; }
+    public int Quantity { get; set; }
 
-    public int Type { get; private set; }
+    public int Type { get; set; }
 
-    public string Reason { get; private set; }
+    public string Reason { get; set; }
 
-    public DateTimeOffset Timestamp { get; private set; }
+    public DateTimeOffset Timestamp { get; set; }
 }
 
 public class StockAdjustmentModel
 {
     public string Id { get; set; }
 
-    public int? QuantityChange { get; private set; }
+    public int? QuantityChange { get; set; }
 
-    public decimal OldUnitCost { get; private set; }
+    public decimal OldUnitCost { get; set; }
 
-    public decimal NewUnitCost { get; private set; }
+    public decimal NewUnitCost { get; set; }
 
-    public string Reason { get; private set; }
+    public string Reason { get; set; }
 
-    public DateTimeOffset Timestamp { get; private set; }
+    public DateTimeOffset Timestamp { get; set; }
 }

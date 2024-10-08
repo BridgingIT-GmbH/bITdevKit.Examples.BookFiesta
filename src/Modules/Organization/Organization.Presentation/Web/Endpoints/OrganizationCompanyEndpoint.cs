@@ -76,7 +76,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
     {
         var result = (await mediator.Send(new CompanyFindOneQuery(id))).Result;
 
-        return result.Value == null ? TypedResults.NotFound() :
+        return result.IsFailure && result.HasError<NotFoundResultError>() ? TypedResults.NotFound() :
             result.IsSuccess ? TypedResults.Ok(mapper.Map<Company, CompanyModel>(result.Value)) :
             TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
@@ -88,9 +88,11 @@ public class OrganizationCompanyEndpoint : EndpointsBase
     {
         var result = (await mediator.Send(new TenantFindAllQuery { CompanyId = id })).Result;
 
-        return result.IsSuccess
-            ? TypedResults.Ok(mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok(mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantModel>>(result.Value))
+                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<CompanyModel>>, ProblemHttpResult>> CompanyFindAll(
@@ -116,7 +118,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
             : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
-    private static async Task<Results<Ok<CompanyModel>, ProblemHttpResult>> CompanyUpdate(
+    private static async Task<Results<Ok<CompanyModel>, NotFound, ProblemHttpResult>> CompanyUpdate(
         [FromServices] IMediator mediator,
         [FromServices] IMapper mapper,
         [FromRoute] string id,
@@ -124,9 +126,11 @@ public class OrganizationCompanyEndpoint : EndpointsBase
     {
         var result = (await mediator.Send(new CompanyUpdateCommand(model))).Result;
 
-        return result.IsSuccess
-            ? TypedResults.Ok(mapper.Map<Company, CompanyModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok(mapper.Map<Company, CompanyModel>(result.Value))
+                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 
     private static async Task<Results<Ok, NotFound, ProblemHttpResult>> CompanyDelete(
@@ -136,8 +140,10 @@ public class OrganizationCompanyEndpoint : EndpointsBase
     {
         var result = (await mediator.Send(new CompanyDeleteCommand(id))).Result;
 
-        return result.HasError<EntityNotFoundResultError>() ? TypedResults.NotFound() :
-            result.IsSuccess ? TypedResults.Ok() :
-            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok()
+                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
     }
 }

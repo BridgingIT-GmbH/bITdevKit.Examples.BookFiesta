@@ -9,10 +9,13 @@ using BridgingIT.DevKit.Application;
 using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Common;
 using BridgingIT.DevKit.Domain.Repositories;
+using BridgingIT.DevKit.Examples.AuthorFiesta.Modules.Catalog.Presentation.Web;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application.Messages;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation.Web;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -52,6 +55,10 @@ public class CatalogModule : WebModuleBase
                 .Enabled(environment?.IsDevelopment() == true)
                 .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
 
+        services.AddMessaging()
+            .WithSubscription<StockCreatedMessage, StockCreatedMessageHandler>()
+            .WithSubscription<StockUpdatedMessage, StockUpdatedMessageHandler>();
+
         services.AddSqlServerDbContext<CatalogDbContext>(o => o
                     .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])
                     .UseLogger(true, environment?.IsDevelopment() == true),
@@ -66,12 +73,12 @@ public class CatalogModule : WebModuleBase
             .WithDatabaseMigratorService(o => o
                 .StartupDelay("00:00:10")
                 .Enabled(environment?.IsDevelopment() == true)
-                .DeleteOnStartup(false))
-            .WithOutboxDomainEventService(o => o
-                .ProcessingInterval("00:00:30")
-                .StartupDelay("00:00:30")
-                .PurgeOnStartup()
-                .ProcessingModeImmediate());
+                .DeleteOnStartup(false));
+        // .WithOutboxDomainEventService(o => o
+        //     .ProcessingInterval("00:00:30")
+        //     .StartupDelay("00:00:30")
+        //     .PurgeOnStartup()
+        //     .ProcessingModeImmediate());
 
         services.AddEntityFrameworkRepository<Customer, CatalogDbContext>()
             .WithTransactions<NullRepositoryTransaction<Customer>>()
@@ -137,6 +144,7 @@ public class CatalogModule : WebModuleBase
         IWebHostEnvironment environment = null)
     {
         new CatalogCustomerEndpoints().Map(app);
+        new CatalogAuthorEndpoints().Map(app);
         new CatalogBookEndpoints().Map(app);
         new CatalogCategoryEndpoints().Map(app);
         new CatalogPublisherEndpoints().Map(app);

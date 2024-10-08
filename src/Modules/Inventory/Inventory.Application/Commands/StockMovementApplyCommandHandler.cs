@@ -9,11 +9,11 @@ public class StockMovementApplyCommandHandler(ILoggerFactory loggerFactory, IGen
     : CommandHandlerBase<StockMovementApplyCommand, Result<Stock>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Stock>>> Process(
-        StockMovementApplyCommand applyCommand,
+        StockMovementApplyCommand command,
         CancellationToken cancellationToken)
     {
         var stockResult = await repository.FindOneResultAsync(
-            StockId.Create(applyCommand.StockId),
+            StockId.Create(command.StockId),
             cancellationToken: cancellationToken);
 
         if (stockResult.IsFailure)
@@ -21,14 +21,14 @@ public class StockMovementApplyCommandHandler(ILoggerFactory loggerFactory, IGen
             return CommandResponse.For(stockResult);
         }
 
-        if (applyCommand.Model.Type == StockMovementType.Addition.Id)
+        if (command.Model.Type == StockMovementType.Addition.Id)
         {
-            stockResult.Value.AddStock(applyCommand.Model.Quantity);
+            stockResult.Value.AddStock(command.Model.Quantity);
             // -> register StockUpdatedDomainEvent -> Handler -> publish StockUpdatedMessage
         }
-        else if (applyCommand.Model.Type == StockMovementType.Removal.Id)
+        else if (command.Model.Type == StockMovementType.Removal.Id)
         {
-            stockResult.Value.RemoveStock(applyCommand.Model.Quantity);
+            stockResult.Value.RemoveStock(command.Model.Quantity);
             // -> register StockUpdatedDomainEvent -> Handler -> publish StockUpdatedMessage
         }
         else

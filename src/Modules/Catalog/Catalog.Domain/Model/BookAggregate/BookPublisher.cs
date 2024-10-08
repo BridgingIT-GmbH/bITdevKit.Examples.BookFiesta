@@ -22,7 +22,7 @@ public class BookPublisher : ValueObject
 
     public static BookPublisher Create(Publisher publisher)
     {
-        _ = publisher ?? throw new ArgumentNullException("BookPublisher Publisher cannot be empty.");
+        _ = publisher ?? throw new ArgumentException("BookPublisher Publisher cannot be empty.");
 
         return new BookPublisher(publisher.Id, publisher.Name);
     }

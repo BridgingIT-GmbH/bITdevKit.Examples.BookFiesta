@@ -7,7 +7,7 @@ public class CustomerForEmailSpecification(TenantId tenantId, EmailAddress email
 {
     public override Expression<Func<Customer, bool>> ToExpression()
     {
-        return e => e.TenantId == tenantId && e.Email.Value == email.Value;
+        return e => e.TenantId == tenantId && e.Email == email;
     }
 }
 
@@ -21,6 +21,6 @@ public static class CustomerSpecifications
     public static Specification<Customer>
         ForEmail2(TenantId tenantId, EmailAddress email) // INFO: short version to define a specification
     {
-        return new Specification<Customer>(e => e.TenantId == tenantId && e.Email.Value == email.Value);
+        return new Specification<Customer>(e => e.TenantId == tenantId && e.Email == email);
     }
 }

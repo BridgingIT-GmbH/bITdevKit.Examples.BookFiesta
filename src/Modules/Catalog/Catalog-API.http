@@ -1,41 +1,125 @@
-@baseUrl = https://localhost:7144
+@baseUrl = https://localhost:5001
 
-###################################################################################
-### API [GET] Customers Find one                                                  #
-GET {{baseUrl}}/api/customers/02ad7224-dd72-4d40-a794-55c5307cf33e HTTP/1.1
+// ======================================================================================
+// Auhtor aggregate request =============================================================
 
-###################################################################################
-### API [GET] Customers Find all                                                  #
-GET {{baseUrl}}/api/customers HTTP/1.1
+### GetCatalogAuthors
+GET {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/authors/535bc0ec-9fab-73aa-e3e7-016363976dd3 HTTP/1.1
 
-###################################################################################
-### API [POST] Customers Create                                                   #
-POST {{baseUrl}}/api/customers HTTP/1.1
+### GetCatalogAuthor
+GET {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/authors/ HTTP/1.1
+
+// ======================================================================================
+// Book aggregate request ===============================================================
+
+### GetCatalogBook
+GET {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/books/67ff86ce-87a7-c942-20ca-680864c3cf16 HTTP/1.1
+
+### GetCatalogBooks
+GET {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/books/ HTTP/1.1
+
+###CreateCatalogBook
+POST {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/books
 Content-Type: application/json
 
 {
-  "firstName": "John{{$randomInt 1000 9999}}",
-  "lastName": "Doe{{$randomInt 1000 9999}}",
-  "email": "john.doe{{$randomInt 1000 9999}}@example.com",
-  "addressLine1": "line1{{$randomInt 1000 9999}}",
-  "addressLine2": "line2{{$randomInt 1000 9999}}",
-  "addressPostalCode": "{{$randomInt 1000 9999}}",
-  "addressCity": "city{{$randomInt 10 99}}",
-  "addressCountry": "country{{$randomInt 10 99}}"
+  "tenantId": "1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f",
+  "title": "Building Evolutionary Architectures{{$random.integer(1000, 9999)}}",
+  "description": "Support Constant Change.",
+  "edition": "1st",
+  "sku": "149198{{$random.integer(1000, 9999)}}",
+  "isbn": "978-149198{{$random.integer(1000, 9999)}}",
+  "price": 11.99,
+  "publisher": {
+    "id": "5f66638b-112a-7a97-6656-564d8c0d6f20",
+    "name": "Addison-Wesley Professional"
+  },
+  "publishedDate": "2017-10-05",
+  "authors": [
+    {
+      "id": "535bc0ec-9fab-73aa-e3e7-016363976dd3",
+      "name": "Eric Evans"
+    }
+  ],
+  "categories": [
+    {
+      "id": "2bc58ce7-dcfb-6f91-f18f-e06b6c431a4f",
+      "title": "Software-Architecture"
+    }
+  ],
+  "chapters": [],
+  "tags": []
 }
 
-###################################################################################
-### API [PUT] Customers Update                                                   #
-PUT {{baseUrl}}/api/customers/02ad7224-dd72-4d40-a794-55c5307cf33e HTTP/1.1
+###
+
+// ======================================================================================
+// Publisher aggregate request ==========================================================
+
+### GetCatalogPublisher
+GET {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/publishers/5f66638b-112a-7a97-6656-564d8c0d6f20 HTTP/1.1
+
+### GetCatalogPublishers
+GET {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/publishers/ HTTP/1.1
+
+###
+
+// ======================================================================================
+// CUSTOMERS ============================================================================
+
+### GetCatalogCustomer
+GET {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/customers/e4f672fe-82d8-7cb3-444f-4486bf6fb163 HTTP/1.1
+
+### GetCatalogCustomers
+GET {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/customers/ HTTP/1.1
+
+### GetCatalogCustomer
+POST {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/customers/ HTTP/1.1
+Content-Type: application/json
+
+ {
+    "tenantId": "1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f",
+    "personName": {
+      "title": null,
+      "parts": [
+        "John",
+        "Doe"
+      ],
+      "suffix": null
+    },
+    "address": {
+      "name": "J. Doe",
+      "line1": "Main Street",
+      "line2": "",
+      "postalCode": "17100",
+      "city": "Anytown",
+      "country": "USA"
+    },
+    "email": "johaaan.doe{{$random.integer(1000, 9999)}}@example.com"
+  }
+
+### UpdateCatalogCustomer
+PUT {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/customers/ccda0403-3deb-4f2c-bd01-0ad0a16512a0 HTTP/1.1
 Content-Type: application/json
 
 {
-  "id": "02ad7224-dd72-4d40-a794-55c5307cf33e",
-  "firstName": "John{{$randomInt 1000 9999}}changed",
-  "lastName": "Doe{{$randomInt 1000 9999}}changed",
-  "addressLine1": "line1{{$randomInt 1000 9999}}changed",
-  "addressLine2": "line2{{$randomInt 1000 9999}}changed",
-  "addressPostalCode": "{{$randomInt 1000 9999}}changed",
-  "addressCity": "city{{$randomInt 10 99}}changed",
-  "addressCountry": "country{{$randomInt 10 99}}changed"
-}
+    "id": "ccda0403-3deb-4f2c-bd01-0ad0a16512a0",
+    "tenantId": "1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f",
+    "personName": {
+      "title": null,
+      "parts": [
+        "John",
+        "Doe"
+      ],
+      "suffix": null
+    },
+    "address": {
+      "name": "J. Doe",
+      "line1": "Main Street",
+      "line2": "",
+      "postalCode": "17100",
+      "city": "Anytown",
+      "country": "USA"
+    },
+    "email": "johaaan.doe{{$random.integer(1000, 9999)}}@example.com"
+  }

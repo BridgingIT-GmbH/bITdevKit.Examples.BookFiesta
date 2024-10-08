@@ -13,6 +13,7 @@ public class OrganizationModuleClient(IMediator mediator, IMapper mapper)
     public async Task<Result<TenantModel>> TenantFindOne(string id)
     {
         var result = (await mediator.Send(new TenantFindOneQuery(id))).Result;
+        var m = mapper.Map<Tenant, TenantModel>(result.Value);
 
         return result.For<Tenant, TenantModel>(mapper);
     }

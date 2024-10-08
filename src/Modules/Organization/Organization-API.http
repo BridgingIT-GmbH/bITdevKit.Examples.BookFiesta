@@ -1,41 +1,22 @@
-@baseUrl = https://localhost:7144
+@baseUrl = https://localhost:5001
 
-###################################################################################
-### API [GET] Customers Find one                                                  #
-GET {{baseUrl}}/api/customers/02ad7224-dd72-4d40-a794-55c5307cf33e HTTP/1.1
+// ======================================================================================
+// Company aggregate request ============================================================
 
-###################################################################################
-### API [GET] Customers Find all                                                  #
-GET {{baseUrl}}/api/customers HTTP/1.1
+### GetOrganizationCompany
+GET {{baseUrl}}/api/organization/companies/17f27051-9de9-04f0-65ca-08ec139e9953 HTTP/1.1
 
-###################################################################################
-### API [POST] Customers Create                                                   #
-POST {{baseUrl}}/api/customers HTTP/1.1
-Content-Type: application/json
+### GetOrganizationCompanyTenants
+GET {{baseUrl}}/api/organization/companies/17f27051-9de9-04f0-65ca-08ec139e9953/tenants HTTP/1.1
 
-{
-  "firstName": "John{{$randomInt 1000 9999}}",
-  "lastName": "Doe{{$randomInt 1000 9999}}",
-  "email": "john.doe{{$randomInt 1000 9999}}@example.com",
-  "addressLine1": "line1{{$randomInt 1000 9999}}",
-  "addressLine2": "line2{{$randomInt 1000 9999}}",
-  "addressPostalCode": "{{$randomInt 1000 9999}}",
-  "addressCity": "city{{$randomInt 10 99}}",
-  "addressCountry": "country{{$randomInt 10 99}}"
-}
+### GetOrganizationCompanies
+GET {{baseUrl}}/api/organization/companies/ HTTP/1.1
 
-###################################################################################
-### API [PUT] Customers Update                                                   #
-PUT {{baseUrl}}/api/customers/02ad7224-dd72-4d40-a794-55c5307cf33e HTTP/1.1
-Content-Type: application/json
+// ======================================================================================
+// Tenant aggregate request ============================================================
 
-{
-  "id": "02ad7224-dd72-4d40-a794-55c5307cf33e",
-  "firstName": "John{{$randomInt 1000 9999}}changed",
-  "lastName": "Doe{{$randomInt 1000 9999}}changed",
-  "addressLine1": "line1{{$randomInt 1000 9999}}changed",
-  "addressLine2": "line2{{$randomInt 1000 9999}}changed",
-  "addressPostalCode": "{{$randomInt 1000 9999}}changed",
-  "addressCity": "city{{$randomInt 10 99}}changed",
-  "addressCountry": "country{{$randomInt 10 99}}changed"
-}
+### GetOrganizationTenant
+GET {{baseUrl}}/api/organization/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f HTTP/1.1
+
+### GetOrganizationTenants
+GET {{baseUrl}}/api/organization/tenants/ HTTP/1.1
