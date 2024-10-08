@@ -25,7 +25,7 @@
     <PackageVersion Include="BridgingIT.DevKit.Common.Modules" Version="3.0.3-preview.0.40"/>
     <PackageVersion Include="BridgingIT.DevKit.Common.Utilities.Xunit" Version="3.0.3-preview.0.40"/>
     <PackageVersion Include="BridgingIT.DevKit.Domain" Version="3.0.3-preview.0.40"/>
-    <PackageVersion Include="BridgingIT.DevKit.Domain.CodeGen" Version="3.0.3-preview.0.40" OutputItemType="Analyzer"/>
+    <PackageVersion Include="BridgingIT.DevKit.Domain.CodeGen" Version="3.0.3-preview.0.42" OutputItemType="Analyzer"/>
     <PackageVersion Include="BridgingIT.DevKit.Domain.Mediator" Version="3.0.3-preview.0.40"/>
     <PackageVersion Include="BridgingIT.DevKit.Infrastructure.EntityFramework" Version="3.0.3-preview.0.40"/>
     <PackageVersion Include="BridgingIT.DevKit.Infrastructure.EntityFramework.SqlServer" Version="3.0.3-preview.0.40"/>
