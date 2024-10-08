@@ -21,8 +21,7 @@ public static class InventorySeedEntities
     public static (Stock[] Stocks, StockSnapshot[] StockSnapshots) Create(TenantId[] tenants, long ticks = 0)
 #pragma warning restore SA1202
     {
-        return (
-            Stocks.Create(tenants, ticks),
+        return (Stocks.Create(tenants, ticks),
             StockSnapshots.Create(tenants, Stocks.Create(tenants, ticks), ticks));
     }
 

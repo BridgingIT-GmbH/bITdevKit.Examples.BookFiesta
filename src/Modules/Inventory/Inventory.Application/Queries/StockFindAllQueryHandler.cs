@@ -14,9 +14,11 @@ public class StockFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepo
         StockFindAllQuery query,
         CancellationToken cancellationToken)
     {
+        var tenantId = TenantId.Create(query.TenantId);
+
         return QueryResponse.For(
             await repository.FindAllResultAsync(
-                    [new Specification<Stock>(e => e.TenantId == query.TenantId)],
+                    [new Specification<Stock>(e => e.TenantId == tenantId)],
                     new FindOptions<Stock> { Order = new OrderOption<Stock>(e => e.Sku) },
                     cancellationToken)
                 .AnyContext());

@@ -53,7 +53,7 @@ public class CatalogPublisherEndpoints : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Publisher, PublisherModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>> GetPublisherBooks(
@@ -66,7 +66,7 @@ public class CatalogPublisherEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Book>, IEnumerable<BookModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<PublisherModel>>, ProblemHttpResult>> GetPublishers(
@@ -78,6 +78,6 @@ public class CatalogPublisherEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Publisher>, IEnumerable<PublisherModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

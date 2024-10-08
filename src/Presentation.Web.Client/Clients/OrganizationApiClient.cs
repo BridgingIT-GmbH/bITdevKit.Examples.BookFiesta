@@ -309,6 +309,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Organiza
                             return new ApiResponse<CompanyModel>(status_, headers_, objectResponse_.Object);
                         }
                         else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("A server side error occurred.", status_, responseText_, headers_, null);
+                        }
+                        else
                         if (status_ == 400)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<HttpValidationProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);

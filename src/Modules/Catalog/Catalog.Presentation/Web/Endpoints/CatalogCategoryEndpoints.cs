@@ -53,7 +53,7 @@ public class CatalogCategoryEndpoints : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Category, CategoryModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<BookModel>>, NotFound, ProblemHttpResult>> GetCategoryBooks(
@@ -66,7 +66,7 @@ public class CatalogCategoryEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Book>, IEnumerable<BookModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<CategoryModel>>, ProblemHttpResult>> GetCategories(
@@ -78,6 +78,6 @@ public class CatalogCategoryEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Category>, IEnumerable<CategoryModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

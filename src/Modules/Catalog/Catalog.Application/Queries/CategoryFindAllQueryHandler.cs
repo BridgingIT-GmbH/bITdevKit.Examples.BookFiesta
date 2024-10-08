@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
+using BridgingIT.DevKit.Domain.Specifications;
+
 public class CategoryFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Category> repository)
     : QueryHandlerBase<CategoryFindAllQuery, Result<IEnumerable<Category>>>(loggerFactory)
 {
@@ -12,7 +14,11 @@ public class CategoryFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericR
         CategoryFindAllQuery query,
         CancellationToken cancellationToken)
     {
-        var categories = await repository.FindAllResultAsync(cancellationToken: cancellationToken).AnyContext();
+        var tenantId = TenantId.Create(query.TenantId);
+        var categories = await repository.FindAllResultAsync(
+            [new Specification<Category>(e => e.TenantId == tenantId)],
+            cancellationToken: cancellationToken).AnyContext();
+
         this.PrintCategories(categories.Value.SafeNull().Where(c => c.Parent == null).OrderBy(e => e.Order));
 
         if (query.Flatten)

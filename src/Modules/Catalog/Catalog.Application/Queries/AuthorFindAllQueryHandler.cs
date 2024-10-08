@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
+using BridgingIT.DevKit.Domain.Specifications;
+
 public class AuthorFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Author> repository)
     : QueryHandlerBase<AuthorFindAllQuery, Result<IEnumerable<Author>>>(loggerFactory)
 {
@@ -12,8 +14,11 @@ public class AuthorFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRep
         AuthorFindAllQuery query,
         CancellationToken cancellationToken)
     {
+        var tenantId = TenantId.Create(query.TenantId);
+
         return QueryResponse.For(
-            await repository.FindAllResultAsync(cancellationToken: cancellationToken)
-                .AnyContext());
+            await repository.FindAllResultAsync(
+                [new Specification<Author>(e => e.TenantId == tenantId)],
+                cancellationToken: cancellationToken).AnyContext());
     }
 }

@@ -65,7 +65,7 @@ public class CatalogCustomerEndpoints : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Customer, CustomerModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<CustomerModel>>, ProblemHttpResult>> GetCustomers(
@@ -77,7 +77,7 @@ public class CatalogCustomerEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Created<CustomerModel>, ProblemHttpResult>> CreateCustomer(
@@ -92,7 +92,7 @@ public class CatalogCustomerEndpoints : EndpointsBase
             ? TypedResults.Created(
                 $"api/tenants/{tenantId}/catalog/customers/{result.Value.Id}",
                 mapper.Map<Customer, CustomerModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<CustomerModel>, NotFound, ProblemHttpResult>> UpdateCustomer(

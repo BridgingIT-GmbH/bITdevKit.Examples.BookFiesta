@@ -78,7 +78,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
 
         return result.IsFailure && result.HasError<NotFoundResultError>() ? TypedResults.NotFound() :
             result.IsSuccess ? TypedResults.Ok(mapper.Map<Company, CompanyModel>(result.Value)) :
-            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<TenantModel>>, NotFound, ProblemHttpResult>> CompanyFindAllTenants(
@@ -92,7 +92,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantModel>>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<CompanyModel>>, ProblemHttpResult>> CompanyFindAll(
@@ -103,7 +103,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Company>, IEnumerable<CompanyModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Created<CompanyModel>, ProblemHttpResult>> CompanyCreate(
@@ -115,7 +115,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Created($"api/companies/{result.Value.Id}", mapper.Map<Company, CompanyModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<CompanyModel>, NotFound, ProblemHttpResult>> CompanyUpdate(
@@ -130,7 +130,7 @@ public class OrganizationCompanyEndpoint : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Company, CompanyModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok, NotFound, ProblemHttpResult>> CompanyDelete(
@@ -144,6 +144,6 @@ public class OrganizationCompanyEndpoint : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok()
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

@@ -36,6 +36,7 @@ public class CatalogQueryService(IGenericRepository<Book> bookRepository, Catalo
             .Select(g => g.Key)
             .ToListAsync();
 
-        return await bookRepository.FindAllResultAsync(new Specification<Book>(e => relatedBookIds.Contains(e.Id)));
+        return await bookRepository.FindAllResultAsync(
+            new Specification<Book>(e => e.TenantId == book.TenantId && relatedBookIds.Contains(e.Id)));
     }
 }

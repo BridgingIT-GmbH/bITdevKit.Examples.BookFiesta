@@ -61,7 +61,7 @@ public class OrganizationTenantEndpoints : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Tenant, TenantModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<TenantModel>>, ProblemHttpResult>> TenantFindAll(
@@ -72,7 +72,7 @@ public class OrganizationTenantEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Created<TenantModel>, ProblemHttpResult>> TenantCreate(
@@ -84,6 +84,6 @@ public class OrganizationTenantEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Created($"api/tenants/{result.Value.Id}", mapper.Map<Tenant, TenantModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

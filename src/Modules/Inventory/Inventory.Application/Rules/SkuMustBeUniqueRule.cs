@@ -12,7 +12,7 @@ public class SkuMustBeUniqueRule(IGenericRepository<Stock> repository, Stock sto
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
         return !(await repository.FindAllAsync(
-            StockSpecifications.ForSku(stock.Sku),
+            StockSpecifications.ForSku(stock.TenantId, stock.Sku),
             cancellationToken: cancellationToken)).SafeAny();
     }
 }

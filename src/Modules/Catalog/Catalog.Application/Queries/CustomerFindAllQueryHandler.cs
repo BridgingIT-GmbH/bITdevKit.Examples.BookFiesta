@@ -18,8 +18,8 @@ public class CustomerFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericR
 
         return QueryResponse.For(
             await repository.FindAllResultAsync(
-                // [new Specification<Customer>(e => e.TenantId == tenantId)],
-                // new FindOptions<Customer> { Order = new OrderOption<Customer>(e => e.Email.Value) },
+                [new Specification<Customer>(e => e.TenantId == tenantId)],
+                new FindOptions<Customer> { Order = new OrderOption<Customer>(e => e.Email) },
                 cancellationToken: cancellationToken).AnyContext());
     }
 }

@@ -17,6 +17,7 @@ public class StockSnapshotFindAllQueryHandler(
         StockSnapshotFindAllQuery query,
         CancellationToken cancellationToken)
     {
+        var tenantId = TenantId.Create(query.TenantId);
         var stockResult = await stockRepository.FindOneResultAsync(
             StockId.Create(query.StockId),
             cancellationToken: cancellationToken);
@@ -28,7 +29,7 @@ public class StockSnapshotFindAllQueryHandler(
 
         return QueryResponse.For(
             await stocksnapshotRepository.FindAllResultAsync(
-                    [new Specification<StockSnapshot>(e => e.TenantId == query.TenantId && e.StockId == query.StockId)],
+                    [new Specification<StockSnapshot>(e => e.TenantId == tenantId && e.StockId == query.StockId)],
                     new FindOptions<StockSnapshot> { Order = new OrderOption<StockSnapshot>(e => e.Timestamp) },
                     cancellationToken)
                 .AnyContext());

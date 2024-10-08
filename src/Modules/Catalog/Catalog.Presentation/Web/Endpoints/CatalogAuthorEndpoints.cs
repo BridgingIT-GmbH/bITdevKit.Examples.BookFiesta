@@ -54,7 +54,7 @@ public class CatalogAuthorEndpoints : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Author, AuthorModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<AuthorModel>>, ProblemHttpResult>> GetAuthors(
@@ -66,7 +66,7 @@ public class CatalogAuthorEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Author>, IEnumerable<AuthorModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static Task<Results<Created<AuthorModel>, ProblemHttpResult>> CreateAuthor(
@@ -82,6 +82,6 @@ public class CatalogAuthorEndpoints : EndpointsBase
         //     ? TypedResults.Created(
         //         $"api/tenants/{tenantId}/catalog/books/{result.Value.Id}",
         //         mapper.Map<Author, AuthorModel>(result.Value))
-        //     : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+        //     : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

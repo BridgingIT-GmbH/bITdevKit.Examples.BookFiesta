@@ -14,11 +14,12 @@ public class BookFindAllForCategoryQueryHandler(ILoggerFactory loggerFactory, IG
         BookFindAllForCategoryQuery query,
         CancellationToken cancellationToken)
     {
+        var tenantId = TenantId.Create(query.TenantId);
         var categoryId = CategoryId.Create(query.CategoryId);
 
         return QueryResponse.For(
             await repository.FindAllResultAsync(
-                    new Specification<Book>(e => e.Categories.Any(c => c.Id == categoryId)),
+                    new Specification<Book>(e => e.Categories.Any(c => c.TenantId == tenantId && c.Id == categoryId)),
                     cancellationToken: cancellationToken)
                 .AnyContext());
     }

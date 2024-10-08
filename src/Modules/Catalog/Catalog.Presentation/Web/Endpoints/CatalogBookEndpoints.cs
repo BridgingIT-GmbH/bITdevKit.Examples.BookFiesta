@@ -54,7 +54,7 @@ public class CatalogBookEndpoints : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Book, BookModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<BookModel>>, ProblemHttpResult>> GetBooks(
@@ -66,7 +66,7 @@ public class CatalogBookEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Book>, IEnumerable<BookModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Created<BookModel>, ProblemHttpResult>> CreateBook(
@@ -81,6 +81,6 @@ public class CatalogBookEndpoints : EndpointsBase
             ? TypedResults.Created(
                 $"api/tenants/{tenantId}/catalog/books/{result.Value.Id}",
                 mapper.Map<Book, BookModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

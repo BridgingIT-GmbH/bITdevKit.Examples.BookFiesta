@@ -14,10 +14,11 @@ public class BookFindAllForPublisherQueryHandler(ILoggerFactory loggerFactory, I
         BookFindAllForPublisherQuery query,
         CancellationToken cancellationToken)
     {
+        var tenantId = TenantId.Create(query.TenantId);
         var publisherId = PublisherId.Create(query.PublisherId);
 
         var result = await repository.FindAllResultAsync(
-                    new Specification<Book>(e => e.Publisher.PublisherId == publisherId),
+                    new Specification<Book>(e => e.TenantId == tenantId && e.Publisher.PublisherId == publisherId),
                     cancellationToken: cancellationToken)
                 .AnyContext() ??
             throw new EntityNotFoundException();

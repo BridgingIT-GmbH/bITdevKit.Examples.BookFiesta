@@ -38,10 +38,10 @@ public class InventoryStockRepositoryTests
         // Assert
         this.fixture.Output.WriteLine($"Entity: {result.DumpText()}");
         result.ShouldNotBeNull();
-        result.Id.Value.ShouldBe(stock.Id.Value);
+        result.Id.ShouldBe(stock.Id);
     }
 
-    // private async Task<Stock> InsertEntityAsync()
+    // private async Task<Stock> InsertEntityAsync() // fixture inserts the seed entities
     // {
     //     var ticks = DateTime.UtcNow.Ticks;
     //     TenantId[] tenants = [TenantIdFactory.CreateForName("Tenant_AcmeBooks"), TenantIdFactory.CreateForName("Tenant_TechBooks")];

@@ -59,7 +59,7 @@ public class InventoryStockEndpoints : EndpointsBase
             ? TypedResults.NotFound()
             : result.IsSuccess
                 ? TypedResults.Ok(mapper.Map<Stock, StockModel>(result.Value))
-                : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<StockModel>>, ProblemHttpResult>> GetStocks(
@@ -71,7 +71,7 @@ public class InventoryStockEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<Stock>, IEnumerable<StockModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Created<StockModel>, ProblemHttpResult>> CreateStock(
@@ -86,7 +86,7 @@ public class InventoryStockEndpoints : EndpointsBase
             ? TypedResults.Created(
                 $"api/tenants/{tenantId}/inventory/stocks/{result.Value.Id}",
                 mapper.Map<Stock, StockModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Created<StockModel>, NotFound, ProblemHttpResult>> CreateStockMovement(
@@ -102,6 +102,6 @@ public class InventoryStockEndpoints : EndpointsBase
             : result.IsSuccess ? TypedResults.Created(
                 $"api/tenants/{tenantId}/inventory/stocks/{result.Value.Id}",
                 mapper.Map<Stock, StockModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

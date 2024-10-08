@@ -53,7 +53,7 @@ public class InventoryStockSnapshotEndpoints : EndpointsBase
 
         return result.Value == null ? TypedResults.NotFound() :
             result.IsSuccess ? TypedResults.Ok(mapper.Map<StockSnapshot, StockSnapshotModel>(result.Value)) :
-            TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Ok<IEnumerable<StockSnapshotModel>>, ProblemHttpResult>> GetStockSnapshots(
@@ -67,7 +67,7 @@ public class InventoryStockSnapshotEndpoints : EndpointsBase
 
         return result.IsSuccess
             ? TypedResults.Ok(mapper.Map<IEnumerable<StockSnapshot>, IEnumerable<StockSnapshotModel>>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 
     private static async Task<Results<Created<StockSnapshotModel>, ProblemHttpResult>> CreateStockSnapshot(
@@ -83,6 +83,6 @@ public class InventoryStockSnapshotEndpoints : EndpointsBase
             ? TypedResults.Created(
                 $"api/tenants/{tenantId}/inventory/stocks/{stockId}/stocksnapshots/{result.Value.Id}",
                 mapper.Map<StockSnapshot, StockSnapshotModel>(result.Value))
-            : TypedResults.Problem(result.Messages.ToString(", "), statusCode: 400);
+            : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

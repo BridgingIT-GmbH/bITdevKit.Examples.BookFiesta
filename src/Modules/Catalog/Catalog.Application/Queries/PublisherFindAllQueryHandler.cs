@@ -5,6 +5,8 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
+using BridgingIT.DevKit.Domain.Specifications;
+
 public class PublisherFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Publisher> repository)
     : QueryHandlerBase<PublisherFindAllQuery, Result<IEnumerable<Publisher>>>(loggerFactory)
 {
@@ -12,8 +14,11 @@ public class PublisherFindAllQueryHandler(ILoggerFactory loggerFactory, IGeneric
         PublisherFindAllQuery query,
         CancellationToken cancellationToken)
     {
+        var tenantId = TenantId.Create(query.TenantId);
+
         return QueryResponse.For(
             await repository.FindAllResultAsync(
+                    [new Specification<Publisher>(e => e.TenantId == tenantId)],
                     new FindOptions<Publisher> { Order = new OrderOption<Publisher>(e => e.Name) },
                     cancellationToken)
                 .AnyContext());
