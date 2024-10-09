@@ -7,7 +7,9 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application.Ev
 
 using BridgingIT.DevKit.Application.Messaging;
 
-public class StockUpdatedDomainEventMessagePublisher(ILoggerFactory loggerFactory, IMessageBroker messageBroker)
+public class StockUpdatedDomainEventMessagePublisher(
+    ILoggerFactory loggerFactory,
+    IMessageBroker messageBroker)
     : DomainEventHandlerBase<StockUpdatedDomainEvent>(loggerFactory)
 {
     public override bool CanHandle(StockUpdatedDomainEvent @event)

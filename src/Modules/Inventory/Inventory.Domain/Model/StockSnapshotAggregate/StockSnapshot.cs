@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain;
 
-using System;
-
 [DebuggerDisplay("Id={Id}, Sku={Sku}, Timestamp={Timestamp}")]
 [TypedEntityId<Guid>]
 public class StockSnapshot : AuditableAggregateRoot<StockSnapshotId>, IConcurrent

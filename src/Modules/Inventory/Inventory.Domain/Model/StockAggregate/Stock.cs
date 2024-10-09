@@ -1,8 +1,5 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain;
 
-using System;
-using System.Collections.Generic;
-
 [DebuggerDisplay("Id={Id}, Sku={Sku}, QuantityOnHand={QuantityOnHand}")]
 [TypedEntityId<Guid>]
 public class Stock : AuditableAggregateRoot<StockId>, IConcurrent

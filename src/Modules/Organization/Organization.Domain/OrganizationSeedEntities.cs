@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-using BridgingIT.DevKit.Common;
-
 public static class OrganizationSeedEntities
 {
     private static string GetSuffix(long ticks)

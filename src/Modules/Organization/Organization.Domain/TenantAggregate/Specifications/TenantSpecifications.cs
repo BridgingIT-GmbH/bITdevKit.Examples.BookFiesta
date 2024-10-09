@@ -5,9 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-using System.Linq.Expressions;
-using BridgingIT.DevKit.Domain.Specifications;
-
 public class TenantForNameSpecification(string name) : Specification<Tenant>
 {
     public override Expression<Func<Tenant, bool>> ToExpression()

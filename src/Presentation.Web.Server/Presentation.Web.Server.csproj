@@ -80,13 +80,4 @@
     <Folder Include="logs\"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\swagger\swagger.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\swagger\swagger_catalog.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\swagger\swagger_inventory.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\swagger\swagger_organization.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\swagger\swagger_system.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\swagger\swagger_system_jobs.json" />
-  </ItemGroup>
-
 </Project>

@@ -1,8 +1,5 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
-using System.Linq.Expressions;
-using BridgingIT.DevKit.Domain.Specifications;
-
 public class BookForIsbnSpecification(TenantId tenantId, BookIsbn isbn) : Specification<Book>
 {
     public override Expression<Func<Book, bool>> ToExpression()

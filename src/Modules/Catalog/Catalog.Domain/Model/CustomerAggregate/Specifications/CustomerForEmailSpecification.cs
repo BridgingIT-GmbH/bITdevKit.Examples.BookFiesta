@@ -1,8 +1,5 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain;
 
-using System.Linq.Expressions;
-using BridgingIT.DevKit.Domain.Specifications;
-
 public class CustomerForEmailSpecification(TenantId tenantId, EmailAddress email) : Specification<Customer>
 {
     public override Expression<Func<Customer, bool>> ToExpression()

@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
-using BridgingIT.DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Domain;
 
 public class StockFindAllQueryHandler(ILoggerFactory loggerFactory, IGenericRepository<Stock> repository)
     : QueryHandlerBase<StockFindAllQuery, Result<IEnumerable<Stock>>>(loggerFactory)

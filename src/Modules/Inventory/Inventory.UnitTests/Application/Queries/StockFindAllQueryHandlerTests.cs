@@ -6,7 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.UnitTests.Application;
 
 using BridgingIT.DevKit.Domain.Repositories;
-using BridgingIT.DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;

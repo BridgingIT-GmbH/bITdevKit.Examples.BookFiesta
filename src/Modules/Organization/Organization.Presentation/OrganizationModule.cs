@@ -44,6 +44,11 @@ public class OrganizationModule : WebModuleBase
 
         services.AddScoped<IOrganizationModuleClient, OrganizationModuleClient>();
 
+        // services.AddJobScheduling()
+        //     .WithJob<EchoJob>(CronExpressions.Every5Minutes);
+        // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
+        //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
+
         services.AddStartupTasks()
             .WithTask<OrganizationDomainSeederTask>(o => o
                 .Enabled(environment?.IsDevelopment() == true)

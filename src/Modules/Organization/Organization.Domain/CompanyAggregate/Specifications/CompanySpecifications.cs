@@ -5,9 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain;
 
-using System.Linq.Expressions;
-using BridgingIT.DevKit.Domain.Specifications;
-
 public class CompanyForNameSpecification(string name) : Specification<Company>
 {
     public override Expression<Func<Company, bool>> ToExpression()

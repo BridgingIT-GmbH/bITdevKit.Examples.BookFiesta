@@ -42,8 +42,8 @@ public class InventoryModule : WebModuleBase
         //         c.BaseAddress = new Uri(configuration["Modules:InventoryModule:ServiceUrl"]);
         //     });
 
-        services.AddJobScheduling()
-            .WithJob<EchoJob>(CronExpressions.Every5Minutes);
+        // services.AddJobScheduling()
+        //     .WithJob<EchoJob>(CronExpressions.Every5Minutes);
         // .WithSingletonJob<EchoJob>(CronExpressions.Every5Minutes)
         //.WithJob<HealthCheckJob>(CronExpressions.EveryMinute);
 

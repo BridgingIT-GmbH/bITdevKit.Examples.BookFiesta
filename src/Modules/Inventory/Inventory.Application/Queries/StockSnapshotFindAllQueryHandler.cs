@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
-using BridgingIT.DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Domain;
 
 public class StockSnapshotFindAllQueryHandler(
     ILoggerFactory loggerFactory,

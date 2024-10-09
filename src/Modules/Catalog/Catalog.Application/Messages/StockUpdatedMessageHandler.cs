@@ -6,7 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application.Messages;
 
 using BridgingIT.DevKit.Application.Messaging;
-using BridgingIT.DevKit.Domain.Specifications;
+using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
 public class StockUpdatedMessageHandler(ILoggerFactory loggerFactory, IGenericRepository<Book> repository)

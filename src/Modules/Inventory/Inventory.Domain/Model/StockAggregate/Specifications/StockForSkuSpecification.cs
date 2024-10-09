@@ -1,8 +1,5 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain;
 
-using System.Linq.Expressions;
-using BridgingIT.DevKit.Domain.Specifications;
-
 public class StockForSkuSpecification(TenantId tenantId, ProductSku sku) : Specification<Stock>
 {
     public override Expression<Func<Stock, bool>> ToExpression()
