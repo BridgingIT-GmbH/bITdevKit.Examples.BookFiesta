@@ -1,6 +1,8 @@
 Catalog![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookFiesta/main/bITDevKit_Logo.png)
 =====================================
 
+![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.GettingStarted/main/bITDevKit_BookFiesta_Banner.png)
+
 # Catalog Module Overview
 
 > The Catalog Module is responsible for managing the book catalog.

@@ -1,3 +1,8 @@
+Inventory![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookFiesta/main/bITDevKit_Logo.png)
+=====================================
+
+![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.GettingStarted/main/bITDevKit_BookFiesta_Banner.png)
+
 # Organization Module Overview
 
 > The Organization Module is responsible for managing tenants, companies, and their associated
