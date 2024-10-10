@@ -13,7 +13,7 @@ The domain model provides a robust foundation for the module, capturing the esse
 their relationships while adhering to Domain-Driven Design principles. It allows for complex
 operations such as managing books with multiple authors, hierarchical categorization, and flexible
 tagging, while maintaining clear boundaries between aggregates.
-~~~~
+
 The domain model consists of two main aggregates: Book and Author. These aggregates, along with
 supporting entities and value objects, form the core of the domain model. A summary of each
 aggregate and their relationships:
