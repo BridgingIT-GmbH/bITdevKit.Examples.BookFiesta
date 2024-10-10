@@ -1,7 +1,7 @@
-Inventory![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookFiesta/main/bITDevKit_Logo.png)
-=====================================
+![bITDevKit](https://github.com/BridgingIT-GmbH/bITdevKit.Examples.BookFiesta/blob/main/bITDevKit_Logo.png?raw=true)
 
-![bITDevKit](https://raw.githubusercontent.com/bridgingIT/bITdevKit.Examples.BookFiesta/main/bITDevKit_BookFiesta_Banner.png)
+![bITDevKit](https://raw.githubusercontent.com/BridgingIT-GmbH/bITdevKit.Examples.BookFiesta/refs/heads/main/bITDevKit_BookFiesta_Banner.png)
+=====================================~~~~
 
 # Inventory Module Overview
 
