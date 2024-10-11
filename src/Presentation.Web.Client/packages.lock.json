@@ -119,9 +119,9 @@
       },
       "Microsoft.NET.Sdk.WebAssembly.Pack": {
         "type": "Direct",
-        "requested": "[8.0.8, )",
-        "resolved": "8.0.8",
-        "contentHash": "z2UxqxjssvxlcQ68KZorgQDITdV2u5H6CWOGhs3kiv+qqDtokhDpcK660TUMrX+FTDdRKie0l7EeZEdej26Ycw=="
+        "requested": "[9.0.0-rc.1.24431.7, )",
+        "resolved": "9.0.0-rc.1.24431.7",
+        "contentHash": "DFJcW6b/ZCG1IREFqI2Fk1c5Ko7E/iw/4nTQkqmFZ9YdedKwjMNI+1KBJg0q2IdjlyMZUQwreU3ymE2tdxPQbA=="
       },
       "MudBlazor": {
         "type": "Direct",
