@@ -143,9 +143,9 @@
       },
       "BridgingIT.DevKit.Common.Extensions": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.56, )",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "7KlqaXNeAl+/Poy3vt2SOTC+Ffgh7bu4bLXkEBuPzesrsVO8uRMWYu+HX+iicrGMurlcFY1i7g00vg0+azFueA==",
+        "requested": "[3.0.3, )",
+        "resolved": "3.0.3",
+        "contentHash": "G8naODQtYI6lA2Dd1Ni9/bduwND/ga9oRjtd1Y8B3KsG+5m2xmEVhsIIPkeh8vgCTXqQiTmod++PSJt9aYTQPQ==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
@@ -759,8 +759,8 @@
       },
       "BridgingIT.DevKit.Common.Abstractions": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "MmvS6dacey6FBxFuk8PM27YgLaLu+FZXUCrcbOODwPn3mtgLweUB1yH5rtxVprsXVVOZprORwCteiyu2VGLG5A==",
+        "resolved": "3.0.3",
+        "contentHash": "qNwgvNqzCr+ZoZOXJ4pt2fPZMB4+woDGYQbQ4pOeJvc2weBFL3TLGAYCsdfqhtdcS/1zn3lEbi7b2E/+2DzdLQ==",
         "dependencies": {
           "Ensure.That": "10.1.0"
         }
@@ -792,8 +792,8 @@
       },
       "BridgingIT.DevKit.Common.Options": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "gtr2ncy/188PFhmKFIIKge6YCAUJ95+FZINua9+TXXNAgNojiqMLO1qjWHdOKRIWriWK3t5nZrsESvSVFlrMTg==",
+        "resolved": "3.0.3",
+        "contentHash": "KqlKoNnX0bkSeOlYP96LwTkIO1Mh2H8ErJ3PZuNtvgzRnJgOYR1z+K0AZG4J/OyZ0hBxD2tpBm4pRN9kbPsojw==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
@@ -802,8 +802,8 @@
       },
       "BridgingIT.DevKit.Common.Serialization": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "OB/fwEnVHV6SopndI/7hoaTQBExg/8aLNapEM+14AydLr5bg42IqRGby6ENUJT2Vekd7qes+TDZWRj3Z/V+a0A==",
+        "resolved": "3.0.3",
+        "contentHash": "jWGxQU2INNEnPp4fwGtUHNqXPVZvvef4QqChliuJYdgGoeL8ki+SaVoyA/I0JV5maa/L0jMRNJaKyv+cISnIvQ==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "MessagePack": "2.5.172",
@@ -813,13 +813,13 @@
       },
       "BridgingIT.DevKit.Common.Utilities": {
         "type": "Transitive",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "xRHmzMWBJlzZYj8wIgQlgho3GfbjJA2zfoduapnlVc+/Oi2KahYRcOEPUAqXEzx6k6j6Wlt3DxKhQx2uQsdDbA==",
+        "resolved": "3.0.3",
+        "contentHash": "sm/2FOLd20x1uNjFX+7vD3VhewcJCeYg7DO3w9J4/fRaGRJjKIgUyaGie5pyfbO6N8EEC+wIzFc6WDjmBjR/Ig==",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Abstractions": "3.0.3-preview.0.56",
-          "BridgingIT.DevKit.Common.Extensions": "3.0.3-preview.0.56",
-          "BridgingIT.DevKit.Common.Options": "3.0.3-preview.0.56",
-          "BridgingIT.DevKit.Common.Serialization": "3.0.3-preview.0.56",
+          "BridgingIT.DevKit.Common.Abstractions": "3.0.3",
+          "BridgingIT.DevKit.Common.Extensions": "3.0.3",
+          "BridgingIT.DevKit.Common.Options": "3.0.3",
+          "BridgingIT.DevKit.Common.Serialization": "3.0.3",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
@@ -2759,7 +2759,7 @@
           "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.56, )",
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.56, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application.Contracts": "[1.0.0, )",
@@ -2799,7 +2799,7 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Presentation": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.56, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3, )",
           "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Domain": "[1.0.0, )",
@@ -2819,7 +2819,7 @@
           "BridgingIT.DevKit.Application.Messaging": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.56, )",
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.56, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
@@ -2860,7 +2860,7 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Presentation": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.56, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3, )",
           "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain": "[1.0.0, )",
@@ -2879,7 +2879,7 @@
           "BridgingIT.DevKit.Application.JobScheduling": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Application.Queries": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Application.Utilities": "[3.0.3-preview.0.56, )",
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.56, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application.Contracts": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": "[1.0.0, )",
           "Ensure.That": "[10.1.0, )"
@@ -2919,7 +2919,7 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Presentation": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Mapping": "[3.0.3-preview.0.56, )",
+          "BridgingIT.DevKit.Common.Mapping": "[3.0.3, )",
           "BridgingIT.DevKit.Common.Modules": "[3.0.3-preview.0.56, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Application": "[1.0.0, )",
           "BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Domain": "[1.0.0, )",
@@ -2934,7 +2934,7 @@
       "BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client": {
         "type": "Project",
         "dependencies": {
-          "BridgingIT.DevKit.Common.Extensions": "[3.0.3-preview.0.56, )",
+          "BridgingIT.DevKit.Common.Extensions": "[3.0.3, )",
           "BridgingIT.DevKit.Presentation.Web.Client": "[3.0.3-preview.0.56, )",
           "Ensure.That": "[10.1.0, )",
           "Humanizer.Core": "[2.14.1, )",
@@ -3102,12 +3102,12 @@
       },
       "BridgingIT.DevKit.Common.Mapping": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3-preview.0.56, )",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "xdA302fCkS+M61rrngPQN57JBhnT3n6PRode7kIac+T5qMo0nh644s0S96gtcRqppUaBhCAMwBLwzfuSTbp9Hw==",
+        "requested": "[3.0.3, )",
+        "resolved": "3.0.3",
+        "contentHash": "mxYIubVtjsdM2g0s1o5GrthUKszUU0NJ97vnfBS9c+SZ3LDzF9wpAWmSt+9UezObeiNEYuDphWq3hqzTaQIBLw==",
         "dependencies": {
           "AutoMapper": "13.0.1",
-          "BridgingIT.DevKit.Common.Utilities": "3.0.3-preview.0.56",
+          "BridgingIT.DevKit.Common.Utilities": "3.0.3",
           "Ensure.That": "10.1.0",
           "FluentValidation": "11.10.0",
           "Humanizer.Core": "2.14.1",
