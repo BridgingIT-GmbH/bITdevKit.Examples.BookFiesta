@@ -19,9 +19,9 @@
     <PackageVersion Include="BridgingIT.DevKit.Application.Messaging" Version="3.0.3-preview.0.56"/>
     <PackageVersion Include="BridgingIT.DevKit.Application.Queries" Version="3.0.3-preview.0.56"/>
     <PackageVersion Include="BridgingIT.DevKit.Application.Utilities" Version="3.0.3-preview.0.56"/>
-    <PackageVersion Include="BridgingIT.DevKit.Common.Extensions" Version="3.0.3-preview.0.56"/>
+    <PackageVersion Include="BridgingIT.DevKit.Common.Extensions" Version="3.0.3"/>
     <PackageVersion Include="BridgingIT.DevKit.Common.Extensions.Web" Version="3.0.3-preview.0.56"/>
-    <PackageVersion Include="BridgingIT.DevKit.Common.Mapping" Version="3.0.3-preview.0.56"/>
+    <PackageVersion Include="BridgingIT.DevKit.Common.Mapping" Version="3.0.3"/>
     <PackageVersion Include="BridgingIT.DevKit.Common.Modules" Version="3.0.3-preview.0.56"/>
     <PackageVersion Include="BridgingIT.DevKit.Common.Utilities.Xunit" Version="3.0.3-preview.0.56"/>
     <PackageVersion Include="BridgingIT.DevKit.Domain" Version="3.0.3-preview.0.56"/>
