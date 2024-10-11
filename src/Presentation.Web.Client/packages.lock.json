@@ -4,9 +4,9 @@
     "net8.0": {
       "BridgingIT.DevKit.Common.Extensions": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.56, )",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "7KlqaXNeAl+/Poy3vt2SOTC+Ffgh7bu4bLXkEBuPzesrsVO8uRMWYu+HX+iicrGMurlcFY1i7g00vg0+azFueA==",
+        "requested": "[3.0.3, )",
+        "resolved": "3.0.3",
+        "contentHash": "G8naODQtYI6lA2Dd1Ni9/bduwND/ga9oRjtd1Y8B3KsG+5m2xmEVhsIIPkeh8vgCTXqQiTmod++PSJt9aYTQPQ==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
@@ -119,9 +119,9 @@
       },
       "Microsoft.NET.Sdk.WebAssembly.Pack": {
         "type": "Direct",
-        "requested": "[8.0.8, )",
-        "resolved": "8.0.8",
-        "contentHash": "z2UxqxjssvxlcQ68KZorgQDITdV2u5H6CWOGhs3kiv+qqDtokhDpcK660TUMrX+FTDdRKie0l7EeZEdej26Ycw=="
+        "requested": "[9.0.0-rc.1.24431.7, )",
+        "resolved": "9.0.0-rc.1.24431.7",
+        "contentHash": "DFJcW6b/ZCG1IREFqI2Fk1c5Ko7E/iw/4nTQkqmFZ9YdedKwjMNI+1KBJg0q2IdjlyMZUQwreU3ymE2tdxPQbA=="
       },
       "MudBlazor": {
         "type": "Direct",
