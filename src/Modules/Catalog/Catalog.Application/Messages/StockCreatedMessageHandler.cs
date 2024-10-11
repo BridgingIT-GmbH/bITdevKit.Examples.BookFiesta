@@ -9,7 +9,9 @@ using BridgingIT.DevKit.Application.Messaging;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
-public class StockCreatedMessageHandler(ILoggerFactory loggerFactory, IGenericRepository<Book> repository)
+public class StockCreatedMessageHandler(
+    ILoggerFactory loggerFactory,
+    IGenericRepository<Book> repository)
     : MessageHandlerBase<StockCreatedMessage>(loggerFactory)
 {
     public override async Task Handle(StockCreatedMessage message, CancellationToken cancellationToken)

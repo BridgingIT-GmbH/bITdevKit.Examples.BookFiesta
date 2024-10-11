@@ -143,7 +143,6 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
             return this;
         }
 
-        this.Description = description;
         this.ReindexKeywords();
 
         this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);

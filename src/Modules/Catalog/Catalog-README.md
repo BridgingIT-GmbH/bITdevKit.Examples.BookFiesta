@@ -3,6 +3,15 @@
 ![bITDevKit](https://raw.githubusercontent.com/BridgingIT-GmbH/bITdevKit.Examples.BookFiesta/refs/heads/main/bITDevKit_BookFiesta_Banner.png)
 =====================================
 
+<!-- TOC -->
+* [Catalog Module Overview](#catalog-module-overview)
+  * [Domain Model](#domain-model)
+    * [Book Aggregate](#book-aggregate)
+    * [Author Aggregate](#author-aggregate)
+    * [Supporting Entities and Value Objects](#supporting-entities-and-value-objects)
+    * [Key Relationships](#key-relationships)
+<!-- TOC -->
+
 # Catalog Module Overview
 
 > The Catalog Module is responsible for managing the book catalog.

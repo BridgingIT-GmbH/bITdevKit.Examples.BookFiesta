@@ -4,9 +4,9 @@
     "net8.0": {
       "BridgingIT.DevKit.Common.Extensions": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.49, )",
-        "resolved": "3.0.3-preview.0.49",
-        "contentHash": "ur9d6OS0VKOwY4Fd54yC+7MLDglRhCNUERAQp2Vj2xzjrWrEzJKNHsxvlCJWIEd1V5WOTrxgYbhiqrsQ2iyv/Q==",
+        "requested": "[3.0.3-preview.0.56, )",
+        "resolved": "3.0.3-preview.0.56",
+        "contentHash": "7KlqaXNeAl+/Poy3vt2SOTC+Ffgh7bu4bLXkEBuPzesrsVO8uRMWYu+HX+iicrGMurlcFY1i7g00vg0+azFueA==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
@@ -17,9 +17,9 @@
       },
       "BridgingIT.DevKit.Presentation.Web.Client": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.49, )",
-        "resolved": "3.0.3-preview.0.49",
-        "contentHash": "BT3bfeHVEfR5NmbK0n908OLCLKjPonKfzzF9mzqMyUPG54c5leudIPq57TcrBf+mZW7cQKveokfp5qRJ9R26nQ==",
+        "requested": "[3.0.3-preview.0.56, )",
+        "resolved": "3.0.3-preview.0.56",
+        "contentHash": "01yXC7Gt34S6tXtRT9f5ND50TrbHGeklWAZZU4yYcKO6xsctIxuYokp5xmVC5qYwK6Y8R56z59zDVuQXShCpLw==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.AspNetCore.Components.Web": "8.0.8",

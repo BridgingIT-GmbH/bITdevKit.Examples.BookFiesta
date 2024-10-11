@@ -3,6 +3,7 @@
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
+using BridgingIT.DevKit.Application.JobScheduling;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Presentation;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
@@ -82,14 +83,14 @@ builder.Services.AddQueries()
     .WithBehavior(typeof(TimeoutQueryBehavior<,>))
     .WithBehavior(typeof(TenantAwareQueryBehavior<,>));
 
-// builder.Services.AddJobScheduling(o => o
-//             .StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]),
-//         builder.Configuration)
-//     //.WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)
-//     .WithBehavior<ModuleScopeJobSchedulingBehavior>()
-//     //.WithBehavior<ChaosExceptionJobSchedulingBehavior>()
-//     .WithBehavior<RetryJobSchedulingBehavior>()
-//     .WithBehavior<TimeoutJobSchedulingBehavior>();
+builder.Services.AddJobScheduling(o => o
+            .StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]),
+        builder.Configuration)
+    //.WithJob<HealthCheckJob>(CronExpressions.Every10Seconds)
+    .WithBehavior<ModuleScopeJobSchedulingBehavior>()
+    //.WithBehavior<ChaosExceptionJobSchedulingBehavior>()
+    .WithBehavior<RetryJobSchedulingBehavior>()
+    .WithBehavior<TimeoutJobSchedulingBehavior>();
 
 builder.Services.AddStartupTasks(o => o
         .Enabled()
@@ -309,61 +310,60 @@ void ConfigureTracing(TracerProviderBuilder provider)
                         ["os.description"] = RuntimeInformation.OSDescription,
                         ["deployment.environment"] = builder.Environment.EnvironmentName.ToLowerInvariant()
                     }))
-        .SetErrorStatusOnException()
-        .AddAspNetCoreInstrumentation(
-            opts =>
-            {
-                opts.RecordException = true;
-                opts.Filter = context => !context.Request.Path.ToString()
-                    .EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns);
-            })
-        .AddHttpClientInstrumentation(
-            opts =>
-            {
-                opts.RecordException = true;
-                opts.FilterHttpRequestMessage = req
-                    => !req.RequestUri.PathAndQuery.EqualsPatternAny(
-                        new RequestLoggingOptions().PathBlackListPatterns.Insert("*api/events/raw"));
-            })
-        .AddSqlClientInstrumentation(
-            opts =>
-            {
-                opts.Filter = cmd
-                    => // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/main/src/OpenTelemetry.Instrumentation.SqlClient/README.md#filter
-                {
-                    if (cmd is SqlCommand command)
-                    {
-                        return !command.CommandText.Contains("QRTZ_") &&
-                            !command.CommandText.Contains("__MigrationsHistory") &&
-                            !command.CommandText.Equals("SELECT 1;");
-                    }
-
-                    return false;
-                };
-                opts.RecordException = true;
-                opts.EnableConnectionLevelAttributes = true;
-                opts.SetDbStatementForText = true;
-            });
+        .SetErrorStatusOnException();
+        // .AddAspNetCoreInstrumentation(
+        //     o =>
+        //     {
+        //         o.RecordException = true;
+        //         o.Filter = context => !context.Request.Path.ToString()
+        //             .EqualsPatternAny(new RequestLoggingOptions().PathBlackListPatterns);
+        //     })
+        // .AddHttpClientInstrumentation(
+        //     o =>
+        //     {
+        //         o.RecordException = true;
+        //         o.FilterHttpRequestMessage = req
+        //             => !req.RequestUri.PathAndQuery.EqualsPatternAny(
+        //                 new RequestLoggingOptions().PathBlackListPatterns.Insert("*api/events/raw"));
+        //     });
+        // .AddSqlClientInstrumentation(
+        //     o =>
+        //     {
+        //         o.Filter = cmd => // https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/main/src/OpenTelemetry.Instrumentation.SqlClient/README.md#filter
+        //         {
+        //             if (cmd is SqlCommand command)
+        //             {
+        //                 return !command.CommandText.Contains("QRTZ_") &&
+        //                     !command.CommandText.Contains("__MigrationsHistory") &&
+        //                     !command.CommandText.Equals("SELECT 1;");
+        //             }
+        //
+        //             return false;
+        //         };
+        //         o.RecordException = true;
+        //         o.EnableConnectionLevelAttributes = true;
+        //         o.SetDbStatementForText = true;
+        //     });
 
     if (builder.Configuration["Tracing:Otlp:Enabled"].To<bool>())
     {
         Log.Logger.Information("{LogKey} otlp exporter enabled (endpoint={Endpoint})", "TRC", builder.Configuration["Tracing:Otlp:Endpoint"]);
-        provider.AddOtlpExporter(opt =>
+        provider.AddOtlpExporter(o =>
         {
-            opt.Endpoint = new Uri(builder.Configuration["Tracing:Otlp:Endpoint"]);
-            opt.Protocol = OtlpExportProtocol.HttpProtobuf;
-            opt.Headers = builder.Configuration["Tracing:Otlp:Headers"];
+            o.Endpoint = new Uri(builder.Configuration["Tracing:Otlp:Endpoint"]);
+            o.Protocol = OtlpExportProtocol.HttpProtobuf;
+            o.Headers = builder.Configuration["Tracing:Otlp:Headers"];
         });
     }
 
     if (builder.Configuration["Tracing:Jaeger:Enabled"].To<bool>())
     {
         Log.Logger.Information("{LogKey} jaeger exporter enabled (host={JaegerHost})", "TRC", builder.Configuration["Tracing:Jaeger:AgentHost"]);
-        provider.AddJaegerExporter(opt =>
+        provider.AddJaegerExporter(o =>
         {
-            opt.AgentHost = builder.Configuration["Tracing:Jaeger:AgentHost"];
-            opt.AgentPort = Convert.ToInt32(builder.Configuration["Tracing:Jaeger:AgentPort"]);
-            opt.ExportProcessorType = ExportProcessorType.Simple;
+            o.AgentHost = builder.Configuration["Tracing:Jaeger:AgentHost"];
+            o.AgentPort = Convert.ToInt32(builder.Configuration["Tracing:Jaeger:AgentPort"]);
+            o.ExportProcessorType = ExportProcessorType.Simple;
         });
     }
 

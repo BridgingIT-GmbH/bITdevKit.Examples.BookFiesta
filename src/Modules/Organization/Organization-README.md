@@ -3,6 +3,15 @@
 ![bITDevKit](https://raw.githubusercontent.com/BridgingIT-GmbH/bITdevKit.Examples.BookFiesta/refs/heads/main/bITDevKit_BookFiesta_Banner.png)
 =====================================
 
+<!-- TOC -->
+* [Organization Module Overview](#organization-module-overview)
+  * [Domain Model](#domain-model)
+    * [Tenant Aggregate](#tenant-aggregate)
+    * [Company Aggregate](#company-aggregate)
+    * [Supporting Entities and Value Objects](#supporting-entities-and-value-objects)
+    * [Key Relationships](#key-relationships)
+<!-- TOC -->
+
 # Organization Module Overview
 
 > The Organization Module is responsible for managing tenants, companies, and their associated

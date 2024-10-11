@@ -3,10 +3,39 @@
 ![bITDevKit](https://raw.githubusercontent.com/BridgingIT-GmbH/bITdevKit.Examples.BookFiesta/refs/heads/main/bITDevKit_BookFiesta_Banner.png)
 =====================================
 
-# Architecture overview
-
 > An application built using .NET 8 and following a Domain-Driven Design approach by using the
 > BridgingIT DevKit.
+
+<!-- TOC -->
+  * [Features](#features)
+  * [Key Technologies and Frameworks](#key-technologies-and-frameworks)
+  * [Architecture Overview](#architecture-overview)
+    * [Patterns & Principles](#patterns--principles)
+    * [Layers](#layers)
+      * [1. Domain Layer](#1-domain-layer)
+      * [2. Application Layer](#2-application-layer)
+      * [3. Infrastructure Layer](#3-infrastructure-layer)
+      * [4. Presentation Layer](#4-presentation-layer)
+    * [Request Processing Flow](#request-processing-flow)
+    * [Architecture Decision Records (ADR)](#architecture-decision-records-adr)
+    * [Cross-cutting Concerns](#cross-cutting-concerns)
+  * [Data Storage](#data-storage)
+  * [External API Layer](#external-api-layer)
+  * [Application Testing](#application-testing)
+  * [Modular Structure](#modular-structure)
+    * [Organization Module](#organization-module)
+    * [Catalog Module](#catalog-module)
+    * [Inventory Module](#inventory-module)
+  * [Getting Started](#getting-started)
+    * [Prerequisites](#prerequisites)
+    * [Running the Application](#running-the-application)
+    * [Solution Structure](#solution-structure)
+    * [Testing the API](#testing-the-api)
+      * [Swagger UI](#swagger-ui)
+      * [Unit Tests](#unit-tests)
+      * [Integration Tests](#integration-tests)
+      * [Http Tests](#http-tests)
+<!-- TOC -->
 
 ## Features
 

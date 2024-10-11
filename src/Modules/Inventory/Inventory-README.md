@@ -1,7 +1,19 @@
 ![bITDevKit](https://github.com/BridgingIT-GmbH/bITdevKit.Examples.BookFiesta/blob/main/bITDevKit_Logo.png?raw=true)
 
 ![bITDevKit](https://raw.githubusercontent.com/BridgingIT-GmbH/bITdevKit.Examples.BookFiesta/refs/heads/main/bITDevKit_BookFiesta_Banner.png)
-=====================================~~~~
+=====================================
+
+<!-- TOC -->
+* [Inventory Module Overview](#inventory-module-overview)
+  * [Domain Model](#domain-model)
+    * [Stock Aggregate](#stock-aggregate)
+    * [StockSnapshot Aggregate](#stocksnapshot-aggregate)
+    * [Supporting Entities and Value Objects](#supporting-entities-and-value-objects)
+    * [Key Relationships](#key-relationships)
+  * [Key Concepts and Operations](#key-concepts-and-operations)
+  * [External API Endpoints](#external-api-endpoints)
+  * [Public API Client](#public-api-client)
+<!-- TOC -->
 
 # Inventory Module Overview
 
