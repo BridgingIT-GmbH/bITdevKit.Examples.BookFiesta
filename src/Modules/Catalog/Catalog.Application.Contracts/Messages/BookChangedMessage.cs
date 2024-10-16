@@ -5,4 +5,17 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class BookCreatedMessage { }
+public class BookUpdatedMessage
+{
+    public string TenantId { get; set; }
+
+    public string BookId { get; set; }
+
+    public string Sku { get; set; }
+
+    public string Title { get; set; }
+
+    public string Isbn { get; set; }
+
+    public decimal Price { get; set; }
+}

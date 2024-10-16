@@ -1,4 +1,4 @@
-﻿// MIT-License
+// MIT-License
 // Copyright BridgingIT GmbH - All Rights Reserved
 // Use of this source code is governed by an MIT-style license that can be
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
@@ -10,14 +10,14 @@ using BridgingIT.DevKit.Application.Messaging;
 public class StockUpdatedDomainEventMessagePublisher(
     ILoggerFactory loggerFactory,
     IMessageBroker messageBroker)
-    : DomainEventHandlerBase<StockUpdatedDomainEvent>(loggerFactory)
+    : DomainEventHandlerBase<StockChangedDomainEvent>(loggerFactory)
 {
-    public override bool CanHandle(StockUpdatedDomainEvent @event)
+    public override bool CanHandle(StockChangedDomainEvent @event)
     {
         return true;
     }
 
-    public override async Task Process(StockUpdatedDomainEvent @event, CancellationToken cancellationToken)
+    public override async Task Process(StockChangedDomainEvent @event, CancellationToken cancellationToken)
     {
         await messageBroker.Publish(
             new StockUpdatedMessage
