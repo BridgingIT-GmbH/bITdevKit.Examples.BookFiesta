@@ -22,6 +22,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         string title,
         string edition,
         string description,
+        Language language,
         ProductSku sku,
         BookIsbn isbn,
         Money price,
@@ -37,6 +38,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         this.SetPrice(price);
         this.SetPublisher(publisher);
         this.SetPublishedDate(publishedDate);
+        this.SetLanguage(language);
         this.AverageRating = AverageRating.Create();
     }
 
@@ -47,6 +49,8 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     public string Edition { get; private set; }
 
     public string Description { get; private set; }
+
+    public Language Language { get; private set; }
 
     public ProductSku Sku { get; private set; }
 
@@ -89,6 +93,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         string title,
         string edition,
         string description,
+        Language language,
         ProductSku sku,
         BookIsbn isbn,
         Money price,
@@ -97,7 +102,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
     {
         _ = tenantId ?? throw new ArgumentException("TenantId cannot be empty.");
 
-        var book = new Book(tenantId, title, edition, description, sku, isbn, price, publisher, publishedDate);
+        var book = new Book(tenantId, title, edition, description, language, sku, isbn, price, publisher, publishedDate);
 
         book.DomainEvents.Register(new BookCreatedDomainEvent(tenantId, book), true);
 
@@ -224,6 +229,22 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         }
 
         this.PublishedDate = publishedDate;
+
+        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+
+        return this;
+    }
+
+    public Book SetLanguage(Language language)
+    {
+        _ = language ?? throw new ArgumentException("Book Language cannot be empty.");
+
+        if (this.Language == language)
+        {
+            return this;
+        }
+
+        this.Language = language;
 
         this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
 

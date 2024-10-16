@@ -64,7 +64,7 @@ public class VatNumberTests
 
         // Act & Assert
         Should.Throw<DomainRuleException>(() => VatNumber.Create(invalidVat))
-            .Message.ShouldBe($"Invalid VAT/EIN number ({invalidVat}) format for country DE.");
+            .Message.ShouldBe($"Invalid VAT/EIN number ({invalidVat}) format for country DE");
     }
 
     [Fact]

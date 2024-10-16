@@ -9,12 +9,12 @@ using BridgingIT.DevKit.Application.Messaging;
 using BridgingIT.DevKit.Domain;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
-public class StockUpdatedMessageHandler(ILoggerFactory loggerFactory, IGenericRepository<Book> repository)
-    : MessageHandlerBase<StockUpdatedMessage>(loggerFactory)
+public class StockChangedMessageHandler(ILoggerFactory loggerFactory, IGenericRepository<Book> repository)
+    : MessageHandlerBase<StockChangedMessage>(loggerFactory)
 {
     //private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
 
-    public override async Task Handle(StockUpdatedMessage message, CancellationToken cancellationToken)
+    public override async Task Handle(StockChangedMessage message, CancellationToken cancellationToken)
     {
         // await Semaphore.WaitAsync(cancellationToken);
         //

@@ -1,7 +1,5 @@
 ﻿namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Text.RegularExpressions;
-
 [DebuggerDisplay("CountryCode={CountryCode}, Number={Number}")]
 public class VatNumber : ValueObject
 {
@@ -42,7 +40,7 @@ public class VatNumber : ValueObject
     {
         if (string.IsNullOrEmpty(value))
         {
-            return null; //throw new DomainRuleException("VatNumber number cannot be empty.");
+            return null; //throw new DomainRuleException("VatNumber number cannot be empty");
         }
 
         value = Normalize(value);
@@ -53,7 +51,7 @@ public class VatNumber : ValueObject
         {
             if (!regex.IsMatch(value))
             {
-                throw new DomainRuleException($"Invalid VAT/EIN number ({value}) format for country {countryCode}.");
+                throw new DomainRuleException($"Invalid VAT/EIN number ({value}) format for country {countryCode}");
             }
 
             return new VatNumber(countryCode, number);
@@ -64,7 +62,7 @@ public class VatNumber : ValueObject
             return new VatNumber(countryCode, number);
         }
 
-        throw new DomainRuleException($"Invalid VAT number  ({value}) format.");
+        throw new DomainRuleException($"Invalid VAT number  ({value}) format");
     }
 
     public static bool TryParse(string value, out VatNumber result)

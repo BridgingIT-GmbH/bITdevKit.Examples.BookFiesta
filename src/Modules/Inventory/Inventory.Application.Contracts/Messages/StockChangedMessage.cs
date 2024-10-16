@@ -7,7 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application;
 
 using BridgingIT.DevKit.Application.Messaging;
 
-public class StockUpdatedMessage : MessageBase
+public class StockChangedMessage : MessageBase
 {
     public string TenantId { get; set; }
 

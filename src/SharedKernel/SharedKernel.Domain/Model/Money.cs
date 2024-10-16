@@ -5,7 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Globalization;
 using EnsureThat;
 
 [DebuggerDisplay("Currency={Currency}, Amount={Amount}")]
@@ -94,7 +93,7 @@ public class Money : DecimalValueObject
 
     public static Money Create(decimal amount)
     {
-        return new Money(amount, Currency.USDollar);
+        return new Money(amount, Currency.UsDollar);
     }
 
     public static Money Create(decimal amount, Currency currency)

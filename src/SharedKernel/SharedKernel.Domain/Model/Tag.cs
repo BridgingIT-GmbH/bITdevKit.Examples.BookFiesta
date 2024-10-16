@@ -46,7 +46,7 @@ public class Tag : Entity<TagId>, IConcurrent
     {
         if (string.IsNullOrEmpty(value))
         {
-            throw new DomainRuleException("Tag name cannot be empty.");
+            throw new DomainRuleException("Tag name cannot be empty");
         }
 
         this.Name = value;

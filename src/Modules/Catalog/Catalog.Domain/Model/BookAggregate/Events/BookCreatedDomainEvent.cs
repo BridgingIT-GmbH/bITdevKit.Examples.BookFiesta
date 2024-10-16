@@ -10,4 +10,8 @@ public class BookCreatedDomainEvent(TenantId tenantId, Book book) : DomainEventB
     public TenantId TenantId { get; } = tenantId;
 
     public BookId BookId { get; } = book.Id;
+
+    public ProductSku Sku { get; } = book.Sku;
+
+    public Money Price { get; } = book.Price;
 }

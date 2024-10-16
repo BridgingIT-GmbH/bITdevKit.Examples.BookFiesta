@@ -42,7 +42,7 @@ public class MoneyTests
         // Assert
         sut.ShouldNotBeNull();
         sut.Amount.ShouldBe(amount);
-        sut.Currency.ShouldBe(Currency.USDollar);
+        sut.Currency.ShouldBe(Currency.UsDollar);
     }
 
     [Fact]
@@ -54,7 +54,7 @@ public class MoneyTests
         // Assert
         sut.ShouldNotBeNull();
         sut.Amount.ShouldBe(0);
-        sut.Currency.ShouldBe(Currency.USDollar);
+        sut.Currency.ShouldBe(Currency.UsDollar);
     }
 
     [Fact]
@@ -117,7 +117,7 @@ public class MoneyTests
     {
         // Arrange
         var amount = 1234.56m;
-        var sut = Money.Create(amount, Currency.USDollar);
+        var sut = Money.Create(amount, Currency.UsDollar);
 
         // Act
         string result = sut;
@@ -146,8 +146,8 @@ public class MoneyTests
     public void InequalityOperator_DifferentMoneyValues_ReturnsTrue()
     {
         // Arrange
-        var money1 = Money.Create(10, Currency.USDollar);
-        var money2 = Money.Create(20, Currency.USDollar);
+        var money1 = Money.Create(10, Currency.UsDollar);
+        var money2 = Money.Create(20, Currency.UsDollar);
 
         // Act
         var result = money1 != money2;
@@ -176,7 +176,7 @@ public class MoneyTests
     {
         // Arrange
         var money1 = Money.Create(10, Currency.Euro);
-        var money2 = Money.Create(20, Currency.USDollar);
+        var money2 = Money.Create(20, Currency.UsDollar);
 
         // Act & Assert
         Should.Throw<InvalidOperationException>(() => money1 + money2)
@@ -203,7 +203,7 @@ public class MoneyTests
     {
         // Arrange
         var money1 = Money.Create(30, Currency.Euro);
-        var money2 = Money.Create(20, Currency.USDollar);
+        var money2 = Money.Create(20, Currency.UsDollar);
 
         // Act & Assert
         Should.Throw<InvalidOperationException>(() => money1 - money2)
@@ -215,7 +215,7 @@ public class MoneyTests
     {
         // Arrange
         var amount = 1234.56m;
-        var sut = Money.Create(amount, Currency.USDollar);
+        var sut = Money.Create(amount, Currency.UsDollar);
 
         // Act
         var result = sut.ToString();

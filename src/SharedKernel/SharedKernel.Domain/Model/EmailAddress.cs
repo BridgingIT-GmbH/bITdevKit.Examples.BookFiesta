@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Text.RegularExpressions;
-
 [DebuggerDisplay("Value={Value}")]
 public partial class EmailAddress : ValueObject
 {
@@ -33,7 +31,7 @@ public partial class EmailAddress : ValueObject
     {
         if (string.IsNullOrEmpty(value))
         {
-            return null; //throw new DomainRuleException("EmailAddress cannot be empty.");
+            return null; //throw new DomainRuleException("EmailAddress cannot be empty");
         }
 
         value = Normalize(value);

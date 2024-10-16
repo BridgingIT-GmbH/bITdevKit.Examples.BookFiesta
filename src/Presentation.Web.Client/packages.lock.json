@@ -4,9 +4,9 @@
     "net8.0": {
       "BridgingIT.DevKit.Common.Extensions": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.56, )",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "7KlqaXNeAl+/Poy3vt2SOTC+Ffgh7bu4bLXkEBuPzesrsVO8uRMWYu+HX+iicrGMurlcFY1i7g00vg0+azFueA==",
+        "requested": "[3.0.3, )",
+        "resolved": "3.0.3",
+        "contentHash": "G8naODQtYI6lA2Dd1Ni9/bduwND/ga9oRjtd1Y8B3KsG+5m2xmEVhsIIPkeh8vgCTXqQiTmod++PSJt9aYTQPQ==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
@@ -17,9 +17,9 @@
       },
       "BridgingIT.DevKit.Presentation.Web.Client": {
         "type": "Direct",
-        "requested": "[3.0.3-preview.0.56, )",
-        "resolved": "3.0.3-preview.0.56",
-        "contentHash": "01yXC7Gt34S6tXtRT9f5ND50TrbHGeklWAZZU4yYcKO6xsctIxuYokp5xmVC5qYwK6Y8R56z59zDVuQXShCpLw==",
+        "requested": "[3.0.3, )",
+        "resolved": "3.0.3",
+        "contentHash": "l2US2SiQjKP2oyIQkdBbDXYs6JI17XgpIJtcFYOJoIwtBhxCoxsgWiiOOSelC+XVyJgpc3GzW+F6oYwfS0HnPA==",
         "dependencies": {
           "Ensure.That": "10.1.0",
           "Microsoft.AspNetCore.Components.Web": "8.0.8",
@@ -113,15 +113,15 @@
       },
       "Microsoft.NET.ILLink.Tasks": {
         "type": "Direct",
-        "requested": "[8.0.8, )",
-        "resolved": "8.0.8",
-        "contentHash": "P8wR6MUWwYXIjPJuBaZgo5zlI/GWI6QEAo6NyVIbPefa9CCkohYu7dP2rD/mrqnjEqfRHyl+h9VZrDoGpELqYg=="
+        "requested": "[8.0.10, )",
+        "resolved": "8.0.10",
+        "contentHash": "xT8jYjlroY7SLbGtoV9vUTVW/TPgodL4Egc31a444Xe0TMytLZ3UlKQ0kxMZsy/CrWsFB6wtKnSG1SsXcWreew=="
       },
       "Microsoft.NET.Sdk.WebAssembly.Pack": {
         "type": "Direct",
-        "requested": "[8.0.8, )",
-        "resolved": "8.0.8",
-        "contentHash": "z2UxqxjssvxlcQ68KZorgQDITdV2u5H6CWOGhs3kiv+qqDtokhDpcK660TUMrX+FTDdRKie0l7EeZEdej26Ycw=="
+        "requested": "[8.0.10, )",
+        "resolved": "8.0.10",
+        "contentHash": "DTJaIRCxCphhaI+7htflFVgOHbQMLprP65yRk5jlnXfkjwyo8oNwFPBZDr6/3X0YO7W77JOjnfjve2QSaYxs9g=="
       },
       "MudBlazor": {
         "type": "Direct",

@@ -7,34 +7,36 @@
 > BridgingIT DevKit.
 
 <!-- TOC -->
-  * [Features](#features)
-  * [Key Technologies and Frameworks](#key-technologies-and-frameworks)
-  * [Architecture Overview](#architecture-overview)
-    * [Patterns & Principles](#patterns--principles)
-    * [Layers](#layers)
-      * [1. Domain Layer](#1-domain-layer)
-      * [2. Application Layer](#2-application-layer)
-      * [3. Infrastructure Layer](#3-infrastructure-layer)
-      * [4. Presentation Layer](#4-presentation-layer)
-    * [Request Processing Flow](#request-processing-flow)
-    * [Architecture Decision Records (ADR)](#architecture-decision-records-adr)
-    * [Cross-cutting Concerns](#cross-cutting-concerns)
-  * [Data Storage](#data-storage)
-  * [External API Layer](#external-api-layer)
-  * [Application Testing](#application-testing)
-  * [Modular Structure](#modular-structure)
-    * [Organization Module](#organization-module)
-    * [Catalog Module](#catalog-module)
-    * [Inventory Module](#inventory-module)
-  * [Getting Started](#getting-started)
-    * [Prerequisites](#prerequisites)
-    * [Running the Application](#running-the-application)
-    * [Solution Structure](#solution-structure)
-    * [Testing the API](#testing-the-api)
-      * [Swagger UI](#swagger-ui)
-      * [Unit Tests](#unit-tests)
-      * [Integration Tests](#integration-tests)
-      * [Http Tests](#http-tests)
+
+* [Features](#features)
+* [Key Technologies and Frameworks](#key-technologies-and-frameworks)
+* [Architecture Overview](#architecture-overview)
+  * [Patterns & Principles](#patterns--principles)
+  * [Layers](#layers)
+    * [1. Domain Layer](#1-domain-layer)
+    * [2. Application Layer](#2-application-layer)
+    * [3. Infrastructure Layer](#3-infrastructure-layer)
+    * [4. Presentation Layer](#4-presentation-layer)
+  * [Request Processing Flow](#request-processing-flow)
+  * [Architecture Decision Records (ADR)](#architecture-decision-records-adr)
+  * [Cross-cutting Concerns](#cross-cutting-concerns)
+* [Data Storage](#data-storage)
+* [External API Layer](#external-api-layer)
+* [Application Testing](#application-testing)
+* [Modular Structure](#modular-structure)
+  * [Organization Module](#organization-module)
+  * [Catalog Module](#catalog-module)
+  * [Inventory Module](#inventory-module)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Running the Application](#running-the-application)
+  * [Solution Structure](#solution-structure)
+  * [Testing the API](#testing-the-api)
+    * [Swagger UI](#swagger-ui)
+    * [Unit Tests](#unit-tests)
+    * [Integration Tests](#integration-tests)
+    * [Http Tests](#http-tests)
+
 <!-- TOC -->
 
 ## Features
@@ -328,7 +330,6 @@ sequenceDiagram
   participant CH as CommandHandler
   participant M as Mapper
   participant R as Repository
-
   C ->> EA: 1. Request
   EA ->> CM: 2. Create Command (with Model)
   CM ->> CV: 3. Validate
@@ -352,8 +353,10 @@ sequenceDiagram
 2. The External API creates a Command object, which includes a Model.
 3. The Command is then validated by a CommandValidator, which returns a Validation Result.
 4. If validation passes, the Command is processed by a CommandHandler.
-5. The CommandHandler interacts with a Repository to find an existing entity using FindOneResultAsync(EntityId).
-6. Once the existing entity is retrieved, a Mapper is used to update the Domain Entity with the new data from the Model.
+5. The CommandHandler interacts with a Repository to find an existing entity using
+   FindOneResultAsync(EntityId).
+6. Once the existing entity is retrieved, a Mapper is used to update the Domain Entity with the new
+   data from the Model.
 7. The CommandHandler then applies any necessary Domain Rules to the updated entity.
 8. The updated Domain Entity is then saved back to the Repository using UpdateAsync(Domain Entity).
 9. The Repository returns the updated Domain Entity to the CommandHandler.
@@ -417,7 +420,8 @@ over time.
 
 ## Modular Structure
 
-The application is divided into the following main modules:
+The application is structured as a modular monolith, comprising several distinct modules that are
+deployed as a single unit. The main modules are:
 
 ```mermaid
 graph TD
@@ -431,9 +435,21 @@ graph TD
   C -- Public API --> I
 ```
 
+- Logical Separation: Provides clear boundaries between different functional areas of the application.
+- Development Focus: Allows teams to concentrate on specific modules, reducing complexity and potential conflicts.
+- Code Organization: Improves codebase navigation and maintenance.
+
+The SharedKernel is not a module and contains common elements, concepts, and utilities that are
+shared across multiple modules. It includes value objects like TenantId, Address, Money,
+EmailAddress, and
+others that are used throughout the application.
+
 ### Organization Module
 
 > Manages tenants, companies, and subscriptions.
+
+This module handles the management of tenants, companies, and their associated subscriptions and
+branding. It includes entities like Tenant, Company, TenantSubscription, and TenantBranding.
 
 [see](./src/Modules/Organization/Organization-README.md)
 
@@ -441,11 +457,18 @@ graph TD
 
 > Manages books, authors, and categories.
 
+This module manages the book catalog, including entities such as Book, Author, Category, and
+Publisher. It handles the relationships between these entities and provides functionalities for
+managing the product catalog.
+
 [see](./src/Modules/Catalog/Catalog-README.md)
 
 ### Inventory Module
 
 > Handles stock management and inventory tracking.
+
+This module is responsible for managing book inventories, tracking stock levels, and handling
+stock-related operations. It includes entities like Stock and StockSnapshot.
 
 [see](./src/Modules/Inventory/Inventory-README.md)
 

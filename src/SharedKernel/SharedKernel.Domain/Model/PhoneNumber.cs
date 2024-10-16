@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Text.RegularExpressions;
-
 [DebuggerDisplay("CountryCode={CountryCode}, Number={Number}")]
 public class PhoneNumber : ValueObject
 {
@@ -66,7 +64,7 @@ public class PhoneNumber : ValueObject
         var cleanNumber = CleanNumber(value);
         if (!IsValid(cleanNumber))
         {
-            throw new DomainRuleException("Invalid phone number format.");
+            throw new DomainRuleException("Invalid phone number format");
         }
 
         var countryCode = ExtractCountryCode(cleanNumber);
@@ -115,6 +113,6 @@ public class PhoneNumber : ValueObject
             }
         }
 
-        throw new DomainRuleException("Invalid or unsupported country code.");
+        throw new DomainRuleException("Invalid or unsupported country code");
     }
 }

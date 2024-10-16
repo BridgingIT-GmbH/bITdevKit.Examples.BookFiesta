@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Text.RegularExpressions;
-
 [DebuggerDisplay("Value={Value}")]
 public class HexColor : ValueObject
 {
@@ -36,7 +34,7 @@ public class HexColor : ValueObject
         value = Normalize(value);
         if (!IsValid(value))
         {
-            throw new DomainRuleException($"Invalid hex color format: {value}. Use the format #RGB or #RRGGBB.");
+            throw new DomainRuleException($"Invalid hex color format: {value}. Use the format #RGB or #RRGGBB");
         }
 
         return new HexColor(value);

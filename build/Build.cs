@@ -47,7 +47,7 @@ class Build : NukeBuild
     readonly AbsolutePath SourceDirectory = RootDirectory / "src";
 
     [Parameter("Output file path for concatenated files")]
-    readonly AbsolutePath DumpCodeOutputFile = RootDirectory / "CodeDump.txt";
+    readonly AbsolutePath CodeDumpOutputFile = RootDirectory / "CodeDump.cs";
 
     // Default local admin credentials
     readonly string SonarLogin = "admin";
@@ -171,18 +171,27 @@ class Build : NukeBuild
                 // .SetResultsDirectory(TestResultsDirectory));
         });
 
-    Target DumpCode => _ => _
+    Target CodeDump => _ => _
     .Executes(() =>
     {
-        var files = SourceDirectory.GlobFiles("**/*.cs", "**/*.md")
+        var files = RootDirectory.GlobFiles("**/*.cs", "**/*.md")
             .Where(file =>
                 !file.Name.Equals("GlobalSuppressions.cs", StringComparison.OrdinalIgnoreCase) &&
                 !file.Name.Equals("AssemblyInfo.cs", StringComparison.OrdinalIgnoreCase) &&
                 !file.Name.EndsWith(".g.cs", StringComparison.OrdinalIgnoreCase) &&
+                !file.Name.EndsWith("ApiClient.cs") &&
+                !file.Name.EndsWith("GlobalUsings.cs") &&
+                !file.Name.EndsWith("CodeDump.cs") &&
+                !file.Name.EndsWith("CODE_OF_CONDUCT") &&
+                !file.ToString().Contains("GlobalSuppressions.cs") &&
                 !file.ToString().Contains("Migrations") &&
                 !file.ToString().Contains(".UnitTests") &&
-                !file.ToString().Contains(".IntegrationTests"))
+                !file.ToString().Contains(".IntegrationTests")&&
+                !file.ToString().Contains(@"\bin\") &&            // Exclude bin folders
+                !file.ToString().Contains(@"\obj\"))
             .ToList();
+
+        //files.AddRange(RootDirectory.GlobFiles("*.md"));
 
         var totalFiles = files.Count;
         var processedFiles = 0;
@@ -192,7 +201,7 @@ class Build : NukeBuild
 
         Console.WriteLine($"Starting to process {totalFiles} files (.cs and .md)...");
 
-        using (var writer = new StreamWriter(DumpCodeOutputFile))
+        using (var writer = new StreamWriter(CodeDumpOutputFile))
         {
             foreach (var file in files)
             {
@@ -223,7 +232,7 @@ class Build : NukeBuild
             }
         }
 
-        Console.WriteLine($"All files have been concatenated into {DumpCodeOutputFile}");
+        Console.WriteLine($"All files have been concatenated into {CodeDumpOutputFile}");
         Console.WriteLine($"Total files processed: {totalFiles}");
         Console.WriteLine($"C# files: {csFiles}");
         Console.WriteLine($"Markdown files: {mdFiles}");
@@ -243,7 +252,7 @@ private int FindContentStartIndex(string[] lines)
 }
 
     Target All => _ => _
-        .DependsOn(SonarAnalysis, DumpCode)
+        .DependsOn(SonarAnalysis, CodeDump)
         .Executes(() =>
         {
             Console.WriteLine("All tasks completed successfully.");

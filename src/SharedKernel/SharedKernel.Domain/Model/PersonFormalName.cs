@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Text.RegularExpressions;
-
 [DebuggerDisplay("Name={ToString()}")]
 public partial class PersonFormalName : ValueObject
 {

@@ -56,8 +56,7 @@ public class CatalogModule : WebModuleBase
                 .StartupDelay(moduleConfiguration.SeederTaskStartupDelay));
 
         services.AddMessaging()
-            .WithSubscription<StockCreatedMessage, StockCreatedMessageHandler>()
-            .WithSubscription<StockUpdatedMessage, StockUpdatedMessageHandler>();
+            .WithSubscription<StockChangedMessage, StockChangedMessageHandler>();
 
         services.AddSqlServerDbContext<CatalogDbContext>(o => o
                     .UseConnectionString(moduleConfiguration.ConnectionStrings["Default"])

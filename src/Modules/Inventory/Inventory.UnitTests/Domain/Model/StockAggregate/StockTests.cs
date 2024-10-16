@@ -41,7 +41,7 @@ public class StockTests
         sut.ReorderQuantity.ShouldBe(reorderQuantity);
         sut.UnitCost.ShouldBe(unitCost);
         sut.Location.ShouldBe(storageLocation);
-        sut.DomainEvents.GetAll().ShouldContain(e => e is StockCreatedDomainEvent);
+        sut.DomainEvents.GetAll().ShouldContain(e => e is StockChangedDomainEvent);
     }
 
     [Fact]
@@ -137,7 +137,7 @@ public class StockTests
         // Assert
         sut.QuantityOnHand.ShouldBe(oldQuantity + quantityToAdd);
         sut.Movements.ShouldContain(m => m.Quantity == quantityToAdd && m.Type == StockMovementType.Addition);
-        sut.DomainEvents.GetAll().ShouldContain(e => e is StockUpdatedDomainEvent);
+        sut.DomainEvents.GetAll().ShouldContain(e => e is StockChangedDomainEvent);
     }
 
     [Fact]
@@ -166,7 +166,7 @@ public class StockTests
         // Assert
         sut.QuantityOnHand.ShouldBe(oldQuantity - quantityToRemove);
         sut.Movements.ShouldContain(m => m.Quantity == -quantityToRemove && m.Type == StockMovementType.Removal);
-        sut.DomainEvents.GetAll().ShouldContain(e => e is StockUpdatedDomainEvent);
+        sut.DomainEvents.GetAll().ShouldContain(e => e is StockChangedDomainEvent);
     }
 
     [Fact]
@@ -255,7 +255,7 @@ public class StockTests
         // Assert
         sut.ReorderThreshold.ShouldBe(newThreshold);
         sut.ReorderQuantity.ShouldBe(newQuantity);
-        sut.DomainEvents.GetAll().ShouldContain(e => e is StockUpdatedDomainEvent);
+        sut.DomainEvents.GetAll().ShouldContain(e => e is StockChangedDomainEvent);
     }
 
     [Fact]

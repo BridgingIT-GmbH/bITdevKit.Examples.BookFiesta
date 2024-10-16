@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Text.RegularExpressions;
-
 [DebuggerDisplay("Value={Value}")]
 public partial class Website : ValueObject
 {
@@ -34,7 +32,7 @@ public partial class Website : ValueObject
     {
         if (string.IsNullOrEmpty(value))
         {
-            return null; //throw new DomainRuleException("Website cannot be empty.");
+            return null; //throw new DomainRuleException("Website cannot be empty");
         }
 
         value = Normalize(value);

@@ -63,6 +63,12 @@ public class BookEntityTypeConfiguration
 
         builder.Property(e => e.Description).IsRequired(false);
 
+        builder.Property(e => e.Language)
+            .HasConversion(language => language.Code, value => Language.Create(value))
+            .IsRequired()
+            .HasMaxLength(4);
+        builder.HasIndex(nameof(Book.Language));
+
         builder.Property(e => e.PublishedDate).IsRequired(false);
 
         builder.Property(e => e.Sku)

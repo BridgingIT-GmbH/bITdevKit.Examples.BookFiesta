@@ -7,7 +7,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application.Ev
 
 using BridgingIT.DevKit.Application.Messaging;
 
-public class StockUpdatedDomainEventMessagePublisher(
+public class StockChangedDomainEventMessagePublisher(
     ILoggerFactory loggerFactory,
     IMessageBroker messageBroker)
     : DomainEventHandlerBase<StockChangedDomainEvent>(loggerFactory)
@@ -20,7 +20,7 @@ public class StockUpdatedDomainEventMessagePublisher(
     public override async Task Process(StockChangedDomainEvent @event, CancellationToken cancellationToken)
     {
         await messageBroker.Publish(
-            new StockUpdatedMessage
+            new StockChangedMessage
             {
                 TenantId = @event.TenantId,
                 StockId = @event.StockId,

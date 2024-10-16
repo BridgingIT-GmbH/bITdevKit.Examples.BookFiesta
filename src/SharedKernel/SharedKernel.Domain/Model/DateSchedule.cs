@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 
-using System.Globalization;
-
 [DebuggerDisplay("StartDate={StartDate}, EndDate={EndDate}")]
 public class DateSchedule : ValueObject, IComparable<DateSchedule>
 {

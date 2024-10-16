@@ -31,10 +31,25 @@ public class CurrencyTests
     }
 
     [Fact]
+    public void Create_ValidLowerCurrencyCode_ReturnsCurrencyInstance()
+    {
+        // Arrange
+        var validCode = "usd";
+
+        // Act
+        var sut = Currency.Create(validCode);
+
+        // Assert
+        sut.ShouldNotBeNull();
+        sut.Code.ShouldBe(validCode.ToUpperInvariant());
+        sut.Symbol.ShouldBe("$");
+    }
+
+    [Fact]
     public void Create_InvalidCurrencyCode_ThrowsDomainRuleException()
     {
         // Arrange
-        var invalidCode = this.faker.Random.AlphaNumeric(3);
+        var invalidCode = this.faker.Random.AlphaNumeric(3).ToUpperInvariant();
 
         // Act & Assert
         Should.Throw<DomainRuleException>(() => Currency.Create(invalidCode))
@@ -104,9 +119,9 @@ public class CurrencyTests
     {
         // Arrange & Act & Assert
         Currency.Euro.Code.ShouldBe("EUR");
-        Currency.USDollar.Code.ShouldBe("USD");
-        Currency.GBPound.Code.ShouldBe("GBP");
-        Currency.JapanYen.Code.ShouldBe("JPY");
+        Currency.UsDollar.Code.ShouldBe("USD");
+        Currency.BritishPound.Code.ShouldBe("GBP");
+        Currency.JapaneseYen.Code.ShouldBe("JPY");
     }
 
     [Fact]
@@ -116,6 +131,7 @@ public class CurrencyTests
         string nullCode = null;
 
         // Act & Assert
-        Should.Throw<DomainRuleException>(() => Currency.Create(nullCode)).Message.ShouldBe("Invalid currency code: ");
+        Should.Throw<DomainRuleException>(() =>
+            Currency.Create(nullCode)).Message.ShouldBe("Currency code cannot be null or empty");
     }
 }

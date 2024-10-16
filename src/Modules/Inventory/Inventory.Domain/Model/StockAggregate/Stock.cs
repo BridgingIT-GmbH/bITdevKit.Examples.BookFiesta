@@ -71,7 +71,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
 
         var stock = new Stock(tenantId, sku, quantityOnHand, reorderThreshold, reorderQuantity, unitCost, storageLocation);
 
-        stock.DomainEvents.Register(new StockCreatedDomainEvent(stock));
+        stock.DomainEvents.Register(new StockChangedDomainEvent(stock));
 
         return stock;
     }
@@ -132,7 +132,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         this.movements.Add(
             StockMovement.Create(this.Id, quantity, StockMovementType.Addition, reason ?? "Stock addition"));
 
-        this.DomainEvents.Register(new StockUpdatedDomainEvent(this));
+        this.DomainEvents.Register(new StockChangedDomainEvent(this));
 
         return this;
     }
@@ -154,7 +154,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         this.movements.Add(
             StockMovement.Create(this.Id, -quantity, StockMovementType.Removal, reason ?? "Stock removal"));
 
-        this.DomainEvents.Register(new StockUpdatedDomainEvent(this));
+        this.DomainEvents.Register(new StockChangedDomainEvent(this));
 
         return this;
     }
@@ -212,7 +212,7 @@ public class Stock : AuditableAggregateRoot<StockId>, IConcurrent
         this.ReorderThreshold = threshold;
         this.ReorderQuantity = quantity;
 
-        this.DomainEvents.Register(new StockUpdatedDomainEvent(this));
+        this.DomainEvents.Register(new StockChangedDomainEvent(this));
 
         return this;
     }

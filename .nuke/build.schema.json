@@ -1,6 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "properties": {
+    "CodeDumpOutputFile": {
+      "type": "string",
+      "description": "Output file path for concatenated files"
+    },
     "Configuration": {
       "type": "string",
       "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
@@ -8,10 +12,6 @@
         "Debug",
         "Release"
       ]
-    },
-    "DumpCodeOutputFile": {
-      "type": "string",
-      "description": "Output file path for concatenated files"
     },
     "Solution": {
       "type": "string",
@@ -68,8 +68,8 @@
       "enum": [
         "All",
         "Clean",
+        "CodeDump",
         "Compile",
-        "DumpCode",
         "EnsureSonarQubeContainer",
         "Restore",
         "SonarAnalysis",

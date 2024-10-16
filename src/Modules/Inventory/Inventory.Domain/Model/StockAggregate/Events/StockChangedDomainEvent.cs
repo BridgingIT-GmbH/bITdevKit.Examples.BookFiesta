@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Domain;
 
-public class StockUpdatedDomainEvent(Stock stock) : DomainEventBase
+public class StockChangedDomainEvent(Stock stock) : DomainEventBase
 {
     public TenantId TenantId { get; } = stock.TenantId;
     public StockId StockId { get; } = stock.Id;
