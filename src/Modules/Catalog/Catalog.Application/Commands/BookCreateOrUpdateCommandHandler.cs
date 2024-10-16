@@ -14,9 +14,7 @@ public class BookCreateOrUpdateCommandHandler(
     IGenericRepository<Publisher> publisherRepository)
     : CommandHandlerBase<BookCreateOrUpdateCommand, Result<Book>>(loggerFactory)
 {
-    public override async Task<CommandResponse<Result<Book>>> Process(
-        BookCreateOrUpdateCommand command,
-        CancellationToken cancellationToken)
+    public override async Task<CommandResponse<Result<Book>>> Process(BookCreateOrUpdateCommand command, CancellationToken cancellationToken)
     {
         var result = await this.ProcessOperationAsync(command, cancellationToken);
         if (result.IsFailure)
