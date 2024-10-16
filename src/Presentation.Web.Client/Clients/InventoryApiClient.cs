@@ -1258,6 +1258,15 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Inventor
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class HttpValidationProblemDetails : ProblemDetails
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("errors")]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IEnumerable<string>> Errors { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CategoryModel
     {
 
@@ -1428,15 +1437,6 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Inventor
 
         [System.Text.Json.Serialization.JsonPropertyName("VatNumber")]
         public string VatNumber { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class HttpValidationProblemDetails : ProblemDetails
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("errors")]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IEnumerable<string>> Errors { get; set; }
 
     }
 

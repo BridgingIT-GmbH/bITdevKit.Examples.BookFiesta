@@ -543,6 +543,31 @@
         }
       }
     },
+    "HttpValidationProblemDetails": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ProblemDetails"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "x-nullable": true,
+            "additionalProperties": {}
+          },
+          "properties": {
+            "errors": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "CategoryModel": {
       "type": "object",
       "properties": {
@@ -768,31 +793,6 @@
           "x-nullable": true
         }
       }
-    },
-    "HttpValidationProblemDetails": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ProblemDetails"
-        },
-        {
-          "type": "object",
-          "additionalProperties": {
-            "x-nullable": true,
-            "additionalProperties": {}
-          },
-          "properties": {
-            "errors": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      ]
     },
     "TenantModel": {
       "type": "object",

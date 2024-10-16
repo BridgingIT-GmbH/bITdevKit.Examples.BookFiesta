@@ -507,6 +507,128 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "UpdateCatalogBook",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "model",
+            "in": "body",
+            "schema": {
+              "x-nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/BookModel"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/BookModel"
+            }
+          },
+          "404": {
+            "description": ""
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/HttpValidationProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "DeleteCatalogBook",
+        "produces": [
+          "application/problem+json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/HttpValidationProblemDetails"
+            }
+          },
+          "500": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
       }
     },
     "/api/tenants/{tenantId}/catalog/books": {
@@ -1288,6 +1410,31 @@
         }
       }
     },
+    "HttpValidationProblemDetails": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ProblemDetails"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "x-nullable": true,
+            "additionalProperties": {}
+          },
+          "properties": {
+            "errors": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "CategoryModel": {
       "type": "object",
       "properties": {
@@ -1513,31 +1660,6 @@
           "x-nullable": true
         }
       }
-    },
-    "HttpValidationProblemDetails": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ProblemDetails"
-        },
-        {
-          "type": "object",
-          "additionalProperties": {
-            "x-nullable": true,
-            "additionalProperties": {}
-          },
-          "properties": {
-            "errors": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      ]
     },
     "TenantModel": {
       "type": "object",

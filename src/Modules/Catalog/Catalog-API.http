@@ -26,6 +26,7 @@ Content-Type: application/json
   "tenantId": "1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f",
   "title": "Building Evolutionary Architectures{{$random.integer(1000, 9999)}}",
   "description": "Support Constant Change.",
+  "language": "en",
   "edition": "1st",
   "sku": "149198{{$random.integer(1000, 9999)}}",
   "isbn": "978-149198{{$random.integer(1000, 9999)}}",
@@ -39,6 +40,50 @@ Content-Type: application/json
     {
       "id": "535bc0ec-9fab-73aa-e3e7-016363976dd3",
       "name": "Eric Evans"
+    }
+  ],
+  "categories": [
+    {
+      "id": "2bc58ce7-dcfb-6f91-f18f-e06b6c431a4f",
+      "title": "Software-Architecture"
+    }
+  ],
+  "chapters": [],
+  "tags": []
+}
+
+> {%
+  client.global.set("book_id", response.body.id);
+  client.global.set("book_isbn", response.body.isbn);
+  %}
+
+###UpdateCatalogBook
+PUT {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/books/{{book_id}}
+Content-Type: application/json
+
+{
+  "id": "{{book_id}}",
+  "tenantId": "1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f",
+  "title": "Modified Building Evolutionary Architectures{{$random.integer(1000, 9999)}}",
+  "description": "Modified.",
+  "language": "de",
+  "edition": "1st",
+  "sku": "149198{{$random.integer(1000, 9999)}}",
+  "isbn": "{{book_isbn}}",
+  "price": 11.99,
+  "publisher": {
+    "id": "5f66638b-112a-7a97-6656-564d8c0d6f20",
+    "name": "Addison-Wesley Professional"
+  },
+  "publishedDate": "2017-10-05",
+  "authors": [
+    {
+      "id": "535bc0ec-9fab-73aa-e3e7-016363976dd3",
+      "name": "Eric Evans"
+    },
+    {
+      "id": "b7c2d2db-8d65-e84b-2ab3-ef5d6df4e16e",
+      "name": "Mark Richards"
     }
   ],
   "categories": [
@@ -98,12 +143,17 @@ Content-Type: application/json
     "email": "johaaan.doe{{$random.integer(1000, 9999)}}@example.com"
   }
 
+> {%
+  client.global.set("customer_id", response.body.id);
+%}
+
+
 ### UpdateCatalogCustomer
-PUT {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/customers/ccda0403-3deb-4f2c-bd01-0ad0a16512a0 HTTP/1.1
+PUT {{baseUrl}}/api/tenants/1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f/catalog/customers/{{customer_id}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": "ccda0403-3deb-4f2c-bd01-0ad0a16512a0",
+    "id": "{{customer_id}}",
     "tenantId": "1bb91b7f-f6f4-5ec4-eef8-157e1fbb700f",
     "personName": {
       "title": null,

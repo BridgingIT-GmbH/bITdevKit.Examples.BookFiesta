@@ -7,17 +7,28 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 using Money = BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Money;
 
-public class BookCreateCommandHandler(
+public class BookUpdateCommandHandler(
     ILoggerFactory loggerFactory,
     IGenericRepository<Book> bookRepository,
     IGenericRepository<Author> authorRepository,
     IGenericRepository<Publisher> publisherRepository)
-    : CommandHandlerBase<BookCreateCommand, Result<Book>>(loggerFactory)
+    : CommandHandlerBase<BookUpdateCommand, Result<Book>>(loggerFactory)
 {
     public override async Task<CommandResponse<Result<Book>>> Process(
-        BookCreateCommand command,
+        BookUpdateCommand command,
         CancellationToken cancellationToken)
     {
+        var bookResult = await bookRepository.FindOneResultAsync(
+                BookId.Create(command.Model.Id),
+                cancellationToken: cancellationToken)
+            .AnyContext();
+        var book = bookResult.Value;
+
+        if(bookResult.IsFailure)
+        {
+            return CommandResponse.For(bookResult);
+        }
+
         var publisherResult = await publisherRepository.FindOneResultAsync(
                 PublisherId.Create(command.Model.Publisher.Id),
                 cancellationToken: cancellationToken)
@@ -28,17 +39,15 @@ public class BookCreateCommandHandler(
             return CommandResponse.For<Book>(publisherResult);
         }
 
-        var book = Book.Create(
-            TenantId.Create(command.TenantId),
-            command.Model.Title,
-            command.Model.Edition,
-            command.Model.Description,
-            Language.Create(command.Model.Language),
-            ProductSku.Create(command.Model.Sku),
-            BookIsbn.Create(command.Model.Isbn),
-            Money.Create(command.Model.Price),
-            publisherResult.Value,
-            command.Model.PublishedDate);
+        book.SetTitle(command.Model.Title);
+        book.SetEdition(command.Model.Edition);
+        book.SetDescription(command.Model.Description);
+        book.SetLanguage(Language.Create(command.Model.Language));
+        book.SetSku(ProductSku.Create(command.Model.Sku));
+        book.SetIsbn(BookIsbn.Create(command.Model.Isbn));
+        book.SetPrice(Money.Create(command.Model.Price));
+        book.SetPublisher(publisherResult.Value);
+        book.SetPublishedDate(command.Model.PublishedDate);
 
         foreach (var bookAuthorModel in command.Model.Authors)
         {
@@ -58,7 +67,7 @@ public class BookCreateCommandHandler(
             ],
             cancellationToken);
 
-        await bookRepository.InsertAsync(book, cancellationToken).AnyContext();
+        await bookRepository.UpsertAsync(book, cancellationToken).AnyContext();
 
         return CommandResponse.Success(book);
     }

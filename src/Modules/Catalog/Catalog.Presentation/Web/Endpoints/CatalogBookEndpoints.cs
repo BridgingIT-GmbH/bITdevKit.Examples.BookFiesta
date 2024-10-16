@@ -40,6 +40,20 @@ public class CatalogBookEndpoints : EndpointsBase
             .ProducesValidationProblem()
             .Produces<ProblemDetails>(400)
             .Produces<ProblemDetails>(500);
+
+        group.MapPut("/{id}", UpdateBook)
+            .WithName("UpdateCatalogBook")
+            .ProducesValidationProblem()
+            .ProducesProblem(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
+
+        group.MapDelete("/{id}", DeleteBook)
+            .WithName("DeleteCatalogBook")
+            .ProducesValidationProblem()
+            .ProducesProblem(500);
+        //.Produces<ProblemDetails>(400)
+        //.Produces<ProblemDetails>(500);
     }
 
     private static async Task<Results<Ok<BookModel>, NotFound, ProblemHttpResult>> GetBook(
@@ -75,12 +89,43 @@ public class CatalogBookEndpoints : EndpointsBase
         [FromRoute] string tenantId,
         [FromBody] BookModel model)
     {
-        var result = (await mediator.Send(new BookCreateCommand(tenantId, model))).Result;
+        var result = (await mediator.Send(new BookCreateOrUpdateCommand(tenantId, model))).Result;
 
         return result.IsSuccess
             ? TypedResults.Created(
                 $"api/tenants/{tenantId}/catalog/books/{result.Value.Id}",
                 mapper.Map<Book, BookModel>(result.Value))
             : TypedResults.Problem(result.ToString(), statusCode: 400);
+    }
+
+    private static async Task<Results<Ok<BookModel>, NotFound, ProblemHttpResult>> UpdateBook(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id,
+        [FromBody] BookModel model)
+    {
+        var result = (await mediator.Send(new BookCreateOrUpdateCommand(tenantId, model))).Result;
+
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok(mapper.Map<Book, BookModel>(result.Value))
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
+    }
+
+    private static async Task<Results<Ok, NotFound, ProblemHttpResult>> DeleteBook(
+        [FromServices] IMediator mediator,
+        [FromServices] IMapper mapper,
+        [FromRoute] string tenantId,
+        [FromRoute] string id)
+    {
+        var result = (await mediator.Send(new BookDeleteCommand(tenantId, id))).Result;
+
+        return result.IsFailure && result.HasError<NotFoundResultError>()
+            ? TypedResults.NotFound()
+            : result.IsSuccess
+                ? TypedResults.Ok()
+                : TypedResults.Problem(result.ToString(), statusCode: 400);
     }
 }

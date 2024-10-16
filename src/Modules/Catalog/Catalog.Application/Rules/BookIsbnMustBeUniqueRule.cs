@@ -12,9 +12,11 @@ public class BookIsbnMustBeUniqueRule(IGenericRepository<Book> repository, Book 
 
     public override async Task<bool> ApplyAsync(CancellationToken cancellationToken = default)
     {
-        return !(await repository.FindAllAsync(
+        var books = await repository.FindAllAsync(
             BookSpecifications.ForIsbn(book.TenantId, book.Isbn),
-            cancellationToken: cancellationToken)).SafeAny();
+            cancellationToken: cancellationToken);
+
+        return books.All(e => e.Id == book.Id);
     }
 }
 

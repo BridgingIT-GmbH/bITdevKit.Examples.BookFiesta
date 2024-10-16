@@ -5,7 +5,7 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class BookCreateCommand(string tenantId, BookModel model)
+public class BookUpdateCommand(string tenantId, BookModel model)
     : CommandRequestBase<Result<Book>>, ITenantAware
 {
     public string TenantId { get; } = tenantId;
@@ -17,7 +17,7 @@ public class BookCreateCommand(string tenantId, BookModel model)
         return new Validator().Validate(this);
     }
 
-    public class Validator : AbstractValidator<BookCreateCommand>
+    public class Validator : AbstractValidator<BookUpdateCommand>
     {
         public Validator()
         {
@@ -31,7 +31,7 @@ public class BookCreateCommand(string tenantId, BookModel model)
             public ModelValidator()
             {
                 this.RuleFor(m => m).NotNull().NotEmpty().WithMessage("Must not be empty.");
-                this.RuleFor(m => m.Id).MustBeDefaultOrEmptyGuid().WithMessage("Must be empty.");
+                this.RuleFor(m => m.Id).MustNotBeDefaultOrEmptyGuid().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Title).NotNull().NotEmpty().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Language).NotNull().NotEmpty().WithMessage("Must not be empty.");
                 this.RuleFor(m => m.Sku).NotNull().NotEmpty().WithMessage("Must not be empty.");
