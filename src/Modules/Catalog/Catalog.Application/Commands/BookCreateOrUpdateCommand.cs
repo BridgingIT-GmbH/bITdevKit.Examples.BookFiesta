@@ -5,14 +5,15 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-public class BookCreateOrUpdateCommand(string tenantId, BookModel model)
+public class BookCreateOrUpdateCommand(string tenantId, BookModel model, UpsertOperationType operationType)
     : CommandRequestBase<Result<Book>>, ITenantAware
 {
     public string TenantId { get; } = tenantId;
 
     public BookModel Model { get; } = model;
 
-    public UpsertOperationType OperationType { get; } = model.Id.IsNullOrEmpty() ? UpsertOperationType.Create : UpsertOperationType.Update;
+    public UpsertOperationType OperationType { get; } = operationType;
+    //public UpsertOperationType OperationType { get; } = model.Id.IsNullOrEmpty() ? UpsertOperationType.Create : UpsertOperationType.Update;
 
     public override ValidationResult Validate()
     {

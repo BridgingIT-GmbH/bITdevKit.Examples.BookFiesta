@@ -89,7 +89,8 @@ public class CatalogBookEndpoints : EndpointsBase
         [FromRoute] string tenantId,
         [FromBody] BookModel model)
     {
-        var result = (await mediator.Send(new BookCreateOrUpdateCommand(tenantId, model))).Result;
+        var result = (await mediator.Send(
+            new BookCreateOrUpdateCommand(tenantId, model, UpsertOperationType.Create))).Result;
 
         return result.IsSuccess
             ? TypedResults.Created(
@@ -105,7 +106,8 @@ public class CatalogBookEndpoints : EndpointsBase
         [FromRoute] string id,
         [FromBody] BookModel model)
     {
-        var result = (await mediator.Send(new BookCreateOrUpdateCommand(tenantId, model))).Result;
+        var result = (await mediator.Send(
+            new BookCreateOrUpdateCommand(tenantId, model, UpsertOperationType.Update))).Result;
 
         return result.IsFailure && result.HasError<NotFoundResultError>()
             ? TypedResults.NotFound()

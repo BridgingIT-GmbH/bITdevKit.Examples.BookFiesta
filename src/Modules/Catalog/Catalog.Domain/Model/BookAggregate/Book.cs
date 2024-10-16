@@ -104,7 +104,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
         var book = new Book(tenantId, title, edition, description, language, sku, isbn, price, publisher, publishedDate);
 
-        book.DomainEvents.Register(new BookCreatedDomainEvent(tenantId, book), true);
+        book.DomainEvents.Register(new BookChangedDomainEvent(tenantId, book), true);
 
         return book;
     }
@@ -121,7 +121,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         this.Title = title;
         this.ReindexKeywords();
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -136,7 +136,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         this.Edition = edition;
         // this.ReindexKeywords();
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -150,7 +150,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
         this.ReindexKeywords();
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -166,7 +166,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
         this.Sku = sku;
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -182,7 +182,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
         this.Isbn = isbn;
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -199,7 +199,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         // TODO: Validate price is > 0
         this.Price = price;
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -216,7 +216,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
         this.Publisher = bookPublisher;
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -230,7 +230,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
         this.PublishedDate = publishedDate;
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -246,7 +246,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
 
         this.Language = language;
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
@@ -261,7 +261,7 @@ public class Book : AuditableAggregateRoot<BookId>, IConcurrent
         this.StockQuantityOnHand = quantityOnHand;
         this.StockQuantityReserved = quantityReserved;
 
-        this.DomainEvents.Register(new BookUpdatedDomainEvent(this.TenantId, this), true);
+        this.DomainEvents.Register(new BookChangedDomainEvent(this.TenantId, this), true);
 
         return this;
     }
