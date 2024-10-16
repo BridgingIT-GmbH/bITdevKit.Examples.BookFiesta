@@ -9,7 +9,9 @@ using BridgingIT.DevKit.Application.Messaging;
 
 public class StockChangedDomainEventMessagePublisher(
     ILoggerFactory loggerFactory,
+#pragma warning disable CS9113 // Parameter is unread.
     IMessageBroker messageBroker)
+#pragma warning restore CS9113 // Parameter is unread.
     : DomainEventHandlerBase<StockChangedDomainEvent>(loggerFactory)
 {
     public override bool CanHandle(StockChangedDomainEvent @event)
@@ -23,7 +25,7 @@ public class StockChangedDomainEventMessagePublisher(
             new StockChangedMessage
             {
                 TenantId = @event.TenantId,
-                StockId = @event.StockId,
+                StockId= @event.StockId,
                 Sku = @event.Sku,
                 QuantityOnHand = @event.QuantityOnHand,
                 QuantityReserved = @event.QuantityReserved,

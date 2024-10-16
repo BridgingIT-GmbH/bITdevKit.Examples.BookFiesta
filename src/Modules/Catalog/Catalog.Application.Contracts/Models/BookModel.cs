@@ -17,6 +17,8 @@ public class BookModel
 
     public string Description { get; set; }
 
+    public string Language { get; set; }
+
     public string Sku { get; set; }
 
     public string Isbn { get; set; }

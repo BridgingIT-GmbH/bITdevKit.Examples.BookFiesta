@@ -1155,6 +1155,10 @@
           "type": "string",
           "x-nullable": true
         },
+        "Language": {
+          "type": "string",
+          "x-nullable": true
+        },
         "Sku": {
           "type": "string",
           "x-nullable": true

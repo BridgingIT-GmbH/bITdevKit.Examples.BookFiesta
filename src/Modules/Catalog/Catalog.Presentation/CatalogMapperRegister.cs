@@ -22,6 +22,7 @@ public class CatalogMapperRegister : IRegister
         // Book aggregate mappings
         config.ForType<Book, BookModel>()
             .Map(d => d.Sku, s => s.Sku.Value)
+            .Map(d => d.Language, s => s.Language.Code)
             .Map(d => d.Keywords, s => s.Keywords.Select(e => e.Text).ToList())
             .Map(d => d.Isbn, s => s.Isbn.Value);
 

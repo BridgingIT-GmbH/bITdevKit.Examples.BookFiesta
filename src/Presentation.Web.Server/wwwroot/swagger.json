@@ -2453,6 +2453,10 @@
             "type": "string",
             "nullable": true
           },
+          "Language": {
+            "type": "string",
+            "nullable": true
+          },
           "Sku": {
             "type": "string",
             "nullable": true

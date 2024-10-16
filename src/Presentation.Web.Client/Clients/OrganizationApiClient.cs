@@ -1334,6 +1334,9 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Presentation.Web.Client.Organiza
         [System.Text.Json.Serialization.JsonPropertyName("Description")]
         public string Description { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("Language")]
+        public string Language { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("Sku")]
         public string Sku { get; set; }
 

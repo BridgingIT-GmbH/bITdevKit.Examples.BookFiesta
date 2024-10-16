@@ -4,10 +4,13 @@
 // found in the LICENSE file at https://github.com/bridgingit/bitdevkit/license
 
 using BridgingIT.DevKit.Application.JobScheduling;
+using BridgingIT.DevKit.Domain;
+using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Application.Events;
 using BridgingIT.DevKit.Examples.BookFiesta.Modules.Inventory.Presentation;
-using BridgingIT.DevKit.Examples.BookFiesta.Modules.Organization.Infrastructure;
 using BridgingIT.DevKit.Infrastructure.EntityFramework;
+using MediatR;
 using OpenTelemetry.Exporter;
+using Scrutor;
 #pragma warning disable SA1200 // Using directives should be placed correctly
 using System.Net;
 using System.Reflection;
@@ -31,7 +34,6 @@ using BridgingIT.DevKit.Presentation.Web;
 using BridgingIT.DevKit.Presentation.Web.JobScheduling;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MudBlazor.Services;
 using NSwag;
@@ -67,7 +69,7 @@ builder.Services.Configure<JsonOptions>(ConfigureJsonOptions); // configure json
 
 // ===============================================================================================
 // Configure the services
-builder.Services.AddMediatR(); // or AddDomainEvents()?
+builder.Services.AddMediatR();
 builder.Services.AddMapping().WithMapster();
 
 builder.Services.AddCommands()
@@ -76,12 +78,15 @@ builder.Services.AddCommands()
     .WithBehavior(typeof(RetryCommandBehavior<,>))
     .WithBehavior(typeof(TimeoutCommandBehavior<,>))
     .WithBehavior(typeof(TenantAwareCommandBehavior<,>));
+
 builder.Services.AddQueries()
     .WithBehavior(typeof(ModuleScopeQueryBehavior<,>))
     //.WithBehavior(typeof(ChaosExceptionQueryBehavior<,>))
     .WithBehavior(typeof(RetryQueryBehavior<,>))
     .WithBehavior(typeof(TimeoutQueryBehavior<,>))
     .WithBehavior(typeof(TenantAwareQueryBehavior<,>));
+
+builder.Services.PrintMediatRRegistrations(builder.Environment.IsDevelopment());
 
 builder.Services.AddJobScheduling(o => o
             .StartupDelay(builder.Configuration["JobScheduling:StartupDelay"]),

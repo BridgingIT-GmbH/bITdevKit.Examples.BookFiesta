@@ -28,7 +28,7 @@ public class BookCreateCommandHandler(
             command.Model.Title,
             command.Model.Edition,
             command.Model.Description,
-            Language.Create("en"),
+            Language.Create(command.Model.Language),
             ProductSku.Create(command.Model.Sku),
             BookIsbn.Create(command.Model.Isbn),
             Money.Create(command.Model.Price),

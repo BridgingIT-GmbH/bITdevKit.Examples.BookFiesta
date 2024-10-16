@@ -298,6 +298,7 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                     Title = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
                     Edition = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Language = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
                     Sku = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     Isbn = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
                     PriceCurrency = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: true, defaultValue: "USD"),
@@ -663,6 +664,12 @@ namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.E
                 schema: "catalog",
                 table: "BookKeywords",
                 column: "Text");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_Language",
+                schema: "catalog",
+                table: "Books",
+                column: "Language");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_PublisherId",

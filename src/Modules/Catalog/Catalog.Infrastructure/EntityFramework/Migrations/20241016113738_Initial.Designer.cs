@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20241016063605_BookLanguage")]
-    partial class BookLanguage
+    [Migration("20241016113738_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
