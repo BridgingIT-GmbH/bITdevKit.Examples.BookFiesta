@@ -5,8 +5,6 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using Money = BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Money;
-
 public class BookCreateCommandHandler(
     ILoggerFactory loggerFactory,
     IGenericRepository<Book> bookRepository,

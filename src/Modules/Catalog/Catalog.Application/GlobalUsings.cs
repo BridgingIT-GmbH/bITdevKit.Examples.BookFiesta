@@ -16,5 +16,5 @@ global using BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain;
 global using FluentValidation;
 global using FluentValidation.Results;
 global using Microsoft.Extensions.Logging;
-
+global using Money = BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Money;
 #pragma warning restore SA1200 // Using directives should be placed correctly

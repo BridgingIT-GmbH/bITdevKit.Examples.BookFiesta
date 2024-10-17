@@ -5,8 +5,13 @@
 
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
-using Money = BridgingIT.DevKit.Examples.BookFiesta.SharedKernel.Domain.Money;
-
+/// <summary>
+/// Handles the creation or update of a Book entity.
+/// </summary>
+/// <remarks>
+/// The handler uses various repositories to manage the book data, including repositories for books, authors, and publishers.
+/// It processes commands to either create a new book or update an existing one, ensuring that all domain rules are applied.
+/// </remarks>
 public class BookCreateOrUpdateCommandHandler(
     ILoggerFactory loggerFactory,
     IGenericRepository<Book> bookRepository,
