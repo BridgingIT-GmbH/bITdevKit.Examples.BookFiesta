@@ -6,7 +6,7 @@
 namespace BridgingIT.DevKit.Examples.BookFiesta.Modules.Catalog.Application;
 
 /// <summary>
-///     Handles the creation or update of a Book entity.
+///  Handles the creation or update of a Book entity.
 /// </summary>
 /// <remarks>
 /// The handler uses various repositories to manage the book data, including repositories for books, authors, and publishers.
